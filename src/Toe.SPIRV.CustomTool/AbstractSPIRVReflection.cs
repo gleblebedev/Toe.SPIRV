@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
+using Veldrid;
 using Veldrid.SPIRV;
 
 namespace Toe.SPIRV.CustomTool

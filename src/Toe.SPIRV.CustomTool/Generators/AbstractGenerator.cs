@@ -39,6 +39,7 @@ namespace Toe.SPIRV.CustomTool.Generators
 
         public virtual void WriteUsings()
         {
+            WriteLine("using System;");
             WriteLine("using System.Numerics;");
             WriteLine("using System.Runtime.InteropServices;");
         }
@@ -126,31 +127,44 @@ namespace Toe.SPIRV.CustomTool.Generators
         protected virtual void WriteStructs()
         {
             var structs = _shader.Instructions.Where(_ => _.OpCode == Op.OpTypeStruct)
-                .Select(_ => (OpTypeStruct)_).ToList();
+                .Select(_ => (OpTypeStruct)_)
+                .Select(_=>new KeyValuePair<string,OpTypeStruct>(_.OpName?.Name ?? "Struct" + _.IdResult, _))
+                .Where(_=>_.Key != "gl_PerVertex")
+                .ToList();
             for (var index = 0; index < structs.Count; index++)
             {
                 var opTypeStruct = structs[index];
-                WriteStruct(opTypeStruct);
+                WriteStruct(opTypeStruct.Key, opTypeStruct.Value);
             }
+            WriteLine("public static unsafe class ExtensionMethods");
+            WriteLine("{");
+            for (var index = 0; index < structs.Count; index++)
+            {
+                var opTypeStruct = structs[index];
+                WriteStructExtensions(opTypeStruct.Key, opTypeStruct.Value);
+            }
+            WriteLine("}");
         }
 
-        private void WriteStruct(OpTypeStruct opTypeStruct)
+        private void WriteStructExtensions(string key, OpTypeStruct value)
         {
-            var name = opTypeStruct.OpName?.Name ?? "Struct" + opTypeStruct.IdResult;
-            if (name == "gl_PerVertex")
-            {
-                return;
-            }
+            WriteLine($"public static ref {key} As{key}(this byte[] buffer, int offset = 0) {{ fixed (byte* ptr = buffer) {{ return ref *({key}*)(ptr + offset); }} }}");
+            //WriteLine($"public static ref {key} As{key}(this Span<byte> buffer) {{ fixed (byte* ptr = buffer) {{ return ref *({key}*)ptr; }} }}");
+            //WriteLine($"public static ref {key} As{key}(this ArraySegment<byte> buffer) {{ fixed (byte* ptr = buffer.Array) {{ return ref *({key}*)(ptr + buffer.Offset); }} }}");
+        }
+
+        private void WriteStruct(string name, OpTypeStruct opTypeStruct)
+        {
             var memberTypes = opTypeStruct.MemberTypes.Select(_ => ResolveType((TypeInstruction)_.Instruction)).ToList();
             var isUnsafe = memberTypes.Any(_ => _.IsArray());
             WriteLine("[StructLayout(LayoutKind.Explicit)]");
             if (isUnsafe)
             {
-                WriteLine("public unsafe struct " + name);
+                WriteLine("public unsafe partial struct " + name);
             }
             else
             {
-                WriteLine("public struct " + name);
+                WriteLine("public partial struct " + name);
             }
             WriteLine("{");
             for (var memberIndex = 0; memberIndex < opTypeStruct.MemberTypes.Count; memberIndex++)
@@ -159,13 +173,26 @@ namespace Toe.SPIRV.CustomTool.Generators
                 var byteOffset = opTypeStruct.FindMemberDecoration<Decoration.Offset>((uint)memberIndex)?.ByteOffset ?? 0;
                 var type = memberTypes[memberIndex];
 
-                WriteLine($"    [FieldOffset({byteOffset})]");
                 if (type.IsArray())
                 {
-                    WriteLine($"    public fixed {type.ElementType} {memberName} [{type.ArraySize}];");
+                    if (CanBeFixedArray(type.ElementType))
+                    {
+                        WriteLine($"    [FieldOffset({byteOffset})]");
+                        WriteLine($"    public fixed {type.ElementType} {memberName} [{type.ArraySize}];");
+                    }
+                    else
+                    {
+                        var sep = char.IsDigit(memberName[memberName.Length - 1]) ? "_" : "";
+                        for (int i=0; i<type.ArraySize;++i)
+                        {
+                            WriteLine($"    [FieldOffset({byteOffset+i*type.ElementSize})]");
+                            WriteLine($"    public {type.ElementType} {memberName}{sep}{i};");
+                        }
+                    }
                 }
                 else
                 {
+                    WriteLine($"    [FieldOffset({byteOffset})]");
                     WriteLine($"    public {type.ElementType} {memberName};");
                 }
                 WriteLine();
@@ -173,20 +200,45 @@ namespace Toe.SPIRV.CustomTool.Generators
             WriteLine("}");
         }
 
+        private bool CanBeFixedArray(string typeElementType)
+        {
+            switch (typeElementType)
+            {
+                case "bool":
+                case "byte":
+                case "short":
+                case "int":
+                case "long":
+                case "char":
+                case "sbyte":
+                case "ushort":
+                case "uint":
+                case "ulong":
+                case "float":
+                case "double":
+                    return true;
+            }
+
+            return false;
+        }
+
 
         public struct TypeDesc
         {
             public string ElementType;
+            public int ElementSize;
             public int ArraySize;
 
-            public TypeDesc(string elementType)
+            public TypeDesc(string elementType, int elementSize)
             {
                 ElementType = elementType;
+                ElementSize = elementSize;
                 ArraySize = 1;
             }
-            public TypeDesc(string elementType, int arraySize)
+            public TypeDesc(string elementType, int elementSize, int arraySize)
             {
                 ElementType = elementType;
+                ElementSize = elementSize;
                 ArraySize = arraySize;
             }
 
@@ -220,18 +272,18 @@ namespace Toe.SPIRV.CustomTool.Generators
             switch (type.OpCode)
             {
                 case Op.OpTypeVoid:
-                    return new TypeDesc("void");
+                    return new TypeDesc("void", 0);
                 case Op.OpTypeStruct:
                     {
                         var opType = (OpTypeStruct)type;
-                        return new TypeDesc(opType.OpName?.Name ?? ("Struct"+opType.IdResult));
+                        return new TypeDesc(opType.OpName?.Name ?? ("Struct"+opType.IdResult), 0); //TODO: calc size
                     }
                 case Op.OpTypeArray:
                     {
                         var opType = (OpTypeArray)type;
                         var element = ResolveType(opType.ElementType);
                         var length = ((OpConstant)opType.Length.Instruction).Value.Value.ToInt32();
-                        return new TypeDesc(element.ElementType, length * element.ArraySize);
+                        return new TypeDesc(element.ElementType, element.ElementSize, length * element.ArraySize);
                     }
                 case Op.OpTypeVector:
                     return GenerateVector((OpTypeVector)type);
@@ -243,9 +295,9 @@ namespace Toe.SPIRV.CustomTool.Generators
                         switch (opType.Width)
                         {
                             case 32:
-                                return new TypeDesc("float");
+                                return new TypeDesc("float",4);
                             case 64:
-                                return new TypeDesc("double");
+                                return new TypeDesc("double", 8);
                         }
 
                         break;
@@ -259,13 +311,13 @@ namespace Toe.SPIRV.CustomTool.Generators
                             switch (opType.Width)
                             {
                                 case 8:
-                                    return new TypeDesc("sbyte");
+                                    return new TypeDesc("sbyte",1);
                                 case 16:
-                                    return new TypeDesc("short");
+                                    return new TypeDesc("short",2);
                                 case 32:
-                                    return new TypeDesc("int");
+                                    return new TypeDesc("int",4);
                                 case 64:
-                                    return new TypeDesc("long");
+                                    return new TypeDesc("long",8);
                             }
                         }
                         else
@@ -273,13 +325,13 @@ namespace Toe.SPIRV.CustomTool.Generators
                             switch (opType.Width)
                             {
                                 case 8:
-                                    return new TypeDesc("byte");
+                                    return new TypeDesc("byte",1);
                                 case 16:
-                                    return new TypeDesc("ushort");
+                                    return new TypeDesc("ushort",2);
                                 case 32:
-                                    return new TypeDesc("uint" );
+                                    return new TypeDesc("uint",4);
                                 case 64:
-                                    return new TypeDesc("ulong" );
+                                    return new TypeDesc("ulong",8);
                             }
                         }
                         break;
@@ -301,10 +353,10 @@ namespace Toe.SPIRV.CustomTool.Generators
             {
                 if (element.ElementType == "Vector4" && length == 4)
                 {
-                    return new TypeDesc("Matrix4x4");
+                    return new TypeDesc("Matrix4x4",element.ElementSize*length);
                 }
             }
-            return new TypeDesc(element.ElementType, length * element.ArraySize);
+            return new TypeDesc(element.ElementType, length * element.ElementSize);
         }
 
         protected virtual TypeDesc GenerateVector(OpTypeVector type)
@@ -323,11 +375,11 @@ namespace Toe.SPIRV.CustomTool.Generators
                     switch (length)
                     {
                         case 2:
-                            return new TypeDesc("Vector2");
+                            return new TypeDesc("Vector2", length * element.ElementSize);
                         case 3:
-                            return new TypeDesc("Vector3");
+                            return new TypeDesc("Vector3", length * element.ElementSize);
                         case 4:
-                            return new TypeDesc("Vector4");
+                            return new TypeDesc("Vector4", length * element.ElementSize);
                     }
                 }
             }

@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29201.188
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CustomTool", "Toe.SPIRV.CustomTool\Toe.SPIRV.CustomTool.csproj", "{E470E941-4F88-4C42-90BB-2ED0EC8354B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV", "Toe.SPIRV\Toe.SPIRV.csproj", "{87A8BC61-09D2-4A9F-8CAB-E93226F786C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.SPIRV", "Toe.SPIRV\Toe.SPIRV.csproj", "{87A8BC61-09D2-4A9F-8CAB-E93226F786C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CustomTool17", "Toe.SPIRV.CustomTool17\Toe.SPIRV.CustomTool17.csproj", "{D3A19E41-8AF4-4B53-AD70-5B2A07DA737B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.Numerics", "Toe.SPIRV.Numerics\Toe.SPIRV.Numerics.csproj", "{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.UnitTests", "Toe.SPIRV.UnitTests\Toe.SPIRV.UnitTests.csproj", "{B88016B7-6B99-46B0-8E7C-D4C9638182CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{87A8BC61-09D2-4A9F-8CAB-E93226F786C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87A8BC61-09D2-4A9F-8CAB-E93226F786C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87A8BC61-09D2-4A9F-8CAB-E93226F786C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A19E41-8AF4-4B53-AD70-5B2A07DA737B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A19E41-8AF4-4B53-AD70-5B2A07DA737B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A19E41-8AF4-4B53-AD70-5B2A07DA737B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A19E41-8AF4-4B53-AD70-5B2A07DA737B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

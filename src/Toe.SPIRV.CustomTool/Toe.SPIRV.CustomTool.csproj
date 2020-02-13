@@ -55,7 +55,6 @@
     <Compile Include="Generators\FixedArrayGenerator.cs" />
     <Compile Include="Generators\SharpDXGenerator.cs" />
     <Compile Include="Generators\ToeGenerator.cs" />
-    <Compile Include="SampleStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharpDXSPIRVReflection.cs" />
     <Compile Include="SPIRVReflection.cs" />
@@ -74,7 +73,7 @@
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.200" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.2.3073" />
     <PackageReference Include="Veldrid.SPIRV">
-      <Version>1.0.12</Version>
+      <Version>1.0.13</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
