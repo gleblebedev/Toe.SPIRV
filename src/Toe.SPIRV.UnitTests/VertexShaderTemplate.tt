@@ -21,7 +21,7 @@ layout(location = 0) out vec4 fsin_color;
 
 int AppendHash(int hash, int f)
 {
-    return hash*397 ^ f;
+    return (hash*397) ^ f;
 }
 int AppendHash(int hash, float f)
 {
@@ -41,19 +41,21 @@ int AppendHash(int hash, vec3 m)
 {
     hash = AppendHash(hash, m.x);
     hash = AppendHash(hash, m.y);
+    hash = AppendHash(hash, m.z);
     return hash;
 }
 int AppendHash(int hash, vec4 m)
 {
     hash = AppendHash(hash, m.x);
     hash = AppendHash(hash, m.y);
+    hash = AppendHash(hash, m.z);
+    hash = AppendHash(hash, m.w);
     return hash;
 }
 int AppendHash(int hash, mat2 m)
 {
     hash = AppendHash(hash, m[0][0]);
     hash = AppendHash(hash, m[0][1]);
-
     hash = AppendHash(hash, m[1][0]);
     hash = AppendHash(hash, m[1][1]);
     return hash;

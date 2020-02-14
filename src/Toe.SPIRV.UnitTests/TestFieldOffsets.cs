@@ -47,6 +47,7 @@ namespace Toe.SPIRV.UnitTests
                 var endMarker = new SpirvStructureField(SpirvTypeBase.Float, "endMarker");
 
                 var allFields = new[] { floatField, doubleField, intField, uintField, vec2Field, vec3Field, vec4Field, mat2Field, mat3Field, mat4Field };
+                yield return new FieldSet(mat2Field);
                 foreach (var field in allFields)
                 {
                     yield return new FieldSet(field, endMarker);
@@ -89,10 +90,10 @@ namespace Toe.SPIRV.UnitTests
 
             //structure.EvaluateLayout();
 
-            //var hlsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.HLSL, new CrossCompileOptions());
-            //var glsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.GLSL, new CrossCompileOptions());
-            //var msl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.MSL, new CrossCompileOptions());
-            //var essl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.ESSL, new CrossCompileOptions());
+            var hlsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.HLSL, new CrossCompileOptions());
+            var glsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.GLSL, new CrossCompileOptions());
+            var msl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.MSL, new CrossCompileOptions());
+            var essl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.ESSL, new CrossCompileOptions());
 
             var shaders = ResourceFactory.CreateFromSpirv(new ShaderDescription(ShaderStages.Vertex, vertex.SpirvBytes, "main"),
                 new ShaderDescription(ShaderStages.Fragment, fragment.SpirvBytes, "main"));
@@ -131,7 +132,8 @@ namespace Toe.SPIRV.UnitTests
 
             var expected = new RgbaByte((byte) (hash % 256), (byte) ((hash / 256) % 256), (byte) ((hash / 65536) % 256),
                 (byte) ((hash / 16777216) % 256));
-            Assert.AreEqual(expected, ReadRenderTargetPixel());
+            var actual = ReadRenderTargetPixel();
+            Assert.AreEqual(expected, actual);
         }
 
         private void PopulateBuffer(byte[] bytes, uint offset, SpirvTypeBase type, ref int counter, ref int hash)
@@ -146,9 +148,10 @@ namespace Toe.SPIRV.UnitTests
             }
             if (type is SpirvMatrix spirvMatrix)
             {
+                var columnType = spirvMatrix.ColumnType;
                 for (uint i = 0; i < spirvMatrix.ColumnCount; ++i)
                 {
-                    PopulateBuffer(bytes, offset + spirvMatrix.ColumnType.SizeInBytes * i, spirvMatrix.ColumnType, ref counter, ref hash);
+                    PopulateBuffer(bytes, offset + columnType.SizeInBytes * i, columnType, ref counter, ref hash);
                 }
                 return;
             }
@@ -159,25 +162,33 @@ namespace Toe.SPIRV.UnitTests
                 case SpirvType.Int:
                     ++counter;
                     MemoryMarshal.Cast<byte, int>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = counter;
-                    hash = hash * 397 + counter;
+                    AppendHash(counter, ref hash);
                     return;
                 case SpirvType.UInt:
                     ++counter;
                     MemoryMarshal.Cast<byte, uint>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = (uint)counter;
-                    hash = hash * 397 + counter;
+                    AppendHash(counter, ref hash);
                     return;
                 case SpirvType.Float:
                     ++counter;
                     MemoryMarshal.Cast<byte, float>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = counter;
-                    hash = hash * 397 + counter;
+                    AppendHash(counter, ref hash);
                     return;
                 case SpirvType.Double:
                     ++counter;
                     MemoryMarshal.Cast<byte, double>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = counter;
-                    hash = hash * 397 + counter;
+                    AppendHash(counter, ref hash);
                     return;
+                default:
+                    throw new NotImplementedException();
             }
         }
+
+        private static void AppendHash(int counter, ref int hash)
+        {
+            hash = (hash * 397) ^ counter;
+        }
+
         private void PopulateBuffer(byte[] bytes, SpirvStructureField field, ref int counter, ref int hash)
         {
             PopulateBuffer(bytes, field.ByteOffset.Value, field.Type, ref counter, ref hash);

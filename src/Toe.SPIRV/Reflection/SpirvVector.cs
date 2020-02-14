@@ -13,6 +13,9 @@
 
         public uint ComponentCount => _componentCount;
         public SpirvTypeBase ComponentType => _componentType;
+
+        public override uint SizeInBytes => _componentType.SizeInBytes * _componentCount;
+
         public static SpirvType GetType(SpirvTypeBase componentType, uint componentCount)
         {
             switch (componentType.Type)

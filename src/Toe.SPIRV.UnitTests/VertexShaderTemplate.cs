@@ -62,33 +62,34 @@ foreach (var field in _fields.Fields)
             #line default
             #line hidden
             this.Write("};\r\n\r\nlayout(location = 0) out vec4 fsin_color;\r\n\r\nint AppendHash(int hash, int f" +
-                    ")\r\n{\r\n    return hash*397 ^ f;\r\n}\r\nint AppendHash(int hash, float f)\r\n{\r\n    ret" +
-                    "urn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, double f)\r\n{\r\n    ret" +
-                    "urn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, vec2 m)\r\n{\r\n    hash " +
-                    "= AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    return hash;\r\n}" +
-                    "\r\nint AppendHash(int hash, vec3 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    ha" +
-                    "sh = AppendHash(hash, m.y);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, vec4 " +
-                    "m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n   " +
-                    " return hash;\r\n}\r\nint AppendHash(int hash, mat2 m)\r\n{\r\n    hash = AppendHash(has" +
-                    "h, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n\r\n    hash = AppendHash(has" +
-                    "h, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n    return hash;\r\n}\r\nint Ap" +
-                    "pendHash(int hash, mat3 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash =" +
-                    " AppendHash(hash, m[0][1]);\r\n    hash = AppendHash(hash, m[0][2]);\r\n\r\n    hash =" +
-                    " AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n    hash = A" +
-                    "ppendHash(hash, m[1][2]);\r\n\r\n    hash = AppendHash(hash, m[2][0]);\r\n    hash = A" +
-                    "ppendHash(hash, m[2][1]);\r\n    hash = AppendHash(hash, m[2][2]);\r\n    return has" +
-                    "h;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0])" +
-                    ";\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = AppendHash(hash, m[0][2]);\r" +
-                    "\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r" +
-                    "\n    hash = AppendHash(hash, m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n " +
-                    "   hash = AppendHash(hash, m[1][3]);\r\n\r\n    hash = AppendHash(hash, m[2][0]);\r\n " +
-                    "   hash = AppendHash(hash, m[2][1]);\r\n    hash = AppendHash(hash, m[2][2]);\r\n   " +
-                    " hash = AppendHash(hash, m[2][3]);\r\n\r\n    hash = AppendHash(hash, m[3][0]);\r\n   " +
-                    " hash = AppendHash(hash, m[3][1]);\r\n    hash = AppendHash(hash, m[3][2]);\r\n    h" +
-                    "ash = AppendHash(hash, m[3][3]);\r\n    return hash;\r\n}\r\nvoid main()\r\n{\r\n    int h" +
-                    "ash = 0;\r\n");
+                    ")\r\n{\r\n    return (hash*397) ^ f;\r\n}\r\nint AppendHash(int hash, float f)\r\n{\r\n    r" +
+                    "eturn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, double f)\r\n{\r\n    r" +
+                    "eturn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, vec2 m)\r\n{\r\n    has" +
+                    "h = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    return hash;\r" +
+                    "\n}\r\nint AppendHash(int hash, vec3 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    " +
+                    "hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    return has" +
+                    "h;\r\n}\r\nint AppendHash(int hash, vec4 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n " +
+                    "   hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    hash = " +
+                    "AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat2 m)\r\n{" +
+                    "\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n" +
+                    "    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n  " +
+                    "  return hash;\r\n}\r\nint AppendHash(int hash, mat3 m)\r\n{\r\n    hash = AppendHash(ha" +
+                    "sh, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = AppendHash(hash" +
+                    ", m[0][2]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash" +
+                    ", m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n\r\n    hash = AppendHash(hash" +
+                    ", m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = AppendHash(hash, " +
+                    "m[2][2]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r\n    hash = " +
+                    "AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = Ap" +
+                    "pendHash(hash, m[0][2]);\r\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n    hash = Ap" +
+                    "pendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n    hash = Appe" +
+                    "ndHash(hash, m[1][2]);\r\n    hash = AppendHash(hash, m[1][3]);\r\n\r\n    hash = Appe" +
+                    "ndHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = Append" +
+                    "Hash(hash, m[2][2]);\r\n    hash = AppendHash(hash, m[2][3]);\r\n\r\n    hash = Append" +
+                    "Hash(hash, m[3][0]);\r\n    hash = AppendHash(hash, m[3][1]);\r\n    hash = AppendHa" +
+                    "sh(hash, m[3][2]);\r\n    hash = AppendHash(hash, m[3][3]);\r\n    return hash;\r\n}\r\n" +
+                    "void main()\r\n{\r\n    int hash = 0;\r\n");
             
-            #line 102 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 104 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 foreach (var field in _fields.Fields)
 {
@@ -98,14 +99,14 @@ foreach (var field in _fields.Fields)
             #line hidden
             this.Write("    hash = AppendHash(hash, ");
             
-            #line 106 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 108 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 107 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 109 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 }
 

@@ -90,18 +90,19 @@ namespace Toe.SPIRV.UnitTests
         [TearDown]
         public void TearDown()
         {
+            for (var index = _disposables.Count - 1; index >= 0; --index)
+            {
+                _disposables[index].Dispose();
+            }
+
+            _disposables = null;
             _commandList?.Dispose();
             _offscreenView?.Dispose();
             _offscreenFB?.Dispose();
             _offscreenDepth?.Dispose();
             _offscreenColor?.Dispose();
             _graphicsDevice?.Dispose();
-            for (var index = _disposables.Count-1; index >= 0 ; --index)
-            {
-                _disposables[index].Dispose();
-            }
-
-            _disposables = null;
+            
         }
 
 
