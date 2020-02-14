@@ -1,87 +1,48 @@
 ﻿namespace Toe.SPIRV.Reflection
 {
-    public abstract class SpirvType
+    public enum SpirvType
     {
-        public static readonly SpirvVoid Void = new SpirvVoid();
-        public static readonly SpirvHalf Half = new SpirvHalf();
-        public static readonly SpirvFloat Float = new SpirvFloat();
-        public static readonly SpirvDouble Double = new SpirvDouble();
-        public static readonly SpirvBool Bool = new SpirvBool();
-        public static readonly SpirvInt Int = new SpirvInt();
-        public static readonly SpirvUInt UInt = new SpirvUInt();
-    }
-    public class SpirvFloat: SpirvType
-    {
-        internal SpirvFloat()
-        {
-        }
+        Void,
 
-        public override string ToString()
-        {
-            return "float";
-        }
-    }
-    public class SpirvHalf : SpirvType
-    {
-        internal SpirvHalf()
-        {
-        }
-        public override string ToString()
-        {
-            return "half float";
-        }
-    }
-    public class SpirvDouble : SpirvType
-    {
-        internal SpirvDouble()
-        {
-        }
-        public override string ToString()
-        {
-            return "double";
-        }
-    }
-    public class SpirvVoid : SpirvType
-    {
-        internal SpirvVoid()
-        {
-        }
-        public override string ToString()
-        {
-            return "void";
-        }
-    }
-    public class SpirvBool : SpirvType
-    {
-        internal SpirvBool()
-        {
-        }
-        public override string ToString()
-        {
-            return "bool";
-        }
+        Bool,
 
-    }
-    public class SpirvInt : SpirvType
-    {
-        internal SpirvInt()
-        {
-        }
-        public override string ToString()
-        {
-            return "int";
-        }
+        Half,
+        Float,
+        Double,
+        CustomFloat,
 
-    }
-    public class SpirvUInt : SpirvType
-    {
-        internal SpirvUInt()
-        {
-        }
-        public override string ToString()
-        {
-            return "uint";
-        }
+        SByte,
+        Byte,
+        Short,
+        UShort,
+        Int,
+        UInt,
+        CustomInt,
 
+        Vec2,
+        Vec3,
+        Vec4,
+        Ivec2,
+        Ivec3,
+        Ivec4,
+        Uvec2,
+        Uvec3,
+        Uvec4,
+        Dvec2,
+        Dvec3,
+        Dvec4,
+        Bvec2,
+        Bvec3,
+        Bvec4,
+        CustomVector,
+
+        Mat2,
+        Mat3,
+        Mat4,
+        CustomMatrix,
+
+        CustomArray,
+
+        CustomStruct,
     }
 }

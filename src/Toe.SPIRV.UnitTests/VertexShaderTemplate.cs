@@ -28,7 +28,7 @@ namespace Toe.SPIRV.UnitTests
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("#version 450\r\n\r\nlayout(set = 0, binding = 1) uniform ModelBuffer\r\n{\r\n");
+            this.Write("#version 450\r\n\r\nlayout(set = 0, binding = 0) uniform ModelBuffer\r\n{\r\n");
             
             #line 10 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
@@ -61,8 +61,59 @@ foreach (var field in _fields.Fields)
             
             #line default
             #line hidden
-            this.Write("};\r\n\r\nlayout(location = 0) out vec4 fsin_color;\r\n\r\nvoid main()\r\n{\r\n    fsin_color" +
-                    " = vec4(1,0.5,1,1);\r\n    gl_Position = vec4(0,0,0.5,1);\r\n}");
+            this.Write("};\r\n\r\nlayout(location = 0) out vec4 fsin_color;\r\n\r\nint AppendHash(int hash, int f" +
+                    ")\r\n{\r\n    return hash*397 ^ f;\r\n}\r\nint AppendHash(int hash, float f)\r\n{\r\n    ret" +
+                    "urn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, double f)\r\n{\r\n    ret" +
+                    "urn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, vec2 m)\r\n{\r\n    hash " +
+                    "= AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    return hash;\r\n}" +
+                    "\r\nint AppendHash(int hash, vec3 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    ha" +
+                    "sh = AppendHash(hash, m.y);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, vec4 " +
+                    "m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n   " +
+                    " return hash;\r\n}\r\nint AppendHash(int hash, mat2 m)\r\n{\r\n    hash = AppendHash(has" +
+                    "h, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n\r\n    hash = AppendHash(has" +
+                    "h, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n    return hash;\r\n}\r\nint Ap" +
+                    "pendHash(int hash, mat3 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash =" +
+                    " AppendHash(hash, m[0][1]);\r\n    hash = AppendHash(hash, m[0][2]);\r\n\r\n    hash =" +
+                    " AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n    hash = A" +
+                    "ppendHash(hash, m[1][2]);\r\n\r\n    hash = AppendHash(hash, m[2][0]);\r\n    hash = A" +
+                    "ppendHash(hash, m[2][1]);\r\n    hash = AppendHash(hash, m[2][2]);\r\n    return has" +
+                    "h;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0])" +
+                    ";\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = AppendHash(hash, m[0][2]);\r" +
+                    "\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r" +
+                    "\n    hash = AppendHash(hash, m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n " +
+                    "   hash = AppendHash(hash, m[1][3]);\r\n\r\n    hash = AppendHash(hash, m[2][0]);\r\n " +
+                    "   hash = AppendHash(hash, m[2][1]);\r\n    hash = AppendHash(hash, m[2][2]);\r\n   " +
+                    " hash = AppendHash(hash, m[2][3]);\r\n\r\n    hash = AppendHash(hash, m[3][0]);\r\n   " +
+                    " hash = AppendHash(hash, m[3][1]);\r\n    hash = AppendHash(hash, m[3][2]);\r\n    h" +
+                    "ash = AppendHash(hash, m[3][3]);\r\n    return hash;\r\n}\r\nvoid main()\r\n{\r\n    int h" +
+                    "ash = 0;\r\n");
+            
+            #line 102 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+foreach (var field in _fields.Fields)
+{
+
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, ");
+            
+            #line 106 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 107 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+}
+
+            
+            #line default
+            #line hidden
+            this.Write("    fsin_color = vec4((hash%256),((hash/256)%256),((hash/65536)%256),((hash/16777" +
+                    "216)%256))*(1/255.0);\r\n    gl_Position = vec4(0,0,0.5,1);\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

@@ -1,44 +1,114 @@
 ﻿namespace Toe.SPIRV.Reflection
 {
-    public class SpirvVector : SpirvType
+    public class SpirvVector : SpirvTypeBase
     {
         private readonly uint _componentCount;
-        private readonly SpirvType _componentType;
-        private string _name;
+        private readonly SpirvTypeBase _componentType;
 
-        public SpirvVector(uint componentCount, SpirvType componentType)
+        internal SpirvVector(SpirvTypeBase componentType, uint componentCount):base(GetType(componentType, componentCount))
         {
             _componentCount = componentCount;
             _componentType = componentType;
-            if (_componentType == SpirvType.Float)
+        }
+
+        public uint ComponentCount => _componentCount;
+        public SpirvTypeBase ComponentType => _componentType;
+        public static SpirvType GetType(SpirvTypeBase componentType, uint componentCount)
+        {
+            switch (componentType.Type)
             {
-                _name = "vec" + _componentCount;
+                case SpirvType.Float:
+                {
+                    switch (componentCount)
+                    {
+                        case 2:
+                            return SpirvType.Vec2;
+                        case 3:
+                            return SpirvType.Vec3;
+                        case 4:
+                            return SpirvType.Vec4;
+                    }
+                    break;
+                }
+                case SpirvType.Int:
+                {
+                    switch (componentCount)
+                    {
+                        case 2:
+                            return SpirvType.Ivec2;
+                        case 3:
+                            return SpirvType.Ivec3;
+                        case 4:
+                            return SpirvType.Ivec4;
+                    }
+                    break;
+                }
+                case SpirvType.UInt:
+                {
+                    switch (componentCount)
+                    {
+                        case 2:
+                            return SpirvType.Uvec2;
+                        case 3:
+                            return SpirvType.Uvec3;
+                        case 4:
+                            return SpirvType.Uvec4;
+                    }
+                    break;
+                }
+                case SpirvType.Double:
+                {
+                    switch (componentCount)
+                    {
+                        case 2:
+                            return SpirvType.Dvec2;
+                        case 3:
+                            return SpirvType.Dvec3;
+                        case 4:
+                            return SpirvType.Dvec4;
+                    }
+                    break;
+                }
+                case SpirvType.Bool:
+                {
+                    switch (componentCount)
+                    {
+                        case 2:
+                            return SpirvType.Bvec2;
+                        case 3:
+                            return SpirvType.Bvec3;
+                        case 4:
+                            return SpirvType.Bvec4;
+                    }
+                    break;
+                }
             }
-            else if (_componentType == SpirvType.Bool)
-            {
-                _name = "bvec" + _componentCount;
-            }
-            else if (_componentType == SpirvType.Int)
-            {
-                _name = "ivec" + _componentCount;
-            }
-            else if (_componentType == SpirvType.UInt)
-            {
-                _name = "uvec" + _componentCount;
-            }
-            else if (_componentType == SpirvType.Double)
-            {
-                _name = "dvec" + _componentCount;
-            }
-            else
-            {
-                _name = _componentType.ToString() + _componentCount;
-            }
+
+            return SpirvType.CustomVector;
         }
 
         public override string ToString()
         {
-            return _name;
+            switch (Type)
+            {
+                case SpirvType.Bvec2: return "bvec2";
+                case SpirvType.Bvec3: return "bvec3";
+                case SpirvType.Bvec4: return "bvec4";
+                case SpirvType.Ivec2: return "ivec2";
+                case SpirvType.Ivec3: return "ivec3";
+                case SpirvType.Ivec4: return "ivec4";
+                case SpirvType.Uvec2: return "uvec2";
+                case SpirvType.Uvec3: return "uvec3";
+                case SpirvType.Uvec4: return "uvec4";
+                case SpirvType.Dvec2: return "dvec2";
+                case SpirvType.Dvec3: return "dvec3";
+                case SpirvType.Dvec4: return "dvec4";
+                case SpirvType.Vec2: return "vec2";
+                case SpirvType.Vec3: return "vec3";
+                case SpirvType.Vec4: return "vec4";
+            }
+
+            return _componentType + "vec" + _componentCount;
         }
     }
 }

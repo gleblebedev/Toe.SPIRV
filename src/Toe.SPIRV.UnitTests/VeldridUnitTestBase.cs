@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Veldrid;
 
@@ -15,12 +17,14 @@ namespace Toe.SPIRV.UnitTests
         private Texture _offscreenDepth;
         private Framebuffer _offscreenFB;
         private Texture _stagingTextrue;
+        private IList<IDisposable> _disposables;
 
         public CommandList CommandList => _commandList;
         public GraphicsDevice GraphicsDevice => _graphicsDevice;
         public Framebuffer Framebuffer => _offscreenFB;
         public ResourceFactory ResourceFactory => _resourceFactory;
 
+        public IList<IDisposable> Disposables => _disposables;
         public virtual uint Width
         {
             get { return 1; }
@@ -32,6 +36,7 @@ namespace Toe.SPIRV.UnitTests
         [SetUp]
         public void Setup()
         {
+            _disposables = new List<IDisposable>();
             _graphicsDevice = GraphicsDevice.CreateVulkan(new GraphicsDeviceOptions(true));
             _resourceFactory = _graphicsDevice.ResourceFactory;
             _offscreenColor = _resourceFactory.CreateTexture(TextureDescription.Texture2D(
@@ -47,16 +52,18 @@ namespace Toe.SPIRV.UnitTests
             _commandList = _resourceFactory.CreateCommandList();
         }
 
-        protected void ReadRenderTargetPixel(Action<RgbaByte> callback)
+        protected RgbaByte ReadRenderTargetPixel()
         {
+            RgbaByte pixel = RgbaByte.Black;
             ReadRenderTarget((MappedResource _) =>
             {
                 unsafe
                 {
                     RgbaByte* basePtr = (RgbaByte*) _.Data;
-                    callback(*basePtr);
+                    pixel = * basePtr;
                 }
             });
+            return pixel;
         }
         protected void ReadRenderTarget(Action<MappedResource> callback)
         {
@@ -89,6 +96,12 @@ namespace Toe.SPIRV.UnitTests
             _offscreenDepth?.Dispose();
             _offscreenColor?.Dispose();
             _graphicsDevice?.Dispose();
+            for (var index = _disposables.Count-1; index >= 0 ; --index)
+            {
+                _disposables[index].Dispose();
+            }
+
+            _disposables = null;
         }
 
 

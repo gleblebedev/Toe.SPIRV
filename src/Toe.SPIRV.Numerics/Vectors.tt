@@ -1,0 +1,101 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+namespace Toe.SPIRV.Numerics
+{
+<#
+    Action<string, int, string> genStruct = (string prefix, int components, string component) => {
+    var name = prefix+"Vec"+components;
+#>
+    public partial struct <#=name#>
+    {
+        public <#=component#> X;
+        public <#=component#> Y;
+<#
+    if (components > 2) {
+#>
+        public <#=component#> Z;
+<#
+    }
+    if (components > 3) {
+#>
+        public <#=component#> W;
+<#
+    }
+#>
+        public bool Equals(<#=name#> other)
+        {
+<#
+    if (components > 3) {
+#>
+            return X == other.X && Y == other.Y && Z == other.Z && W == other.W;
+<#
+    }
+    else if (components > 2) {
+#>
+            return X == other.X && Y == other.Y && Z == other.Z;
+<#
+    }
+    else {
+#>
+            return X == other.X && Y == other.Y;
+<#
+    }
+#>
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is <#=name#> other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+<#
+    if (components > 2) {
+#>
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+<#
+    }
+    if (components > 3) {
+#>
+                hashCode = (hashCode * 397) ^ W.GetHashCode();
+<#
+    }
+#>
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(<#=name#> left, <#=name#> right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(<#=name#> left, <#=name#> right)
+        {
+            return !left.Equals(right);
+        }
+    };
+<#
+    };
+    genStruct("B",2,"bool");
+    genStruct("B",3,"bool");
+    genStruct("B",4,"bool");
+    genStruct("I",2,"int");
+    genStruct("I",3,"int");
+    genStruct("I",4,"int");
+    genStruct("D",2,"double");
+    genStruct("D",3,"double");
+    genStruct("D",4,"double");
+    genStruct("U",2,"uint");
+    genStruct("U",3,"uint");
+    genStruct("U",4,"uint");
+#>
+}

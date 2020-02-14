@@ -2,17 +2,21 @@
 {
     public class SpirvStructureField
     {
-        private readonly SpirvType _type;
+        private readonly SpirvTypeBase _type;
         private readonly string _name;
+        private uint? _byteOffset;
 
-        public SpirvStructureField(SpirvType type, string name)
+        public SpirvStructureField(SpirvTypeBase type, string name, uint? byteOffset = null)
         {
             _type = type;
             _name = name;
+            _byteOffset = byteOffset;
         }
 
-        public SpirvType Type => _type;
+        public SpirvTypeBase Type => _type;
+
         public string Name => _name;
+        public uint? ByteOffset => _byteOffset;
 
         public override string ToString()
         {

@@ -22,10 +22,7 @@ namespace Toe.SPIRV.UnitTests
             GraphicsDevice.SubmitCommands(CommandList);
             GraphicsDevice.WaitForIdle();
 
-            ReadRenderTargetPixel(color =>
-            {
-                Assert.AreEqual(rgbaByte, color);
-            });
+            Assert.AreEqual(rgbaByte, ReadRenderTargetPixel());
         }
     }
 }
