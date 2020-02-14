@@ -141,17 +141,17 @@ namespace Toe.SPIRV.Reflection
             switch (columnType.Type)
             {
                 case SpirvType.Vec2:
-                    if (columnCount == 2) return Vec2;
+                    if (columnCount == 2) return Mat2;
                     break;
                 case SpirvType.Vec3:
-                    if (columnCount == 3) return Vec3;
+                    if (columnCount == 3) return Mat3;
                     break;
                 case SpirvType.Vec4:
-                    if (columnCount == 4) return Vec4;
+                    if (columnCount == 4) return Mat4;
                     break;
             }
 
-            return new SpirvVector(columnType, columnCount);
+            return new SpirvMatrix((SpirvVector)columnType, columnCount);
         }
     }
 }

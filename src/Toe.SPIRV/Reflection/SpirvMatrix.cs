@@ -4,17 +4,19 @@
     {
         private readonly SpirvVector _columnType;
         private readonly uint _columnCount;
+        private readonly uint _columnStride;
 
         public SpirvMatrix(SpirvVector columnType, uint columnCount) :base(GetType(columnType, columnCount))
         {
             _columnType = columnType;
             _columnCount = columnCount;
+            _columnStride = _columnType.SizeInBytes * 4;
         }
 
         public SpirvVector ColumnType => _columnType;
         public uint ColumnCount => _columnCount;
 
-        public override uint SizeInBytes => _columnType.SizeInBytes * _columnCount;
+        public override uint SizeInBytes => _columnStride * _columnCount;
         public static SpirvType GetType(SpirvTypeBase columnType, uint columnCount)
         {
             switch (columnType.Type)

@@ -90,10 +90,10 @@ namespace Toe.SPIRV.UnitTests
 
             //structure.EvaluateLayout();
 
-            var hlsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.HLSL, new CrossCompileOptions());
-            var glsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.GLSL, new CrossCompileOptions());
-            var msl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.MSL, new CrossCompileOptions());
-            var essl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.ESSL, new CrossCompileOptions());
+            //var hlsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.HLSL, new CrossCompileOptions());
+            //var glsl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.GLSL, new CrossCompileOptions());
+            //var msl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.MSL, new CrossCompileOptions());
+            //var essl = SpirvCompilation.CompileVertexFragment(vertex.SpirvBytes, fragment.SpirvBytes, CrossCompileTarget.ESSL, new CrossCompileOptions());
 
             var shaders = ResourceFactory.CreateFromSpirv(new ShaderDescription(ShaderStages.Vertex, vertex.SpirvBytes, "main"),
                 new ShaderDescription(ShaderStages.Fragment, fragment.SpirvBytes, "main"));
@@ -149,9 +149,11 @@ namespace Toe.SPIRV.UnitTests
             if (type is SpirvMatrix spirvMatrix)
             {
                 var columnType = spirvMatrix.ColumnType;
+                var elementType = columnType.ComponentType;
+                var columnStride = elementType.SizeInBytes * 4;
                 for (uint i = 0; i < spirvMatrix.ColumnCount; ++i)
                 {
-                    PopulateBuffer(bytes, offset + columnType.SizeInBytes * i, columnType, ref counter, ref hash);
+                    PopulateBuffer(bytes, offset + columnStride * i, columnType, ref counter, ref hash);
                 }
                 return;
             }
