@@ -97,8 +97,9 @@ namespace Toe.SPIRV.Reflection
             var length = instruction.Length.Instruction as OpConstant;
             var lengthType = _types[length.IdResultType.Id];
             SpirvArray array;
+            var arrayStrideValue = instruction.FindDecoration<Decoration.ArrayStride>()?.ArrayStrideValue;
             if (lengthType == SpirvTypeBase.UInt)
-                array = new SpirvArray(_types[instruction.ElementType.Id], length.Value.Value.ToUInt32());
+                array = new SpirvArray(_types[instruction.ElementType.Id], length.Value.Value.ToUInt32(), arrayStrideValue);
             else
                 throw new NotImplementedException();
             AddType(instruction, array);
@@ -136,8 +137,17 @@ namespace Toe.SPIRV.Reflection
                 {
                     name = instruction.MemberNames[index].Name;
                 }
-                var byteOffset = instruction.FindMemberDecoration<Decoration.Offset>((uint)index)?.ByteOffset ?? 0;
-                structure.Fields.Add(new SpirvStructureField(_types[instructionMemberType.Id], name, byteOffset));
+                var byteOffset = instruction.FindMemberDecoration<Decoration.Offset>((uint)index)?.ByteOffset;
+                var matrixStride = instruction.FindMemberDecoration<Decoration.MatrixStride>((uint)index)?.MatrixStrideValue;
+                bool rowMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.RowMajor) != null;
+                bool colMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.ColMajor) != null;
+                var matrixOrientation = MatrixOrientation.Undefined;
+                if (rowMajor && !colMajor)
+                    matrixOrientation = MatrixOrientation.RowMajor;
+                else if (!rowMajor && colMajor)
+                    matrixOrientation = MatrixOrientation.ColMajor;
+                var spirvStructureField = new SpirvStructureField(_types[instructionMemberType.Id], name, byteOffset, matrixStride, matrixOrientation);
+                structure.Fields.Add(spirvStructureField);
             }
         }
     }

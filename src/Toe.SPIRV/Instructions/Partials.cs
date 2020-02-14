@@ -41,6 +41,10 @@ namespace Toe.SPIRV.Instructions
         {
             return MemberDecorations.Where(_=>_.Member == member).Select(_=>_.Decoration).OfType<T>().FirstOrDefault();
         }
+        public Decoration FindMemberDecoration(uint member, Decoration.Enumerant id)
+        {
+            return MemberDecorations.Where(_ => _.Member == member && _.Decoration.Value == id).Select(_ => _.Decoration).FirstOrDefault();
+        }
         public override uint SizeInWords
         {
             get
