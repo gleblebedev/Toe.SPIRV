@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Toe.SPIRV.Reflection;
 
 namespace Toe.SPIRV.UnitTests
 {
     partial class VertexShaderTemplate
     {
-        protected readonly TestFieldOffsets.FieldSet _fields;
+        protected readonly SpirvStructure _fields;
 
-        public VertexShaderTemplate(TestFieldOffsets.FieldSet fields)
+        public VertexShaderTemplate(SpirvStructure fields)
         {
             _fields = fields;
         }

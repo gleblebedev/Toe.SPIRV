@@ -6,12 +6,41 @@
 <#@ import namespace="Toe.SPIRV.Reflection" #>
 #version 450
 
-layout(set = 0, binding = 0) uniform ModelBuffer
+<#
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStructure)_.Type).Distinct())
+{
+#>
+struct <#=structDef.Name#>
+{
+<#
+    foreach (var field in structDef.Fields)
+    {
+        if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+        {
+            var arrayType = (SpirvArrayBase)field.Type;
+#>
+    <#=arrayType.ElementType #> <#=field.Name #> [<#=arrayType.Length #>];
+<#
+        }
+        else
+        {
+#>
+    <#=field.Type #> <#=field.Name #>;
+<#
+        }
+    };
+#>
+}; // end of <#=structDef.Name#>
+<#
+};
+#>
+
+layout(set = 0, binding = 0) uniform <#=_fields.Name#>
 {
 <#
 foreach (var field in _fields.Fields)
 {
-if (field.Type.Type == SpirvType.CustomArray)
+if (field.Type.TypeCategory == SpirvTypeCategory.Array)
 {
 var arrayType = (SpirvArrayBase)field.Type;
 #>
@@ -130,13 +159,43 @@ int AppendHash(int hash, mat4 m)
     hash = AppendHash(hash, m[3][3]);
     return hash;
 }
+<#
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStructure)_.Type).Distinct())
+{
+#>
+int AppendHash(int hash, <#=structDef.Name#> m)
+{
+<#
+    foreach (var field in structDef.Fields)
+    {
+        if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+        {
+            var arrayType = (SpirvArrayBase)field.Type;
+#>
+    hash = AppendHash(hash, m.<#=field.Name #>[0]);
+<#
+        }
+        else
+        {
+#>
+    hash = AppendHash(hash, m.<#=field.Name #>);
+<#
+        }
+    };
+#>
+    return hash;
+} // end of <#=structDef.Name#>
+<#
+};
+#>
+
 void main()
 {
     int hash = 0;
 <#
 foreach (var field in _fields.Fields)
 {
-if (field.Type.Type == SpirvType.CustomArray)
+if (field.Type.TypeCategory == SpirvTypeCategory.Array)
 {
 var arrayType = (SpirvArrayBase)field.Type;
 #>

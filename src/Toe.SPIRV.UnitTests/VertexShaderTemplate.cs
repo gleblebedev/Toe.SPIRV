@@ -29,13 +29,122 @@ namespace Toe.SPIRV.UnitTests
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("#version 450\r\n\r\nlayout(set = 0, binding = 0) uniform ModelBuffer\r\n{\r\n");
+            this.Write("#version 450\r\n\r\n");
             
-            #line 11 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 9 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStructure)_.Type).Distinct())
+{
+
+            
+            #line default
+            #line hidden
+            this.Write("struct ");
+            
+            #line 13 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n");
+            
+            #line 15 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+    foreach (var field in structDef.Fields)
+    {
+        if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+        {
+            var arrayType = (SpirvArrayBase)field.Type;
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 22 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.ElementType));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 22 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" [");
+            
+            #line 22 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.Length));
+            
+            #line default
+            #line hidden
+            this.Write("];\r\n");
+            
+            #line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 28 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Type));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 28 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 29 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+        }
+    };
+
+            
+            #line default
+            #line hidden
+            this.Write("}; // end of ");
+            
+            #line 33 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 34 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+};
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\nlayout(set = 0, binding = 0) uniform ");
+            
+            #line 38 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_fields.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n");
+            
+            #line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 foreach (var field in _fields.Fields)
 {
-if (field.Type.Type == SpirvType.CustomArray)
+if (field.Type.TypeCategory == SpirvTypeCategory.Array)
 {
 var arrayType = (SpirvArrayBase)field.Type;
 
@@ -44,28 +153,28 @@ var arrayType = (SpirvArrayBase)field.Type;
             #line hidden
             this.Write("    ");
             
-            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.ElementType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write(" [");
             
-            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.Length));
             
             #line default
             #line hidden
             this.Write("];\r\n");
             
-            #line 19 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 }
 else
@@ -76,21 +185,21 @@ else
             #line hidden
             this.Write("    ");
             
-            #line 24 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 53 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Type));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 24 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 53 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 25 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 54 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 }
 }
@@ -130,13 +239,94 @@ else
                     "ash = AppendHash(hash, m[2][2]);\r\n    hash = AppendHash(hash, m[2][3]);\r\n\r\n    h" +
                     "ash = AppendHash(hash, m[3][0]);\r\n    hash = AppendHash(hash, m[3][1]);\r\n    has" +
                     "h = AppendHash(hash, m[3][2]);\r\n    hash = AppendHash(hash, m[3][3]);\r\n    retur" +
-                    "n hash;\r\n}\r\nvoid main()\r\n{\r\n    int hash = 0;\r\n");
+                    "n hash;\r\n}\r\n");
             
-            #line 136 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStructure)_.Type).Distinct())
+{
+
+            
+            #line default
+            #line hidden
+            this.Write("int AppendHash(int hash, ");
+            
+            #line 166 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" m)\r\n{\r\n");
+            
+            #line 168 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+    foreach (var field in structDef.Fields)
+    {
+        if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+        {
+            var arrayType = (SpirvArrayBase)field.Type;
+
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, m.");
+            
+            #line 175 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write("[0]);\r\n");
+            
+            #line 176 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, m.");
+            
+            #line 181 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 182 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+        }
+    };
+
+            
+            #line default
+            #line hidden
+            this.Write("    return hash;\r\n} // end of ");
+            
+            #line 187 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 188 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+};
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\nvoid main()\r\n{\r\n    int hash = 0;\r\n");
+            
+            #line 195 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 foreach (var field in _fields.Fields)
 {
-if (field.Type.Type == SpirvType.CustomArray)
+if (field.Type.TypeCategory == SpirvTypeCategory.Array)
 {
 var arrayType = (SpirvArrayBase)field.Type;
 
@@ -145,14 +335,14 @@ var arrayType = (SpirvArrayBase)field.Type;
             #line hidden
             this.Write("    hash = AppendHash(hash, ");
             
-            #line 143 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 202 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write("[0]);\r\n");
             
-            #line 144 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 203 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 }
 else
@@ -163,14 +353,14 @@ else
             #line hidden
             this.Write("    hash = AppendHash(hash, ");
             
-            #line 149 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 208 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 150 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 209 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 }
 }

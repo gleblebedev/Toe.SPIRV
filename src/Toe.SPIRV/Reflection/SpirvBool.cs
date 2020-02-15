@@ -2,7 +2,7 @@
 {
     public class SpirvBool : SpirvTypeBase
     {
-        internal SpirvBool():base(SpirvType.Bool)
+        internal SpirvBool():base(SpirvTypeCategory.Bool)
         {
         }
         public override string ToString()

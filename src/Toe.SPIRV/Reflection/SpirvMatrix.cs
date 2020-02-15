@@ -14,7 +14,7 @@ namespace Toe.SPIRV.Reflection
         }
         
         public override SpirvVector ColumnType => _columnType;
-        public override uint ColumnStride => _columnType.Alignment / _columnType.ComponentType.SizeInBytes;
+        public override uint ColumnStride => _columnType.Alignment;
         public override MatrixOrientation MatrixOrientation => MatrixOrientation.ColMajor;
         public override uint ColumnCount => _columnCount;
     }

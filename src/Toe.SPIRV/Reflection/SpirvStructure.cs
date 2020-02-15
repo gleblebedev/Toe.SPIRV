@@ -1,36 +1,96 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Toe.SPIRV.Reflection
 {
     public class SpirvStructure: SpirvTypeBase
     {
+        private readonly string _name;
         private uint? _sizeInBytes;
-        public SpirvStructure():base(SpirvType.CustomStruct)
+        private readonly List<SpirvStructureField> _fields = new List<SpirvStructureField>();
+        private uint? _alignment;
+
+        public SpirvStructure(string name, params SpirvStructureField[] fields):base(SpirvTypeCategory.Struct)
         {
+            _name = name;
+            _fields.AddRange(fields);
+            if (_fields.Any(_ => _.ByteOffset == null))
+            {
+                UpdateFieldOffsets();
+            }
+            else
+            {
+                Console.WriteLine("skip UpdateFieldOffsets");
+            }
+            EvaluateSizeAndAlignment();
         }
 
-        public IList<SpirvStructureField> Fields { get; } = new List<SpirvStructureField>();
+        public override uint Alignment 
+        {
+            get
+            {
+                if (!_alignment.HasValue)
+                    throw new InvalidOperationException("Please execute EvaluateLayout() to calculate property value");
+                return _alignment.Value;
+            }
+        }
+    
+        public string Name => _name;
+        public IReadOnlyList<SpirvStructureField> Fields => _fields;
 
-        public void EvaluateLayout()
+        private void UpdateFieldOffsets()
+        {
+            uint offset = 0;
+            foreach (var field in _fields)
+            {
+                var alignment = field.Type.Alignment;
+                var pos = SpirvUtils.RoundUp(offset, alignment);
+                field.ByteOffset = pos;
+                offset = pos + field.Type.SizeInBytes;
+            }
+        }
+        private void EvaluateSizeAndAlignment()
         {
             if (Fields.Count == 0)
             {
                 _sizeInBytes = 0;
+                _alignment = 0;
                 return;
             }
-
-            var last = Fields[Fields.Count-1];
-            _sizeInBytes = last.ByteOffset + last.Type.SizeInBytes;
+            uint size = 0;
+            uint maxAlignment = 16;
+            foreach (var field in _fields)
+            {
+                var alignment = field.Type.Alignment;
+                if (maxAlignment < alignment)
+                    maxAlignment = alignment;
+                var end = field.ByteOffset.Value + field.Type.SizeInBytes;
+                if (end > size)
+                    size = end;
+            }
+            _alignment = maxAlignment;
+            _sizeInBytes = SpirvUtils.RoundUp(size, maxAlignment);
         }
+        //public void EvaluateLayout()
+        //{
+        //    UpdateFieldOffsets();
+        //    EvaluateSizeAndAlignment();
+        //}
 
         public override uint SizeInBytes
         {
             get
             {
-                if (!_sizeInBytes.HasValue)
-                    EvaluateLayout();
+                if (!_alignment.HasValue)
+                    throw new InvalidOperationException("Please execute EvaluateLayout() to calculate property value");
                 return _sizeInBytes.Value;
             }
+        }
+
+        public override string ToString()
+        {
+            return _name ?? base.ToString();
         }
     }
 }

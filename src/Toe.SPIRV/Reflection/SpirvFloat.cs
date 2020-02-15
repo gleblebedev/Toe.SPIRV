@@ -11,18 +11,18 @@
 
         public override uint SizeInBytes => _width / 8;
 
-        public static SpirvType GetType(uint width)
+        public static SpirvTypeCategory GetType(uint width)
         {
             switch (width)
             {
                 case 16:
-                    return SpirvType.Half;
+                    return SpirvTypeCategory.Half;
                 case 32:
-                    return SpirvType.Float;
+                    return SpirvTypeCategory.Float;
                 case 64:
-                    return SpirvType.Double;
+                    return SpirvTypeCategory.Double;
                 default:
-                    return SpirvType.CustomFloat;
+                    return SpirvTypeCategory.CustomFloat;
             }
         }
 

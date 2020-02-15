@@ -4,7 +4,7 @@ namespace Toe.SPIRV.Reflection
 {
     public abstract class SpirvTypeBase
     {
-        private readonly SpirvType _type;
+        private readonly SpirvTypeCategory _type;
 
         public static readonly SpirvVoid Void;
         public static readonly SpirvFloat Half;
@@ -70,17 +70,17 @@ namespace Toe.SPIRV.Reflection
             Mat2Base = new SpirvMatrix(Vec2, 2);
             Mat3Base = new SpirvMatrix(Vec3, 3);
             Mat4Base = new SpirvMatrix(Vec4, 4);
-            Mat2 = new SpirvMatrixLayout(Mat2Base, MatrixOrientation.ColMajor, 4);
-            Mat3 = new SpirvMatrixLayout(Mat3Base, MatrixOrientation.ColMajor, 4);
-            Mat4 = new SpirvMatrixLayout(Mat4Base, MatrixOrientation.ColMajor, 4);
+            Mat2 = new SpirvMatrixLayout(Mat2Base, MatrixOrientation.ColMajor, 16);
+            Mat3 = new SpirvMatrixLayout(Mat3Base, MatrixOrientation.ColMajor, 16);
+            Mat4 = new SpirvMatrixLayout(Mat4Base, MatrixOrientation.ColMajor, 16);
         }
 
-        protected SpirvTypeBase(SpirvType type)
+        protected SpirvTypeBase(SpirvTypeCategory type)
         {
             _type = type;
         }
 
-        public SpirvType Type => _type;
+        public SpirvTypeCategory TypeCategory => _type;
 
         public virtual uint SizeInBytes { get { throw new NotImplementedException(); } }
 
@@ -88,9 +88,9 @@ namespace Toe.SPIRV.Reflection
 
         public static SpirvVector ResolveVector(SpirvTypeBase componentType, uint componentCount)
         {
-            switch (componentType.Type)
+            switch (componentType.TypeCategory)
             {
-                case SpirvType.Float:
+                case SpirvTypeCategory.Float:
                 {
                     switch (componentCount)
                     {
@@ -100,7 +100,7 @@ namespace Toe.SPIRV.Reflection
                     }
                     break;
                 }
-                case SpirvType.Int:
+                case SpirvTypeCategory.Int:
                 {
                     switch (componentCount)
                     {
@@ -110,7 +110,7 @@ namespace Toe.SPIRV.Reflection
                     }
                     break;
                 }
-                case SpirvType.UInt:
+                case SpirvTypeCategory.UInt:
                 {
                     switch (componentCount)
                     {
@@ -120,7 +120,7 @@ namespace Toe.SPIRV.Reflection
                     }
                     break;
                 }
-                case SpirvType.Bool:
+                case SpirvTypeCategory.Bool:
                 {
                     switch (componentCount)
                     {
@@ -130,7 +130,7 @@ namespace Toe.SPIRV.Reflection
                     }
                     break;
                 }
-                case SpirvType.Double:
+                case SpirvTypeCategory.Double:
                 {
                     switch (componentCount)
                     {
@@ -146,15 +146,15 @@ namespace Toe.SPIRV.Reflection
 
         public static SpirvTypeBase ResolveMatrix(SpirvTypeBase columnType, uint columnCount)
         {
-            switch (columnType.Type)
+            switch (columnType.TypeCategory)
             {
-                case SpirvType.Vec2:
+                case SpirvTypeCategory.Vec2:
                     if (columnCount == 2) return Mat2;
                     break;
-                case SpirvType.Vec3:
+                case SpirvTypeCategory.Vec3:
                     if (columnCount == 3) return Mat3;
                     break;
-                case SpirvType.Vec4:
+                case SpirvTypeCategory.Vec4:
                     if (columnCount == 4) return Mat4;
                     break;
             }

@@ -129,9 +129,7 @@ namespace Toe.SPIRV.Reflection
 
         private void ParseStructure(OpTypeStruct instruction)
         {
-            var structure = new SpirvStructure();
-            AddType(instruction, structure);
-            _structures.Add(structure);
+            var fields = new SpirvStructureField[instruction.MemberTypes.Count];
             for (var index = 0; index < instruction.MemberTypes.Count; index++)
             {
                 var instructionMemberType = instruction.MemberTypes[index];
@@ -142,12 +140,12 @@ namespace Toe.SPIRV.Reflection
                 }
                 var byteOffset = instruction.FindMemberDecoration<Decoration.Offset>((uint)index)?.ByteOffset;
                 var spirvTypeBase = _types[instructionMemberType.Id];
-                if (spirvTypeBase.Type == SpirvType.CustomArray)
+                if (spirvTypeBase.TypeCategory == SpirvTypeCategory.Array)
                 {
                     var arrayStride = instruction.FindMemberDecoration<Decoration.ArrayStride>((uint)index)?.ArrayStrideValue;
                     spirvTypeBase = new SpirvArrayLayout((SpirvArrayBase)spirvTypeBase, arrayStride);
                 }
-                else if (spirvTypeBase.Type == SpirvType.CustomMatrix)
+                else if (spirvTypeBase.TypeCategory == SpirvTypeCategory.Matrix)
                 {
                     var matrixStride = instruction.FindMemberDecoration<Decoration.MatrixStride>((uint)index)?.MatrixStrideValue;
                     bool rowMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.RowMajor) != null;
@@ -161,9 +159,12 @@ namespace Toe.SPIRV.Reflection
                         matrixOrientation = MatrixOrientation.ColMajor;
                     spirvTypeBase = new SpirvMatrixLayout((SpirvMatrixBase)spirvTypeBase, matrixOrientation, matrixStride);
                 }
-                var spirvStructureField = new SpirvStructureField(spirvTypeBase, name, byteOffset);
-                structure.Fields.Add(spirvStructureField);
+                fields[index] = new SpirvStructureField(spirvTypeBase, name, byteOffset);
             }
+            Array.Sort(fields);
+            var structure = new SpirvStructure(instruction.OpName?.Name, fields);
+            AddType(instruction, structure);
+            _structures.Add(structure);
         }
     }
 }

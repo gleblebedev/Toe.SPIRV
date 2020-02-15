@@ -36,7 +36,7 @@ namespace Toe.SPIRV.Reflection
             return !Equals(left, right);
         }
 
-        public SpirvMatrixBase():base(SpirvType.CustomMatrix)
+        public SpirvMatrixBase():base(SpirvTypeCategory.Matrix)
         {
         }
 

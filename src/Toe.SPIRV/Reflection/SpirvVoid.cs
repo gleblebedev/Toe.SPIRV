@@ -2,7 +2,7 @@
 {
     public class SpirvVoid : SpirvTypeBase
     {
-        internal SpirvVoid():base(SpirvType.Void)
+        internal SpirvVoid():base(SpirvTypeCategory.Void)
         {
         }
 

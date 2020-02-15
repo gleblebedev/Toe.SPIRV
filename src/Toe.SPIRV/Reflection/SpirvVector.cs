@@ -32,99 +32,99 @@
 
         public override uint SizeInBytes => _componentType.SizeInBytes * _componentCount;
 
-        public static SpirvType GetType(SpirvTypeBase componentType, uint componentCount)
+        public static SpirvTypeCategory GetType(SpirvTypeBase componentType, uint componentCount)
         {
-            switch (componentType.Type)
+            switch (componentType.TypeCategory)
             {
-                case SpirvType.Float:
+                case SpirvTypeCategory.Float:
                 {
                     switch (componentCount)
                     {
                         case 2:
-                            return SpirvType.Vec2;
+                            return SpirvTypeCategory.Vec2;
                         case 3:
-                            return SpirvType.Vec3;
+                            return SpirvTypeCategory.Vec3;
                         case 4:
-                            return SpirvType.Vec4;
+                            return SpirvTypeCategory.Vec4;
                     }
                     break;
                 }
-                case SpirvType.Int:
+                case SpirvTypeCategory.Int:
                 {
                     switch (componentCount)
                     {
                         case 2:
-                            return SpirvType.Ivec2;
+                            return SpirvTypeCategory.Ivec2;
                         case 3:
-                            return SpirvType.Ivec3;
+                            return SpirvTypeCategory.Ivec3;
                         case 4:
-                            return SpirvType.Ivec4;
+                            return SpirvTypeCategory.Ivec4;
                     }
                     break;
                 }
-                case SpirvType.UInt:
+                case SpirvTypeCategory.UInt:
                 {
                     switch (componentCount)
                     {
                         case 2:
-                            return SpirvType.Uvec2;
+                            return SpirvTypeCategory.Uvec2;
                         case 3:
-                            return SpirvType.Uvec3;
+                            return SpirvTypeCategory.Uvec3;
                         case 4:
-                            return SpirvType.Uvec4;
+                            return SpirvTypeCategory.Uvec4;
                     }
                     break;
                 }
-                case SpirvType.Double:
+                case SpirvTypeCategory.Double:
                 {
                     switch (componentCount)
                     {
                         case 2:
-                            return SpirvType.Dvec2;
+                            return SpirvTypeCategory.Dvec2;
                         case 3:
-                            return SpirvType.Dvec3;
+                            return SpirvTypeCategory.Dvec3;
                         case 4:
-                            return SpirvType.Dvec4;
+                            return SpirvTypeCategory.Dvec4;
                     }
                     break;
                 }
-                case SpirvType.Bool:
+                case SpirvTypeCategory.Bool:
                 {
                     switch (componentCount)
                     {
                         case 2:
-                            return SpirvType.Bvec2;
+                            return SpirvTypeCategory.Bvec2;
                         case 3:
-                            return SpirvType.Bvec3;
+                            return SpirvTypeCategory.Bvec3;
                         case 4:
-                            return SpirvType.Bvec4;
+                            return SpirvTypeCategory.Bvec4;
                     }
                     break;
                 }
             }
 
-            return SpirvType.CustomVector;
+            return SpirvTypeCategory.CustomVector;
         }
 
         public override string ToString()
         {
-            switch (Type)
+            switch (TypeCategory)
             {
-                case SpirvType.Bvec2: return "bvec2";
-                case SpirvType.Bvec3: return "bvec3";
-                case SpirvType.Bvec4: return "bvec4";
-                case SpirvType.Ivec2: return "ivec2";
-                case SpirvType.Ivec3: return "ivec3";
-                case SpirvType.Ivec4: return "ivec4";
-                case SpirvType.Uvec2: return "uvec2";
-                case SpirvType.Uvec3: return "uvec3";
-                case SpirvType.Uvec4: return "uvec4";
-                case SpirvType.Dvec2: return "dvec2";
-                case SpirvType.Dvec3: return "dvec3";
-                case SpirvType.Dvec4: return "dvec4";
-                case SpirvType.Vec2: return "vec2";
-                case SpirvType.Vec3: return "vec3";
-                case SpirvType.Vec4: return "vec4";
+                case SpirvTypeCategory.Bvec2: return "bvec2";
+                case SpirvTypeCategory.Bvec3: return "bvec3";
+                case SpirvTypeCategory.Bvec4: return "bvec4";
+                case SpirvTypeCategory.Ivec2: return "ivec2";
+                case SpirvTypeCategory.Ivec3: return "ivec3";
+                case SpirvTypeCategory.Ivec4: return "ivec4";
+                case SpirvTypeCategory.Uvec2: return "uvec2";
+                case SpirvTypeCategory.Uvec3: return "uvec3";
+                case SpirvTypeCategory.Uvec4: return "uvec4";
+                case SpirvTypeCategory.Dvec2: return "dvec2";
+                case SpirvTypeCategory.Dvec3: return "dvec3";
+                case SpirvTypeCategory.Dvec4: return "dvec4";
+                case SpirvTypeCategory.Vec2: return "vec2";
+                case SpirvTypeCategory.Vec3: return "vec3";
+                case SpirvTypeCategory.Vec4: return "vec4";
             }
 
             return _componentType + "vec" + _componentCount;

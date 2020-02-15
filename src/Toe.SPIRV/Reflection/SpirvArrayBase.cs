@@ -35,7 +35,7 @@ namespace Toe.SPIRV.Reflection
             return !Equals(left, right);
         }
 
-        public SpirvArrayBase():base(SpirvType.CustomArray)
+        public SpirvArrayBase():base(SpirvTypeCategory.Array)
         {
             
         }
@@ -47,7 +47,7 @@ namespace Toe.SPIRV.Reflection
 
         public override uint SizeInBytes => Alignment * Length;
 
-        public override uint Alignment => 16*((ElementType.Alignment+15)/16);
+        public override uint Alignment => SpirvUtils.RoundUp(ElementType.Alignment,16);
 
         public override string ToString()
         {

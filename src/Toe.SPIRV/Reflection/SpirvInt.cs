@@ -13,36 +13,36 @@
 
         public override uint SizeInBytes => _width / 8;
 
-        public static SpirvType GetType(uint width, bool signed)
+        public static SpirvTypeCategory GetType(uint width, bool signed)
         {
             switch (width)
             {
                 case 8:
-                    return signed ? SpirvType.SByte : SpirvType.Byte;
+                    return signed ? SpirvTypeCategory.SByte : SpirvTypeCategory.Byte;
                 case 16:
-                    return signed ? SpirvType.Short : SpirvType.UShort;
+                    return signed ? SpirvTypeCategory.Short : SpirvTypeCategory.UShort;
                 case 32:
-                    return signed ? SpirvType.Int : SpirvType.UInt;
+                    return signed ? SpirvTypeCategory.Int : SpirvTypeCategory.UInt;
                 default:
-                    return SpirvType.CustomInt;
+                    return SpirvTypeCategory.CustomInt;
             }
         }
 
         public override string ToString()
         {
-            switch (Type)
+            switch (TypeCategory)
             {
-                case SpirvType.SByte:
+                case SpirvTypeCategory.SByte:
                     return "sbyte";
-                case SpirvType.Byte:
+                case SpirvTypeCategory.Byte:
                     return "byte";
-                case SpirvType.Short:
+                case SpirvTypeCategory.Short:
                     return "short";
-                case SpirvType.UShort:
+                case SpirvTypeCategory.UShort:
                     return "ushort";
-                case SpirvType.Int:
+                case SpirvTypeCategory.Int:
                     return "int";
-                case SpirvType.UInt:
+                case SpirvTypeCategory.UInt:
                     return "uint";
                 default:
                     return (_signed ?"u":"")+"int"+_width;

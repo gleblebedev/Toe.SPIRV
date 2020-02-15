@@ -1,6 +1,6 @@
 ﻿namespace Toe.SPIRV.Reflection
 {
-    public enum SpirvType
+    public enum SpirvTypeCategory
     {
         Void,
 
@@ -36,10 +36,10 @@
         Bvec4,
         CustomVector,
 
-        CustomMatrix,
+        Matrix,
 
-        CustomArray,
+        Array,
 
-        CustomStruct,
+        Struct,
     }
 }

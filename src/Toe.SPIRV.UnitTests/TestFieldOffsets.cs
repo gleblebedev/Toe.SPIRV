@@ -14,23 +14,6 @@ namespace Toe.SPIRV.UnitTests
     [TestFixture]
     public class TestFieldOffsets: VeldridUnitTestBase
     {
-        public class FieldSet
-        {
-            private readonly SpirvStructureField[] _fields;
-
-            public IReadOnlyList<SpirvStructureField> Fields => _fields;
-
-            public FieldSet(params SpirvStructureField[] fields)
-            {
-                _fields = fields;
-            }
-
-            public override string ToString()
-            {
-                return string.Join(", ", _fields.Select(_=>_.ToString()));
-            }
-        }
-
         static TestFieldOffsets()
         {
             var floatField = new SpirvStructureField(SpirvTypeBase.Float, "floatField");
@@ -47,22 +30,46 @@ namespace Toe.SPIRV.UnitTests
             var mat3Field = new SpirvStructureField(SpirvTypeBase.Mat3, "mat3Field");
             var mat4Field = new SpirvStructureField(SpirvTypeBase.Mat4, "mat4Field");
             marker = new SpirvStructureField(SpirvTypeBase.Float, "marker");
-
+            
             WellKnownTypes = new[] { floatField, doubleField, intField, uintField, vec2Field, vec3Field, vec4Field, dvec2Field, dvec3Field, dvec4Field, mat2Field, mat3Field, mat4Field };
         }
 
         private static SpirvStructureField marker;
         public static SpirvStructureField[] WellKnownTypes { get; }
 
-        public static IEnumerable<FieldSet> FieldPermutations
+        public static IEnumerable<SpirvStructure> FieldPermutations
         {
             get
             {
-                var endMarker = new SpirvStructureField(SpirvTypeBase.Float, "endMarker");
-                foreach (var field in WellKnownTypes)
+                for (var index0 = 0; index0 < WellKnownTypes.Length; index0++)
                 {
-                    yield return new FieldSet(field, endMarker);
+                    for (var index1 = 0; index1 < WellKnownTypes.Length; index1++)
+                    {
+                        for (var index2 = 0; index2 < WellKnownTypes.Length; index2++)
+                        {
+                            if (index0 != index1 && index0 != index2 && index1 != index2)
+                            {
+                                var structure = new SpirvStructure("testStruct",
+                                    new SpirvStructureField(WellKnownTypes[index0].Type, WellKnownTypes[index0].Name),
+                                    new SpirvStructureField(WellKnownTypes[index1].Type, WellKnownTypes[index1].Name),
+                                    new SpirvStructureField(WellKnownTypes[index2].Type, WellKnownTypes[index2].Name));
+                                var spirvStructureField = new SpirvStructureField(structure, string.Join("_", structure.Fields.Select(_ => _.Name)));
+                                var endMarker = new SpirvStructureField(SpirvTypeBase.Float, "endMarker");
+                                var modelStruct = new SpirvStructure("test_" + spirvStructureField.Name, marker, spirvStructureField, endMarker);
+                                yield return modelStruct;
+                            }
+                        }
+                    }
                 }
+                //var structure = new SpirvStructure("testStruct",
+                //    new SpirvStructureField(WellKnownTypes[0].Type, WellKnownTypes[0].Name),
+                //    new SpirvStructureField(WellKnownTypes[1].Type, WellKnownTypes[1].Name),
+                //    new SpirvStructureField(WellKnownTypes[7].Type, WellKnownTypes[7].Name));
+                //var spirvStructureField = new SpirvStructureField(structure, string.Join("_", structure.Fields.Select(_ => _.Name)));
+                //var endMarker = new SpirvStructureField(SpirvTypeBase.Float, "endMarker");
+
+                //var modelStruct = new SpirvStructure("test_" + spirvStructureField.Name, marker, spirvStructureField, endMarker);
+                //yield return modelStruct;
             }
         }
 
@@ -70,7 +77,7 @@ namespace Toe.SPIRV.UnitTests
         [TestCaseSource(nameof(WellKnownTypes))]
         public void TestAlignment(SpirvStructureField field)
         {
-            (var shaderInstructions, var shaders) = CompileShaderForFieldSet(new FieldSet(marker, field));
+            (var shaderInstructions, var shaders) = CompileShaderForFieldSet(new SpirvStructure("ModelBuffer", marker, field));
             var shaderReflection = new ShaderReflection(shaderInstructions);
             var structure = shaderReflection.Structures[0];
             Assert.AreEqual(structure.Fields[1].ByteOffset, structure.Fields[1].Type.Alignment);
@@ -81,7 +88,7 @@ namespace Toe.SPIRV.UnitTests
         public void TestArrayAlignment(SpirvStructureField field)
         {
             var originalArrayType = new SpirvArray(field.Type,2);
-            (var shaderInstructions, var shaders) = CompileShaderForFieldSet(new FieldSet(marker, new SpirvStructureField(originalArrayType, "testArray")));
+            (var shaderInstructions, var shaders) = CompileShaderForFieldSet(new SpirvStructure("ModelBuffer", marker, new SpirvStructureField(originalArrayType, "testArray")));
             var shaderReflection = new ShaderReflection(shaderInstructions);
             var structure = shaderReflection.Structures[0];
             var spirvStructureField = structure.Fields[1];
@@ -92,12 +99,13 @@ namespace Toe.SPIRV.UnitTests
 
         [Test]
         [TestCaseSource(nameof(FieldPermutations))]
-        public void TestPermutation(FieldSet fieldSet)
+        public void TestPermutation(SpirvStructure fieldSet)
         {
             (var shaderInstructions, var shaders) = CompileShaderForFieldSet(fieldSet);
             var shaderReflection = new ShaderReflection(shaderInstructions);
-            var structure = shaderReflection.Structures[0];
-            structure.EvaluateLayout();
+            var structure = shaderReflection.Structures.Where(_=>_.Name == fieldSet.Name).First();
+
+            CompareStructureLayout(structure, fieldSet);
 
             var bufferSize = structure.SizeInBytes;
             bufferSize = ((bufferSize + 15) / 16) * 16;
@@ -107,10 +115,7 @@ namespace Toe.SPIRV.UnitTests
             var bytes = new byte[bufferSize];
             int counter = 1;
             int hash = 0;
-            foreach (var field in structure.Fields)
-            {
-                PopulateBuffer(bytes, field, ref counter, ref hash);
-            }
+            PopulateBuffer(bytes, 0, structure, ref counter, ref hash);
             GraphicsDevice.UpdateBuffer(buffer, 0, bytes);
 
             //structure.EvaluateLayout();
@@ -156,7 +161,22 @@ namespace Toe.SPIRV.UnitTests
             Assert.AreEqual(expected, actual);
         }
 
-        private (Shader, Veldrid.Shader[]) CompileShaderForFieldSet(FieldSet fieldSet)
+        private void CompareStructureLayout(SpirvStructure expected, SpirvStructure actual)
+        {
+            Assert.AreEqual(expected.Fields.Count, actual.Fields.Count);
+            for (var index = 0; index < expected.Fields.Count; index++)
+            {
+                var actualField = actual.Fields[index];
+                var expectedField = expected.Fields[index];
+                Assert.AreEqual(expectedField.ByteOffset, actualField.ByteOffset);
+                if (expectedField.Type.TypeCategory == SpirvTypeCategory.Struct)
+                {
+                    CompareStructureLayout((SpirvStructure)expectedField.Type, (SpirvStructure)actualField.Type);
+                }
+            }
+        }
+
+        private (Shader, Veldrid.Shader[]) CompileShaderForFieldSet(SpirvStructure fieldSet)
         {
             var vertexShaderText = new VertexShaderTemplate(fieldSet).TransformText();
             var vertex = Veldrid.SPIRV.SpirvCompilation.CompileGlslToSpirv(vertexShaderText, "vertex.glsl", ShaderStages.Vertex,
@@ -176,6 +196,14 @@ namespace Toe.SPIRV.UnitTests
 
         private void PopulateBuffer(byte[] bytes, uint offset, SpirvTypeBase type, ref int counter, ref int hash)
         {
+            if (type is SpirvStructure spirvStruct)
+            {
+                foreach (var field in spirvStruct.Fields)
+                {
+                    PopulateBuffer(bytes, offset + field.ByteOffset.Value, field.Type, ref counter, ref hash);
+                }
+                return;
+            }
             if (type is SpirvVector spirvVector)
             {
                 for (uint i = 0; i < spirvVector.ComponentCount; ++i)
@@ -195,26 +223,26 @@ namespace Toe.SPIRV.UnitTests
                 }
                 return;
             }
-            switch (type.Type)
+            switch (type.TypeCategory)
             {
-                case SpirvType.Void:
+                case SpirvTypeCategory.Void:
                     return;
-                case SpirvType.Int:
+                case SpirvTypeCategory.Int:
                     ++counter;
                     MemoryMarshal.Cast<byte, int>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = counter;
                     AppendHash(counter, ref hash);
                     return;
-                case SpirvType.UInt:
+                case SpirvTypeCategory.UInt:
                     ++counter;
                     MemoryMarshal.Cast<byte, uint>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = (uint)counter;
                     AppendHash(counter, ref hash);
                     return;
-                case SpirvType.Float:
+                case SpirvTypeCategory.Float:
                     ++counter;
                     MemoryMarshal.Cast<byte, float>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = counter;
                     AppendHash(counter, ref hash);
                     return;
-                case SpirvType.Double:
+                case SpirvTypeCategory.Double:
                     ++counter;
                     MemoryMarshal.Cast<byte, double>(bytes.AsSpan((int)offset, (int)type.SizeInBytes))[0] = counter;
                     AppendHash(counter, ref hash);
@@ -227,11 +255,6 @@ namespace Toe.SPIRV.UnitTests
         private static void AppendHash(int counter, ref int hash)
         {
             hash = (hash * 397) ^ counter;
-        }
-
-        private void PopulateBuffer(byte[] bytes, SpirvStructureField field, ref int counter, ref int hash)
-        {
-            PopulateBuffer(bytes, field.ByteOffset.Value, field.Type, ref counter, ref hash);
         }
     }
 }
