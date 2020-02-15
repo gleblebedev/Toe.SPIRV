@@ -14,6 +14,22 @@
         public uint ComponentCount => _componentCount;
         public SpirvTypeBase ComponentType => _componentType;
 
+        public override uint Alignment
+        {
+            get
+            {
+                switch (_componentCount)
+                {
+                    case 3:
+                        return _componentType.SizeInBytes * 4;
+                    case 2:
+                    case 4:
+                    default:
+                        return _componentType.SizeInBytes * _componentCount;
+                }
+            }
+        }
+
         public override uint SizeInBytes => _componentType.SizeInBytes * _componentCount;
 
         public static SpirvType GetType(SpirvTypeBase componentType, uint componentCount)

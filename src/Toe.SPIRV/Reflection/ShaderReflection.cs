@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -96,10 +97,12 @@ namespace Toe.SPIRV.Reflection
         {
             var length = instruction.Length.Instruction as OpConstant;
             var lengthType = _types[length.IdResultType.Id];
-            SpirvArray array;
+            SpirvArrayLayout array;
             var arrayStrideValue = instruction.FindDecoration<Decoration.ArrayStride>()?.ArrayStrideValue;
             if (lengthType == SpirvTypeBase.UInt)
-                array = new SpirvArray(_types[instruction.ElementType.Id], length.Value.Value.ToUInt32(), arrayStrideValue);
+                array = new SpirvArrayLayout(new SpirvArray(_types[instruction.ElementType.Id], length.Value.Value.ToUInt32()), arrayStrideValue);
+            else if (lengthType == SpirvTypeBase.Int)
+                array = new SpirvArrayLayout(new SpirvArray(_types[instruction.ElementType.Id], (uint)length.Value.Value.ToInt32()), arrayStrideValue);
             else
                 throw new NotImplementedException();
             AddType(instruction, array);
@@ -138,15 +141,27 @@ namespace Toe.SPIRV.Reflection
                     name = instruction.MemberNames[index].Name;
                 }
                 var byteOffset = instruction.FindMemberDecoration<Decoration.Offset>((uint)index)?.ByteOffset;
-                var matrixStride = instruction.FindMemberDecoration<Decoration.MatrixStride>((uint)index)?.MatrixStrideValue;
-                bool rowMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.RowMajor) != null;
-                bool colMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.ColMajor) != null;
-                var matrixOrientation = MatrixOrientation.Undefined;
-                if (rowMajor && !colMajor)
-                    matrixOrientation = MatrixOrientation.RowMajor;
-                else if (!rowMajor && colMajor)
-                    matrixOrientation = MatrixOrientation.ColMajor;
-                var spirvStructureField = new SpirvStructureField(_types[instructionMemberType.Id], name, byteOffset, matrixStride, matrixOrientation);
+                var spirvTypeBase = _types[instructionMemberType.Id];
+                if (spirvTypeBase.Type == SpirvType.CustomArray)
+                {
+                    var arrayStride = instruction.FindMemberDecoration<Decoration.ArrayStride>((uint)index)?.ArrayStrideValue;
+                    spirvTypeBase = new SpirvArrayLayout((SpirvArrayBase)spirvTypeBase, arrayStride);
+                }
+                else if (spirvTypeBase.Type == SpirvType.CustomMatrix)
+                {
+                    var matrixStride = instruction.FindMemberDecoration<Decoration.MatrixStride>((uint)index)?.MatrixStrideValue;
+                    bool rowMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.RowMajor) != null;
+                    bool colMajor = instruction.FindMemberDecoration((uint)index, Decoration.Enumerant.ColMajor) != null;
+                    var matrixOrientation = MatrixOrientation.ColMajor;
+                    if (rowMajor && colMajor)
+                        throw new InvalidDataException("Matrix can't have both ColMajor and RowMajor declarations");
+                    if (rowMajor)
+                        matrixOrientation = MatrixOrientation.RowMajor;
+                    else if (colMajor)
+                        matrixOrientation = MatrixOrientation.ColMajor;
+                    spirvTypeBase = new SpirvMatrixLayout((SpirvMatrixBase)spirvTypeBase, matrixOrientation, matrixStride);
+                }
+                var spirvStructureField = new SpirvStructureField(spirvTypeBase, name, byteOffset);
                 structure.Fields.Add(spirvStructureField);
             }
         }

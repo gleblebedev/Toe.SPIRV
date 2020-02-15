@@ -2,8 +2,7 @@
 {
     public enum MatrixOrientation
     {
-        Undefined,
+        ColMajor,
         RowMajor,
-        ColMajor
     }
 }

@@ -1,24 +1,19 @@
 ﻿namespace Toe.SPIRV.Reflection
 {
-    public class SpirvArray : SpirvTypeBase
+    public class SpirvArray : SpirvArrayBase
     {
         private readonly SpirvTypeBase _elementType;
         private readonly uint _length;
-        private readonly uint? _arrayStride;
 
-        public SpirvArray(SpirvTypeBase elementType, uint length, uint? arrayStride):base(SpirvType.CustomArray)
+        public SpirvArray(SpirvTypeBase elementType, uint length)
         {
             _elementType = elementType;
             _length = length;
-            _arrayStride = arrayStride;
         }
-        public uint ArrayStride => _arrayStride ?? _elementType.SizeInBytes;
+        public override uint ArrayStride => _elementType.Alignment;
 
-        public override uint SizeInBytes => (_arrayStride ??_elementType.SizeInBytes) * _length;
+        public override SpirvTypeBase ElementType => _elementType;
 
-        public override string ToString()
-        {
-            return $"{_elementType}[{_length}]";
-        }
+        public override uint Length => _length;
     }
 }

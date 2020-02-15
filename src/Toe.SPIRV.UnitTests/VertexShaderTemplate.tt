@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.Reflection" #>
 #version 450
 
 layout(set = 0, binding = 0) uniform ModelBuffer
@@ -10,9 +11,19 @@ layout(set = 0, binding = 0) uniform ModelBuffer
 <#
 foreach (var field in _fields.Fields)
 {
+if (field.Type.Type == SpirvType.CustomArray)
+{
+var arrayType = (SpirvArrayBase)field.Type;
+#>
+    <#=arrayType.ElementType #> <#=field.Name #> [<#=arrayType.Length #>];
+<#
+}
+else
+{
 #>
     <#=field.Type #> <#=field.Name #>;
 <#
+}
 }
 #>
 };
@@ -45,6 +56,27 @@ int AppendHash(int hash, vec3 m)
     return hash;
 }
 int AppendHash(int hash, vec4 m)
+{
+    hash = AppendHash(hash, m.x);
+    hash = AppendHash(hash, m.y);
+    hash = AppendHash(hash, m.z);
+    hash = AppendHash(hash, m.w);
+    return hash;
+}
+int AppendHash(int hash, dvec2 m)
+{
+    hash = AppendHash(hash, m.x);
+    hash = AppendHash(hash, m.y);
+    return hash;
+}
+int AppendHash(int hash, dvec3 m)
+{
+    hash = AppendHash(hash, m.x);
+    hash = AppendHash(hash, m.y);
+    hash = AppendHash(hash, m.z);
+    return hash;
+}
+int AppendHash(int hash, dvec4 m)
 {
     hash = AppendHash(hash, m.x);
     hash = AppendHash(hash, m.y);
@@ -104,9 +136,19 @@ void main()
 <#
 foreach (var field in _fields.Fields)
 {
+if (field.Type.Type == SpirvType.CustomArray)
+{
+var arrayType = (SpirvArrayBase)field.Type;
+#>
+    hash = AppendHash(hash, <#=field.Name #>[0]);
+<#
+}
+else
+{
 #>
     hash = AppendHash(hash, <#=field.Name #>);
 <#
+}
 }
 #>
     fsin_color = vec4((hash%256),((hash/256)%256),((hash/65536)%256),((hash/16777216)%256))*(1/255.0);

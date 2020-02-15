@@ -36,9 +36,6 @@
         Bvec4,
         CustomVector,
 
-        Mat2,
-        Mat3,
-        Mat4,
         CustomMatrix,
 
         CustomArray,

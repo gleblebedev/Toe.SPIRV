@@ -34,7 +34,7 @@ namespace Toe.SPIRV.UnitTests
             get { return 1; }
         }
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
             _disposables = new List<IDisposable>();
             _graphicsDevice = GraphicsDevice.CreateVulkan(new GraphicsDeviceOptions(true));
@@ -88,7 +88,7 @@ namespace Toe.SPIRV.UnitTests
         }
 
         [TearDown]
-        public void TearDown()
+        public virtual void TearDown()
         {
             for (var index = _disposables.Count - 1; index >= 0; --index)
             {

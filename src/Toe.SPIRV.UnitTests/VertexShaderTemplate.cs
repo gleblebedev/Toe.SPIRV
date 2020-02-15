@@ -12,6 +12,7 @@ namespace Toe.SPIRV.UnitTests
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using Toe.SPIRV.Reflection;
     using System;
     
     /// <summary>
@@ -30,9 +31,44 @@ namespace Toe.SPIRV.UnitTests
         {
             this.Write("#version 450\r\n\r\nlayout(set = 0, binding = 0) uniform ModelBuffer\r\n{\r\n");
             
-            #line 10 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 11 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 foreach (var field in _fields.Fields)
+{
+if (field.Type.Type == SpirvType.CustomArray)
+{
+var arrayType = (SpirvArrayBase)field.Type;
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.ElementType));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" [");
+            
+            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.Length));
+            
+            #line default
+            #line hidden
+            this.Write("];\r\n");
+            
+            #line 19 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+}
+else
 {
 
             
@@ -40,22 +76,23 @@ foreach (var field in _fields.Fields)
             #line hidden
             this.Write("    ");
             
-            #line 14 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 24 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Type));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 14 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 24 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 15 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 25 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
+}
 }
 
             
@@ -70,28 +107,55 @@ foreach (var field in _fields.Fields)
                     "hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    return has" +
                     "h;\r\n}\r\nint AppendHash(int hash, vec4 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n " +
                     "   hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    hash = " +
-                    "AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat2 m)\r\n{" +
-                    "\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n" +
-                    "    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n  " +
-                    "  return hash;\r\n}\r\nint AppendHash(int hash, mat3 m)\r\n{\r\n    hash = AppendHash(ha" +
-                    "sh, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = AppendHash(hash" +
-                    ", m[0][2]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash" +
-                    ", m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n\r\n    hash = AppendHash(hash" +
-                    ", m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = AppendHash(hash, " +
-                    "m[2][2]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r\n    hash = " +
-                    "AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = Ap" +
-                    "pendHash(hash, m[0][2]);\r\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n    hash = Ap" +
-                    "pendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n    hash = Appe" +
-                    "ndHash(hash, m[1][2]);\r\n    hash = AppendHash(hash, m[1][3]);\r\n\r\n    hash = Appe" +
-                    "ndHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = Append" +
-                    "Hash(hash, m[2][2]);\r\n    hash = AppendHash(hash, m[2][3]);\r\n\r\n    hash = Append" +
-                    "Hash(hash, m[3][0]);\r\n    hash = AppendHash(hash, m[3][1]);\r\n    hash = AppendHa" +
-                    "sh(hash, m[3][2]);\r\n    hash = AppendHash(hash, m[3][3]);\r\n    return hash;\r\n}\r\n" +
-                    "void main()\r\n{\r\n    int hash = 0;\r\n");
+                    "AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, dvec2 m)\r\n" +
+                    "{\r\n    hash = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    ret" +
+                    "urn hash;\r\n}\r\nint AppendHash(int hash, dvec3 m)\r\n{\r\n    hash = AppendHash(hash, " +
+                    "m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n   " +
+                    " return hash;\r\n}\r\nint AppendHash(int hash, dvec4 m)\r\n{\r\n    hash = AppendHash(ha" +
+                    "sh, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r" +
+                    "\n    hash = AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash" +
+                    ", mat2 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash," +
+                    " m[0][1]);\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m" +
+                    "[1][1]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat3 m)\r\n{\r\n    hash = A" +
+                    "ppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = App" +
+                    "endHash(hash, m[0][2]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = App" +
+                    "endHash(hash, m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n\r\n    hash = App" +
+                    "endHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = Appen" +
+                    "dHash(hash, m[2][2]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r" +
+                    "\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n " +
+                    "   hash = AppendHash(hash, m[0][2]);\r\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n " +
+                    "   hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n   " +
+                    " hash = AppendHash(hash, m[1][2]);\r\n    hash = AppendHash(hash, m[1][3]);\r\n\r\n   " +
+                    " hash = AppendHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    h" +
+                    "ash = AppendHash(hash, m[2][2]);\r\n    hash = AppendHash(hash, m[2][3]);\r\n\r\n    h" +
+                    "ash = AppendHash(hash, m[3][0]);\r\n    hash = AppendHash(hash, m[3][1]);\r\n    has" +
+                    "h = AppendHash(hash, m[3][2]);\r\n    hash = AppendHash(hash, m[3][3]);\r\n    retur" +
+                    "n hash;\r\n}\r\nvoid main()\r\n{\r\n    int hash = 0;\r\n");
             
-            #line 104 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 136 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
 foreach (var field in _fields.Fields)
+{
+if (field.Type.Type == SpirvType.CustomArray)
+{
+var arrayType = (SpirvArrayBase)field.Type;
+
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, ");
+            
+            #line 143 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write("[0]);\r\n");
+            
+            #line 144 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+}
+else
 {
 
             
@@ -99,15 +163,16 @@ foreach (var field in _fields.Fields)
             #line hidden
             this.Write("    hash = AppendHash(hash, ");
             
-            #line 108 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 149 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 109 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            #line 150 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
+}
 }
 
             
