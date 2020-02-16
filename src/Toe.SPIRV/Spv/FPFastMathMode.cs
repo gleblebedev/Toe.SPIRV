@@ -5,6 +5,11 @@ namespace Toe.SPIRV.Spv
 {
     public class FPFastMathMode : ValueEnum
     {
+        public FPFastMathMode(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
@@ -24,11 +29,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             Fast = 0x0010
-        }
-
-        public FPFastMathMode(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

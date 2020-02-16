@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class ImageFormat : ValueEnum
     {
+        public ImageFormat(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             Unknown = 0,
@@ -124,12 +129,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.StorageImageExtendedFormats)]
             R8ui = 39
-        }
-
-
-        public ImageFormat(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

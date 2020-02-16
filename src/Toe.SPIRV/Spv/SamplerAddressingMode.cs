@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class SamplerAddressingMode : ValueEnum
     {
+        public SamplerAddressingMode(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -20,12 +25,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             RepeatMirrored = 4
-        }
-
-
-        public SamplerAddressingMode(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

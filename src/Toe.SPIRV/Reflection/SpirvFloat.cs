@@ -1,28 +1,32 @@
 ﻿namespace Toe.SPIRV.Reflection
 {
-    public class SpirvFloat: SpirvTypeBase
+    public class SpirvFloat : SpirvTypeBase
     {
         private readonly uint _width;
 
-        internal SpirvFloat(uint width):base(GetType(width))
+        internal SpirvFloat(uint width) : base(SpirvTypeCategory.Float)
         {
             _width = width;
+            FloatType = GetType(_width);
         }
 
         public override uint SizeInBytes => _width / 8;
+        public uint Width => _width;
 
-        public static SpirvTypeCategory GetType(uint width)
+        public FloatType FloatType { get; }
+
+        public static FloatType GetType(uint width)
         {
             switch (width)
             {
                 case 16:
-                    return SpirvTypeCategory.Half;
+                    return FloatType.Half;
                 case 32:
-                    return SpirvTypeCategory.Float;
+                    return FloatType.Float;
                 case 64:
-                    return SpirvTypeCategory.Double;
+                    return FloatType.Double;
                 default:
-                    return SpirvTypeCategory.CustomFloat;
+                    return FloatType.Unknown;
             }
         }
 
@@ -35,7 +39,7 @@
                 case 64:
                     return "double";
                 default:
-                    return "float"+_width;
+                    return "float" + _width;
             }
         }
     }

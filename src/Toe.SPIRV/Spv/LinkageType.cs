@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class LinkageType : ValueEnum
     {
+        public LinkageType(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Linkage)]
@@ -11,12 +16,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Linkage)]
             Import = 1
-        }
-
-
-        public LinkageType(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

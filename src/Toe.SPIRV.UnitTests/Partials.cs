@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Toe.SPIRV.Reflection;
+﻿using Toe.SPIRV.Reflection;
 
 namespace Toe.SPIRV.UnitTests
 {

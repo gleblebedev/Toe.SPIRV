@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class AddressingModel : ValueEnum
     {
+        public AddressingModel(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             Logical = 0,
@@ -13,12 +18,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Addresses)]
             Physical64 = 2
-        }
-
-
-        public AddressingModel(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

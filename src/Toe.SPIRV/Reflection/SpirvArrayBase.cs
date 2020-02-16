@@ -4,12 +4,28 @@ namespace Toe.SPIRV.Reflection
 {
     public abstract class SpirvArrayBase : SpirvTypeBase, IEquatable<SpirvArrayBase>
     {
-        public bool Equals(SpirvArrayBase other)
+        public SpirvArrayBase() : base(SpirvTypeCategory.Array)
         {
-            return (ElementType == other.ElementType
-                    && Length == other.Length
-                    && ArrayStride == other.ArrayStride
-                    && Alignment == other.Alignment);
+        }
+
+        public abstract uint ArrayStride { get; }
+
+        public abstract uint Length { get; }
+
+        public abstract SpirvTypeBase ElementType { get; }
+
+        public override uint SizeInBytes => Alignment * Length;
+
+        public override uint Alignment => SpirvUtils.RoundUp(ElementType.Alignment, 16);
+
+        public static bool operator ==(SpirvArrayBase left, SpirvArrayBase right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(SpirvArrayBase left, SpirvArrayBase right)
+        {
+            return !Equals(left, right);
         }
 
         public override bool Equals(object obj)
@@ -25,34 +41,17 @@ namespace Toe.SPIRV.Reflection
             return hashCode;
         }
 
-        public static bool operator ==(SpirvArrayBase left, SpirvArrayBase right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(SpirvArrayBase left, SpirvArrayBase right)
-        {
-            return !Equals(left, right);
-        }
-
-        public SpirvArrayBase():base(SpirvTypeCategory.Array)
-        {
-            
-        }
-        public abstract uint ArrayStride { get; }
-
-        public abstract uint Length { get; }
-
-        public abstract SpirvTypeBase ElementType { get; }
-
-        public override uint SizeInBytes => Alignment * Length;
-
-        public override uint Alignment => SpirvUtils.RoundUp(ElementType.Alignment,16);
-
         public override string ToString()
         {
             return $"{ElementType}[{Length}]";
         }
 
+        public bool Equals(SpirvArrayBase other)
+        {
+            return ElementType == other.ElementType
+                   && Length == other.Length
+                   && ArrayStride == other.ArrayStride
+                   && Alignment == other.Alignment;
+        }
     }
 }

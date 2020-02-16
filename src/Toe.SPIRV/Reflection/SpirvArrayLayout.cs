@@ -11,11 +11,10 @@
             _arrayStride = arrayStride;
         }
 
-        public override uint ArrayStride => _arrayStride ?? _arrayType.ElementType.Alignment;
+        public override uint ArrayStride => _arrayStride ?? _arrayType.ArrayStride;
 
         public override uint Length => _arrayType.Length;
 
         public override SpirvTypeBase ElementType => _arrayType.ElementType;
-
     }
 }

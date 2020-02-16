@@ -5,6 +5,11 @@ namespace Toe.SPIRV.Spv
 {
     public class FunctionControl : ValueEnum
     {
+        public FunctionControl(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
@@ -13,11 +18,6 @@ namespace Toe.SPIRV.Spv
             DontInline = 0x0002,
             Pure = 0x0004,
             Const = 0x0008
-        }
-
-        public FunctionControl(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

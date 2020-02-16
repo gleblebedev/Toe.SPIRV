@@ -3,13 +3,13 @@
     public class SpirvMatrixLayout : SpirvMatrixBase
     {
         private readonly SpirvMatrixBase _matrixType;
-        private readonly MatrixOrientation _matrixOrientation;
         private readonly uint? _columnStride;
 
-        public SpirvMatrixLayout(SpirvMatrixBase matrixType, MatrixOrientation matrixOrientation = MatrixOrientation.ColMajor, uint? columnStride = null)
+        public SpirvMatrixLayout(SpirvMatrixBase matrixType,
+            MatrixOrientation matrixOrientation = MatrixOrientation.ColMajor, uint? columnStride = null)
         {
             _matrixType = matrixType;
-            _matrixOrientation = matrixOrientation;
+            MatrixOrientation = matrixOrientation;
             _columnStride = columnStride;
         }
 
@@ -17,6 +17,6 @@
         public override uint ColumnStride => _columnStride ?? _matrixType.ColumnStride;
         public override uint ColumnCount => _matrixType.ColumnCount;
 
-        public override MatrixOrientation MatrixOrientation => _matrixOrientation;
+        public override MatrixOrientation MatrixOrientation { get; }
     }
 }

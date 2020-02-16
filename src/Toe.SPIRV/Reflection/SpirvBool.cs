@@ -2,13 +2,13 @@
 {
     public class SpirvBool : SpirvTypeBase
     {
-        internal SpirvBool():base(SpirvTypeCategory.Bool)
+        internal SpirvBool() : base(SpirvTypeCategory.Bool)
         {
         }
+
         public override string ToString()
         {
             return "bool";
         }
-
     }
 }

@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class Scope : ValueEnum
     {
+        public Scope(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             CrossDevice = 0,
@@ -11,12 +16,6 @@ namespace Toe.SPIRV.Spv
             Workgroup = 2,
             Subgroup = 3,
             Invocation = 4
-        }
-
-
-        public Scope(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

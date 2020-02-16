@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class ExecutionModel : ValueEnum
     {
+        public ExecutionModel(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Shader)]
@@ -26,12 +31,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             Kernel = 6
-        }
-
-
-        public ExecutionModel(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

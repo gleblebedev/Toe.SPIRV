@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class FunctionParameterAttribute : ValueEnum
     {
+        public FunctionParameterAttribute(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -29,12 +34,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             NoReadWrite = 7
-        }
-
-
-        public FunctionParameterAttribute(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

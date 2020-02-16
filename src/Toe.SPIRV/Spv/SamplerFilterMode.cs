@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class SamplerFilterMode : ValueEnum
     {
+        public SamplerFilterMode(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -11,12 +16,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             Linear = 1
-        }
-
-
-        public SamplerFilterMode(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

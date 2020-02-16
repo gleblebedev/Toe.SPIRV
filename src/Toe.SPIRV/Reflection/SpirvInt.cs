@@ -5,47 +5,53 @@
         private readonly uint _width;
         private readonly bool _signed;
 
-        internal SpirvInt(uint width, bool signed) : base(GetType(width, signed))
+        internal SpirvInt(uint width, bool signed) : base(SpirvTypeCategory.Int)
         {
             _width = width;
             _signed = signed;
+            IntType = GetType(_width, _signed);
         }
 
         public override uint SizeInBytes => _width / 8;
 
-        public static SpirvTypeCategory GetType(uint width, bool signed)
+        public uint Width => _width;
+        public bool Signed => _signed;
+
+        public IntType IntType { get; }
+
+        public static IntType GetType(uint width, bool signed)
         {
             switch (width)
             {
                 case 8:
-                    return signed ? SpirvTypeCategory.SByte : SpirvTypeCategory.Byte;
+                    return signed ? IntType.SByte : IntType.Byte;
                 case 16:
-                    return signed ? SpirvTypeCategory.Short : SpirvTypeCategory.UShort;
+                    return signed ? IntType.Short : IntType.UShort;
                 case 32:
-                    return signed ? SpirvTypeCategory.Int : SpirvTypeCategory.UInt;
+                    return signed ? IntType.Int : IntType.UInt;
                 default:
-                    return SpirvTypeCategory.CustomInt;
+                    return IntType.Unknown;
             }
         }
 
         public override string ToString()
         {
-            switch (TypeCategory)
+            switch (IntType)
             {
-                case SpirvTypeCategory.SByte:
+                case IntType.SByte:
                     return "sbyte";
-                case SpirvTypeCategory.Byte:
+                case IntType.Byte:
                     return "byte";
-                case SpirvTypeCategory.Short:
+                case IntType.Short:
                     return "short";
-                case SpirvTypeCategory.UShort:
+                case IntType.UShort:
                     return "ushort";
-                case SpirvTypeCategory.Int:
+                case IntType.Int:
                     return "int";
-                case SpirvTypeCategory.UInt:
+                case IntType.UInt:
                     return "uint";
                 default:
-                    return (_signed ?"u":"")+"int"+_width;
+                    return (_signed ? "u" : "") + "int" + _width;
             }
         }
     }

@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class MemoryModel : ValueEnum
     {
+        public MemoryModel(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Shader)]
@@ -14,12 +19,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             OpenCL = 2
-        }
-
-
-        public MemoryModel(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

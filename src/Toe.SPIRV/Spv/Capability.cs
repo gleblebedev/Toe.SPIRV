@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class Capability : ValueEnum
     {
+        public Capability(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             Matrix = 0,
@@ -99,12 +104,6 @@ namespace Toe.SPIRV.Spv
             SubgroupShuffleINTEL = 5568,
             SubgroupBufferBlockIOINTEL = 5569,
             SubgroupImageBlockIOINTEL = 5570
-        }
-
-
-        public Capability(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

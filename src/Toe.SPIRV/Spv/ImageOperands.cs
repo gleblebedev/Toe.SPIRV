@@ -5,6 +5,11 @@ namespace Toe.SPIRV.Spv
 {
     public class ImageOperands : ValueEnum
     {
+        public ImageOperands(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
@@ -23,11 +28,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.MinLod)]
             MinLod = 0x0080
-        }
-
-        public ImageOperands(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

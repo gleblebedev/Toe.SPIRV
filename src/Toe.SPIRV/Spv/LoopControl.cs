@@ -5,17 +5,17 @@ namespace Toe.SPIRV.Spv
 {
     public class LoopControl : ValueEnum
     {
+        public LoopControl(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
             None = 0x0000,
             Unroll = 0x0001,
             DontUnroll = 0x0002
-        }
-
-        public LoopControl(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

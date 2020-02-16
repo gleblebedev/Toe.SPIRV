@@ -80,16 +80,6 @@ namespace Toe.SPIRV
             return shader;
         }
 
-        private IEnumerable<OpVariable> GetAllVariablesByStorageClass(StorageClass.Enumerant storageClass)
-        {
-            foreach (var instruction in Instructions)
-            {
-                var variable = instruction as OpVariable;
-                if (variable != null && variable.StorageClass.Value == storageClass)
-                    yield return variable;
-            }
-        }
-
         public static Shader Parse(BinaryReader reader, uint wordCount)
         {
             return Parse(new WordReader(reader, new InstructionRegistry()), wordCount);
@@ -114,6 +104,16 @@ namespace Toe.SPIRV
         public override string ToString()
         {
             return string.Join(Environment.NewLine, Instructions);
+        }
+
+        private IEnumerable<OpVariable> GetAllVariablesByStorageClass(StorageClass.Enumerant storageClass)
+        {
+            foreach (var instruction in Instructions)
+            {
+                var variable = instruction as OpVariable;
+                if (variable != null && variable.StorageClass.Value == storageClass)
+                    yield return variable;
+            }
         }
     }
 }

@@ -5,6 +5,11 @@ namespace Toe.SPIRV.Spv
 {
     public class MemoryAccess : ValueEnum
     {
+        public MemoryAccess(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
@@ -12,11 +17,6 @@ namespace Toe.SPIRV.Spv
             Volatile = 0x0001,
             Aligned = 0x0002,
             Nontemporal = 0x0004
-        }
-
-        public MemoryAccess(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class StorageClass : ValueEnum
     {
+        public StorageClass(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             UniformConstant = 0,
@@ -33,12 +38,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Shader)]
             StorageBuffer = 12
-        }
-
-
-        public StorageClass(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

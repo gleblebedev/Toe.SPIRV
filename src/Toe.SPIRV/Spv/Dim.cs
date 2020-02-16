@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class Dim : ValueEnum
     {
+        public Dim(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Sampled1D)]
@@ -22,12 +27,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.InputAttachment)]
             SubpassData = 6
-        }
-
-
-        public Dim(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

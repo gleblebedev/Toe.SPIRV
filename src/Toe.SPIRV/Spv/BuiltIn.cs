@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class BuiltIn : ValueEnum
     {
+        public BuiltIn(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Shader)]
@@ -171,12 +176,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.PerViewAttributesNV)]
             ViewportMaskPerViewNV = 5262
-        }
-
-
-        public BuiltIn(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

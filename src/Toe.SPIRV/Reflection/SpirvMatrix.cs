@@ -1,21 +1,18 @@
-﻿using Toe.SPIRV.Spv;
-
-namespace Toe.SPIRV.Reflection
+﻿namespace Toe.SPIRV.Reflection
 {
     public class SpirvMatrix : SpirvMatrixBase
     {
         private readonly SpirvVector _columnType;
-        private readonly uint _columnCount;
 
         public SpirvMatrix(SpirvVector columnType, uint columnCount)
         {
             _columnType = columnType;
-            _columnCount = columnCount;
+            ColumnCount = columnCount;
         }
-        
+
         public override SpirvVector ColumnType => _columnType;
         public override uint ColumnStride => _columnType.Alignment;
         public override MatrixOrientation MatrixOrientation => MatrixOrientation.ColMajor;
-        public override uint ColumnCount => _columnCount;
+        public override uint ColumnCount { get; }
     }
 }

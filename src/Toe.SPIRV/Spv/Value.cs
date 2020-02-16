@@ -15,6 +15,40 @@ namespace Toe.SPIRV.Spv
 
         public TypeInstruction Type { get; }
 
+        public override string ToString()
+        {
+            if (Type.OpCode == Op.OpTypeBool) return ToBool().ToString();
+            if (Type.OpCode == Op.OpTypeFloat)
+            {
+                if (Type.SizeInWords == 1) return ToFloat().ToString();
+                if (Type.SizeInWords == 2) return ToDouble().ToString();
+            }
+            else if (Type.OpCode == Op.OpTypeInt)
+            {
+                var op = (OpTypeInt) Type;
+                if (op.Signedness == 0)
+                {
+                    if (op.Width == 8) return ToInt8().ToString();
+                    if (op.Width == 16) return ToInt16().ToString();
+                    if (op.Width == 32) return ToInt32().ToString();
+                    if (op.Width == 64) return ToInt64().ToString();
+                }
+                else
+                {
+                    if (op.Width == 8) return ToUInt8().ToString();
+                    if (op.Width == 16) return ToUInt16().ToString();
+                    if (op.Width == 32) return ToUInt32().ToString();
+                    if (op.Width == 64) return ToUInt64().ToString();
+                }
+            }
+            else if (Type.OpCode == Op.OpTypeVector)
+            {
+                var op = (OpTypeVector) Type;
+            }
+
+            return Type.OpCode + "(" + BitConverter.ToString(Bytes) + ")";
+        }
+
         public float ToFloat(uint offset = 0)
         {
             return BitConverter.ToSingle(Bytes, (int) offset);
@@ -68,40 +102,6 @@ namespace Toe.SPIRV.Spv
         public byte ToUInt8(uint offset = 0)
         {
             return Bytes[(int) offset];
-        }
-
-        public override string ToString()
-        {
-            if (Type.OpCode == Op.OpTypeBool) return ToBool().ToString();
-            if (Type.OpCode == Op.OpTypeFloat)
-            {
-                if (Type.SizeInWords == 1) return ToFloat().ToString();
-                if (Type.SizeInWords == 2) return ToDouble().ToString();
-            }
-            else if (Type.OpCode == Op.OpTypeInt)
-            {
-                var op = (OpTypeInt) Type;
-                if (op.Signedness == 0)
-                {
-                    if (op.Width == 8) return ToInt8().ToString();
-                    if (op.Width == 16) return ToInt16().ToString();
-                    if (op.Width == 32) return ToInt32().ToString();
-                    if (op.Width == 64) return ToInt64().ToString();
-                }
-                else
-                {
-                    if (op.Width == 8) return ToUInt8().ToString();
-                    if (op.Width == 16) return ToUInt16().ToString();
-                    if (op.Width == 32) return ToUInt32().ToString();
-                    if (op.Width == 64) return ToUInt64().ToString();
-                }
-            }
-            else if (Type.OpCode == Op.OpTypeVector)
-            {
-                var op = (OpTypeVector) Type;
-            }
-
-            return Type.OpCode + "(" + BitConverter.ToString(Bytes) + ")";
         }
     }
 }

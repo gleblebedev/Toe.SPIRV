@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class FPRoundingMode : ValueEnum
     {
+        public FPRoundingMode(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -33,12 +38,6 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.StoragePushConstant16)]
             [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTN = 3
-        }
-
-
-        public FPRoundingMode(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

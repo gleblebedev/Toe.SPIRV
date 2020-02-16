@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class ImageChannelOrder : ValueEnum
     {
+        public ImageChannelOrder(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -65,12 +70,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             ABGR = 19
-        }
-
-
-        public ImageChannelOrder(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

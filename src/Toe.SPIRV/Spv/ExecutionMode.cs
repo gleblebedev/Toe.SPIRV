@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class ExecutionMode : ValueEnum
     {
+        public ExecutionMode(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Geometry)]
@@ -102,11 +107,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.StencilExportEXT)]
             StencilRefReplacingEXT = 5027
-        }
-
-        public ExecutionMode(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

@@ -6,7 +6,6 @@ namespace Toe.SPIRV.UnitTests
     [TestFixture]
     public class ClearColorTests : VeldridUnitTestBase
     {
- 
         [Test]
         [TestCase(10, 20, 30, 40)]
         [TestCase(0, 0, 0, 0)]
@@ -16,7 +15,8 @@ namespace Toe.SPIRV.UnitTests
             CommandList.Begin();
             CommandList.SetFramebuffer(Framebuffer);
             CommandList.SetFullViewports();
-            CommandList.ClearColorTarget(0, new RgbaFloat(rgbaByte.R / 255.0f, rgbaByte.G / 255.0f, rgbaByte.B / 255.0f, rgbaByte.A / 255.0f));
+            CommandList.ClearColorTarget(0,
+                new RgbaFloat(rgbaByte.R / 255.0f, rgbaByte.G / 255.0f, rgbaByte.B / 255.0f, rgbaByte.A / 255.0f));
             CommandList.End();
 
             GraphicsDevice.SubmitCommands(CommandList);

@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class Decoration : ValueEnum
     {
+        public Decoration(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Shader)]
@@ -139,11 +144,6 @@ namespace Toe.SPIRV.Spv
             SecondaryViewportRelativeNV = 5256,
             HlslCounterBufferGOOGLE = 5634,
             HlslSemanticGOOGLE = 5635
-        }
-
-        public Decoration(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

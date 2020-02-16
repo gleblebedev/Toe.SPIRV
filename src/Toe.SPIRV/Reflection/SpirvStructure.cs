@@ -4,29 +4,21 @@ using System.Linq;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvStructure: SpirvTypeBase
+    public class SpirvStructure : SpirvTypeBase
     {
-        private readonly string _name;
-        private uint? _sizeInBytes;
         private readonly List<SpirvStructureField> _fields = new List<SpirvStructureField>();
+        private uint? _sizeInBytes;
         private uint? _alignment;
 
-        public SpirvStructure(string name, params SpirvStructureField[] fields):base(SpirvTypeCategory.Struct)
+        public SpirvStructure(string name, params SpirvStructureField[] fields) : base(SpirvTypeCategory.Struct)
         {
-            _name = name;
+            Name = name;
             _fields.AddRange(fields);
-            if (_fields.Any(_ => _.ByteOffset == null))
-            {
-                UpdateFieldOffsets();
-            }
-            else
-            {
-                Console.WriteLine("skip UpdateFieldOffsets");
-            }
+            if (_fields.Any(_ => _.ByteOffset == null)) UpdateFieldOffsets();
             EvaluateSizeAndAlignment();
         }
 
-        public override uint Alignment 
+        public override uint Alignment
         {
             get
             {
@@ -34,43 +26,6 @@ namespace Toe.SPIRV.Reflection
                     throw new InvalidOperationException("Please execute EvaluateLayout() to calculate property value");
                 return _alignment.Value;
             }
-        }
-    
-        public string Name => _name;
-        public IReadOnlyList<SpirvStructureField> Fields => _fields;
-
-        private void UpdateFieldOffsets()
-        {
-            uint offset = 0;
-            foreach (var field in _fields)
-            {
-                var alignment = field.Type.Alignment;
-                var pos = SpirvUtils.RoundUp(offset, alignment);
-                field.ByteOffset = pos;
-                offset = pos + field.Type.SizeInBytes;
-            }
-        }
-        private void EvaluateSizeAndAlignment()
-        {
-            if (Fields.Count == 0)
-            {
-                _sizeInBytes = 0;
-                _alignment = 0;
-                return;
-            }
-            uint size = 0;
-            uint maxAlignment = 16;
-            foreach (var field in _fields)
-            {
-                var alignment = field.Type.Alignment;
-                if (maxAlignment < alignment)
-                    maxAlignment = alignment;
-                var end = field.ByteOffset.Value + field.Type.SizeInBytes;
-                if (end > size)
-                    size = end;
-            }
-            _alignment = maxAlignment;
-            _sizeInBytes = SpirvUtils.RoundUp(size, maxAlignment);
         }
         //public void EvaluateLayout()
         //{
@@ -88,9 +43,50 @@ namespace Toe.SPIRV.Reflection
             }
         }
 
+        public string Name { get; }
+
+        public IReadOnlyList<SpirvStructureField> Fields => _fields;
+
         public override string ToString()
         {
-            return _name ?? base.ToString();
+            return Name ?? base.ToString();
+        }
+
+        private void UpdateFieldOffsets()
+        {
+            uint offset = 0;
+            foreach (var field in _fields)
+            {
+                var alignment = field.Type.Alignment;
+                var pos = SpirvUtils.RoundUp(offset, alignment);
+                field.ByteOffset = pos;
+                offset = pos + field.Type.SizeInBytes;
+            }
+        }
+
+        private void EvaluateSizeAndAlignment()
+        {
+            if (Fields.Count == 0)
+            {
+                _sizeInBytes = 0;
+                _alignment = 0;
+                return;
+            }
+
+            uint size = 0;
+            uint maxAlignment = 16;
+            foreach (var field in _fields)
+            {
+                var alignment = field.Type.Alignment;
+                if (maxAlignment < alignment)
+                    maxAlignment = alignment;
+                var end = field.ByteOffset.Value + field.Type.SizeInBytes;
+                if (end > size)
+                    size = end;
+            }
+
+            _alignment = maxAlignment;
+            _sizeInBytes = SpirvUtils.RoundUp(size, maxAlignment);
         }
     }
 }

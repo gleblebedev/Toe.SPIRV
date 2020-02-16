@@ -5,6 +5,11 @@ namespace Toe.SPIRV.Spv
 {
     public class MemorySemantics : ValueEnum
     {
+        public MemorySemantics(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
@@ -24,11 +29,6 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.AtomicStorage)]
             AtomicCounterMemory = 0x0400,
             ImageMemory = 0x0800
-        }
-
-        public MemorySemantics(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

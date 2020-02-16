@@ -5,11 +5,10 @@ namespace Toe.SPIRV.Instructions
 {
     public partial class OpTypeStruct : TypeInstruction
     {
+        public override Op OpCode => Op.OpTypeStruct;
         public IList<OpMemberDecorate> MemberDecorations { get; } = new List<OpMemberDecorate>();
 
         public IList<OpMemberName> MemberNames { get; } = new List<OpMemberName>();
-
-        public override Op OpCode => Op.OpTypeStruct;
 
         public IList<IdRef> MemberTypes { get; set; }
 

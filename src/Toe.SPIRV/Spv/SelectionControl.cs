@@ -5,17 +5,17 @@ namespace Toe.SPIRV.Spv
 {
     public class SelectionControl : ValueEnum
     {
+        public SelectionControl(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
             None = 0x0000,
             Flatten = 0x0001,
             DontFlatten = 0x0002
-        }
-
-        public SelectionControl(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

@@ -3,6 +3,6 @@
     public enum MatrixOrientation
     {
         ColMajor,
-        RowMajor,
+        RowMajor
     }
 }

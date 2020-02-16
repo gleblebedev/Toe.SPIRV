@@ -5,6 +5,11 @@ namespace Toe.SPIRV.Spv
 {
     public class KernelProfilingInfo : ValueEnum
     {
+        public KernelProfilingInfo(Enumerant value)
+        {
+            Value = value;
+        }
+
         [Flags]
         public enum Enumerant
         {
@@ -12,11 +17,6 @@ namespace Toe.SPIRV.Spv
 
             [Capability(Capability.Enumerant.Kernel)]
             CmdExecTime = 0x0001
-        }
-
-        public KernelProfilingInfo(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

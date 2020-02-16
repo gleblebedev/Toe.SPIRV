@@ -4,6 +4,11 @@ namespace Toe.SPIRV.Spv
 {
     public class SourceLanguage : ValueEnum
     {
+        public SourceLanguage(Enumerant value)
+        {
+            Value = value;
+        }
+
         public enum Enumerant
         {
             Unknown = 0,
@@ -12,12 +17,6 @@ namespace Toe.SPIRV.Spv
             OpenCL_C = 3,
             OpenCL_CPP = 4,
             HLSL = 5
-        }
-
-
-        public SourceLanguage(Enumerant value)
-        {
-            Value = value;
         }
 
         public Enumerant Value { get; }

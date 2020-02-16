@@ -7,6 +7,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.CustomTool.Generators
@@ -126,24 +127,21 @@ namespace Toe.SPIRV.CustomTool.Generators
 
         protected virtual void WriteStructs()
         {
-            var structs = _shader.Instructions.Where(_ => _.OpCode == Op.OpTypeStruct)
-                .Select(_ => (OpTypeStruct)_)
-                .Select(_=>new KeyValuePair<string,OpTypeStruct>(_.OpName?.Name ?? "Struct" + _.IdResult, _))
-                .Where(_=>_.Key != "gl_PerVertex")
-                .ToList();
+            var structs = new ShaderReflection(_shader).Structures.Where(_=>_.Name != "gl_PerVertex").ToList();
+
             for (var index = 0; index < structs.Count; index++)
             {
                 var opTypeStruct = structs[index];
-                WriteStruct(opTypeStruct.Key, opTypeStruct.Value);
+                WriteStruct(opTypeStruct);
             }
-            WriteLine("public static unsafe class ExtensionMethods");
-            WriteLine("{");
-            for (var index = 0; index < structs.Count; index++)
-            {
-                var opTypeStruct = structs[index];
-                WriteStructExtensions(opTypeStruct.Key, opTypeStruct.Value);
-            }
-            WriteLine("}");
+            //WriteLine("public static unsafe class ExtensionMethods");
+            //WriteLine("{");
+            //for (var index = 0; index < structs.Count; index++)
+            //{
+            //    var opTypeStruct = structs[index];
+            //    WriteStructExtensions(opTypeStruct);
+            //}
+            //WriteLine("}");
         }
 
         private void WriteStructExtensions(string key, OpTypeStruct value)
@@ -153,51 +151,199 @@ namespace Toe.SPIRV.CustomTool.Generators
             //WriteLine($"public static ref {key} As{key}(this ArraySegment<byte> buffer) {{ fixed (byte* ptr = buffer.Array) {{ return ref *({key}*)(ptr + buffer.Offset); }} }}");
         }
 
-        private void WriteStruct(string name, OpTypeStruct opTypeStruct)
+        private void WriteStruct(SpirvStructure structure)
         {
-            var memberTypes = opTypeStruct.MemberTypes.Select(_ => ResolveType((TypeInstruction)_.Instruction)).ToList();
-            var isUnsafe = memberTypes.Any(_ => _.IsArray());
+            var fields = structure.Fields;
             WriteLine("[StructLayout(LayoutKind.Explicit)]");
-            if (isUnsafe)
+            WriteLine("public partial struct " + structure.Name);
+            WriteLine("{");
+            for (var memberIndex = 0; memberIndex < fields.Count; memberIndex++)
             {
-                WriteLine("public unsafe partial struct " + name);
+                var field = fields[memberIndex];
+                WriteStructField(field.Name, field.ByteOffset.Value, field.Type);
+                if (memberIndex != fields.Count-1)
+                    WriteLine();
+            }
+            WriteLine("}");
+        }
+
+        protected virtual void WriteStructField(string fieldName, uint byteOffset, SpirvTypeBase fieldType)
+        {
+            switch (fieldType.TypeCategory)
+            {
+                case SpirvTypeCategory.Void:
+                    return;
+                case SpirvTypeCategory.Array:
+                {
+                    WriteArrayField(fieldName, byteOffset, (SpirvArrayBase)fieldType);
+                    return;
+                }
+                case SpirvTypeCategory.Float:
+                {
+                    if (WriteFloatField(fieldName, byteOffset, (SpirvFloat)fieldType)) return;
+                    break;
+                }
+                case SpirvTypeCategory.Int:
+                {
+                    if (WriteIntField(fieldName, byteOffset, (SpirvInt)fieldType)) return;
+                    break;
+                }
+                case SpirvTypeCategory.Vector:
+                {
+                    if (WriteVectorField(fieldName, byteOffset, (SpirvVector)fieldType)) return;
+                    break;
+                }
+                case SpirvTypeCategory.Matrix:
+                {
+                    if (WriteMatrixField(fieldName, byteOffset, (SpirvMatrixBase)fieldType)) return;
+                    break;
+                }
+                case SpirvTypeCategory.Struct:
+                {
+                    WriteLine($"    [FieldOffset({byteOffset})]");
+                    WriteLine($"    public {fieldType} {fieldName};");
+                    break;
+                }
+            }
+            WriteLine($"    //[FieldOffset({byteOffset})]");
+            WriteLine($"    //public {fieldType} {fieldName};");
+        }
+
+        protected virtual bool WriteMatrixField(string fieldName, uint byteOffset, SpirvMatrixBase fieldType)
+        {
+            if (fieldType.ColumnType == SpirvTypeBase.Vec4 && fieldType.ColumnCount == 4 &&
+                fieldType.ColumnStride == 16 && fieldType.MatrixOrientation == MatrixOrientation.ColMajor)
+            {
+                WriteLine($"    [FieldOffset({byteOffset})]");
+                WriteLine($"    public Matrix4x4 {fieldName};");
+                return true;
+            }
+
+            for (uint i = 0; i < fieldType.ColumnCount; ++i)
+            {
+                if (fieldType.MatrixOrientation == MatrixOrientation.ColMajor)
+                    WriteStructField(fieldName + "Col" + i, byteOffset + i * fieldType.ColumnStride, fieldType.ColumnType);
+                else
+                    WriteStructField(fieldName + "Row" + i, byteOffset + i * fieldType.ColumnStride, fieldType.ColumnType);
+            }
+            return true;
+        }
+
+        protected virtual bool WriteVectorField(string fieldName, uint byteOffset, SpirvVector fieldType)
+        {
+            switch (fieldType.VectorType)
+            {
+                case VectorType.Vec2:
+                    WriteLine($"    [FieldOffset({byteOffset})]");
+                    WriteLine($"    public Vector2 {fieldName};");
+                    return true;
+                case VectorType.Vec3:
+                    WriteLine($"    [FieldOffset({byteOffset})]");
+                    WriteLine($"    public Vector3 {fieldName};");
+                    return true;
+                case VectorType.Vec4:
+                    WriteLine($"    [FieldOffset({byteOffset})]");
+                    WriteLine($"    public Vector4 {fieldName};");
+                    return true;
+            }
+            for (uint i = 0; i < fieldType.ComponentCount; ++i)
+            {
+                string letter = null;
+                switch (i)
+                {
+                    case 0: letter = "X"; break;
+                    case 1: letter = "Y"; break;
+                    case 2: letter = "Z"; break;
+                    case 3: letter = "W"; break;
+                    default: letter = "_" + i; break;
+                }
+                WriteStructField(fieldName + letter, byteOffset + i * fieldType.ComponentType.Alignment, fieldType.ComponentType);
+            }
+            return true;
+        }
+
+        protected virtual bool WriteFloatField(string fieldName, uint byteOffset, SpirvFloat floatType)
+        {
+            string actualName = null;
+            switch (floatType.Width)
+            {
+                case 32:
+                    actualName = "float";
+                    break;
+                case 64:
+                    actualName = "double";
+                    break;
+            }
+
+            if (actualName != null)
+            {
+                WriteLine($"    [FieldOffset({byteOffset})]");
+                WriteLine($"    public {actualName} {fieldName};");
+                return true;
+            }
+
+            return false;
+        }
+
+        protected virtual bool WriteIntField(string fieldName, uint byteOffset, SpirvInt intType)
+        {
+            string actualName = null;
+            if (intType.Signed)
+            {
+                switch (intType.Width)
+                {
+                    case 8:
+                        actualName = "sbyte";
+                        break;
+                    case 16:
+                        actualName = "short";
+                        break;
+                    case 32:
+                        actualName = "int";
+                        break;
+                    case 64:
+                        actualName = "long";
+                        break;
+                }
+
             }
             else
             {
-                WriteLine("public partial struct " + name);
+                switch (intType.Width)
+                {
+                    case 8:
+                        actualName = "byte";
+                        break;
+                    case 16:
+                        actualName = "ushort";
+                        break;
+                    case 32:
+                        actualName = "uint";
+                        break;
+                    case 64:
+                        actualName = "ulong";
+                        break;
+                }
             }
-            WriteLine("{");
-            for (var memberIndex = 0; memberIndex < opTypeStruct.MemberTypes.Count; memberIndex++)
+            if (actualName != null)
             {
-                var memberName = opTypeStruct.MemberNames.FirstOrDefault(_ => _.Member == memberIndex)?.Name ?? ("field"+memberIndex);
-                var byteOffset = opTypeStruct.FindMemberDecoration<Decoration.Offset>((uint)memberIndex)?.ByteOffset ?? 0;
-                var type = memberTypes[memberIndex];
-
-                if (type.IsArray())
-                {
-                    if (CanBeFixedArray(type.ElementType))
-                    {
-                        WriteLine($"    [FieldOffset({byteOffset})]");
-                        WriteLine($"    public fixed {type.ElementType} {memberName} [{type.ArraySize}];");
-                    }
-                    else
-                    {
-                        var sep = char.IsDigit(memberName[memberName.Length - 1]) ? "_" : "";
-                        for (int i=0; i<type.ArraySize;++i)
-                        {
-                            WriteLine($"    [FieldOffset({byteOffset+i*type.ElementSize})]");
-                            WriteLine($"    public {type.ElementType} {memberName}{sep}{i};");
-                        }
-                    }
-                }
-                else
-                {
-                    WriteLine($"    [FieldOffset({byteOffset})]");
-                    WriteLine($"    public {type.ElementType} {memberName};");
-                }
-                WriteLine();
+                WriteLine($"    [FieldOffset({byteOffset})]");
+                WriteLine($"    public {actualName} {fieldName};");
+                return true;
             }
-            WriteLine("}");
+
+            return false;
+        }
+
+        private void WriteArrayField(string fieldName, uint byteOffset, SpirvArrayBase arrayType)
+        {
+            var sep = char.IsDigit(fieldName[fieldName.Length - 1]) ? "_" : "";
+            for (uint i = 0; i < arrayType.Length; ++i)
+            {
+                WriteStructField(fieldName + sep + i, byteOffset + i * arrayType.ArrayStride, arrayType.ElementType);
+            }
+
+            return;
         }
 
         private bool CanBeFixedArray(string typeElementType)

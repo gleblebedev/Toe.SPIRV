@@ -4,8 +4,6 @@ namespace Toe.SPIRV.Reflection
 {
     public abstract class SpirvTypeBase
     {
-        private readonly SpirvTypeCategory _type;
-
         public static readonly SpirvVoid Void;
         public static readonly SpirvFloat Half;
         public static readonly SpirvFloat Float;
@@ -77,14 +75,14 @@ namespace Toe.SPIRV.Reflection
 
         protected SpirvTypeBase(SpirvTypeCategory type)
         {
-            _type = type;
+            TypeCategory = type;
         }
 
-        public SpirvTypeCategory TypeCategory => _type;
-
-        public virtual uint SizeInBytes { get { throw new NotImplementedException(); } }
+        public virtual uint SizeInBytes => throw new NotImplementedException();
 
         public virtual uint Alignment => SizeInBytes;
+
+        public SpirvTypeCategory TypeCategory { get; }
 
         public static SpirvVector ResolveVector(SpirvTypeBase componentType, uint componentCount)
         {
@@ -92,33 +90,51 @@ namespace Toe.SPIRV.Reflection
             {
                 case SpirvTypeCategory.Float:
                 {
-                    switch (componentCount)
+                    var sprivFloat = (SpirvFloat) componentType;
+                    switch (sprivFloat.FloatType)
                     {
-                            case 2: return Vec2;
-                            case 3: return Vec3;
-                            case 4: return Vec4;
+                        case FloatType.Float:
+                            switch (componentCount)
+                            {
+                                case 2: return Vec2;
+                                case 3: return Vec3;
+                                case 4: return Vec4;
+                            }
+                            break;
+                        case FloatType.Double:
+                            switch (componentCount)
+                            {
+                                case 2: return Dvec2;
+                                case 3: return Dvec3;
+                                case 4: return Dvec4;
+                            }
+                            break; 
                     }
                     break;
                 }
                 case SpirvTypeCategory.Int:
                 {
-                    switch (componentCount)
+                    var sprivInt = (SpirvInt)componentType;
+                    switch (sprivInt.IntType)
                     {
-                        case 2: return Ivec2;
-                        case 3: return Ivec3;
-                        case 4: return Ivec4;
+                        case IntType.Int:
+                            switch (componentCount)
+                            {
+                                case 2: return Ivec2;
+                                case 3: return Ivec3;
+                                case 4: return Ivec4;
+                            }
+                            break;
+                        case IntType.UInt:
+                            switch (componentCount)
+                            {
+                                case 2: return Uvec2;
+                                case 3: return Uvec3;
+                                case 4: return Uvec4;
+                            }
+                            break;
                     }
-                    break;
-                }
-                case SpirvTypeCategory.UInt:
-                {
-                    switch (componentCount)
-                    {
-                        case 2: return Uvec2;
-                        case 3: return Uvec3;
-                        case 4: return Uvec4;
-                    }
-                    break;
+                        break;
                 }
                 case SpirvTypeCategory.Bool:
                 {
@@ -128,38 +144,30 @@ namespace Toe.SPIRV.Reflection
                         case 3: return Bvec3;
                         case 4: return Bvec4;
                     }
-                    break;
-                }
-                case SpirvTypeCategory.Double:
-                {
-                    switch (componentCount)
-                    {
-                        case 2: return Dvec2;
-                        case 3: return Dvec3;
-                        case 4: return Dvec4;
-                    }
+
                     break;
                 }
             }
+
             return new SpirvVector(componentType, componentCount);
         }
 
-        public static SpirvTypeBase ResolveMatrix(SpirvTypeBase columnType, uint columnCount)
+        public static SpirvTypeBase ResolveMatrix(SpirvVector columnType, uint columnCount)
         {
-            switch (columnType.TypeCategory)
+            switch (columnType.VectorType)
             {
-                case SpirvTypeCategory.Vec2:
+                case VectorType.Vec2:
                     if (columnCount == 2) return Mat2;
                     break;
-                case SpirvTypeCategory.Vec3:
+                case VectorType.Vec3:
                     if (columnCount == 3) return Mat3;
                     break;
-                case SpirvTypeCategory.Vec4:
+                case VectorType.Vec4:
                     if (columnCount == 4) return Mat4;
                     break;
             }
 
-            return new SpirvMatrix((SpirvVector)columnType, columnCount);
+            return new SpirvMatrix((SpirvVector) columnType, columnCount);
         }
     }
 }

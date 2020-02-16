@@ -25,8 +25,7 @@ namespace Toe.SPIRV.Instructions
 
         public Decoration FindDecoration(Decoration.Enumerant id)
         {
-            return Decorations.Where(_ => _.Decoration.Value == id).Select(_=>_.Decoration).FirstOrDefault();
+            return Decorations.Where(_ => _.Decoration.Value == id).Select(_ => _.Decoration).FirstOrDefault();
         }
-
     }
 }
