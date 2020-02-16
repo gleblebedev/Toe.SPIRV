@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.SPIRV", "Toe.SPIRV\Toe.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CustomTool17", "Toe.SPIRV.CustomTool17\Toe.SPIRV.CustomTool17.csproj", "{D3A19E41-8AF4-4B53-AD70-5B2A07DA737B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.Numerics", "Toe.SPIRV.Numerics\Toe.SPIRV.Numerics.csproj", "{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.SPIRV.Numerics", "Toe.SPIRV.Numerics\Toe.SPIRV.Numerics.csproj", "{07F6ABBD-1CC6-47BB-BD82-56935F6D5BC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.UnitTests", "Toe.SPIRV.UnitTests\Toe.SPIRV.UnitTests.csproj", "{B88016B7-6B99-46B0-8E7C-D4C9638182CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.SPIRV.UnitTests", "Toe.SPIRV.UnitTests\Toe.SPIRV.UnitTests.csproj", "{B88016B7-6B99-46B0-8E7C-D4C9638182CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.ReflectionGenerator", "Toe.SPIRV.ReflectionGenerator\Toe.SPIRV.ReflectionGenerator.csproj", "{59E44A8E-3538-4912-AC7C-158E0F68A7E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B88016B7-6B99-46B0-8E7C-D4C9638182CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E44A8E-3538-4912-AC7C-158E0F68A7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E44A8E-3538-4912-AC7C-158E0F68A7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E44A8E-3538-4912-AC7C-158E0F68A7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E44A8E-3538-4912-AC7C-158E0F68A7E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

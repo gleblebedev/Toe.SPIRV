@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Toe.SPIRV.CustomTool.391c396a-ed34-40b8-9994-3989edcea25a" Version="0.1.2" Language="en-US" Publisher="Gleb Lebedev" />
+        <Identity Id="Toe.SPIRV.CustomTool.391c396a-ed34-40b8-9994-3989edcea25a" Version="0.1.2.1" Language="en-US" Publisher="Gleb Lebedev" />
         <DisplayName>Toe.SPIRV.CustomTool</DisplayName>
         <Description xml:space="preserve">Vulkan data types generator based on SPIRV reflection data.</Description>
         <MoreInfo>https://github.com/gleblebedev/Toe.SPIRV</MoreInfo>
