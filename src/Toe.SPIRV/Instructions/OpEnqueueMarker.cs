@@ -1,36 +1,63 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpEnqueueMarker : InstructionWithId
+    public partial class OpEnqueueMarker: InstructionWithId
     {
-        public override Op OpCode => Op.OpEnqueueMarker;
+        public OpEnqueueMarker()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Queue { get; set; }
-        public IdRef NumEvents { get; set; }
-        public IdRef WaitEvents { get; set; }
-        public IdRef RetEvent { get; set; }
+        public override Op OpCode { get { return Op.OpEnqueueMarker; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Queue { get; set; }
+        public Spv.IdRef NumEvents { get; set; }
+        public Spv.IdRef WaitEvents { get; set; }
+        public Spv.IdRef RetEvent { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Queue", Queue);
             yield return new ReferenceProperty("NumEvents", NumEvents);
             yield return new ReferenceProperty("WaitEvents", WaitEvents);
             yield return new ReferenceProperty("RetEvent", RetEvent);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Queue = IdRef.Parse(reader, end - reader.Position);
-            NumEvents = IdRef.Parse(reader, end - reader.Position);
-            WaitEvents = IdRef.Parse(reader, end - reader.Position);
-            RetEvent = IdRef.Parse(reader, end - reader.Position);
+            Queue = Spv.IdRef.Parse(reader, end-reader.Position);
+            NumEvents = Spv.IdRef.Parse(reader, end-reader.Position);
+            WaitEvents = Spv.IdRef.Parse(reader, end-reader.Position);
+            RetEvent = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Queue.GetWordCount();
+            wordCount += NumEvents.GetWordCount();
+            wordCount += WaitEvents.GetWordCount();
+            wordCount += RetEvent.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Queue.Write(writer);
+            NumEvents.Write(writer);
+            WaitEvents.Write(writer);
+            RetEvent.Write(writer);
         }
 
         public override string ToString()

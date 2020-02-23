@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpUnreachable : Instruction
+    public partial class OpUnreachable: Instruction
     {
-        public override Op OpCode => Op.OpUnreachable;
+        public OpUnreachable()
+        {
+        }
+
+        public override Op OpCode { get { return Op.OpUnreachable; } }
 
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
@@ -14,7 +19,17 @@ namespace Toe.SPIRV.Instructions
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
+            var end = reader.Position+wordCount-1;
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
         }
 
         public override string ToString()

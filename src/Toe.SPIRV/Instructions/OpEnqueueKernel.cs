@@ -1,25 +1,29 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpEnqueueKernel : InstructionWithId
+    public partial class OpEnqueueKernel: InstructionWithId
     {
-        public override Op OpCode => Op.OpEnqueueKernel;
+        public OpEnqueueKernel()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Queue { get; set; }
-        public IdRef Flags { get; set; }
-        public IdRef NDRange { get; set; }
-        public IdRef NumEvents { get; set; }
-        public IdRef WaitEvents { get; set; }
-        public IdRef RetEvent { get; set; }
-        public IdRef Invoke { get; set; }
-        public IdRef Param { get; set; }
-        public IdRef ParamSize { get; set; }
-        public IdRef ParamAlign { get; set; }
-        public IList<IdRef> LocalSize { get; set; }
+        public override Op OpCode { get { return Op.OpEnqueueKernel; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Queue { get; set; }
+        public Spv.IdRef Flags { get; set; }
+        public Spv.IdRef NDRange { get; set; }
+        public Spv.IdRef NumEvents { get; set; }
+        public Spv.IdRef WaitEvents { get; set; }
+        public Spv.IdRef RetEvent { get; set; }
+        public Spv.IdRef Invoke { get; set; }
+        public Spv.IdRef Param { get; set; }
+        public Spv.IdRef ParamSize { get; set; }
+        public Spv.IdRef ParamAlign { get; set; }
+        public IList<Spv.IdRef> LocalSize { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Queue", Queue);
@@ -32,33 +36,69 @@ namespace Toe.SPIRV.Instructions
             yield return new ReferenceProperty("Param", Param);
             yield return new ReferenceProperty("ParamSize", ParamSize);
             yield return new ReferenceProperty("ParamAlign", ParamAlign);
-            for (var i = 0; i < LocalSize.Count; ++i)
-                yield return new ReferenceProperty("LocalSize" + i, LocalSize[i]);
+            for (int i=0; i<LocalSize.Count; ++i)
+                yield return new ReferenceProperty("LocalSize"+i, LocalSize[i]);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Queue = IdRef.Parse(reader, end - reader.Position);
-            Flags = IdRef.Parse(reader, end - reader.Position);
-            NDRange = IdRef.Parse(reader, end - reader.Position);
-            NumEvents = IdRef.Parse(reader, end - reader.Position);
-            WaitEvents = IdRef.Parse(reader, end - reader.Position);
-            RetEvent = IdRef.Parse(reader, end - reader.Position);
-            Invoke = IdRef.Parse(reader, end - reader.Position);
-            Param = IdRef.Parse(reader, end - reader.Position);
-            ParamSize = IdRef.Parse(reader, end - reader.Position);
-            ParamAlign = IdRef.Parse(reader, end - reader.Position);
-            LocalSize = IdRef.ParseCollection(reader, end - reader.Position);
+            Queue = Spv.IdRef.Parse(reader, end-reader.Position);
+            Flags = Spv.IdRef.Parse(reader, end-reader.Position);
+            NDRange = Spv.IdRef.Parse(reader, end-reader.Position);
+            NumEvents = Spv.IdRef.Parse(reader, end-reader.Position);
+            WaitEvents = Spv.IdRef.Parse(reader, end-reader.Position);
+            RetEvent = Spv.IdRef.Parse(reader, end-reader.Position);
+            Invoke = Spv.IdRef.Parse(reader, end-reader.Position);
+            Param = Spv.IdRef.Parse(reader, end-reader.Position);
+            ParamSize = Spv.IdRef.Parse(reader, end-reader.Position);
+            ParamAlign = Spv.IdRef.Parse(reader, end-reader.Position);
+            LocalSize = Spv.IdRef.ParseCollection(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Queue.GetWordCount();
+            wordCount += Flags.GetWordCount();
+            wordCount += NDRange.GetWordCount();
+            wordCount += NumEvents.GetWordCount();
+            wordCount += WaitEvents.GetWordCount();
+            wordCount += RetEvent.GetWordCount();
+            wordCount += Invoke.GetWordCount();
+            wordCount += Param.GetWordCount();
+            wordCount += ParamSize.GetWordCount();
+            wordCount += ParamAlign.GetWordCount();
+            wordCount += LocalSize.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Queue.Write(writer);
+            Flags.Write(writer);
+            NDRange.Write(writer);
+            NumEvents.Write(writer);
+            WaitEvents.Write(writer);
+            RetEvent.Write(writer);
+            Invoke.Write(writer);
+            Param.Write(writer);
+            ParamSize.Write(writer);
+            ParamAlign.Write(writer);
+            LocalSize.Write(writer);
         }
 
         public override string ToString()
         {
-            return
-                $"{IdResultType} {IdResult} = {OpCode} {Queue} {Flags} {NDRange} {NumEvents} {WaitEvents} {RetEvent} {Invoke} {Param} {ParamSize} {ParamAlign} {LocalSize}";
+            return $"{IdResultType} {IdResult} = {OpCode} {Queue} {Flags} {NDRange} {NumEvents} {WaitEvents} {RetEvent} {Invoke} {Param} {ParamSize} {ParamAlign} {LocalSize}";
         }
     }
 }

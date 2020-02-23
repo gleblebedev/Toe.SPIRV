@@ -3,13 +3,8 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class FunctionControl : ValueEnum
+    public partial class FunctionControl : ValueEnum
     {
-        public FunctionControl(Enumerant value)
-        {
-            Value = value;
-        }
-
         [Flags]
         public enum Enumerant
         {
@@ -17,15 +12,21 @@ namespace Toe.SPIRV.Spv
             Inline = 0x0001,
             DontInline = 0x0002,
             Pure = 0x0004,
-            Const = 0x0008
+            Const = 0x0008,
+        }
+
+        public FunctionControl(Enumerant value)
+        {
+            Value = value;
         }
 
         public Enumerant Value { get; }
 
 
+
         public static FunctionControl Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount;
+            var end = reader.Position+wordCount;
             var id = (Enumerant) reader.ReadWord();
             var value = new FunctionControl(id);
             value.PostParse(reader, wordCount - 1);
@@ -42,13 +43,27 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<FunctionControl>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            uint wordCount = 1;
+            return wordCount;
+        }
+
+        public void Write(WordWriter writer)
+        {
+             writer.WriteWord((uint)Value);
         }
     }
 }

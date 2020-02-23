@@ -22,5 +22,15 @@ namespace Toe.SPIRV.Spv
             while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
             return res;
         }
+
+        public static uint GetWordCount(string name)
+        {
+            return WordWriter.GetWordCount(name ?? string.Empty);
+        }
+
+        public static void Write(WordWriter writer, string name)
+        {
+            writer.Write(name);
+        }
     }
 }

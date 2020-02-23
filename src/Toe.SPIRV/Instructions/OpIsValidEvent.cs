@@ -1,27 +1,48 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpIsValidEvent : InstructionWithId
+    public partial class OpIsValidEvent: InstructionWithId
     {
-        public override Op OpCode => Op.OpIsValidEvent;
+        public OpIsValidEvent()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Event { get; set; }
+        public override Op OpCode { get { return Op.OpIsValidEvent; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Event { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Event", Event);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Event = IdRef.Parse(reader, end - reader.Position);
+            Event = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Event.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Event.Write(writer);
         }
 
         public override string ToString()

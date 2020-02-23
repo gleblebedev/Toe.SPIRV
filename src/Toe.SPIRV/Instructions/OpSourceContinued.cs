@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpSourceContinued : Instruction
+    public partial class OpSourceContinued: Instruction
     {
-        public override Op OpCode => Op.OpSourceContinued;
+        public OpSourceContinued()
+        {
+        }
+
+        public override Op OpCode { get { return Op.OpSourceContinued; } }
 
         public string ContinuedSource { get; set; }
-
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -16,8 +20,20 @@ namespace Toe.SPIRV.Instructions
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            ContinuedSource = LiteralString.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            ContinuedSource = Spv.LiteralString.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += ContinuedSource.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            ContinuedSource.Write(writer);
         }
 
         public override string ToString()

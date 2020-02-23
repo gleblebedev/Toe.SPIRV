@@ -21,17 +21,42 @@ namespace Toe.SPIRV
 
         public IList<Instruction> Instructions { get; } = new List<Instruction>();
 
-        public uint GeneratorName { get; set; }
+        public uint GeneratorName { get; set; } = 851975;
 
-        public uint Version { get; set; }
+        public uint Version { get; set; } = SpirVVersion;
 
+
+        public void Build(WordWriter writer)
+        {
+            writer.WriteWord(Magic);
+            writer.WriteWord(Version);
+            writer.WriteWord(GeneratorName);
+            uint bound = 0;
+            foreach (var instruction in Instructions)
+            {
+                if (instruction.TryGetResultId(out uint id))
+                {
+                    if (id >= bound)
+                        bound = id + 1;
+                }
+            }
+            writer.WriteWord(bound);
+            writer.WriteWord(0);
+            foreach (var instruction in Instructions)
+            {
+                instruction.Build(writer);
+            }
+        }
+
+        public const uint Magic = 0x07230203;
+        public const uint SpirVVersion = 0x00010000;
         public static Shader Parse(WordReader reader, uint wordCount)
         {
             var end = reader.Position + wordCount;
             var shader = new Shader();
-            if (reader.ReadWord() != 0x07230203) throw new FormatException("SpirV magic number doesn't match");
+            if (reader.ReadWord() != Magic) throw new FormatException("SpirV magic number doesn't match");
             shader.Version = reader.ReadWord();
-            if (shader.Version != 0x00010000) throw new FormatException("Unsupported SpirV version");
+            if (shader.Version != SpirVVersion) throw new FormatException("Unsupported SpirV version");
             shader.GeneratorName = reader.ReadWord();
             shader.Bound = reader.ReadWord();
             if (reader.ReadWord() != 0) throw new FormatException("SpirV reserved word isn't 0");
@@ -91,7 +116,27 @@ namespace Toe.SPIRV
             if (length % 4 != 0) throw new FormatException("SpirV bytecode length should be divisable by 4");
             return Parse(new WordReader(reader, new InstructionRegistry()), (uint) length / 4);
         }
-
+        public byte[] Build()
+        {
+            var memoryStream = new MemoryStream();
+            Build(memoryStream);
+            return memoryStream.ToArray();
+        }
+        public void Build(Stream stream)
+        {
+            using (var binaryWriter = new BinaryWriter(stream))
+            {
+                Build(binaryWriter);
+            }
+        }
+        public void Build(BinaryWriter writer)
+        {
+            using (var wordWriter = new WordWriter(writer))
+            {
+                Build(wordWriter);
+            }
+        }
+ 
         public static Shader Parse(byte[] spirVBytes)
         {
             if (spirVBytes.Length % 4 != 0) throw new FormatException("SpirV bytecode length should be divisable by 4");

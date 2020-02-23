@@ -1,36 +1,63 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpReadPipe : InstructionWithId
+    public partial class OpReadPipe: InstructionWithId
     {
-        public override Op OpCode => Op.OpReadPipe;
+        public OpReadPipe()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Pipe { get; set; }
-        public IdRef Pointer { get; set; }
-        public IdRef PacketSize { get; set; }
-        public IdRef PacketAlignment { get; set; }
+        public override Op OpCode { get { return Op.OpReadPipe; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Pipe { get; set; }
+        public Spv.IdRef Pointer { get; set; }
+        public Spv.IdRef PacketSize { get; set; }
+        public Spv.IdRef PacketAlignment { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pipe", Pipe);
             yield return new ReferenceProperty("Pointer", Pointer);
             yield return new ReferenceProperty("PacketSize", PacketSize);
             yield return new ReferenceProperty("PacketAlignment", PacketAlignment);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Pipe = IdRef.Parse(reader, end - reader.Position);
-            Pointer = IdRef.Parse(reader, end - reader.Position);
-            PacketSize = IdRef.Parse(reader, end - reader.Position);
-            PacketAlignment = IdRef.Parse(reader, end - reader.Position);
+            Pipe = Spv.IdRef.Parse(reader, end-reader.Position);
+            Pointer = Spv.IdRef.Parse(reader, end-reader.Position);
+            PacketSize = Spv.IdRef.Parse(reader, end-reader.Position);
+            PacketAlignment = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Pipe.GetWordCount();
+            wordCount += Pointer.GetWordCount();
+            wordCount += PacketSize.GetWordCount();
+            wordCount += PacketAlignment.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Pipe.Write(writer);
+            Pointer.Write(writer);
+            PacketSize.Write(writer);
+            PacketAlignment.Write(writer);
         }
 
         public override string ToString()

@@ -15,6 +15,16 @@ namespace Toe.SPIRV.Spv
 
         public TypeInstruction Type { get; }
 
+        public virtual uint GetWordCount()
+        {
+            return ((uint)Bytes.Length+3)/4;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.Write(Bytes);
+        }
+
         public override string ToString()
         {
             if (Type.OpCode == Op.OpTypeBool) return ToBool().ToString();

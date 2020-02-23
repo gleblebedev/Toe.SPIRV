@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class SourceLanguage : ValueEnum
+    public partial class SourceLanguage : ValueEnum
     {
         public SourceLanguage(Enumerant value)
         {
@@ -16,8 +16,9 @@ namespace Toe.SPIRV.Spv
             GLSL = 2,
             OpenCL_C = 3,
             OpenCL_CPP = 4,
-            HLSL = 5
+            HLSL = 5,
         }
+
 
         public Enumerant Value { get; }
 
@@ -30,7 +31,7 @@ namespace Toe.SPIRV.Spv
                     return new SourceLanguage(id);
             }
         }
-
+        
         public static SourceLanguage ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -41,13 +42,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<SourceLanguage>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

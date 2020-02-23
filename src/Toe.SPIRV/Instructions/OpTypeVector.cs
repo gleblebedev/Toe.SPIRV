@@ -1,27 +1,48 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public partial class OpTypeVector : TypeInstruction
+    public partial class OpTypeVector: TypeInstruction
     {
-        public override Op OpCode => Op.OpTypeVector;
+        public OpTypeVector()
+        {
+        }
 
-        public IdRef ComponentType { get; set; }
+        public override Op OpCode { get { return Op.OpTypeVector; } }
+
+        public Spv.IdRef ComponentType { get; set; }
         public uint ComponentCount { get; set; }
-
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("ComponentType", ComponentType);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            ComponentType = IdRef.Parse(reader, end - reader.Position);
-            ComponentCount = LiteralInteger.Parse(reader, end - reader.Position);
+            ComponentType = Spv.IdRef.Parse(reader, end-reader.Position);
+            ComponentCount = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResult.GetWordCount();
+            wordCount += ComponentType.GetWordCount();
+            wordCount += ComponentCount.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResult.Write(writer);
+            ComponentType.Write(writer);
+            ComponentCount.Write(writer);
         }
 
         public override string ToString()

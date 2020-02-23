@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class FPRoundingMode : ValueEnum
+    public partial class FPRoundingMode : ValueEnum
     {
         public FPRoundingMode(Enumerant value)
         {
@@ -17,28 +17,26 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.StoragePushConstant16)]
             [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTE = 0,
-
             [Capability(Capability.Enumerant.Kernel)]
             [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
             [Capability(Capability.Enumerant.StorageUniform16)]
             [Capability(Capability.Enumerant.StoragePushConstant16)]
             [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTZ = 1,
-
             [Capability(Capability.Enumerant.Kernel)]
             [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
             [Capability(Capability.Enumerant.StorageUniform16)]
             [Capability(Capability.Enumerant.StoragePushConstant16)]
             [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTP = 2,
-
             [Capability(Capability.Enumerant.Kernel)]
             [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
             [Capability(Capability.Enumerant.StorageUniform16)]
             [Capability(Capability.Enumerant.StoragePushConstant16)]
             [Capability(Capability.Enumerant.StorageInputOutput16)]
-            RTN = 3
+            RTN = 3,
         }
+
 
         public Enumerant Value { get; }
 
@@ -51,7 +49,7 @@ namespace Toe.SPIRV.Spv
                     return new FPRoundingMode(id);
             }
         }
-
+        
         public static FPRoundingMode ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -62,13 +60,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<FPRoundingMode>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

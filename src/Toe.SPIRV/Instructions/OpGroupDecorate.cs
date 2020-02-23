@@ -1,27 +1,46 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpGroupDecorate : Instruction
+    public partial class OpGroupDecorate: Instruction
     {
-        public override Op OpCode => Op.OpGroupDecorate;
+        public OpGroupDecorate()
+        {
+        }
 
-        public IdRef DecorationGroup { get; set; }
-        public IList<IdRef> Targets { get; set; }
+        public override Op OpCode { get { return Op.OpGroupDecorate; } }
 
+        public Spv.IdRef DecorationGroup { get; set; }
+        public IList<Spv.IdRef> Targets { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("DecorationGroup", DecorationGroup);
-            for (var i = 0; i < Targets.Count; ++i)
-                yield return new ReferenceProperty("Targets" + i, Targets[i]);
+            for (int i=0; i<Targets.Count; ++i)
+                yield return new ReferenceProperty("Targets"+i, Targets[i]);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            DecorationGroup = IdRef.Parse(reader, end - reader.Position);
-            Targets = IdRef.ParseCollection(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            DecorationGroup = Spv.IdRef.Parse(reader, end-reader.Position);
+            Targets = Spv.IdRef.ParseCollection(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += DecorationGroup.GetWordCount();
+            wordCount += Targets.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            DecorationGroup.Write(writer);
+            Targets.Write(writer);
         }
 
         public override string ToString()

@@ -31,6 +31,21 @@ namespace Toe.SPIRV.Spv
             return res;
         }
 
+        public virtual uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += LiteralInteger.GetWordCount();
+            wordCount += IdRef.GetWordCount();
+            return wordCount;
+        }
+
+
+        public virtual void Write(WordWriter writer)
+        {
+            LiteralInteger.Write(writer);
+            IdRef.Write(writer);
+        }
+
         public override string ToString()
         {
             return $"{{ {LiteralInteger} {IdRef} }}";

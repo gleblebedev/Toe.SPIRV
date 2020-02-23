@@ -1,25 +1,44 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpLifetimeStop : Instruction
+    public partial class OpLifetimeStop: Instruction
     {
-        public override Op OpCode => Op.OpLifetimeStop;
+        public OpLifetimeStop()
+        {
+        }
 
-        public IdRef Pointer { get; set; }
+        public override Op OpCode { get { return Op.OpLifetimeStop; } }
+
+        public Spv.IdRef Pointer { get; set; }
         public uint Size { get; set; }
-
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pointer", Pointer);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            Pointer = IdRef.Parse(reader, end - reader.Position);
-            Size = LiteralInteger.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            Pointer = Spv.IdRef.Parse(reader, end-reader.Position);
+            Size = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += Pointer.GetWordCount();
+            wordCount += Size.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            Pointer.Write(writer);
+            Size.Write(writer);
         }
 
         public override string ToString()

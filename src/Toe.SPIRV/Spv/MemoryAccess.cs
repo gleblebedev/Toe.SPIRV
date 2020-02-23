@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class MemoryAccess : ValueEnum
+    public partial class MemoryAccess : ValueEnum
     {
-        public MemoryAccess(Enumerant value)
-        {
-            Value = value;
-        }
-
         [Flags]
         public enum Enumerant
         {
             None = 0x0000,
             Volatile = 0x0001,
             Aligned = 0x0002,
-            Nontemporal = 0x0004
+            Nontemporal = 0x0004,
+        }
+
+        public MemoryAccess(Enumerant value)
+        {
+            Value = value;
         }
 
         public Enumerant Value { get; }
@@ -26,11 +26,13 @@ namespace Toe.SPIRV.Spv
 
         public static MemoryAccess Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount;
+            var end = reader.Position+wordCount;
             var id = (Enumerant) reader.ReadWord();
             var value = new MemoryAccess(id);
             if (Enumerant.Aligned == (id & Enumerant.Aligned))
-                value.Aligned = LiteralInteger.Parse(reader, wordCount - 1);
+            {
+                value.Aligned = Spv.LiteralInteger.Parse(reader, wordCount - 1);
+            }
             value.PostParse(reader, wordCount - 1);
             return value;
         }
@@ -45,13 +47,35 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<MemoryAccess>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            uint wordCount = 1;
+            if (Enumerant.Aligned == (Value & Enumerant.Aligned))
+            {
+                wordCount += Aligned.GetWordCount();
+            }
+            return wordCount;
+        }
+
+        public void Write(WordWriter writer)
+        {
+             writer.WriteWord((uint)Value);
+            if (Enumerant.Aligned == (Value & Enumerant.Aligned))
+            {
+                Aligned.Write(writer);
+            }
         }
     }
 }

@@ -1,33 +1,58 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpSubgroupShuffleUpINTEL : InstructionWithId
+    public partial class OpSubgroupShuffleUpINTEL: InstructionWithId
     {
-        public override Op OpCode => Op.OpSubgroupShuffleUpINTEL;
+        public OpSubgroupShuffleUpINTEL()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Previous { get; set; }
-        public IdRef Current { get; set; }
-        public IdRef Delta { get; set; }
+        public override Op OpCode { get { return Op.OpSubgroupShuffleUpINTEL; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Previous { get; set; }
+        public Spv.IdRef Current { get; set; }
+        public Spv.IdRef Delta { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Previous", Previous);
             yield return new ReferenceProperty("Current", Current);
             yield return new ReferenceProperty("Delta", Delta);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Previous = IdRef.Parse(reader, end - reader.Position);
-            Current = IdRef.Parse(reader, end - reader.Position);
-            Delta = IdRef.Parse(reader, end - reader.Position);
+            Previous = Spv.IdRef.Parse(reader, end-reader.Position);
+            Current = Spv.IdRef.Parse(reader, end-reader.Position);
+            Delta = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Previous.GetWordCount();
+            wordCount += Current.GetWordCount();
+            wordCount += Delta.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Previous.Write(writer);
+            Current.Write(writer);
+            Delta.Write(writer);
         }
 
         public override string ToString()

@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpPhi : InstructionWithId
+    public partial class OpPhi: InstructionWithId
     {
-        public override Op OpCode => Op.OpPhi;
+        public OpPhi()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IList<PairIdRefIdRef> VariableParent { get; set; }
+        public override Op OpCode { get { return Op.OpPhi; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public IList<Spv.PairIdRefIdRef> VariableParent { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -17,11 +21,27 @@ namespace Toe.SPIRV.Instructions
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            VariableParent = PairIdRefIdRef.ParseCollection(reader, end - reader.Position);
+            VariableParent = Spv.PairIdRefIdRef.ParseCollection(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += VariableParent.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            VariableParent.Write(writer);
         }
 
         public override string ToString()

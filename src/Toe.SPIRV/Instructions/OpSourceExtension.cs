@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpSourceExtension : Instruction
+    public partial class OpSourceExtension: Instruction
     {
-        public override Op OpCode => Op.OpSourceExtension;
+        public OpSourceExtension()
+        {
+        }
+
+        public override Op OpCode { get { return Op.OpSourceExtension; } }
 
         public string Extension { get; set; }
-
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -16,8 +20,20 @@ namespace Toe.SPIRV.Instructions
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            Extension = LiteralString.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            Extension = Spv.LiteralString.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += Extension.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            Extension.Write(writer);
         }
 
         public override string ToString()

@@ -1,31 +1,54 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpEntryPoint : Instruction
+    public partial class OpEntryPoint: Instruction
     {
-        public override Op OpCode => Op.OpEntryPoint;
+        public OpEntryPoint()
+        {
+        }
 
-        public ExecutionModel ExecutionModel { get; set; }
-        public IdRef EntryPoint { get; set; }
+        public override Op OpCode { get { return Op.OpEntryPoint; } }
+
+        public Spv.ExecutionModel ExecutionModel { get; set; }
+        public Spv.IdRef EntryPoint { get; set; }
         public string Name { get; set; }
-        public IList<IdRef> Interface { get; set; }
-
+        public IList<Spv.IdRef> Interface { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("EntryPoint", EntryPoint);
-            for (var i = 0; i < Interface.Count; ++i)
-                yield return new ReferenceProperty("Interface" + i, Interface[i]);
+            for (int i=0; i<Interface.Count; ++i)
+                yield return new ReferenceProperty("Interface"+i, Interface[i]);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            ExecutionModel = ExecutionModel.Parse(reader, end - reader.Position);
-            EntryPoint = IdRef.Parse(reader, end - reader.Position);
-            Name = LiteralString.Parse(reader, end - reader.Position);
-            Interface = IdRef.ParseCollection(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            ExecutionModel = Spv.ExecutionModel.Parse(reader, end-reader.Position);
+            EntryPoint = Spv.IdRef.Parse(reader, end-reader.Position);
+            Name = Spv.LiteralString.Parse(reader, end-reader.Position);
+            Interface = Spv.IdRef.ParseCollection(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += ExecutionModel.GetWordCount();
+            wordCount += EntryPoint.GetWordCount();
+            wordCount += Name.GetWordCount();
+            wordCount += Interface.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            ExecutionModel.Write(writer);
+            EntryPoint.Write(writer);
+            Name.Write(writer);
+            Interface.Write(writer);
         }
 
         public override string ToString()

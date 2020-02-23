@@ -1,30 +1,53 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpDot : InstructionWithId
+    public partial class OpDot: InstructionWithId
     {
-        public override Op OpCode => Op.OpDot;
+        public OpDot()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Vector1 { get; set; }
-        public IdRef Vector2 { get; set; }
+        public override Op OpCode { get { return Op.OpDot; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Vector1 { get; set; }
+        public Spv.IdRef Vector2 { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Vector1", Vector1);
             yield return new ReferenceProperty("Vector2", Vector2);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Vector1 = IdRef.Parse(reader, end - reader.Position);
-            Vector2 = IdRef.Parse(reader, end - reader.Position);
+            Vector1 = Spv.IdRef.Parse(reader, end-reader.Position);
+            Vector2 = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Vector1.GetWordCount();
+            wordCount += Vector2.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Vector1.Write(writer);
+            Vector2.Write(writer);
         }
 
         public override string ToString()

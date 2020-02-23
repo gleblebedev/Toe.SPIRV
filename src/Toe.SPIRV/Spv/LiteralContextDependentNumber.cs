@@ -29,6 +29,16 @@ namespace Toe.SPIRV.Spv
             return res;
         }
 
+        public virtual uint GetWordCount()
+        {
+            return Value.GetWordCount();
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            Value.Write(writer);
+        }
+
         public override string ToString()
         {
             if (Value != null)

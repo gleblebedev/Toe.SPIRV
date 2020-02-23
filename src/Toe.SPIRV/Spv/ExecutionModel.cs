@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class ExecutionModel : ValueEnum
+    public partial class ExecutionModel : ValueEnum
     {
         public ExecutionModel(Enumerant value)
         {
@@ -13,25 +13,20 @@ namespace Toe.SPIRV.Spv
         {
             [Capability(Capability.Enumerant.Shader)]
             Vertex = 0,
-
             [Capability(Capability.Enumerant.Tessellation)]
             TessellationControl = 1,
-
             [Capability(Capability.Enumerant.Tessellation)]
             TessellationEvaluation = 2,
-
             [Capability(Capability.Enumerant.Geometry)]
             Geometry = 3,
-
             [Capability(Capability.Enumerant.Shader)]
             Fragment = 4,
-
             [Capability(Capability.Enumerant.Shader)]
             GLCompute = 5,
-
             [Capability(Capability.Enumerant.Kernel)]
-            Kernel = 6
+            Kernel = 6,
         }
+
 
         public Enumerant Value { get; }
 
@@ -44,7 +39,7 @@ namespace Toe.SPIRV.Spv
                     return new ExecutionModel(id);
             }
         }
-
+        
         public static ExecutionModel ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -55,13 +50,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<ExecutionModel>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

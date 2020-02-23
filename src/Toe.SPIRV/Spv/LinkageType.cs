@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class LinkageType : ValueEnum
+    public partial class LinkageType : ValueEnum
     {
         public LinkageType(Enumerant value)
         {
@@ -13,10 +13,10 @@ namespace Toe.SPIRV.Spv
         {
             [Capability(Capability.Enumerant.Linkage)]
             Export = 0,
-
             [Capability(Capability.Enumerant.Linkage)]
-            Import = 1
+            Import = 1,
         }
+
 
         public Enumerant Value { get; }
 
@@ -29,7 +29,7 @@ namespace Toe.SPIRV.Spv
                     return new LinkageType(id);
             }
         }
-
+        
         public static LinkageType ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -40,13 +40,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<LinkageType>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

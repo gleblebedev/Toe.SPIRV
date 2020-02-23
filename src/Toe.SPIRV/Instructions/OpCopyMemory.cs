@@ -1,28 +1,49 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpCopyMemory : Instruction
+    public partial class OpCopyMemory: Instruction
     {
-        public override Op OpCode => Op.OpCopyMemory;
+        public OpCopyMemory()
+        {
+        }
 
-        public IdRef Target { get; set; }
-        public IdRef Source { get; set; }
-        public MemoryAccess MemoryAccess { get; set; }
+        public override Op OpCode { get { return Op.OpCopyMemory; } }
 
+        public Spv.IdRef Target { get; set; }
+        public Spv.IdRef Source { get; set; }
+        public Spv.MemoryAccess MemoryAccess { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Target", Target);
             yield return new ReferenceProperty("Source", Source);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            Target = IdRef.Parse(reader, end - reader.Position);
-            Source = IdRef.Parse(reader, end - reader.Position);
-            MemoryAccess = MemoryAccess.ParseOptional(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            Target = Spv.IdRef.Parse(reader, end-reader.Position);
+            Source = Spv.IdRef.Parse(reader, end-reader.Position);
+            MemoryAccess = Spv.MemoryAccess.ParseOptional(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += Target.GetWordCount();
+            wordCount += Source.GetWordCount();
+            wordCount += MemoryAccess?.GetWordCount() ?? (uint)0;
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            Target.Write(writer);
+            Source.Write(writer);
+            if (MemoryAccess != null) MemoryAccess.Write(writer);
         }
 
         public override string ToString()

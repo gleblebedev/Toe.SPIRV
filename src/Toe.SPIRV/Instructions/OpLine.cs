@@ -1,27 +1,48 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpLine : Instruction
+    public partial class OpLine: Instruction
     {
-        public override Op OpCode => Op.OpLine;
+        public OpLine()
+        {
+        }
 
-        public IdRef File { get; set; }
+        public override Op OpCode { get { return Op.OpLine; } }
+
+        public Spv.IdRef File { get; set; }
         public uint Line { get; set; }
         public uint Column { get; set; }
-
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("File", File);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            File = IdRef.Parse(reader, end - reader.Position);
-            Line = LiteralInteger.Parse(reader, end - reader.Position);
-            Column = LiteralInteger.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            File = Spv.IdRef.Parse(reader, end-reader.Position);
+            Line = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+            Column = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += File.GetWordCount();
+            wordCount += Line.GetWordCount();
+            wordCount += Column.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            File.Write(writer);
+            Line.Write(writer);
+            Column.Write(writer);
         }
 
         public override string ToString()

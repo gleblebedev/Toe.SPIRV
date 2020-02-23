@@ -30,7 +30,19 @@ namespace Toe.SPIRV.Spv
             while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
             return res;
         }
+        public virtual uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdRef.GetWordCount();
+            wordCount += IdRef2.GetWordCount();
+            return wordCount;
+        }
 
+        public virtual void Write(WordWriter writer)
+        {
+            IdRef.Write(writer);
+            IdRef2.Write(writer);
+        }
         public override string ToString()
         {
             return $"{{ {IdRef} {IdRef2} }}";

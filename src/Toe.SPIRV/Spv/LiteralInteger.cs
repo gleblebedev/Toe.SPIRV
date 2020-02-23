@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 
 namespace Toe.SPIRV.Spv
 {

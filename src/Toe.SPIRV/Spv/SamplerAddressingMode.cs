@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class SamplerAddressingMode : ValueEnum
+    public partial class SamplerAddressingMode : ValueEnum
     {
         public SamplerAddressingMode(Enumerant value)
         {
@@ -13,19 +13,16 @@ namespace Toe.SPIRV.Spv
         {
             [Capability(Capability.Enumerant.Kernel)]
             None = 0,
-
             [Capability(Capability.Enumerant.Kernel)]
             ClampToEdge = 1,
-
             [Capability(Capability.Enumerant.Kernel)]
             Clamp = 2,
-
             [Capability(Capability.Enumerant.Kernel)]
             Repeat = 3,
-
             [Capability(Capability.Enumerant.Kernel)]
-            RepeatMirrored = 4
+            RepeatMirrored = 4,
         }
+
 
         public Enumerant Value { get; }
 
@@ -38,7 +35,7 @@ namespace Toe.SPIRV.Spv
                     return new SamplerAddressingMode(id);
             }
         }
-
+        
         public static SamplerAddressingMode ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -49,13 +46,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<SamplerAddressingMode>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

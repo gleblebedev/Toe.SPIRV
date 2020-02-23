@@ -1,29 +1,52 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpVariable : InstructionWithId
+    public partial class OpVariable: InstructionWithId
     {
-        public override Op OpCode => Op.OpVariable;
+        public OpVariable()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public StorageClass StorageClass { get; set; }
-        public IdRef Initializer { get; set; }
+        public override Op OpCode { get { return Op.OpVariable; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.StorageClass StorageClass { get; set; }
+        public Spv.IdRef Initializer { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Initializer", Initializer);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            StorageClass = StorageClass.Parse(reader, end - reader.Position);
-            Initializer = IdRef.ParseOptional(reader, end - reader.Position);
+            StorageClass = Spv.StorageClass.Parse(reader, end-reader.Position);
+            Initializer = Spv.IdRef.ParseOptional(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += StorageClass.GetWordCount();
+            wordCount += Initializer?.GetWordCount() ?? (uint)0;
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            StorageClass.Write(writer);
+            if (Initializer != null) Initializer.Write(writer);
         }
 
         public override string ToString()

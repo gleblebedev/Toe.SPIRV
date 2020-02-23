@@ -1,33 +1,58 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpBuildNDRange : InstructionWithId
+    public partial class OpBuildNDRange: InstructionWithId
     {
-        public override Op OpCode => Op.OpBuildNDRange;
+        public OpBuildNDRange()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef GlobalWorkSize { get; set; }
-        public IdRef LocalWorkSize { get; set; }
-        public IdRef GlobalWorkOffset { get; set; }
+        public override Op OpCode { get { return Op.OpBuildNDRange; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef GlobalWorkSize { get; set; }
+        public Spv.IdRef LocalWorkSize { get; set; }
+        public Spv.IdRef GlobalWorkOffset { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("GlobalWorkSize", GlobalWorkSize);
             yield return new ReferenceProperty("LocalWorkSize", LocalWorkSize);
             yield return new ReferenceProperty("GlobalWorkOffset", GlobalWorkOffset);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            GlobalWorkSize = IdRef.Parse(reader, end - reader.Position);
-            LocalWorkSize = IdRef.Parse(reader, end - reader.Position);
-            GlobalWorkOffset = IdRef.Parse(reader, end - reader.Position);
+            GlobalWorkSize = Spv.IdRef.Parse(reader, end-reader.Position);
+            LocalWorkSize = Spv.IdRef.Parse(reader, end-reader.Position);
+            GlobalWorkOffset = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += GlobalWorkSize.GetWordCount();
+            wordCount += LocalWorkSize.GetWordCount();
+            wordCount += GlobalWorkOffset.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            GlobalWorkSize.Write(writer);
+            LocalWorkSize.Write(writer);
+            GlobalWorkOffset.Write(writer);
         }
 
         public override string ToString()

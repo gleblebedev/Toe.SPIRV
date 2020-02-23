@@ -1,30 +1,53 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpINotEqual : InstructionWithId
+    public partial class OpINotEqual: InstructionWithId
     {
-        public override Op OpCode => Op.OpINotEqual;
+        public OpINotEqual()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Operand1 { get; set; }
-        public IdRef Operand2 { get; set; }
+        public override Op OpCode { get { return Op.OpINotEqual; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Operand1 { get; set; }
+        public Spv.IdRef Operand2 { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Operand1", Operand1);
             yield return new ReferenceProperty("Operand2", Operand2);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Operand1 = IdRef.Parse(reader, end - reader.Position);
-            Operand2 = IdRef.Parse(reader, end - reader.Position);
+            Operand1 = Spv.IdRef.Parse(reader, end-reader.Position);
+            Operand2 = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Operand1.GetWordCount();
+            wordCount += Operand2.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Operand1.Write(writer);
+            Operand2.Write(writer);
         }
 
         public override string ToString()

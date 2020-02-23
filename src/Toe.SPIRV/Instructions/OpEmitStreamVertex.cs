@@ -1,23 +1,40 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpEmitStreamVertex : Instruction
+    public partial class OpEmitStreamVertex: Instruction
     {
-        public override Op OpCode => Op.OpEmitStreamVertex;
+        public OpEmitStreamVertex()
+        {
+        }
 
-        public IdRef Stream { get; set; }
+        public override Op OpCode { get { return Op.OpEmitStreamVertex; } }
 
+        public Spv.IdRef Stream { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Stream", Stream);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            Stream = IdRef.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            Stream = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += Stream.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            Stream.Write(writer);
         }
 
         public override string ToString()

@@ -6,6 +6,7 @@ namespace Toe.SPIRV
 {
     public class WordReader
     {
+        internal static readonly UTF8Encoding Encoding = new UTF8Encoding(false);
         private readonly BinaryReader _reader;
 
 
@@ -33,7 +34,7 @@ namespace Toe.SPIRV
             Position += (uint) (bytes.Length / 4);
             if (len == 0)
                 return string.Empty;
-            return Encoding.UTF8.GetString(bytes, 0, len);
+            return Encoding.GetString(bytes, 0, len);
         }
 
         public string ReadString()
@@ -55,7 +56,7 @@ namespace Toe.SPIRV
             while (len > 0 && bytes[len - 1] == 0) --len;
             if (len == 0)
                 return string.Empty;
-            return Encoding.UTF8.GetString(bytes.ToArray(), 0, len);
+            return Encoding.GetString(bytes.ToArray(), 0, len);
         }
 
         public byte[] ReadBytes(uint numWords)

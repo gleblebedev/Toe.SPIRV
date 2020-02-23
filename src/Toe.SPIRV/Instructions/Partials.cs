@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Instructions
@@ -37,6 +38,10 @@ namespace Toe.SPIRV.Instructions
 
     public partial class OpTypeStruct
     {
+        public IList<OpMemberName> MemberNames { get; } = new List<OpMemberName>();
+
+        public IList<OpMemberDecorate> MemberDecorations { get; } = new List<OpMemberDecorate>();
+
         public override uint SizeInWords
         {
             get

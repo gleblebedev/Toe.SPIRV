@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class Scope : ValueEnum
+    public partial class Scope : ValueEnum
     {
         public Scope(Enumerant value)
         {
@@ -15,8 +15,9 @@ namespace Toe.SPIRV.Spv
             Device = 1,
             Workgroup = 2,
             Subgroup = 3,
-            Invocation = 4
+            Invocation = 4,
         }
+
 
         public Enumerant Value { get; }
 
@@ -29,7 +30,7 @@ namespace Toe.SPIRV.Spv
                     return new Scope(id);
             }
         }
-
+        
         public static Scope ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -40,13 +41,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<Scope>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

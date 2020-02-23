@@ -1,29 +1,45 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public partial class OpTypeStruct : TypeInstruction
+    public partial class OpTypeStruct: TypeInstruction
     {
-        public override Op OpCode => Op.OpTypeStruct;
-        public IList<OpMemberDecorate> MemberDecorations { get; } = new List<OpMemberDecorate>();
+        public OpTypeStruct()
+        {
+        }
 
-        public IList<OpMemberName> MemberNames { get; } = new List<OpMemberName>();
+        public override Op OpCode { get { return Op.OpTypeStruct; } }
 
-        public IList<IdRef> MemberTypes { get; set; }
-
+        public IList<Spv.IdRef> MemberTypes { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
-            for (var i = 0; i < MemberTypes.Count; ++i)
-                yield return new ReferenceProperty("MemberTypes" + i, MemberTypes[i]);
+            for (int i=0; i<MemberTypes.Count; ++i)
+                yield return new ReferenceProperty("MemberTypes"+i, MemberTypes[i]);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            MemberTypes = IdRef.ParseCollection(reader, end - reader.Position);
+            MemberTypes = Spv.IdRef.ParseCollection(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResult.GetWordCount();
+            wordCount += MemberTypes.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResult.Write(writer);
+            MemberTypes.Write(writer);
         }
 
         public override string ToString()

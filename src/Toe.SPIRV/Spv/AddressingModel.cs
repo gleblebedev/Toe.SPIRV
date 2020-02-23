@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class AddressingModel : ValueEnum
+    public partial class AddressingModel : ValueEnum
     {
         public AddressingModel(Enumerant value)
         {
@@ -12,13 +12,12 @@ namespace Toe.SPIRV.Spv
         public enum Enumerant
         {
             Logical = 0,
-
             [Capability(Capability.Enumerant.Addresses)]
             Physical32 = 1,
-
             [Capability(Capability.Enumerant.Addresses)]
-            Physical64 = 2
+            Physical64 = 2,
         }
+
 
         public Enumerant Value { get; }
 
@@ -31,7 +30,7 @@ namespace Toe.SPIRV.Spv
                     return new AddressingModel(id);
             }
         }
-
+        
         public static AddressingModel ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -42,13 +41,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<AddressingModel>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

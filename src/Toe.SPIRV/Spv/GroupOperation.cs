@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class GroupOperation : ValueEnum
+    public partial class GroupOperation : ValueEnum
     {
         public GroupOperation(Enumerant value)
         {
@@ -13,13 +13,12 @@ namespace Toe.SPIRV.Spv
         {
             [Capability(Capability.Enumerant.Kernel)]
             Reduce = 0,
-
             [Capability(Capability.Enumerant.Kernel)]
             InclusiveScan = 1,
-
             [Capability(Capability.Enumerant.Kernel)]
-            ExclusiveScan = 2
+            ExclusiveScan = 2,
         }
+
 
         public Enumerant Value { get; }
 
@@ -32,7 +31,7 @@ namespace Toe.SPIRV.Spv
                     return new GroupOperation(id);
             }
         }
-
+        
         public static GroupOperation ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -43,13 +42,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<GroupOperation>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

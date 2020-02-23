@@ -39,6 +39,15 @@ namespace Toe.SPIRV.Spv
             while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
             return res;
         }
+        public override uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            writer.WriteWord(base.Id);
+        }
     }
 
     public class IdRef
@@ -123,6 +132,15 @@ namespace Toe.SPIRV.Spv
             if (_instruction != null)
                 return _instruction.ToString();
             return "<null>";
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord(_id);
         }
     }
 }

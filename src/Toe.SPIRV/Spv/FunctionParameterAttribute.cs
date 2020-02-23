@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class FunctionParameterAttribute : ValueEnum
+    public partial class FunctionParameterAttribute : ValueEnum
     {
         public FunctionParameterAttribute(Enumerant value)
         {
@@ -13,28 +13,22 @@ namespace Toe.SPIRV.Spv
         {
             [Capability(Capability.Enumerant.Kernel)]
             Zext = 0,
-
             [Capability(Capability.Enumerant.Kernel)]
             Sext = 1,
-
             [Capability(Capability.Enumerant.Kernel)]
             ByVal = 2,
-
             [Capability(Capability.Enumerant.Kernel)]
             Sret = 3,
-
             [Capability(Capability.Enumerant.Kernel)]
             NoAlias = 4,
-
             [Capability(Capability.Enumerant.Kernel)]
             NoCapture = 5,
-
             [Capability(Capability.Enumerant.Kernel)]
             NoWrite = 6,
-
             [Capability(Capability.Enumerant.Kernel)]
-            NoReadWrite = 7
+            NoReadWrite = 7,
         }
+
 
         public Enumerant Value { get; }
 
@@ -47,7 +41,7 @@ namespace Toe.SPIRV.Spv
                     return new FunctionParameterAttribute(id);
             }
         }
-
+        
         public static FunctionParameterAttribute ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -58,13 +52,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<FunctionParameterAttribute>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

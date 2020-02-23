@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class Capability : ValueEnum
+    public partial class Capability : ValueEnum
     {
         public Capability(Enumerant value)
         {
@@ -12,99 +12,155 @@ namespace Toe.SPIRV.Spv
         public enum Enumerant
         {
             Matrix = 0,
-            [Capability(Matrix)] Shader = 1,
-            [Capability(Shader)] Geometry = 2,
-            [Capability(Shader)] Tessellation = 3,
+            [Capability(Capability.Enumerant.Matrix)]
+            Shader = 1,
+            [Capability(Capability.Enumerant.Shader)]
+            Geometry = 2,
+            [Capability(Capability.Enumerant.Shader)]
+            Tessellation = 3,
             Addresses = 4,
             Linkage = 5,
             Kernel = 6,
-            [Capability(Kernel)] Vector16 = 7,
-            [Capability(Kernel)] Float16Buffer = 8,
+            [Capability(Capability.Enumerant.Kernel)]
+            Vector16 = 7,
+            [Capability(Capability.Enumerant.Kernel)]
+            Float16Buffer = 8,
             Float16 = 9,
             Float64 = 10,
             Int64 = 11,
-            [Capability(Int64)] Int64Atomics = 12,
-            [Capability(Kernel)] ImageBasic = 13,
-            [Capability(ImageBasic)] ImageReadWrite = 14,
-            [Capability(ImageBasic)] ImageMipmap = 15,
-            [Capability(Kernel)] Pipes = 17,
+            [Capability(Capability.Enumerant.Int64)]
+            Int64Atomics = 12,
+            [Capability(Capability.Enumerant.Kernel)]
+            ImageBasic = 13,
+            [Capability(Capability.Enumerant.ImageBasic)]
+            ImageReadWrite = 14,
+            [Capability(Capability.Enumerant.ImageBasic)]
+            ImageMipmap = 15,
+            [Capability(Capability.Enumerant.Kernel)]
+            Pipes = 17,
             Groups = 18,
-            [Capability(Kernel)] DeviceEnqueue = 19,
-            [Capability(Kernel)] LiteralSampler = 20,
-            [Capability(Shader)] AtomicStorage = 21,
+            [Capability(Capability.Enumerant.Kernel)]
+            DeviceEnqueue = 19,
+            [Capability(Capability.Enumerant.Kernel)]
+            LiteralSampler = 20,
+            [Capability(Capability.Enumerant.Shader)]
+            AtomicStorage = 21,
             Int16 = 22,
-            [Capability(Tessellation)] TessellationPointSize = 23,
-            [Capability(Geometry)] GeometryPointSize = 24,
-            [Capability(Shader)] ImageGatherExtended = 25,
-            [Capability(Shader)] StorageImageMultisample = 27,
-            [Capability(Shader)] UniformBufferArrayDynamicIndexing = 28,
-            [Capability(Shader)] SampledImageArrayDynamicIndexing = 29,
-            [Capability(Shader)] StorageBufferArrayDynamicIndexing = 30,
-            [Capability(Shader)] StorageImageArrayDynamicIndexing = 31,
-            [Capability(Shader)] ClipDistance = 32,
-            [Capability(Shader)] CullDistance = 33,
-            [Capability(SampledCubeArray)] ImageCubeArray = 34,
-            [Capability(Shader)] SampleRateShading = 35,
-            [Capability(SampledRect)] ImageRect = 36,
-            [Capability(Shader)] SampledRect = 37,
-            [Capability(Addresses)] GenericPointer = 38,
-            [Capability(Kernel)] Int8 = 39,
-            [Capability(Shader)] InputAttachment = 40,
-            [Capability(Shader)] SparseResidency = 41,
-            [Capability(Shader)] MinLod = 42,
+            [Capability(Capability.Enumerant.Tessellation)]
+            TessellationPointSize = 23,
+            [Capability(Capability.Enumerant.Geometry)]
+            GeometryPointSize = 24,
+            [Capability(Capability.Enumerant.Shader)]
+            ImageGatherExtended = 25,
+            [Capability(Capability.Enumerant.Shader)]
+            StorageImageMultisample = 27,
+            [Capability(Capability.Enumerant.Shader)]
+            UniformBufferArrayDynamicIndexing = 28,
+            [Capability(Capability.Enumerant.Shader)]
+            SampledImageArrayDynamicIndexing = 29,
+            [Capability(Capability.Enumerant.Shader)]
+            StorageBufferArrayDynamicIndexing = 30,
+            [Capability(Capability.Enumerant.Shader)]
+            StorageImageArrayDynamicIndexing = 31,
+            [Capability(Capability.Enumerant.Shader)]
+            ClipDistance = 32,
+            [Capability(Capability.Enumerant.Shader)]
+            CullDistance = 33,
+            [Capability(Capability.Enumerant.SampledCubeArray)]
+            ImageCubeArray = 34,
+            [Capability(Capability.Enumerant.Shader)]
+            SampleRateShading = 35,
+            [Capability(Capability.Enumerant.SampledRect)]
+            ImageRect = 36,
+            [Capability(Capability.Enumerant.Shader)]
+            SampledRect = 37,
+            [Capability(Capability.Enumerant.Addresses)]
+            GenericPointer = 38,
+            [Capability(Capability.Enumerant.Kernel)]
+            Int8 = 39,
+            [Capability(Capability.Enumerant.Shader)]
+            InputAttachment = 40,
+            [Capability(Capability.Enumerant.Shader)]
+            SparseResidency = 41,
+            [Capability(Capability.Enumerant.Shader)]
+            MinLod = 42,
             Sampled1D = 43,
-            [Capability(Sampled1D)] Image1D = 44,
-            [Capability(Shader)] SampledCubeArray = 45,
+            [Capability(Capability.Enumerant.Sampled1D)]
+            Image1D = 44,
+            [Capability(Capability.Enumerant.Shader)]
+            SampledCubeArray = 45,
             SampledBuffer = 46,
-            [Capability(SampledBuffer)] ImageBuffer = 47,
-            [Capability(Shader)] ImageMSArray = 48,
-            [Capability(Shader)] StorageImageExtendedFormats = 49,
-            [Capability(Shader)] ImageQuery = 50,
-            [Capability(Shader)] DerivativeControl = 51,
-            [Capability(Shader)] InterpolationFunction = 52,
-            [Capability(Shader)] TransformFeedback = 53,
-            [Capability(Geometry)] GeometryStreams = 54,
-            [Capability(Shader)] StorageImageReadWithoutFormat = 55,
-            [Capability(Shader)] StorageImageWriteWithoutFormat = 56,
-            [Capability(Geometry)] MultiViewport = 57,
+            [Capability(Capability.Enumerant.SampledBuffer)]
+            ImageBuffer = 47,
+            [Capability(Capability.Enumerant.Shader)]
+            ImageMSArray = 48,
+            [Capability(Capability.Enumerant.Shader)]
+            StorageImageExtendedFormats = 49,
+            [Capability(Capability.Enumerant.Shader)]
+            ImageQuery = 50,
+            [Capability(Capability.Enumerant.Shader)]
+            DerivativeControl = 51,
+            [Capability(Capability.Enumerant.Shader)]
+            InterpolationFunction = 52,
+            [Capability(Capability.Enumerant.Shader)]
+            TransformFeedback = 53,
+            [Capability(Capability.Enumerant.Geometry)]
+            GeometryStreams = 54,
+            [Capability(Capability.Enumerant.Shader)]
+            StorageImageReadWithoutFormat = 55,
+            [Capability(Capability.Enumerant.Shader)]
+            StorageImageWriteWithoutFormat = 56,
+            [Capability(Capability.Enumerant.Geometry)]
+            MultiViewport = 57,
             SubgroupBallotKHR = 4423,
             DrawParameters = 4427,
             SubgroupVoteKHR = 4431,
             StorageBuffer16BitAccess = 4433,
             StorageUniformBufferBlock16 = 4433,
-
-            [Capability(StorageBuffer16BitAccess)] [Capability(StorageUniformBufferBlock16)]
+            [Capability(Capability.Enumerant.StorageBuffer16BitAccess)]
+            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
             UniformAndStorageBuffer16BitAccess = 4434,
-
-            [Capability(StorageBuffer16BitAccess)] [Capability(StorageUniformBufferBlock16)]
+            [Capability(Capability.Enumerant.StorageBuffer16BitAccess)]
+            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
             StorageUniform16 = 4434,
             StoragePushConstant16 = 4435,
             StorageInputOutput16 = 4436,
             DeviceGroup = 4437,
-            [Capability(Shader)] MultiView = 4439,
-            [Capability(Shader)] VariablePointersStorageBuffer = 4441,
-
-            [Capability(VariablePointersStorageBuffer)]
+            [Capability(Capability.Enumerant.Shader)]
+            MultiView = 4439,
+            [Capability(Capability.Enumerant.Shader)]
+            VariablePointersStorageBuffer = 4441,
+            [Capability(Capability.Enumerant.VariablePointersStorageBuffer)]
             VariablePointers = 4442,
             AtomicStorageOps = 4445,
             SampleMaskPostDepthCoverage = 4447,
-            [Capability(Shader)] ImageGatherBiasLodAMD = 5009,
-            [Capability(Shader)] FragmentMaskAMD = 5010,
-            [Capability(Shader)] StencilExportEXT = 5013,
-            [Capability(Shader)] ImageReadWriteLodAMD = 5015,
-            [Capability(SampleRateShading)] SampleMaskOverrideCoverageNV = 5249,
-            [Capability(Geometry)] GeometryShaderPassthroughNV = 5251,
-            [Capability(MultiViewport)] ShaderViewportIndexLayerEXT = 5254,
-            [Capability(MultiViewport)] ShaderViewportIndexLayerNV = 5254,
-
-            [Capability(ShaderViewportIndexLayerNV)]
+            [Capability(Capability.Enumerant.Shader)]
+            ImageGatherBiasLodAMD = 5009,
+            [Capability(Capability.Enumerant.Shader)]
+            FragmentMaskAMD = 5010,
+            [Capability(Capability.Enumerant.Shader)]
+            StencilExportEXT = 5013,
+            [Capability(Capability.Enumerant.Shader)]
+            ImageReadWriteLodAMD = 5015,
+            [Capability(Capability.Enumerant.SampleRateShading)]
+            SampleMaskOverrideCoverageNV = 5249,
+            [Capability(Capability.Enumerant.Geometry)]
+            GeometryShaderPassthroughNV = 5251,
+            [Capability(Capability.Enumerant.MultiViewport)]
+            ShaderViewportIndexLayerEXT = 5254,
+            [Capability(Capability.Enumerant.MultiViewport)]
+            ShaderViewportIndexLayerNV = 5254,
+            [Capability(Capability.Enumerant.ShaderViewportIndexLayerNV)]
             ShaderViewportMaskNV = 5255,
-            [Capability(ShaderViewportMaskNV)] ShaderStereoViewNV = 5259,
-            [Capability(MultiView)] PerViewAttributesNV = 5260,
+            [Capability(Capability.Enumerant.ShaderViewportMaskNV)]
+            ShaderStereoViewNV = 5259,
+            [Capability(Capability.Enumerant.MultiView)]
+            PerViewAttributesNV = 5260,
             SubgroupShuffleINTEL = 5568,
             SubgroupBufferBlockIOINTEL = 5569,
-            SubgroupImageBlockIOINTEL = 5570
+            SubgroupImageBlockIOINTEL = 5570,
         }
+
 
         public Enumerant Value { get; }
 
@@ -117,7 +173,7 @@ namespace Toe.SPIRV.Spv
                     return new Capability(id);
             }
         }
-
+        
         public static Capability ParseOptional(WordReader reader, uint wordCount)
         {
             if (wordCount == 0) return null;
@@ -128,13 +184,26 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<Capability>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
         }
     }
 }

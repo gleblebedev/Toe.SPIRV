@@ -3,28 +3,28 @@ using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public class KernelProfilingInfo : ValueEnum
+    public partial class KernelProfilingInfo : ValueEnum
     {
+        [Flags]
+        public enum Enumerant
+        {
+            None = 0x0000,
+            [Capability(Capability.Enumerant.Kernel)]
+            CmdExecTime = 0x0001,
+        }
+
         public KernelProfilingInfo(Enumerant value)
         {
             Value = value;
         }
 
-        [Flags]
-        public enum Enumerant
-        {
-            None = 0x0000,
-
-            [Capability(Capability.Enumerant.Kernel)]
-            CmdExecTime = 0x0001
-        }
-
         public Enumerant Value { get; }
+
 
 
         public static KernelProfilingInfo Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount;
+            var end = reader.Position+wordCount;
             var id = (Enumerant) reader.ReadWord();
             var value = new KernelProfilingInfo(id);
             value.PostParse(reader, wordCount - 1);
@@ -41,13 +41,27 @@ namespace Toe.SPIRV.Spv
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<KernelProfilingInfo>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
             return res;
         }
 
         public override string ToString()
         {
             return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            uint wordCount = 1;
+            return wordCount;
+        }
+
+        public void Write(WordWriter writer)
+        {
+             writer.WriteWord((uint)Value);
         }
     }
 }

@@ -1,30 +1,53 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Spv;
 
+
 namespace Toe.SPIRV.Instructions
 {
-    public class OpSubgroupReadInvocationKHR : InstructionWithId
+    public partial class OpSubgroupReadInvocationKHR: InstructionWithId
     {
-        public override Op OpCode => Op.OpSubgroupReadInvocationKHR;
+        public OpSubgroupReadInvocationKHR()
+        {
+        }
 
-        public IdRef<TypeInstruction> IdResultType { get; set; }
-        public IdRef Value { get; set; }
-        public IdRef Index { get; set; }
+        public override Op OpCode { get { return Op.OpSubgroupReadInvocationKHR; } }
 
+        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef Value { get; set; }
+        public Spv.IdRef Index { get; set; }
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Value", Value);
             yield return new ReferenceProperty("Index", Index);
+            yield break;
         }
 
         public override void Parse(WordReader reader, uint wordCount)
         {
-            var end = reader.Position + wordCount - 1;
-            IdResultType = Spv.IdResultType.Parse(reader, end - reader.Position);
-            IdResult = Spv.IdResult.Parse(reader, end - reader.Position);
+            var end = reader.Position+wordCount-1;
+            IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
+            IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Value = IdRef.Parse(reader, end - reader.Position);
-            Index = IdRef.Parse(reader, end - reader.Position);
+            Value = Spv.IdRef.Parse(reader, end-reader.Position);
+            Index = Spv.IdRef.Parse(reader, end-reader.Position);
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+            wordCount += IdResultType.GetWordCount();
+            wordCount += IdResult.GetWordCount();
+            wordCount += Value.GetWordCount();
+            wordCount += Index.GetWordCount();
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+            IdResultType.Write(writer);
+            IdResult.Write(writer);
+            Value.Write(writer);
+            Index.Write(writer);
         }
 
         public override string ToString()
