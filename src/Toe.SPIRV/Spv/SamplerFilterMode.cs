@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class SamplerFilterMode : ValueEnum
+    public abstract partial class SamplerFilterMode : ValueEnum
     {
-        public SamplerFilterMode(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -17,16 +13,40 @@ namespace Toe.SPIRV.Spv
             Linear = 1,
         }
 
+        public class Nearest: SamplerFilterMode
+        {
+            public override Enumerant Value => SamplerFilterMode.Enumerant.Nearest;
+            public new static Nearest Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Nearest();
+                return res;
+            }
+        }
+        public class Linear: SamplerFilterMode
+        {
+            public override Enumerant Value => SamplerFilterMode.Enumerant.Linear;
+            public new static Linear Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Linear();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static SamplerFilterMode Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.Nearest :
+                    return Nearest.Parse(reader, wordCount - 1);
+                case Enumerant.Linear :
+                    return Linear.Parse(reader, wordCount - 1);
                 default:
-                    return new SamplerFilterMode(id);
+                    throw new IndexOutOfRangeException("Unknown SamplerFilterMode "+id);
             }
         }
         

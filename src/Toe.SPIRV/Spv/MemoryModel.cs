@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class MemoryModel : ValueEnum
+    public abstract partial class MemoryModel : ValueEnum
     {
-        public MemoryModel(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Shader)]
@@ -19,16 +15,52 @@ namespace Toe.SPIRV.Spv
             OpenCL = 2,
         }
 
+        public class Simple: MemoryModel
+        {
+            public override Enumerant Value => MemoryModel.Enumerant.Simple;
+            public new static Simple Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Simple();
+                return res;
+            }
+        }
+        public class GLSL450: MemoryModel
+        {
+            public override Enumerant Value => MemoryModel.Enumerant.GLSL450;
+            public new static GLSL450 Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new GLSL450();
+                return res;
+            }
+        }
+        public class OpenCL: MemoryModel
+        {
+            public override Enumerant Value => MemoryModel.Enumerant.OpenCL;
+            public new static OpenCL Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new OpenCL();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static MemoryModel Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.Simple :
+                    return Simple.Parse(reader, wordCount - 1);
+                case Enumerant.GLSL450 :
+                    return GLSL450.Parse(reader, wordCount - 1);
+                case Enumerant.OpenCL :
+                    return OpenCL.Parse(reader, wordCount - 1);
                 default:
-                    return new MemoryModel(id);
+                    throw new IndexOutOfRangeException("Unknown MemoryModel "+id);
             }
         }
         

@@ -175,5 +175,16 @@ namespace Toe.SPIRV.Reflection
             AddType(instruction, structure);
             _structures.Add(structure);
         }
+
+        public Shader Build()
+        {
+            var shader = new Shader();
+            shader.Instructions.Add(new OpCapability(){Capability = new Capability.Shader() });
+            shader.Instructions.Add(new OpExtInstImport(){Name = "GLSL.std.450" });
+            shader.Instructions.Add(new OpMemoryModel() { MemoryModel = new MemoryModel.GLSL450(), AddressingModel = new AddressingModel.Logical()});
+            //shader.Instructions.Add(new OpEntryPoint() { ExecutionModel = });
+            throw new NotImplementedException();
+            return shader;
+        }
     }
 }

@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class LinkageType : ValueEnum
+    public abstract partial class LinkageType : ValueEnum
     {
-        public LinkageType(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Linkage)]
@@ -17,16 +13,40 @@ namespace Toe.SPIRV.Spv
             Import = 1,
         }
 
+        public class Export: LinkageType
+        {
+            public override Enumerant Value => LinkageType.Enumerant.Export;
+            public new static Export Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Export();
+                return res;
+            }
+        }
+        public class Import: LinkageType
+        {
+            public override Enumerant Value => LinkageType.Enumerant.Import;
+            public new static Import Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Import();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static LinkageType Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.Export :
+                    return Export.Parse(reader, wordCount - 1);
+                case Enumerant.Import :
+                    return Import.Parse(reader, wordCount - 1);
                 default:
-                    return new LinkageType(id);
+                    throw new IndexOutOfRangeException("Unknown LinkageType "+id);
             }
         }
         

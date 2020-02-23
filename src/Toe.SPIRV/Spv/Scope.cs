@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class Scope : ValueEnum
+    public abstract partial class Scope : ValueEnum
     {
-        public Scope(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             CrossDevice = 0,
@@ -18,16 +14,76 @@ namespace Toe.SPIRV.Spv
             Invocation = 4,
         }
 
+        public class CrossDevice: Scope
+        {
+            public override Enumerant Value => Scope.Enumerant.CrossDevice;
+            public new static CrossDevice Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CrossDevice();
+                return res;
+            }
+        }
+        public class Device: Scope
+        {
+            public override Enumerant Value => Scope.Enumerant.Device;
+            public new static Device Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Device();
+                return res;
+            }
+        }
+        public class Workgroup: Scope
+        {
+            public override Enumerant Value => Scope.Enumerant.Workgroup;
+            public new static Workgroup Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Workgroup();
+                return res;
+            }
+        }
+        public class Subgroup: Scope
+        {
+            public override Enumerant Value => Scope.Enumerant.Subgroup;
+            public new static Subgroup Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Subgroup();
+                return res;
+            }
+        }
+        public class Invocation: Scope
+        {
+            public override Enumerant Value => Scope.Enumerant.Invocation;
+            public new static Invocation Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Invocation();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static Scope Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.CrossDevice :
+                    return CrossDevice.Parse(reader, wordCount - 1);
+                case Enumerant.Device :
+                    return Device.Parse(reader, wordCount - 1);
+                case Enumerant.Workgroup :
+                    return Workgroup.Parse(reader, wordCount - 1);
+                case Enumerant.Subgroup :
+                    return Subgroup.Parse(reader, wordCount - 1);
+                case Enumerant.Invocation :
+                    return Invocation.Parse(reader, wordCount - 1);
                 default:
-                    return new Scope(id);
+                    throw new IndexOutOfRangeException("Unknown Scope "+id);
             }
         }
         

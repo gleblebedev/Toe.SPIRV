@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class FPRoundingMode : ValueEnum
+    public abstract partial class FPRoundingMode : ValueEnum
     {
-        public FPRoundingMode(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -37,16 +33,64 @@ namespace Toe.SPIRV.Spv
             RTN = 3,
         }
 
+        public class RTE: FPRoundingMode
+        {
+            public override Enumerant Value => FPRoundingMode.Enumerant.RTE;
+            public new static RTE Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RTE();
+                return res;
+            }
+        }
+        public class RTZ: FPRoundingMode
+        {
+            public override Enumerant Value => FPRoundingMode.Enumerant.RTZ;
+            public new static RTZ Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RTZ();
+                return res;
+            }
+        }
+        public class RTP: FPRoundingMode
+        {
+            public override Enumerant Value => FPRoundingMode.Enumerant.RTP;
+            public new static RTP Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RTP();
+                return res;
+            }
+        }
+        public class RTN: FPRoundingMode
+        {
+            public override Enumerant Value => FPRoundingMode.Enumerant.RTN;
+            public new static RTN Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RTN();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static FPRoundingMode Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.RTE :
+                    return RTE.Parse(reader, wordCount - 1);
+                case Enumerant.RTZ :
+                    return RTZ.Parse(reader, wordCount - 1);
+                case Enumerant.RTP :
+                    return RTP.Parse(reader, wordCount - 1);
+                case Enumerant.RTN :
+                    return RTN.Parse(reader, wordCount - 1);
                 default:
-                    return new FPRoundingMode(id);
+                    throw new IndexOutOfRangeException("Unknown FPRoundingMode "+id);
             }
         }
         

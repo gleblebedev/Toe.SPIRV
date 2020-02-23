@@ -10,7 +10,7 @@
             Length = length;
         }
 
-        public override uint ArrayStride => SpirvUtils.RoundUp(_elementType.Alignment, 16);
+        public override uint ArrayStride => SpirvUtils.RoundUp(_elementType.SizeInBytes, 16);
 
         public override SpirvTypeBase ElementType => _elementType;
 

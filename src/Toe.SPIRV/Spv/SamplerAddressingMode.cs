@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class SamplerAddressingMode : ValueEnum
+    public abstract partial class SamplerAddressingMode : ValueEnum
     {
-        public SamplerAddressingMode(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -23,16 +19,76 @@ namespace Toe.SPIRV.Spv
             RepeatMirrored = 4,
         }
 
+        public class None: SamplerAddressingMode
+        {
+            public override Enumerant Value => SamplerAddressingMode.Enumerant.None;
+            public new static None Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new None();
+                return res;
+            }
+        }
+        public class ClampToEdge: SamplerAddressingMode
+        {
+            public override Enumerant Value => SamplerAddressingMode.Enumerant.ClampToEdge;
+            public new static ClampToEdge Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ClampToEdge();
+                return res;
+            }
+        }
+        public class Clamp: SamplerAddressingMode
+        {
+            public override Enumerant Value => SamplerAddressingMode.Enumerant.Clamp;
+            public new static Clamp Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Clamp();
+                return res;
+            }
+        }
+        public class Repeat: SamplerAddressingMode
+        {
+            public override Enumerant Value => SamplerAddressingMode.Enumerant.Repeat;
+            public new static Repeat Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Repeat();
+                return res;
+            }
+        }
+        public class RepeatMirrored: SamplerAddressingMode
+        {
+            public override Enumerant Value => SamplerAddressingMode.Enumerant.RepeatMirrored;
+            public new static RepeatMirrored Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RepeatMirrored();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static SamplerAddressingMode Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.None :
+                    return None.Parse(reader, wordCount - 1);
+                case Enumerant.ClampToEdge :
+                    return ClampToEdge.Parse(reader, wordCount - 1);
+                case Enumerant.Clamp :
+                    return Clamp.Parse(reader, wordCount - 1);
+                case Enumerant.Repeat :
+                    return Repeat.Parse(reader, wordCount - 1);
+                case Enumerant.RepeatMirrored :
+                    return RepeatMirrored.Parse(reader, wordCount - 1);
                 default:
-                    return new SamplerAddressingMode(id);
+                    throw new IndexOutOfRangeException("Unknown SamplerAddressingMode "+id);
             }
         }
         

@@ -109,6 +109,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Toe.SPIRV.ReflectionGenerator\Toe.SPIRV.ReflectionGenerator.csproj">
+      <Project>{59e44a8e-3538-4912-ac7c-158e0f68a7e5}</Project>
+      <Name>Toe.SPIRV.ReflectionGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toe.SPIRV\Toe.SPIRV.csproj">
       <Project>{87a8bc61-09d2-4a9f-8cab-e93226f786c6}</Project>
       <Name>Toe.SPIRV</Name>

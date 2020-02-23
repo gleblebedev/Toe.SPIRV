@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class ExecutionModel : ValueEnum
+    public abstract partial class ExecutionModel : ValueEnum
     {
-        public ExecutionModel(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Shader)]
@@ -27,16 +23,100 @@ namespace Toe.SPIRV.Spv
             Kernel = 6,
         }
 
+        public class Vertex: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.Vertex;
+            public new static Vertex Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Vertex();
+                return res;
+            }
+        }
+        public class TessellationControl: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.TessellationControl;
+            public new static TessellationControl Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new TessellationControl();
+                return res;
+            }
+        }
+        public class TessellationEvaluation: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.TessellationEvaluation;
+            public new static TessellationEvaluation Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new TessellationEvaluation();
+                return res;
+            }
+        }
+        public class Geometry: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.Geometry;
+            public new static Geometry Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Geometry();
+                return res;
+            }
+        }
+        public class Fragment: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.Fragment;
+            public new static Fragment Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Fragment();
+                return res;
+            }
+        }
+        public class GLCompute: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.GLCompute;
+            public new static GLCompute Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new GLCompute();
+                return res;
+            }
+        }
+        public class Kernel: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.Kernel;
+            public new static Kernel Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Kernel();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static ExecutionModel Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.Vertex :
+                    return Vertex.Parse(reader, wordCount - 1);
+                case Enumerant.TessellationControl :
+                    return TessellationControl.Parse(reader, wordCount - 1);
+                case Enumerant.TessellationEvaluation :
+                    return TessellationEvaluation.Parse(reader, wordCount - 1);
+                case Enumerant.Geometry :
+                    return Geometry.Parse(reader, wordCount - 1);
+                case Enumerant.Fragment :
+                    return Fragment.Parse(reader, wordCount - 1);
+                case Enumerant.GLCompute :
+                    return GLCompute.Parse(reader, wordCount - 1);
+                case Enumerant.Kernel :
+                    return Kernel.Parse(reader, wordCount - 1);
                 default:
-                    return new ExecutionModel(id);
+                    throw new IndexOutOfRangeException("Unknown ExecutionModel "+id);
             }
         }
         

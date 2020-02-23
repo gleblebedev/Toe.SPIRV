@@ -116,12 +116,14 @@ namespace Toe.SPIRV
             if (length % 4 != 0) throw new FormatException("SpirV bytecode length should be divisable by 4");
             return Parse(new WordReader(reader, new InstructionRegistry()), (uint) length / 4);
         }
+
         public byte[] Build()
         {
             var memoryStream = new MemoryStream();
             Build(memoryStream);
             return memoryStream.ToArray();
         }
+
         public void Build(Stream stream)
         {
             using (var binaryWriter = new BinaryWriter(stream))

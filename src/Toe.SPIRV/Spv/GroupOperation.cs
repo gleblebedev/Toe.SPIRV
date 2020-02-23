@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class GroupOperation : ValueEnum
+    public abstract partial class GroupOperation : ValueEnum
     {
-        public GroupOperation(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -19,16 +15,52 @@ namespace Toe.SPIRV.Spv
             ExclusiveScan = 2,
         }
 
+        public class Reduce: GroupOperation
+        {
+            public override Enumerant Value => GroupOperation.Enumerant.Reduce;
+            public new static Reduce Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Reduce();
+                return res;
+            }
+        }
+        public class InclusiveScan: GroupOperation
+        {
+            public override Enumerant Value => GroupOperation.Enumerant.InclusiveScan;
+            public new static InclusiveScan Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new InclusiveScan();
+                return res;
+            }
+        }
+        public class ExclusiveScan: GroupOperation
+        {
+            public override Enumerant Value => GroupOperation.Enumerant.ExclusiveScan;
+            public new static ExclusiveScan Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ExclusiveScan();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static GroupOperation Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.Reduce :
+                    return Reduce.Parse(reader, wordCount - 1);
+                case Enumerant.InclusiveScan :
+                    return InclusiveScan.Parse(reader, wordCount - 1);
+                case Enumerant.ExclusiveScan :
+                    return ExclusiveScan.Parse(reader, wordCount - 1);
                 default:
-                    return new GroupOperation(id);
+                    throw new IndexOutOfRangeException("Unknown GroupOperation "+id);
             }
         }
         

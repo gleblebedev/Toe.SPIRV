@@ -210,6 +210,8 @@ namespace Toe.SPIRV.UnitTests
         [TestCaseSource(nameof(WellKnownTypes))]
         public void TestArrayAlignment(SpirvStructureField field)
         {
+            if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+                Assert.Ignore("Can't make array of arrays.");
             var originalArrayType = new SpirvArray(field.Type, 2);
             var (shaderInstructions, shaders) = CompileShaderForFieldSet(new SpirvStructure("ModelBuffer", marker,
                 new SpirvStructureField(originalArrayType, "testArray")));

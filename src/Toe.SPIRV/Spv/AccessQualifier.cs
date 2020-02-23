@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class AccessQualifier : ValueEnum
+    public abstract partial class AccessQualifier : ValueEnum
     {
-        public AccessQualifier(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Kernel)]
@@ -19,16 +15,52 @@ namespace Toe.SPIRV.Spv
             ReadWrite = 2,
         }
 
+        public class ReadOnly: AccessQualifier
+        {
+            public override Enumerant Value => AccessQualifier.Enumerant.ReadOnly;
+            public new static ReadOnly Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ReadOnly();
+                return res;
+            }
+        }
+        public class WriteOnly: AccessQualifier
+        {
+            public override Enumerant Value => AccessQualifier.Enumerant.WriteOnly;
+            public new static WriteOnly Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WriteOnly();
+                return res;
+            }
+        }
+        public class ReadWrite: AccessQualifier
+        {
+            public override Enumerant Value => AccessQualifier.Enumerant.ReadWrite;
+            public new static ReadWrite Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ReadWrite();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static AccessQualifier Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.ReadOnly :
+                    return ReadOnly.Parse(reader, wordCount - 1);
+                case Enumerant.WriteOnly :
+                    return WriteOnly.Parse(reader, wordCount - 1);
+                case Enumerant.ReadWrite :
+                    return ReadWrite.Parse(reader, wordCount - 1);
                 default:
-                    return new AccessQualifier(id);
+                    throw new IndexOutOfRangeException("Unknown AccessQualifier "+id);
             }
         }
         

@@ -1,14 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace Toe.SPIRV.Spv
 {
-    public partial class AddressingModel : ValueEnum
+    public abstract partial class AddressingModel : ValueEnum
     {
-        public AddressingModel(Enumerant value)
-        {
-            Value = value;
-        }
-
         public enum Enumerant
         {
             Logical = 0,
@@ -18,16 +14,52 @@ namespace Toe.SPIRV.Spv
             Physical64 = 2,
         }
 
+        public class Logical: AddressingModel
+        {
+            public override Enumerant Value => AddressingModel.Enumerant.Logical;
+            public new static Logical Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Logical();
+                return res;
+            }
+        }
+        public class Physical32: AddressingModel
+        {
+            public override Enumerant Value => AddressingModel.Enumerant.Physical32;
+            public new static Physical32 Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Physical32();
+                return res;
+            }
+        }
+        public class Physical64: AddressingModel
+        {
+            public override Enumerant Value => AddressingModel.Enumerant.Physical64;
+            public new static Physical64 Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Physical64();
+                return res;
+            }
+        }
 
-        public Enumerant Value { get; }
+        public abstract Enumerant Value { get; }
 
         public static AddressingModel Parse(WordReader reader, uint wordCount)
         {
             var id = (Enumerant) reader.ReadWord();
             switch (id)
             {
+                case Enumerant.Logical :
+                    return Logical.Parse(reader, wordCount - 1);
+                case Enumerant.Physical32 :
+                    return Physical32.Parse(reader, wordCount - 1);
+                case Enumerant.Physical64 :
+                    return Physical64.Parse(reader, wordCount - 1);
                 default:
-                    return new AddressingModel(id);
+                    throw new IndexOutOfRangeException("Unknown AddressingModel "+id);
             }
         }
         

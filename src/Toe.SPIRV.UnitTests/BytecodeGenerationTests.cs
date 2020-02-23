@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
-using Toe.SPIRV.Reflection;
 using Veldrid;
 using Veldrid.SPIRV;
 
 namespace Toe.SPIRV.UnitTests
 {
     [TestFixture]
-    public class SpirvGenerationTests
+    public class BytecodeGenerationTests
     {
         private static byte[] CompileToBytecode(string vertexShaderText)
         {
@@ -25,15 +24,13 @@ void main()
     gl_Position = vec4(0,1,2,3);
 }");
             var instructions = Shader.Parse(shaderBytes);
-            var reflection = new ShaderReflection(instructions);
+            var bytes = instructions.Build();
+            Shader.Parse(bytes);
 
-            var generatedInstructions = reflection.Build();
-            var generatedBytecode = generatedInstructions.Build();
-
-            //Assert.AreEqual(shaderBytes.Length, generatedBytecode.Length);
-            for (var index = 16; index < shaderBytes.Length; index++)
+            Assert.AreEqual(shaderBytes.Length, bytes.Length);
+            for (var index = 0; index < shaderBytes.Length; index++)
             {
-                Assert.AreEqual(shaderBytes[index], generatedBytecode[index]);
+                Assert.AreEqual(shaderBytes[index], bytes[index]);
             }
         }
     }
