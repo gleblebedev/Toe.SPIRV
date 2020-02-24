@@ -62,7 +62,9 @@ namespace Toe.SPIRV
 
         protected virtual void WriteStructs()
         {
-            var structs = new ShaderReflection(_shader).Structures.Where(_=>_.Name != "gl_PerVertex").ToList();
+            var structs = new ShaderReflection(_shader).Structures
+                .Where(_=>_.Name != "gl_PerVertex")
+                .ToList();
 
             for (var index = 0; index < structs.Count; index++)
             {

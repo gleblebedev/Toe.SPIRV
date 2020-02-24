@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Toe.SPIRV.ReflectionGenerator\Toe.SPIRV.ReflectionGenerator.csproj" />
         <ProjectReference Include="..\Toe.SPIRV\Toe.SPIRV.csproj" />
     </ItemGroup>
 

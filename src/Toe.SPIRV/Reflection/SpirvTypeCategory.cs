@@ -16,6 +16,8 @@
 
         Array,
 
-        Struct
+        Struct,
+
+        Function
     }
 }

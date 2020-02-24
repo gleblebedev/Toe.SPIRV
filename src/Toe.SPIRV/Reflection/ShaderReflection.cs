@@ -15,6 +15,8 @@ namespace Toe.SPIRV.Reflection
         public ShaderReflection(Shader shader)
         {
             _shader = shader;
+            OpEntryPoint entryPoint = null;
+            SpirvFunction entryFunction = null;
             foreach (var instruction in _shader.Instructions)
                 switch (instruction.OpCode)
                 {
@@ -42,7 +44,60 @@ namespace Toe.SPIRV.Reflection
                     case Op.OpTypeInt:
                         ParseInt(instruction);
                         break;
+                    case Op.OpEntryPoint:
+                        entryPoint = (OpEntryPoint)instruction;
+                        break;
+                    case Op.OpTypeFunction:
+                        ParseFunctionType((OpTypeFunction)instruction);
+                        break;
+                    case Op.OpFunction:
+                    {
+                        var opFunction = (OpFunction) instruction;
+                        var function = ParseFunction(opFunction);
+                        if (entryPoint != null && opFunction.IdResult == entryPoint.EntryPoint.Id)
+                        {
+                            entryFunction = function;
+                        }
+                        break;
+                    }
                 }
+        }
+
+        private SpirvFunction ParseFunction(OpFunction instruction)
+        {
+            var type = (SpirvFunctionType)ResolveType(instruction.FunctionType);
+            var spirvFunction = new SpirvFunction();
+            spirvFunction.ReturnType = type.ReturnType;
+            foreach (var argument in type.Arguments)
+            {
+                spirvFunction.Arguments.Add(argument);
+            }
+            return spirvFunction;
+        }
+
+        private SpirvTypeBase ResolveType(IdRef idRef)
+        {
+            if (idRef == null)
+                return null;
+            return _types[idRef.Id];
+        }
+        private SpirvTypeBase ResolveType(uint id)
+        {
+            if (_types.TryGetValue(id, out var type))
+                return type;
+            return null;
+        }
+
+        private void ParseFunctionType(OpTypeFunction instruction)
+        {
+            var function = new SpirvFunctionType();
+            function.Name = instruction.OpName?.Name;
+            function.ReturnType = ResolveType(instruction.ReturnType);
+            foreach (var parameterType in instruction.ParameterTypes)
+            {
+                function.Arguments.Add(new SpirvFunctionArgument(ResolveType(parameterType.Id)));
+            }
+            AddType(instruction, function);
         }
 
         public IReadOnlyList<SpirvStructure> Structures => _structures;

@@ -27,6 +27,8 @@ void main()
             var instructions = Shader.Parse(shaderBytes);
             var reflection = new ShaderReflection(instructions);
 
+            //var txt = new ReflectionGenerator(instructions).GenerateText();
+
             var generatedInstructions = reflection.Build();
             var generatedBytecode = generatedInstructions.Build();
 
