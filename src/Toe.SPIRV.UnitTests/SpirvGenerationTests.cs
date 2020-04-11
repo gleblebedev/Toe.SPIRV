@@ -20,9 +20,21 @@ namespace Toe.SPIRV.UnitTests
         public void SimpleShader()
         {
             var shaderBytes = CompileToBytecode(@"#version 450
+
+vec4 GetColor(float x)
+{
+    //vec4 res;
+    //if (x > 0.5)
+    //    res = vec4(x,x-1,x,1);
+    //else
+    //    res = vec4(x,x+1,x,1);
+    //return res;
+    return (x>0.5)?vec4(x,x-1,x,1):vec4(x,x+1,x,1);
+}
+
 void main()
 {
-    gl_Position = vec4(0,1,2,3);
+    gl_Position = GetColor(0.1);
 }");
             var instructions = Shader.Parse(shaderBytes);
             var reflection = new ShaderReflection(instructions);

@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvFunction
+    public class SpirvFunction: SequentialOperationNode
     {
         public SpirvFunction()
         {
         }
 
-        public SpirvTypeBase ReturnType { get; set; }
+        public SpirvTypeBase ReturnType { get; set; } = SpirvTypeBase.Void;
 
-        public IList<SpirvFunctionArgument> Arguments { get; } = new List<SpirvFunctionArgument>();
+        public IList<FunctionParameter> Arguments { get; } = new List<FunctionParameter>();
 
         public string Name { get; set; }
+        public FunctionControl FunctionControl { get; set; } = FunctionControl.None;
     }
 }

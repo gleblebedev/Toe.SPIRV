@@ -18,6 +18,8 @@
 
         Struct,
 
-        Function
+        Function,
+
+        Pointer,
     }
 }

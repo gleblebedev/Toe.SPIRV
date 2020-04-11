@@ -8,5 +8,15 @@
         {
             _type = type;
         }
+
+        public SpirvTypeBase Type
+        {
+            get => _type;
+        }
+
+        public override string ToString()
+        {
+            return _type.ToString();
+        }
     }
 }

@@ -13,5 +13,10 @@ namespace Toe.SPIRV.Reflection
         public IList<SpirvFunctionArgument> Arguments { get; } = new List<SpirvFunctionArgument>();
 
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name ?? base.ToString();
+        }
     }
 }

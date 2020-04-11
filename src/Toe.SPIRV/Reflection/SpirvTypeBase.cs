@@ -176,5 +176,10 @@ namespace Toe.SPIRV.Reflection
 
             return new SpirvMatrix((SpirvVector) columnType, columnCount);
         }
+
+        public override string ToString()
+        {
+            return this.TypeCategory.ToString();
+        }
     }
 }
