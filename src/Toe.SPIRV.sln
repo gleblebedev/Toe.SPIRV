@@ -29,11 +29,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.Scripting.ExpressionGra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.NodeEditor", "Toe.SPIRV.NodeEditor\Toe.SPIRV.NodeEditor.csproj", "{4662E5E9-6445-4441-87C1-1E58F790DA31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CrossPlatformNodeEditor", "Toe.SPIRV.CrossPlatformNodeEditor\Toe.SPIRV.CrossPlatformNodeEditor.csproj", "{EAE29A53-3613-49F8-B9A4-5261E9D81E38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.SPIRV.CrossPlatformNodeEditor", "Toe.SPIRV.CrossPlatformNodeEditor\Toe.SPIRV.CrossPlatformNodeEditor.csproj", "{EAE29A53-3613-49F8-B9A4-5261E9D81E38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.Scripting.Avalonia", "..\submodules\Toe.Scripting\src\Toe.Scripting.Avalonia\Toe.Scripting.Avalonia.csproj", "{EB5E21C0-D763-4206-83B0-57FD699703FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.Scripting.Avalonia", "..\submodules\Toe.Scripting\src\Toe.Scripting.Avalonia\Toe.Scripting.Avalonia.csproj", "{EB5E21C0-D763-4206-83B0-57FD699703FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CodeGenerator", "Toe.SPIRV.CodeGenerator\Toe.SPIRV.CodeGenerator.csproj", "{4546628B-0819-4DEE-B339-04B75840FFC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toe.SPIRV.CodeGenerator", "Toe.SPIRV.CodeGenerator\Toe.SPIRV.CodeGenerator.csproj", "{4546628B-0819-4DEE-B339-04B75840FFC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.Scripting.MSAGL", "..\submodules\Toe.Scripting\src\Toe.Scripting.MSAGL\Toe.Scripting.MSAGL.csproj", "{FCF72F93-375E-44C5-AFA4-C630A9771177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.Scripting.WPFEditor", "..\submodules\Toe.Scripting\src\Toe.Scripting.WPFEditor\Toe.Scripting.WPFEditor.csproj", "{0116A1E2-3D2C-4DAF-8029-673659CFA4BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +105,14 @@ Global
 		{4546628B-0819-4DEE-B339-04B75840FFC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4546628B-0819-4DEE-B339-04B75840FFC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4546628B-0819-4DEE-B339-04B75840FFC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF72F93-375E-44C5-AFA4-C630A9771177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF72F93-375E-44C5-AFA4-C630A9771177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF72F93-375E-44C5-AFA4-C630A9771177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF72F93-375E-44C5-AFA4-C630A9771177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0116A1E2-3D2C-4DAF-8029-673659CFA4BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0116A1E2-3D2C-4DAF-8029-673659CFA4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0116A1E2-3D2C-4DAF-8029-673659CFA4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0116A1E2-3D2C-4DAF-8029-673659CFA4BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +124,8 @@ Global
 		{14BC8D17-54B3-4058-8309-38164A51CAAB} = {A13961E4-4BE0-441A-B185-E077A887D305}
 		{8A78B73E-02E3-4BDA-8DFE-B54D42A0FA58} = {A13961E4-4BE0-441A-B185-E077A887D305}
 		{EB5E21C0-D763-4206-83B0-57FD699703FC} = {A13961E4-4BE0-441A-B185-E077A887D305}
+		{FCF72F93-375E-44C5-AFA4-C630A9771177} = {A13961E4-4BE0-441A-B185-E077A887D305}
+		{0116A1E2-3D2C-4DAF-8029-673659CFA4BB} = {A13961E4-4BE0-441A-B185-E077A887D305}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE91DD18-BAA8-4EB4-86EA-A8870602EFCB}
