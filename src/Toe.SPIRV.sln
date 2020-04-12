@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CrossPlatformNode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.Scripting.Avalonia", "..\submodules\Toe.Scripting\src\Toe.Scripting.Avalonia\Toe.Scripting.Avalonia.csproj", "{EB5E21C0-D763-4206-83B0-57FD699703FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toe.SPIRV.CodeGenerator", "Toe.SPIRV.CodeGenerator\Toe.SPIRV.CodeGenerator.csproj", "{4546628B-0819-4DEE-B339-04B75840FFC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{EB5E21C0-D763-4206-83B0-57FD699703FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB5E21C0-D763-4206-83B0-57FD699703FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB5E21C0-D763-4206-83B0-57FD699703FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4546628B-0819-4DEE-B339-04B75840FFC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4546628B-0819-4DEE-B339-04B75840FFC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4546628B-0819-4DEE-B339-04B75840FFC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4546628B-0819-4DEE-B339-04B75840FFC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,38 @@
+﻿namespace Toe.SPIRV.CodeGenerator.Model.Grammar
+{
+    public enum SpirvOperandKind
+    {
+        IdResultType,
+        IdResult,
+        LiteralString,
+        SourceLanguage,
+        LiteralInteger,
+        IdRef,
+        LiteralExtInstInteger,
+        AddressingModel,
+        MemoryModel,
+        ExecutionModel,
+        ExecutionMode,
+        Capability,
+        Dim,
+        ImageFormat,
+        AccessQualifier,
+        StorageClass,
+        LiteralContextDependentNumber,
+        SamplerAddressingMode,
+        SamplerFilterMode,
+        LiteralSpecConstantOpInteger,
+        FunctionControl,
+        MemoryAccess,
+        Decoration,
+        PairIdRefLiteralInteger,
+        ImageOperands,
+        IdScope,
+        IdMemorySemantics,
+        PairIdRefIdRef,
+        LoopControl,
+        SelectionControl,
+        PairLiteralIntegerIdRef,
+        GroupOperation,
+    }
+}

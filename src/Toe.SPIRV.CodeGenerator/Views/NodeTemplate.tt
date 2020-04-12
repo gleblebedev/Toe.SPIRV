@@ -1,0 +1,59 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
+using System.Collections.Generic;
+using Toe.SPIRV.Instructions;
+
+namespace Toe.SPIRV.Reflection.Nodes
+{
+    public partial class <#= name #> : <#= baseClass#> 
+    {
+        public <#= name #>(<#= opname #> op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+<# 
+if (_instruction.IdResultType != null)
+{
+#>
+            ReturnType = treeBuilder.ResolveType(op.IdResultType);
+<# 
+}
+
+foreach (var op in IdRefOperands)
+{
+    if (op.Quantifier == SpirvOperandQuantifier.Repeated)
+    {
+#>
+            <#=op.Name#> = treeBuilder.GetNodes(op.<#=op.Name#>);
+<# 
+    }
+    else
+    {
+#>
+            <#=op.Name#> = treeBuilder.GetNode(op.<#=op.Name#>);
+<# 
+    }
+}
+#>
+        }
+
+<# foreach (var op in IdRefOperands)
+{
+    if (op.Quantifier == SpirvOperandQuantifier.Repeated)
+    {
+#>
+        public IList<Node> <#=op.Name#> { get; set; }
+<# 
+    }
+    else
+    {
+#>
+        public Node <#=op.Name#> { get; set; }
+<# 
+    }
+}
+#>
+    }
+}
