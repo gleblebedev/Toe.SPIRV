@@ -14,6 +14,9 @@ namespace Toe.SPIRV.CodeGenerator.Model.Grammar
         public SpirvOperand IdResultType { get; set; }
 
         public List<SpirvOperand> Operands { get; } = new List<SpirvOperand>();
+        public bool LastInstructionInABlock { get; set; }
+        public bool HasDefaultEnter { get; set; }
+        public bool HasDefaultExit { get; set; }
 
         public IEnumerable<SpirvOperand> AllOperands()
         {
@@ -25,6 +28,11 @@ namespace Toe.SPIRV.CodeGenerator.Model.Grammar
             {
                 yield return operand;
             }
+        }
+
+        public override string ToString()
+        {
+            return Name ?? OpCode.ToString();
         }
     }
 }

@@ -1,15 +1,29 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class EmitVertex : ExecutableNode 
+    public partial class EmitVertex : ExecutableNode, INodeWithNext
     {
         public EmitVertex()
         {
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpEmitVertex;
+
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
+        }
+
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
@@ -17,11 +31,19 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

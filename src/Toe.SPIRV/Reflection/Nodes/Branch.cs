@@ -1,16 +1,21 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class Branch : ExecutableNode 
+    public partial class Branch : ExecutableNode
     {
         public Branch()
         {
         }
 
-        public ExecutableNode TargetLabel { get; set; }
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpBranch;
+
+
+        public Label TargetLabel { get; set; }
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
@@ -18,11 +23,18 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield return CreateExitPin(nameof(TargetLabel), TargetLabel);
                 yield break;
             }
@@ -34,7 +46,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpBranch op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            TargetLabel = (ExecutableNode)treeBuilder.GetNode(op.TargetLabel);
+            TargetLabel = (Label)treeBuilder.GetNode(op.TargetLabel);
         }
     }
 }

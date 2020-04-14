@@ -14,38 +14,21 @@ namespace Toe.SPIRV.Reflection
             return null;
         }
 
-        public virtual Node GetNext()
+        public virtual ExecutableNode GetNext()
         {
             return null;
         }
 
-        public bool IsFunction
-        {
-            get
-            {
-                var resType = GetResultType();
-                if (resType == null)
-                    return false;
-                if (resType == SpirvTypeBase.Void)
-                    return false;
-                return true;
-            }
-        }
+        public abstract Spv.Op OpCode { get; }
 
         public virtual IEnumerable<NodePin> EnterPins
         {
-            get
-            {
-                if (!IsFunction) yield return new NodePin(this,"",null);
-            }
+            get { return Enumerable.Empty<NodePin>(); }
         }
 
         public virtual IEnumerable<NodePinWithConnection> ExitPins
         {
-            get
-            {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
-            }
+            get { return Enumerable.Empty<NodePinWithConnection>(); }
         }
 
         public virtual IEnumerable<NodePinWithConnection> InputPins
@@ -55,11 +38,10 @@ namespace Toe.SPIRV.Reflection
 
         public virtual IEnumerable<NodePin> OutputPins
         {
-            get
-            {
-                if (IsFunction) yield return new NodePin(this, "", GetResultType());
-            }
+            get { return Enumerable.Empty<NodePin>(); }
         }
+
+        public string Name { get; set; }
 
         protected NodePinWithConnection CreateInputPin(string name, Node node)
         {
@@ -79,6 +61,7 @@ namespace Toe.SPIRV.Reflection
         {
             switch (instruction.OpCode)
             {
+                case Op.OpUndef: return new Undef();
                 case Op.OpConstantTrue: return new ConstantTrue();
                 case Op.OpConstantFalse: return new ConstantFalse();
                 case Op.OpConstant: return new Constant();

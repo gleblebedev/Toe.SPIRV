@@ -1,15 +1,26 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class CompositeExtract : FunctionNode 
+    public partial class CompositeExtract : Node
     {
         public CompositeExtract()
         {
         }
 
+        public override Op OpCode => Op.OpCompositeExtract;
+
+
         public Node Composite { get; set; }
+        public IList<uint> Indexes { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -19,11 +30,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -36,6 +56,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Composite = treeBuilder.GetNode(op.Composite);
+            Indexes = op.Indexes;
         }
     }
 }

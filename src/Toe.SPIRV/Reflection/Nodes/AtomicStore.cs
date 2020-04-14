@@ -1,15 +1,30 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class AtomicStore : ExecutableNode 
+    public partial class AtomicStore : ExecutableNode, INodeWithNext
     {
         public AtomicStore()
         {
         }
 
+        public override Op OpCode => Op.OpAtomicStore;
+
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
+        }
+
         public Node Pointer { get; set; }
+        public uint Scope { get; set; }
+        public uint Semantics { get; set; }
         public Node Value { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
@@ -21,11 +36,27 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -37,6 +68,8 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpAtomicStore op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Pointer = treeBuilder.GetNode(op.Pointer);
+            Scope = op.Scope;
+            Semantics = op.Semantics;
             Value = treeBuilder.GetNode(op.Value);
         }
     }

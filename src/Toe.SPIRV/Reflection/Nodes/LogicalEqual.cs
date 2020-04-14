@@ -1,16 +1,26 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class LogicalEqual : FunctionNode 
+    public partial class LogicalEqual : Node
     {
         public LogicalEqual()
         {
         }
 
+        public override Op OpCode => Op.OpLogicalEqual;
+
+
         public Node Operand1 { get; set; }
         public Node Operand2 { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -21,11 +31,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

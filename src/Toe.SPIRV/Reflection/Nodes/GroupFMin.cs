@@ -1,15 +1,27 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class GroupFMin : FunctionNode 
+    public partial class GroupFMin : Node
     {
         public GroupFMin()
         {
         }
 
+        public override Op OpCode => Op.OpGroupFMin;
+
+
+        public uint Execution { get; set; }
+        public Spv.GroupOperation Operation { get; set; }
         public Node X { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -19,11 +31,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -35,6 +56,8 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpGroupFMin op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Execution = op.Execution;
+            Operation = op.Operation;
             X = treeBuilder.GetNode(op.X);
         }
     }

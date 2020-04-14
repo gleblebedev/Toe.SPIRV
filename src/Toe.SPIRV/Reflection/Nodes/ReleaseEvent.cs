@@ -1,12 +1,25 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class ReleaseEvent : ExecutableNode 
+    public partial class ReleaseEvent : ExecutableNode, INodeWithNext
     {
         public ReleaseEvent()
         {
+        }
+
+        public override Op OpCode => Op.OpReleaseEvent;
+
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
         }
 
         public Node Event { get; set; }
@@ -19,11 +32,27 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

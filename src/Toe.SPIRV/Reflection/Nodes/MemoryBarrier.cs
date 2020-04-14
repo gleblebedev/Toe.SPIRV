@@ -1,15 +1,31 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class MemoryBarrier : ExecutableNode 
+    public partial class MemoryBarrier : ExecutableNode, INodeWithNext
     {
         public MemoryBarrier()
         {
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpMemoryBarrier;
+
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
+        }
+
+        public uint Memory { get; set; }
+        public uint Semantics { get; set; }
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
@@ -17,11 +33,19 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -32,6 +56,8 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpMemoryBarrier op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            Memory = op.Memory;
+            Semantics = op.Semantics;
         }
     }
 }

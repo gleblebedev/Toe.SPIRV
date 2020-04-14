@@ -1,17 +1,27 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class Select : FunctionNode 
+    public partial class Select : Node
     {
         public Select()
         {
         }
 
+        public override Op OpCode => Op.OpSelect;
+
+
         public Node Condition { get; set; }
         public Node Object1 { get; set; }
         public Node Object2 { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -23,11 +33,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

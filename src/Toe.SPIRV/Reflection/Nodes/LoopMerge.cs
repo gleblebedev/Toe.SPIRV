@@ -1,23 +1,44 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class LoopMerge : ExecutableNode 
+    public partial class LoopMerge : ExecutableNode, INodeWithNext
     {
         public LoopMerge()
         {
         }
 
+        public override Op OpCode => Op.OpLoopMerge;
+
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
+        }
+
         public Node MergeBlock { get; set; }
         public Node ContinueTarget { get; set; }
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public Spv.LoopControl LoopControl { get; set; }
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
-                yield return CreateInputPin(nameof(MergeBlock), MergeBlock);
-                yield return CreateInputPin(nameof(ContinueTarget), ContinueTarget);
                 yield break;
+            }
+        }
+
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
             }
         }
 
@@ -25,7 +46,9 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin(nameof(MergeBlock), MergeBlock);
+                yield return CreateExitPin(nameof(ContinueTarget), ContinueTarget);
                 yield break;
             }
         }
@@ -38,6 +61,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             MergeBlock = treeBuilder.GetNode(op.MergeBlock);
             ContinueTarget = treeBuilder.GetNode(op.ContinueTarget);
+            LoopControl = op.LoopControl;
         }
     }
 }

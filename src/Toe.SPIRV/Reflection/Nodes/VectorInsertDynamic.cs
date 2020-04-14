@@ -1,17 +1,27 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class VectorInsertDynamic : FunctionNode 
+    public partial class VectorInsertDynamic : Node
     {
         public VectorInsertDynamic()
         {
         }
 
+        public override Op OpCode => Op.OpVectorInsertDynamic;
+
+
         public Node Vector { get; set; }
         public Node Component { get; set; }
         public Node Index { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -23,11 +33,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

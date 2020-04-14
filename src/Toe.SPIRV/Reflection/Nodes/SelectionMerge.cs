@@ -1,16 +1,31 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class SelectionMerge : ExecutableNode 
+    public partial class SelectionMerge : ExecutableNode, INodeWithNext
     {
         public SelectionMerge()
         {
         }
 
-        public ExecutableNode MergeBlock { get; set; }
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpSelectionMerge;
+
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
+        }
+
+        public Node MergeBlock { get; set; }
+        public Spv.SelectionControl SelectionControl { get; set; }
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
@@ -18,11 +33,19 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin("", GetNext());
                 yield return CreateExitPin(nameof(MergeBlock), MergeBlock);
                 yield break;
             }
@@ -34,7 +57,8 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpSelectionMerge op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            MergeBlock = (ExecutableNode)treeBuilder.GetNode(op.MergeBlock);
+            MergeBlock = treeBuilder.GetNode(op.MergeBlock);
+            SelectionControl = op.SelectionControl;
         }
     }
 }

@@ -6,14 +6,34 @@
 <#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class <#= name #> : <#= baseClass#> 
+    public partial class <#= name #> : <#= baseClass#><#=_instruction.HasDefaultExit?", INodeWithNext":""#>
     {
         public <#= name #>()
         {
         }
+
+        public override Op OpCode => Op.<#= _instruction.Name #>;
+
+<# 
+if (_instruction.HasDefaultExit)
+{
+#>
+        /// <summary>
+        /// Next operation in sequence
+        /// </summary>
+        public ExecutableNode Next { get; set; }
+
+        public override ExecutableNode GetNext()
+        {
+            return Next;
+        }
+<# 
+}
+#>
 
 <# 
 foreach (var op in _instruction.Operands)
@@ -26,13 +46,9 @@ foreach (var op in _instruction.Operands)
 <# 
             break;
         case SpirvOperandClassification.Exit:
-#>
-        public ExecutableNode <#=op.Name#> { get; set; }
-<# 
-            break;
         case SpirvOperandClassification.Input:
 #>
-        public Node <#=op.Name#> { get; set; }
+        public <#=GetNodeType(op)#> <#=op.Name#> { get; set; }
 <# 
             break;
         case SpirvOperandClassification.RepeatedInput:
@@ -40,10 +56,15 @@ foreach (var op in _instruction.Operands)
         public IList<Node> <#=op.Name#> { get; set; }
 <# 
             break;
+        default:
+#>
+        public <#=GetPropertyType(op)#> <#=op.Name#> { get; set; }
+<# 
+            break;
     }
 }
 
-if (_instruction.IdResultType != null && baseClass != "FunctionNode")
+if (_instruction.IdResultType != null)
 {
 #>
         public SpirvTypeBase ResultType { get; set; }
@@ -54,6 +75,9 @@ if (_instruction.IdResultType != null && baseClass != "FunctionNode")
         }
 <# 
 }
+
+if (_instruction.Operands.Any(op=>op.Class == SpirvOperandClassification.Input || op.Class == SpirvOperandClassification.RepeatedInput))
+{
 #>
         public override IEnumerable<NodePinWithConnection> InputPins
         {
@@ -82,13 +106,52 @@ foreach (var op in _instruction.Operands)
                 yield break;
             }
         }
+<# 
+}
+#>
+
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+<# 
+if (_instruction.IdResultType != null)
+{
+#>
+                yield return new NodePin(this, "", ResultType);
+<# 
+}
+#>
+                yield break;
+            }
+        }
+
+<# 
+if (_instruction.HasDefaultEnter)
+{
+#>
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+<# 
+}
+#>
 
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
 <# 
+if (_instruction.HasDefaultExit)
+{
+#>
+                yield return CreateExitPin("", GetNext());
+<# 
+}
 foreach (var op in _instruction.Operands)
 {
     if (op.Class == SpirvOperandClassification.Exit)
@@ -127,18 +190,19 @@ foreach (var op in _instruction.Operands)
 <# 
             break;
         case SpirvOperandClassification.Exit:
+        case SpirvOperandClassification.Input:
 #>
-            <#=op.Name#> = (ExecutableNode)treeBuilder.GetNode(op.<#=op.Name#>);
-<# 
-            break;
-            case SpirvOperandClassification.Input:
-#>
-            <#=op.Name#> = treeBuilder.GetNode(op.<#=op.Name#>);
+            <#=op.Name#> = <#=CastNodeType(op)#>treeBuilder.GetNode(op.<#=op.Name#>);
 <# 
             break;
         case SpirvOperandClassification.RepeatedInput:
 #>
             <#=op.Name#> = treeBuilder.GetNodes(op.<#=op.Name#>);
+<# 
+            break;
+        default:
+#>
+            <#=op.Name#> = op.<#=op.Name#>;
 <# 
             break;
     }

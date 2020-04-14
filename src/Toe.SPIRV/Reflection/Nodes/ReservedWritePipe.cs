@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class ReservedWritePipe : FunctionNode 
+    public partial class ReservedWritePipe : Node
     {
         public ReservedWritePipe()
         {
         }
+
+        public override Op OpCode => Op.OpReservedWritePipe;
+
 
         public Node Pipe { get; set; }
         public Node ReserveId { get; set; }
@@ -15,6 +19,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node Pointer { get; set; }
         public Node PacketSize { get; set; }
         public Node PacketAlignment { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -29,11 +39,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

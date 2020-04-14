@@ -1,16 +1,27 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class ExtInst : FunctionNode 
+    public partial class ExtInst : Node
     {
         public ExtInst()
         {
         }
 
+        public override Op OpCode => Op.OpExtInst;
+
+
         public Node Set { get; set; }
+        public uint Instruction { get; set; }
         public IList<Node> Operands { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -24,11 +35,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -41,6 +61,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Set = treeBuilder.GetNode(op.Set);
+            Instruction = op.Instruction;
             Operands = treeBuilder.GetNodes(op.Operands);
         }
     }

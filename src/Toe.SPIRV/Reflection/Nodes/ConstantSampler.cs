@@ -1,27 +1,42 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class ConstantSampler : FunctionNode 
+    public partial class ConstantSampler : Node
     {
         public ConstantSampler()
         {
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpConstantSampler;
+
+
+        public Spv.SamplerAddressingMode SamplerAddressingMode { get; set; }
+        public uint Param { get; set; }
+        public Spv.SamplerFilterMode SamplerFilterMode { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
+                yield return new NodePin(this, "", ResultType);
                 yield break;
             }
         }
+
 
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -33,6 +48,9 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpConstantSampler op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
+            SamplerAddressingMode = op.SamplerAddressingMode;
+            Param = op.Param;
+            SamplerFilterMode = op.SamplerFilterMode;
         }
     }
 }

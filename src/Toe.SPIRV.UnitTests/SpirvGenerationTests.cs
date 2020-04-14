@@ -12,6 +12,7 @@ namespace Toe.SPIRV.UnitTests
         {
             var vertex = SpirvCompilation.CompileGlslToSpirv(vertexShaderText, "vertex.glsl", ShaderStages.Vertex,
                 new GlslCompileOptions { Debug = true });
+
             return vertex.SpirvBytes;
         }
 

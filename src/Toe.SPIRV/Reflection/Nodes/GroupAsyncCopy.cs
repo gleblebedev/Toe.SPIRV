@@ -1,19 +1,30 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class GroupAsyncCopy : FunctionNode 
+    public partial class GroupAsyncCopy : Node
     {
         public GroupAsyncCopy()
         {
         }
 
+        public override Op OpCode => Op.OpGroupAsyncCopy;
+
+
+        public uint Execution { get; set; }
         public Node Destination { get; set; }
         public Node Source { get; set; }
         public Node NumElements { get; set; }
         public Node Stride { get; set; }
         public Node Event { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -27,11 +38,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -43,6 +63,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpGroupAsyncCopy op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Execution = op.Execution;
             Destination = treeBuilder.GetNode(op.Destination);
             Source = treeBuilder.GetNode(op.Source);
             NumElements = treeBuilder.GetNode(op.NumElements);

@@ -10,5 +10,13 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             return ResultType;
         }
+
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", GetResultType());
+            }
+        }
     }
 }

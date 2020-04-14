@@ -1,15 +1,20 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class Kill : ExecutableNode 
+    public partial class Kill : ExecutableNode
     {
         public Kill()
         {
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpKill;
+
+
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
@@ -17,11 +22,18 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

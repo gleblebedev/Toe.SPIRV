@@ -3,10 +3,9 @@
     public enum SpirvOperandClassification
     {
         Other,
-        Enum,
         Type,
         Input,
         RepeatedInput,
-        Exit
+        Exit,
     }
 }

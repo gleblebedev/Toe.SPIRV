@@ -1,16 +1,28 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class AtomicOr : FunctionNode 
+    public partial class AtomicOr : Node
     {
         public AtomicOr()
         {
         }
 
+        public override Op OpCode => Op.OpAtomicOr;
+
+
         public Node Pointer { get; set; }
+        public uint Scope { get; set; }
+        public uint Semantics { get; set; }
         public Node Value { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -21,11 +33,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", ResultType);
+                yield break;
+            }
+        }
+
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }
@@ -38,6 +59,8 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pointer = treeBuilder.GetNode(op.Pointer);
+            Scope = op.Scope;
+            Semantics = op.Semantics;
             Value = treeBuilder.GetNode(op.Value);
         }
     }

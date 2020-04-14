@@ -1,27 +1,39 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class ConstantFalse : FunctionNode 
+    public partial class ConstantFalse : Node
     {
         public ConstantFalse()
         {
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override Op OpCode => Op.OpConstantFalse;
+
+
+        public SpirvTypeBase ResultType { get; set; }
+
+        public override SpirvTypeBase GetResultType()
+        {
+            return ResultType;
+        }
+
+        public override IEnumerable<NodePin> OutputPins
         {
             get
             {
+                yield return new NodePin(this, "", ResultType);
                 yield break;
             }
         }
+
 
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield break;
             }
         }

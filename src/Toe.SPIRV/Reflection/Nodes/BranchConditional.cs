@@ -1,17 +1,22 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class BranchConditional : ExecutableNode 
+    public partial class BranchConditional : ExecutableNode
     {
         public BranchConditional()
         {
         }
 
+        public override Op OpCode => Op.OpBranchConditional;
+
+
         public Node Condition { get; set; }
-        public ExecutableNode TrueLabel { get; set; }
-        public ExecutableNode FalseLabel { get; set; }
+        public Label TrueLabel { get; set; }
+        public Label FalseLabel { get; set; }
+        public IList<uint> Branchweights { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -21,11 +26,26 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
+        public override IEnumerable<NodePin> OutputPins
+        {
+            get
+            {
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePin> EnterPins
+        {
+            get
+            {
+                yield return new NodePin(this, "", null);
+            }
+        }
+
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                if (!IsFunction) yield return CreateExitPin("", GetNext());
                 yield return CreateExitPin(nameof(TrueLabel), TrueLabel);
                 yield return CreateExitPin(nameof(FalseLabel), FalseLabel);
                 yield break;
@@ -39,8 +59,9 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpBranchConditional op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Condition = treeBuilder.GetNode(op.Condition);
-            TrueLabel = (ExecutableNode)treeBuilder.GetNode(op.TrueLabel);
-            FalseLabel = (ExecutableNode)treeBuilder.GetNode(op.FalseLabel);
+            TrueLabel = (Label)treeBuilder.GetNode(op.TrueLabel);
+            FalseLabel = (Label)treeBuilder.GetNode(op.FalseLabel);
+            Branchweights = op.Branchweights;
         }
     }
 }

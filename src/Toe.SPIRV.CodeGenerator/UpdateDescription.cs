@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
 using Toe.SPIRV.CodeGenerator.Model.Spv;
 
@@ -8,10 +10,21 @@ namespace Toe.SPIRV.CodeGenerator
     {
         private Operands _operands;
         private SpirvInstructions _grammar;
+        private Dictionary<SpirvOperandKind, SpirvOperandCategory> _operandKindCategories = new Dictionary<SpirvOperandKind, SpirvOperandCategory>();
 
         public void Run(UpdateDescriptionOptions options)
         {
             _operands =  Utils.LoadOperands(options.Input);
+
+            //foreach (var kind  in _operands.operand_kinds.Select(_=>_.kind).Distinct().OrderBy(_=>_))
+            //{
+            //    Console.WriteLine($"                {kind},");
+            //}
+            foreach (var operandKind in _operands.operand_kinds)
+            {
+                var kind = GetKind(operandKind.kind);
+                _operandKindCategories.Add(kind, GetOperandCategory(operandKind.category));
+            }
 
             if (options.Rebuild)
             {
@@ -32,6 +45,20 @@ namespace Toe.SPIRV.CodeGenerator
             Utils.SaveGrammar(options.Output, _grammar);
         }
 
+        private SpirvOperandCategory GetOperandCategory(string category)
+        {
+            switch (category)
+            {
+                case "BitEnum": return SpirvOperandCategory.BitEnum;
+                case "ValueEnum": return SpirvOperandCategory.ValueEnum;
+                case "Id": return SpirvOperandCategory.Id;
+                case "Literal": return SpirvOperandCategory.Literal;
+                case "Composite": return SpirvOperandCategory.Composite;
+                default:
+                    throw new NotImplementedException(category+" not supported");
+            }
+        }
+
         private SpirvInstruction CreateInstruction(Instruction instruction)
         {
             var spirvInstruction = new SpirvInstruction()
@@ -39,10 +66,23 @@ namespace Toe.SPIRV.CodeGenerator
                 Name = instruction.opname,
                 OpCode = instruction.opcode,
             };
+
             if (instruction.capabilities != null)
                 spirvInstruction.Capabilities.AddRange(instruction.capabilities);
             if (instruction.extensions != null)
                 spirvInstruction.Extensions.AddRange(instruction.extensions);
+            switch (spirvInstruction.Name)
+            {
+                case "OpUnreachable":
+                case "OpReturnValue":
+                case "OpReturn":
+                case "OpKill":
+                case "OpSwitch":
+                case "OpBranchConditional":
+                case "OpBranch":
+                    spirvInstruction.LastInstructionInABlock = true;
+                    break;
+            }
 
             for (var index = 0; index < instruction.operands.Count; index++)
             {
@@ -75,12 +115,33 @@ namespace Toe.SPIRV.CodeGenerator
             }
 
             spirvInstruction.Kind = EvaluateInstructionKind(spirvInstruction);
+            switch (spirvInstruction.Kind)
+            {
+                case InstructionKind.Function:
+                    spirvInstruction.HasDefaultEnter = false;
+                    spirvInstruction.HasDefaultExit = false;
+                    break;
+                default:
+                    spirvInstruction.HasDefaultEnter = spirvInstruction.Name != "OpFunction";
+                    if (spirvInstruction.LastInstructionInABlock)
+                    {
+                        spirvInstruction.HasDefaultExit = false;
+                    }
+                    else
+                    {
+                        spirvInstruction.HasDefaultExit = true;
+                    }
+
+                    break;
+            }
 
             return spirvInstruction;
         }
 
         private InstructionKind EvaluateInstructionKind(SpirvInstruction spirvInstruction)
         {
+            if (spirvInstruction.LastInstructionInABlock)
+                return InstructionKind.Executable;
             if (spirvInstruction.Name.StartsWith("OpType"))
                 return InstructionKind.Type;
             if (spirvInstruction.Name == "OpFunction")
@@ -96,18 +157,21 @@ namespace Toe.SPIRV.CodeGenerator
 
         private SpirvOperand CreateOperand(Instruction instruction, Operand operand)
         {
+            var spirvOperandKind = GetKind(operand.kind);
             var spirvOperand = new SpirvOperand()
             {
-                Kind = GetKind(operand.kind),
+                Kind = spirvOperandKind,
                 SpirvName = operand.name,
-                Quantifier = GetQuantifier(operand.quantifier)
+                Quantifier = GetQuantifier(operand.quantifier),
+                Category = _operandKindCategories[spirvOperandKind]
             };
+
             spirvOperand.Name = GetOperandName(spirvOperand);
-            spirvOperand.Class = GetOperandClass(instruction, spirvOperand);
+            SetOperandClass(instruction, spirvOperand);
             return spirvOperand;
         }
 
-        private SpirvOperandClassification GetOperandClass(Instruction instruction, SpirvOperand spirvOperand)
+        private void SetOperandClass(Instruction instruction, SpirvOperand spirvOperand)
         {
             if (spirvOperand.Kind == SpirvOperandKind.IdRef)
             {
@@ -115,29 +179,85 @@ namespace Toe.SPIRV.CodeGenerator
                 {
                     case "OpFunction":
                         if (spirvOperand.Name == "FunctionType")
-                            return SpirvOperandClassification.Type;
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpFunctionCall":
+                        if (spirvOperand.Name == "Function")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Input;
+                            spirvOperand.OperandType = "OpFunction";
+                            return;
+                        }
                         break;
                     case "OpSelectionMerge":
                         if (spirvOperand.Name == "MergeBlock")
-                            return SpirvOperandClassification.Exit;
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            return;
+                        }
+                        break;
+                    case "OpLoopMerge":
+                        if (spirvOperand.Name == "MergeBlock")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            return;
+                        }
+                        if (spirvOperand.Name == "ContinueTarget")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            return;
+                        }
                         break;
                     case "OpBranchConditional":
                         if (spirvOperand.Name == "TrueLabel")
-                            return SpirvOperandClassification.Exit;
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpLabel";
+                            return;
+                        }
+
                         if (spirvOperand.Name == "FalseLabel")
-                            return SpirvOperandClassification.Exit;
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpLabel";
+                            return;
+                        }
                         break;
                     case "OpBranch":
                         if (spirvOperand.Name == "TargetLabel")
-                            return SpirvOperandClassification.Exit;
+                        { 
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpLabel";
+                            return;
+                        }
                         break;
                 }
+
                 if (spirvOperand.Quantifier == SpirvOperandQuantifier.Repeated)
-                    return SpirvOperandClassification.RepeatedInput;
-                return SpirvOperandClassification.Input;
+                {
+                    spirvOperand.Class = SpirvOperandClassification.RepeatedInput;
+                }
+                else
+                {
+                    spirvOperand.Class = SpirvOperandClassification.Input;
+                }
+                return;
             }
 
-            return SpirvOperandClassification.Other;
+            spirvOperand.Class = SpirvOperandClassification.Other;
+            //switch (spirvOperand.Category)
+            //{
+            //    case SpirvOperandCategory.BitEnum:
+            //    case SpirvOperandCategory.ValueEnum:
+            //        spirvOperand.OperandType = spirvOperand.Category + ".Enumerant";
+            //        break;
+            //    default:
+            //        break;
+            //}
+            spirvOperand.Class = SpirvOperandClassification.Other;
         }
 
         private string GetOperandName(SpirvOperand spirvOperand)
@@ -191,38 +311,49 @@ namespace Toe.SPIRV.CodeGenerator
         {
             switch (operandKind)
             {
-                case "IdResultType": return SpirvOperandKind.IdResultType;
-                case "IdResult": return SpirvOperandKind.IdResult;
-                case "LiteralString": return SpirvOperandKind.LiteralString;
-                case "SourceLanguage": return SpirvOperandKind.SourceLanguage;
-                case "LiteralInteger": return SpirvOperandKind.LiteralInteger;
-                case "IdRef": return SpirvOperandKind.IdRef;
-                case "LiteralExtInstInteger": return SpirvOperandKind.LiteralExtInstInteger;
-                case "AddressingModel": return SpirvOperandKind.AddressingModel;
-                case "MemoryModel": return SpirvOperandKind.MemoryModel;
-                case "ExecutionModel": return SpirvOperandKind.ExecutionModel;
-                case "ExecutionMode": return SpirvOperandKind.ExecutionMode;
-                case "Capability": return SpirvOperandKind.Capability;
-                case "Dim": return SpirvOperandKind.Dim;
-                case "ImageFormat": return SpirvOperandKind.ImageFormat;
                 case "AccessQualifier": return SpirvOperandKind.AccessQualifier;
-                case "StorageClass": return SpirvOperandKind.StorageClass;
+                case "AddressingModel": return SpirvOperandKind.AddressingModel;
+                case "BuiltIn": return SpirvOperandKind.BuiltIn;
+                case "Capability": return SpirvOperandKind.Capability;
+                case "Decoration": return SpirvOperandKind.Decoration;
+                case "Dim": return SpirvOperandKind.Dim;
+                case "ExecutionMode": return SpirvOperandKind.ExecutionMode;
+                case "ExecutionModel": return SpirvOperandKind.ExecutionModel;
+                case "FPFastMathMode": return SpirvOperandKind.FPFastMathMode;
+                case "FPRoundingMode": return SpirvOperandKind.FPRoundingMode;
+                case "FunctionControl": return SpirvOperandKind.FunctionControl;
+                case "FunctionParameterAttribute": return SpirvOperandKind.FunctionParameterAttribute;
+                case "GroupOperation": return SpirvOperandKind.GroupOperation;
+                case "IdMemorySemantics": return SpirvOperandKind.IdMemorySemantics;
+                case "IdRef": return SpirvOperandKind.IdRef;
+                case "IdResult": return SpirvOperandKind.IdResult;
+                case "IdResultType": return SpirvOperandKind.IdResultType;
+                case "IdScope": return SpirvOperandKind.IdScope;
+                case "ImageChannelDataType": return SpirvOperandKind.ImageChannelDataType;
+                case "ImageChannelOrder": return SpirvOperandKind.ImageChannelOrder;
+                case "ImageFormat": return SpirvOperandKind.ImageFormat;
+                case "ImageOperands": return SpirvOperandKind.ImageOperands;
+                case "KernelEnqueueFlags": return SpirvOperandKind.KernelEnqueueFlags;
+                case "KernelProfilingInfo": return SpirvOperandKind.KernelProfilingInfo;
+                case "LinkageType": return SpirvOperandKind.LinkageType;
                 case "LiteralContextDependentNumber": return SpirvOperandKind.LiteralContextDependentNumber;
+                case "LiteralExtInstInteger": return SpirvOperandKind.LiteralExtInstInteger;
+                case "LiteralInteger": return SpirvOperandKind.LiteralInteger;
+                case "LiteralSpecConstantOpInteger": return SpirvOperandKind.LiteralSpecConstantOpInteger;
+                case "LiteralString": return SpirvOperandKind.LiteralString;
+                case "LoopControl": return SpirvOperandKind.LoopControl;
+                case "MemoryAccess": return SpirvOperandKind.MemoryAccess;
+                case "MemoryModel": return SpirvOperandKind.MemoryModel;
+                case "MemorySemantics": return SpirvOperandKind.MemorySemantics;
+                case "PairIdRefIdRef": return SpirvOperandKind.PairIdRefIdRef;
+                case "PairIdRefLiteralInteger": return SpirvOperandKind.PairIdRefLiteralInteger;
+                case "PairLiteralIntegerIdRef": return SpirvOperandKind.PairLiteralIntegerIdRef;
                 case "SamplerAddressingMode": return SpirvOperandKind.SamplerAddressingMode;
                 case "SamplerFilterMode": return SpirvOperandKind.SamplerFilterMode;
-                case "LiteralSpecConstantOpInteger": return SpirvOperandKind.LiteralSpecConstantOpInteger;
-                case "FunctionControl": return SpirvOperandKind.FunctionControl;
-                case "MemoryAccess": return SpirvOperandKind.MemoryAccess;
-                case "Decoration": return SpirvOperandKind.Decoration;
-                case "PairIdRefLiteralInteger": return SpirvOperandKind.PairIdRefLiteralInteger;
-                case "ImageOperands": return SpirvOperandKind.ImageOperands;
-                case "IdScope": return SpirvOperandKind.IdScope;
-                case "IdMemorySemantics": return SpirvOperandKind.IdMemorySemantics;
-                case "PairIdRefIdRef": return SpirvOperandKind.PairIdRefIdRef;
-                case "LoopControl": return SpirvOperandKind.LoopControl;
+                case "Scope": return SpirvOperandKind.Scope;
                 case "SelectionControl": return SpirvOperandKind.SelectionControl;
-                case "PairLiteralIntegerIdRef": return SpirvOperandKind.PairLiteralIntegerIdRef;
-                case "GroupOperation": return SpirvOperandKind.GroupOperation;
+                case "SourceLanguage": return SpirvOperandKind.SourceLanguage;
+                case "StorageClass": return SpirvOperandKind.StorageClass;
                 default: throw new NotImplementedException(operandKind+" not supported");
             }
         }
