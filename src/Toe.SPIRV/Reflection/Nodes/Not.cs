@@ -5,12 +5,37 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class Not : FunctionNode 
     {
-        public Not(OpNot op, SpirvInstructionTreeBuilder treeBuilder)
+        public Not()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Operand = treeBuilder.GetNode(op.Operand);
         }
 
         public Node Operand { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Operand), Operand);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpNot)op, treeBuilder);
+        }
+
+        public void SetUp(OpNot op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Operand = treeBuilder.GetNode(op.Operand);
+        }
     }
 }

@@ -1,0 +1,11 @@
+﻿<Window x:Class="Toe.SPIRV.NodeEditor.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Toe.SPIRV.NodeEditor.Views"
+        xmlns:views="clr-namespace:Toe.Scripting.WPF.Views;assembly=Toe.Scripting.WPF"
+        mc:Ignorable="d"
+        Title="Toe.SPIRV.NodeEditor" Height="450" Width="800">
+    <views:ScriptView DataContext="{Binding Script}"/>
+</Window>

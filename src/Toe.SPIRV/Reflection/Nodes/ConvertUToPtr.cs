@@ -5,12 +5,37 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class ConvertUToPtr : FunctionNode 
     {
-        public ConvertUToPtr(OpConvertUToPtr op, SpirvInstructionTreeBuilder treeBuilder)
+        public ConvertUToPtr()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            IntegerValue = treeBuilder.GetNode(op.IntegerValue);
         }
 
         public Node IntegerValue { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(IntegerValue), IntegerValue);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpConvertUToPtr)op, treeBuilder);
+        }
+
+        public void SetUp(OpConvertUToPtr op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            IntegerValue = treeBuilder.GetNode(op.IntegerValue);
+        }
     }
 }

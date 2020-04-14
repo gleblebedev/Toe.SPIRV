@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Toe.SPIRV.NodeEditor.ViewModels;
 
-namespace Toe.SPIRV.NodeEditor
+namespace Toe.SPIRV.NodeEditor.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,6 +24,7 @@ namespace Toe.SPIRV.NodeEditor
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }

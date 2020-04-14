@@ -5,14 +5,40 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class ImageRead : FunctionNode 
     {
-        public ImageRead(OpImageRead op, SpirvInstructionTreeBuilder treeBuilder)
+        public ImageRead()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Image = treeBuilder.GetNode(op.Image);
-            Coordinate = treeBuilder.GetNode(op.Coordinate);
         }
 
         public Node Image { get; set; }
         public Node Coordinate { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Image), Image);
+                yield return CreateInputPin(nameof(Coordinate), Coordinate);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpImageRead)op, treeBuilder);
+        }
+
+        public void SetUp(OpImageRead op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Image = treeBuilder.GetNode(op.Image);
+            Coordinate = treeBuilder.GetNode(op.Coordinate);
+        }
     }
 }

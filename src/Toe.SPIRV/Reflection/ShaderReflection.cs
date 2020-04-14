@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
@@ -18,7 +19,7 @@ namespace Toe.SPIRV.Reflection
 
         public IReadOnlyList<SpirvStructure> Structures { get; private set; }
 
-        public SpirvFunction EntryFunction { get; set; }
+        public Function EntryFunction { get; set; }
 
         public Shader Build()
         {

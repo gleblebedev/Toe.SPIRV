@@ -5,14 +5,40 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class UGreaterThan : FunctionNode 
     {
-        public UGreaterThan(OpUGreaterThan op, SpirvInstructionTreeBuilder treeBuilder)
+        public UGreaterThan()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Operand1 = treeBuilder.GetNode(op.Operand1);
-            Operand2 = treeBuilder.GetNode(op.Operand2);
         }
 
         public Node Operand1 { get; set; }
         public Node Operand2 { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Operand1), Operand1);
+                yield return CreateInputPin(nameof(Operand2), Operand2);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpUGreaterThan)op, treeBuilder);
+        }
+
+        public void SetUp(OpUGreaterThan op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Operand1 = treeBuilder.GetNode(op.Operand1);
+            Operand2 = treeBuilder.GetNode(op.Operand2);
+        }
     }
 }

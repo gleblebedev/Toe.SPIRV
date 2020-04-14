@@ -3,7 +3,9 @@
     public class SpirvOperand
     {
         public SpirvOperandKind Kind { get; set; }
-        
+
+        public SpirvOperandClassification Class { get; set; }
+
         public string SpirvName { get; set; }
 
         public string Name { get; set; }

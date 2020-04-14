@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -17,8 +17,10 @@
     <PackageReference Include="Avalonia" Version="0.9.7" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.7" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.7" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.13" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\submodules\Toe.Scripting\src\Toe.Scripting.Avalonia\Toe.Scripting.Avalonia.csproj" />
+    <ProjectReference Include="..\Toe.SPIRV.NodeEditor\Toe.SPIRV.NodeEditor.csproj" />
   </ItemGroup>
 </Project>

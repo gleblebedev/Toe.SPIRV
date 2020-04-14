@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
 using Toe.SPIRV.CodeGenerator.Model.Spv;
 
@@ -14,7 +13,15 @@ namespace Toe.SPIRV.CodeGenerator
         {
             _operands =  Utils.LoadOperands(options.Input);
 
-            _grammar = Utils.LoadGrammar(options.Output);
+            if (options.Rebuild)
+            {
+                _grammar = new SpirvInstructions();
+            }
+            else
+            {
+                _grammar = Utils.LoadGrammar(options.Output);
+            }
+
             foreach (var instruction in _operands.instructions)
             {
                 if (!_grammar.Instructions.ContainsKey(instruction.opcode))
@@ -40,7 +47,7 @@ namespace Toe.SPIRV.CodeGenerator
             for (var index = 0; index < instruction.operands.Count; index++)
             {
                 var operand = instruction.operands[index];
-                var spirvOperand = CreateOperand(operand);
+                var spirvOperand = CreateOperand(instruction, operand);
                 switch (spirvOperand.Kind)
                 {
                     case SpirvOperandKind.IdResult:
@@ -76,14 +83,18 @@ namespace Toe.SPIRV.CodeGenerator
         {
             if (spirvInstruction.Name.StartsWith("OpType"))
                 return InstructionKind.Type;
-            if (spirvInstruction.OpCode <= 40)
-                return InstructionKind.Other;
+            if (spirvInstruction.Name == "OpFunction")
+                return InstructionKind.Executable;
+            if (spirvInstruction.Name == "OpFunctionCall")
+                return InstructionKind.Executable;
             if (spirvInstruction.IdResultType != null)
                 return InstructionKind.Function;
-            return InstructionKind.Procedure;
+            if (spirvInstruction.OpCode <= 40)
+                return InstructionKind.Other;
+            return InstructionKind.Executable;
         }
 
-        private SpirvOperand CreateOperand(Operand operand)
+        private SpirvOperand CreateOperand(Instruction instruction, Operand operand)
         {
             var spirvOperand = new SpirvOperand()
             {
@@ -92,7 +103,41 @@ namespace Toe.SPIRV.CodeGenerator
                 Quantifier = GetQuantifier(operand.quantifier)
             };
             spirvOperand.Name = GetOperandName(spirvOperand);
+            spirvOperand.Class = GetOperandClass(instruction, spirvOperand);
             return spirvOperand;
+        }
+
+        private SpirvOperandClassification GetOperandClass(Instruction instruction, SpirvOperand spirvOperand)
+        {
+            if (spirvOperand.Kind == SpirvOperandKind.IdRef)
+            {
+                switch (instruction.opname)
+                {
+                    case "OpFunction":
+                        if (spirvOperand.Name == "FunctionType")
+                            return SpirvOperandClassification.Type;
+                        break;
+                    case "OpSelectionMerge":
+                        if (spirvOperand.Name == "MergeBlock")
+                            return SpirvOperandClassification.Exit;
+                        break;
+                    case "OpBranchConditional":
+                        if (spirvOperand.Name == "TrueLabel")
+                            return SpirvOperandClassification.Exit;
+                        if (spirvOperand.Name == "FalseLabel")
+                            return SpirvOperandClassification.Exit;
+                        break;
+                    case "OpBranch":
+                        if (spirvOperand.Name == "TargetLabel")
+                            return SpirvOperandClassification.Exit;
+                        break;
+                }
+                if (spirvOperand.Quantifier == SpirvOperandQuantifier.Repeated)
+                    return SpirvOperandClassification.RepeatedInput;
+                return SpirvOperandClassification.Input;
+            }
+
+            return SpirvOperandClassification.Other;
         }
 
         private string GetOperandName(SpirvOperand spirvOperand)

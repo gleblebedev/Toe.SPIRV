@@ -3,18 +3,38 @@ using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class SelectionMerge : SequentialOperationNode 
+    public partial class SelectionMerge : ExecutableNode 
     {
-        public SelectionMerge(OpSelectionMerge op, SpirvInstructionTreeBuilder treeBuilder)
+        public SelectionMerge()
         {
         }
 
-        public Node MergeBlock { get; set; }
-
-        public override void FixForwardReferences(Instruction instruction, SpirvInstructionTreeBuilder treeBuilder)
+        public ExecutableNode MergeBlock { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
         {
-            base.FixForwardReferences(instruction, treeBuilder);
-            MergeBlock = treeBuilder.GetNode(((OpSelectionMerge)instruction).MergeBlock);
+            get
+            {
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin(nameof(MergeBlock), MergeBlock);
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpSelectionMerge)op, treeBuilder);
+        }
+
+        public void SetUp(OpSelectionMerge op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            MergeBlock = (ExecutableNode)treeBuilder.GetNode(op.MergeBlock);
         }
     }
 }

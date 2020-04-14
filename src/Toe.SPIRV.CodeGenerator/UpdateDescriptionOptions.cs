@@ -11,5 +11,7 @@ namespace Toe.SPIRV.CodeGenerator
         [Option('o', "output", Required = false, HelpText = "Path to toe.spirv.grammar.json file")]
         public string Output { get; set; } = "toe.spirv.grammar.json";
 
+        [Option('r', "rebuild", Required = false, HelpText = "Completely rebuild toe.spirv.grammar.json")]
+        public bool Rebuild { get; set; }
     }
 }

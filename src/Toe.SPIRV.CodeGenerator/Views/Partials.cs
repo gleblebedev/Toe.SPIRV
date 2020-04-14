@@ -12,7 +12,6 @@ namespace Toe.SPIRV.CodeGenerator.Views
         private readonly string opname;
         private readonly string name;
         private readonly string baseClass;
-        private readonly IList<SpirvOperand> IdRefOperands;
 
         public NodeTemplate(SpirvInstruction instruction)
         {
@@ -25,10 +24,9 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     baseClass = "FunctionNode";
                     break;
                 default:
-                    baseClass = "SequentialOperationNode";
+                    baseClass = "ExecutableNode";
                     break;
             }
-            IdRefOperands = _instruction.Operands.Where(_=>_.Kind == SpirvOperandKind.IdRef).ToList();
         }
     }
 }

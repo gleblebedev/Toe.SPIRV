@@ -3,11 +3,35 @@ using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class Kill : SequentialOperationNode 
+    public partial class Kill : ExecutableNode 
     {
-        public Kill(OpKill op, SpirvInstructionTreeBuilder treeBuilder)
+        public Kill()
         {
         }
 
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpKill)op, treeBuilder);
+        }
+
+        public void SetUp(OpKill op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+        }
     }
 }

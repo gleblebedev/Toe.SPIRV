@@ -3,15 +3,41 @@ using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class AtomicStore : SequentialOperationNode 
+    public partial class AtomicStore : ExecutableNode 
     {
-        public AtomicStore(OpAtomicStore op, SpirvInstructionTreeBuilder treeBuilder)
+        public AtomicStore()
         {
-            Pointer = treeBuilder.GetNode(op.Pointer);
-            Value = treeBuilder.GetNode(op.Value);
         }
 
         public Node Pointer { get; set; }
         public Node Value { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Pointer), Pointer);
+                yield return CreateInputPin(nameof(Value), Value);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpAtomicStore)op, treeBuilder);
+        }
+
+        public void SetUp(OpAtomicStore op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            Pointer = treeBuilder.GetNode(op.Pointer);
+            Value = treeBuilder.GetNode(op.Value);
+        }
     }
 }

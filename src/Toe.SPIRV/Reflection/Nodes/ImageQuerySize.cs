@@ -5,12 +5,37 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class ImageQuerySize : FunctionNode 
     {
-        public ImageQuerySize(OpImageQuerySize op, SpirvInstructionTreeBuilder treeBuilder)
+        public ImageQuerySize()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Image = treeBuilder.GetNode(op.Image);
         }
 
         public Node Image { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Image), Image);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpImageQuerySize)op, treeBuilder);
+        }
+
+        public void SetUp(OpImageQuerySize op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Image = treeBuilder.GetNode(op.Image);
+        }
     }
 }

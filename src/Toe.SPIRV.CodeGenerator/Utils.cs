@@ -62,5 +62,16 @@ namespace Toe.SPIRV.CodeGenerator
         {
             SaveJson(fileName, instructions);
         }
+
+        public static void SaveText(string fileName, string text)
+        {
+            using (var file = CreateFile(fileName))
+            {
+                using (var writer = new StreamWriter(file, new UTF8Encoding(false)))
+                {
+                    writer.Write(text);
+                }
+            }
+        }
     }
 }

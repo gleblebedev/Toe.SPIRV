@@ -5,12 +5,37 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class PtrCastToGeneric : FunctionNode 
     {
-        public PtrCastToGeneric(OpPtrCastToGeneric op, SpirvInstructionTreeBuilder treeBuilder)
+        public PtrCastToGeneric()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Pointer = treeBuilder.GetNode(op.Pointer);
         }
 
         public Node Pointer { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Pointer), Pointer);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpPtrCastToGeneric)op, treeBuilder);
+        }
+
+        public void SetUp(OpPtrCastToGeneric op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Pointer = treeBuilder.GetNode(op.Pointer);
+        }
     }
 }

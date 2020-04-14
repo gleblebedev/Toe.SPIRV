@@ -5,14 +5,40 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class OuterProduct : FunctionNode 
     {
-        public OuterProduct(OpOuterProduct op, SpirvInstructionTreeBuilder treeBuilder)
+        public OuterProduct()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Vector1 = treeBuilder.GetNode(op.Vector1);
-            Vector2 = treeBuilder.GetNode(op.Vector2);
         }
 
         public Node Vector1 { get; set; }
         public Node Vector2 { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Vector1), Vector1);
+                yield return CreateInputPin(nameof(Vector2), Vector2);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpOuterProduct)op, treeBuilder);
+        }
+
+        public void SetUp(OpOuterProduct op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Vector1 = treeBuilder.GetNode(op.Vector1);
+            Vector2 = treeBuilder.GetNode(op.Vector2);
+        }
     }
 }

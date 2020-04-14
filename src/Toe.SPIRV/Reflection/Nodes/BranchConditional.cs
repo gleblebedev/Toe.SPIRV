@@ -1,31 +1,46 @@
-﻿using Toe.SPIRV.Instructions;
+using System.Collections.Generic;
+using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public class BranchConditional : SequentialOperationNode
+    public partial class BranchConditional : ExecutableNode 
     {
-        public BranchConditional(OpBranchConditional op, SpirvInstructionTreeBuilder treeBuilder)
+        public BranchConditional()
         {
         }
 
-        /// <summary>
-        /// Next operation in sequence
-        /// </summary>
-        public new Label Next
+        public Node Condition { get; set; }
+        public ExecutableNode TrueLabel { get; set; }
+        public ExecutableNode FalseLabel { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
         {
-            get => (Label)base.Next;
-            set => base.Next = value;
+            get
+            {
+                yield return CreateInputPin(nameof(Condition), Condition);
+                yield break;
+            }
         }
 
-        public Label TrueLabel { get; set; }
-
-        public Label FalseLabel { get; set; }
-
-        public override void FixForwardReferences(Instruction instruction, SpirvInstructionTreeBuilder treeBuilder)
+        public override IEnumerable<NodePinWithConnection> ExitPins
         {
-            base.FixForwardReferences(instruction, treeBuilder);
-            TrueLabel = (Label)treeBuilder.GetNode(((OpBranchConditional)instruction).TrueLabel);
-            FalseLabel = (Label)treeBuilder.GetNode(((OpBranchConditional)instruction).FalseLabel);
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin(nameof(TrueLabel), TrueLabel);
+                yield return CreateExitPin(nameof(FalseLabel), FalseLabel);
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpBranchConditional)op, treeBuilder);
+        }
+
+        public void SetUp(OpBranchConditional op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            Condition = treeBuilder.GetNode(op.Condition);
+            TrueLabel = (ExecutableNode)treeBuilder.GetNode(op.TrueLabel);
+            FalseLabel = (ExecutableNode)treeBuilder.GetNode(op.FalseLabel);
         }
     }
 }

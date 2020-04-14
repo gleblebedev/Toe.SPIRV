@@ -1,13 +1,14 @@
-﻿namespace Toe.SPIRV.Reflection.Nodes
+﻿using System.Collections.Generic;
+
+namespace Toe.SPIRV.Reflection.Nodes
 {
     public abstract class FunctionNode: Node
     {
-        public SpirvTypeBase ReturnType { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
-        public override bool TryGetReturnType(out SpirvTypeBase type)
+        public override SpirvTypeBase GetResultType()
         {
-            type = ReturnType;
-            return true;
+            return ResultType;
         }
     }
 }

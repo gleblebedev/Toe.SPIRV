@@ -1,19 +1,40 @@
-﻿using Toe.SPIRV.Instructions;
+using System.Collections.Generic;
+using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public class Branch : SequentialOperationNode
+    public partial class Branch : ExecutableNode 
     {
-        public Branch(OpBranch op, SpirvInstructionTreeBuilder treeBuilder)
+        public Branch()
         {
         }
-        /// <summary>
-        /// Next operation in sequence
-        /// </summary>
-        public new Label Next
+
+        public ExecutableNode TargetLabel { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
         {
-            get => (Label)base.Next;
-            set => base.Next = value;
+            get
+            {
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin(nameof(TargetLabel), TargetLabel);
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpBranch)op, treeBuilder);
+        }
+
+        public void SetUp(OpBranch op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            TargetLabel = (ExecutableNode)treeBuilder.GetNode(op.TargetLabel);
         }
     }
 }

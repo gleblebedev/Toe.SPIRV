@@ -5,20 +5,8 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class EnqueueKernel : FunctionNode 
     {
-        public EnqueueKernel(OpEnqueueKernel op, SpirvInstructionTreeBuilder treeBuilder)
+        public EnqueueKernel()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            Queue = treeBuilder.GetNode(op.Queue);
-            Flags = treeBuilder.GetNode(op.Flags);
-            NDRange = treeBuilder.GetNode(op.NDRange);
-            NumEvents = treeBuilder.GetNode(op.NumEvents);
-            WaitEvents = treeBuilder.GetNode(op.WaitEvents);
-            RetEvent = treeBuilder.GetNode(op.RetEvent);
-            Invoke = treeBuilder.GetNode(op.Invoke);
-            Param = treeBuilder.GetNode(op.Param);
-            ParamSize = treeBuilder.GetNode(op.ParamSize);
-            ParamAlign = treeBuilder.GetNode(op.ParamAlign);
-            LocalSize = treeBuilder.GetNodes(op.LocalSize);
         }
 
         public Node Queue { get; set; }
@@ -32,5 +20,55 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node ParamSize { get; set; }
         public Node ParamAlign { get; set; }
         public IList<Node> LocalSize { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(Queue), Queue);
+                yield return CreateInputPin(nameof(Flags), Flags);
+                yield return CreateInputPin(nameof(NDRange), NDRange);
+                yield return CreateInputPin(nameof(NumEvents), NumEvents);
+                yield return CreateInputPin(nameof(WaitEvents), WaitEvents);
+                yield return CreateInputPin(nameof(RetEvent), RetEvent);
+                yield return CreateInputPin(nameof(Invoke), Invoke);
+                yield return CreateInputPin(nameof(Param), Param);
+                yield return CreateInputPin(nameof(ParamSize), ParamSize);
+                yield return CreateInputPin(nameof(ParamAlign), ParamAlign);
+                for (var index = 0; index < LocalSize.Count; index++)
+                {
+                    yield return CreateInputPin(nameof(LocalSize) + index, LocalSize[index]);
+                }
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpEnqueueKernel)op, treeBuilder);
+        }
+
+        public void SetUp(OpEnqueueKernel op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            Queue = treeBuilder.GetNode(op.Queue);
+            Flags = treeBuilder.GetNode(op.Flags);
+            NDRange = treeBuilder.GetNode(op.NDRange);
+            NumEvents = treeBuilder.GetNode(op.NumEvents);
+            WaitEvents = treeBuilder.GetNode(op.WaitEvents);
+            RetEvent = treeBuilder.GetNode(op.RetEvent);
+            Invoke = treeBuilder.GetNode(op.Invoke);
+            Param = treeBuilder.GetNode(op.Param);
+            ParamSize = treeBuilder.GetNode(op.ParamSize);
+            ParamAlign = treeBuilder.GetNode(op.ParamAlign);
+            LocalSize = treeBuilder.GetNodes(op.LocalSize);
+        }
     }
 }

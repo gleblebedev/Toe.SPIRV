@@ -5,14 +5,40 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class ImageSparseSampleProjExplicitLod : FunctionNode 
     {
-        public ImageSparseSampleProjExplicitLod(OpImageSparseSampleProjExplicitLod op, SpirvInstructionTreeBuilder treeBuilder)
+        public ImageSparseSampleProjExplicitLod()
         {
-            ReturnType = treeBuilder.ResolveType(op.IdResultType);
-            SampledImage = treeBuilder.GetNode(op.SampledImage);
-            Coordinate = treeBuilder.GetNode(op.Coordinate);
         }
 
         public Node SampledImage { get; set; }
         public Node Coordinate { get; set; }
+        public override IEnumerable<NodePinWithConnection> InputPins
+        {
+            get
+            {
+                yield return CreateInputPin(nameof(SampledImage), SampledImage);
+                yield return CreateInputPin(nameof(Coordinate), Coordinate);
+                yield break;
+            }
+        }
+
+        public override IEnumerable<NodePinWithConnection> ExitPins
+        {
+            get
+            {
+                if (!IsFunction) yield return CreateExitPin("", GetNext());
+                yield break;
+            }
+        }
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUp((OpImageSparseSampleProjExplicitLod)op, treeBuilder);
+        }
+
+        public void SetUp(OpImageSparseSampleProjExplicitLod op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+            SampledImage = treeBuilder.GetNode(op.SampledImage);
+            Coordinate = treeBuilder.GetNode(op.Coordinate);
+        }
     }
 }

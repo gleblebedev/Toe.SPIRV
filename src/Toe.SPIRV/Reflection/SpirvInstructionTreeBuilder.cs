@@ -258,15 +258,25 @@ namespace Toe.SPIRV.Reflection
                         break;
                     case Op.OpFunction:
                         {
+                            var function = ParseNode(instruction);
                             var hasId = _shader.Instructions[index].TryGetResultId(out var id);
-                            var function = ParseFunctionDefinition(ref index);
                             if (hasId)
                             {
                                 if (entryPoint != null && id == entryPoint.EntryPoint.Id)
                                 {
-                                    EntryFunction = function;
+                                    EntryFunction = (Function)function;
                                 }
                             }
+
+                            //var hasId = _shader.Instructions[index].TryGetResultId(out var id);
+                            //var function = ParseFunctionDefinition(ref index);
+                            //if (hasId)
+                            //{
+                            //    if (entryPoint != null && id == entryPoint.EntryPoint.Id)
+                            //    {
+                            //        EntryFunction = function;
+                            //    }
+                            //}
                             break;
                         }
                     default:
@@ -275,16 +285,19 @@ namespace Toe.SPIRV.Reflection
                 }
             }
             // Fix forward references.
-            SequentialOperationNode prevSequentialInstruction = null;
+            ExecutableNode prevSequentialInstruction = null;
             foreach (var instructionAndNode in _nodes)
             {
                 var key = instructionAndNode.Key;
                 var value = instructionAndNode.Value;
-                if (value is SequentialOperationNode sequential)
+                value.SetUp(key, this);
+                if (!value.IsFunction && value is ExecutableNode sequential)
                 {
                     if (prevSequentialInstruction != null)
                         prevSequentialInstruction.Next = sequential;
-                    if (key.OpCode == Op.OpBranch || key.OpCode == Op.OpBranchConditional || key.OpCode == Op.OpReturn || key.OpCode == Op.OpReturnValue || key.OpCode == Op.OpSwitch || key.OpCode == Op.OpKill || key.OpCode == Op.OpUnreachable)
+                    if (key.OpCode == Op.OpBranch || key.OpCode == Op.OpBranchConditional ||
+                        key.OpCode == Op.OpReturn || key.OpCode == Op.OpReturnValue || key.OpCode == Op.OpSwitch ||
+                        key.OpCode == Op.OpKill || key.OpCode == Op.OpUnreachable)
                     {
                         prevSequentialInstruction = null;
                     }
@@ -293,52 +306,51 @@ namespace Toe.SPIRV.Reflection
                         prevSequentialInstruction = sequential;
                     }
                 }
-                value.FixForwardReferences(key, this);
             }
         }
 
-        public SpirvFunction EntryFunction { get; set; }
+        public Function EntryFunction { get; set; }
         public IEnumerable<SpirvTypeBase> Types => _types.Values;
 
-        private SpirvFunction ParseFunctionDefinition(ref int index)
-        {
-            var instruction = (OpFunction)_shader.Instructions[index];
-            var type = (SpirvFunctionType)ResolveType(instruction.FunctionType);
-            var spirvFunction = new SpirvFunction();
-            AddNode(instruction, spirvFunction);
-            RegisterNodeResult(instruction.IdResult, spirvFunction);
-            spirvFunction.ReturnType = type.ReturnType;
-            spirvFunction.FunctionControl = (FunctionControl)instruction.FunctionControl.Value;
-            ++index;
+        //private SpirvFunction ParseFunctionDefinition(ref int index)
+        //{
+        //    var instruction = (OpFunction)_shader.Instructions[index];
+        //    var type = (SpirvFunctionType)ResolveType(instruction.FunctionType);
+        //    var spirvFunction = new SpirvFunction();
+        //    AddNode(instruction, spirvFunction);
+        //    RegisterNodeResult(instruction.IdResult, spirvFunction);
+        //    spirvFunction.ReturnType = type.ReturnType;
+        //    spirvFunction.FunctionControl = (FunctionControl)instruction.FunctionControl.Value;
+        //    ++index;
 
-            // Parse arguments.
-            foreach (var argument in type.Arguments)
-            {
-                if (_shader.Instructions.Count <= index)
-                    throw new IndexOutOfRangeException("Expected OpFunctionParameter at index " + index);
-                if (_shader.Instructions[index].OpCode != Op.OpFunctionParameter)
-                    throw new ArgumentException("Expected OpFunctionParameter at index " + index);
-                spirvFunction.Arguments.Add(ParseFunctionParameter(argument, (OpFunctionParameter)_shader.Instructions[index]));
-                ++index;
-            }
+        //    // Parse arguments.
+        //    foreach (var argument in type.Arguments)
+        //    {
+        //        if (_shader.Instructions.Count <= index)
+        //            throw new IndexOutOfRangeException("Expected OpFunctionParameter at index " + index);
+        //        if (_shader.Instructions[index].OpCode != Op.OpFunctionParameter)
+        //            throw new ArgumentException("Expected OpFunctionParameter at index " + index);
+        //        spirvFunction.Arguments.Add(ParseFunctionParameter(argument, (OpFunctionParameter)_shader.Instructions[index]));
+        //        ++index;
+        //    }
 
-            // Create nodes.
-            while (index < _shader.Instructions.Count)
-            {
-                var op = _shader.Instructions[index];
-                if (op.OpCode == Op.OpFunctionEnd)
-                    break;
-                var node = ParseNode(op);
-                if (node != null)
-                {
-                    _nodes.Add(new KeyValuePair<Instruction, Node>(op, node));
-                }
+        //    // Create nodes.
+        //    while (index < _shader.Instructions.Count)
+        //    {
+        //        var op = _shader.Instructions[index];
+        //        if (op.OpCode == Op.OpFunctionEnd)
+        //            break;
+        //        var node = ParseNode(op);
+        //        if (node != null)
+        //        {
+        //            _nodes.Add(new KeyValuePair<Instruction, Node>(op, node));
+        //        }
 
-                ++index;
-            }
+        //        ++index;
+        //    }
 
-            return spirvFunction;
-        }
+        //    return spirvFunction;
+        //}
 
         private void AddNode(Instruction instruction, Node node)
         {
@@ -354,20 +366,22 @@ namespace Toe.SPIRV.Reflection
                 {
                     RegisterNodeResult(id, node);
                 }
+
+                AddNode(op, node);
             }
 
             return node;
         }
 
-        private FunctionParameter ParseFunctionParameter(SpirvFunctionArgument argument, OpFunctionParameter parameter)
-        {
-            var node = (FunctionParameter)ParseNode(parameter);
-            if (node.ReturnType != argument.Type)
-            {
-                throw new ArgumentException("Argument type mismatch: expected " + argument.Type + " but parameter type is " + node.ReturnType);
-            }
-            return node;
-        }
+        //private FunctionParameter ParseFunctionParameter(SpirvFunctionArgument argument, OpFunctionParameter parameter)
+        //{
+        //    var node = (FunctionParameter)ParseNode(parameter);
+        //    if (node.ReturnType != argument.Type)
+        //    {
+        //        throw new ArgumentException("Argument type mismatch: expected " + argument.Type + " but parameter type is " + node.ReturnType);
+        //    }
+        //    return node;
+        //}
 
     }
 }

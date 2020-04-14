@@ -14,6 +14,6 @@
         /// <summary>
         /// An instruction with side effects. Should be part of control chain.
         /// </summary>
-        Procedure
+        Executable
     }
 }
