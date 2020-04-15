@@ -2,14 +2,7 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public abstract class SpirvInstructionBase
-    {
-    }
-    public abstract class SpirvSequentialInstructionBase: SpirvInstructionBase
-    {
-        public SpirvInstructionBase Next { get; set; }
-    }
-    public abstract class SpirvTypeBase
+    public abstract class SpirvTypeBase: ReflectedInstruction
     {
         public static readonly SpirvVoid Void;
         public static readonly SpirvFloat Half;

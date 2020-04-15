@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
 {
     public class SpirvArrayLayout : SpirvArrayBase
     {
@@ -10,6 +12,8 @@
             _arrayType = arrayType;
             _arrayStride = arrayStride;
         }
+
+        public override Op OpCode => Op.OpTypeArray;
 
         public override uint ArrayStride => _arrayStride ?? _arrayType.ArrayStride;
 

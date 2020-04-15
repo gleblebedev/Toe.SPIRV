@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
 {
     public class SpirvMatrixLayout : SpirvMatrixBase
     {
@@ -12,6 +14,9 @@
             MatrixOrientation = matrixOrientation;
             _columnStride = columnStride;
         }
+
+        public override Op OpCode => Op.OpTypeMatrix;
+
 
         public override SpirvVector ColumnType => _matrixType.ColumnType;
         public override uint ColumnStride => _columnStride ?? _matrixType.ColumnStride;

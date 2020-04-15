@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
 {
     public class SpirvArray : SpirvArrayBase
     {
@@ -9,6 +11,8 @@
             _elementType = elementType;
             Length = length;
         }
+
+        public override Op OpCode => Op.OpTypeArray;
 
         public override uint ArrayStride => SpirvUtils.RoundUp(_elementType.SizeInBytes, 16);
 

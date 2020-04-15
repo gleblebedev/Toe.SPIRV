@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
 {
     public class SpirvInt : SpirvTypeBase
     {
@@ -11,6 +13,9 @@
             _signed = signed;
             IntType = GetType(_width, _signed);
         }
+
+        public override Op OpCode => Op.OpTypeInt;
+
 
         public override uint SizeInBytes => _width / 8;
 

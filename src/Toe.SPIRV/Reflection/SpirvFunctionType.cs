@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
@@ -7,6 +8,8 @@ namespace Toe.SPIRV.Reflection
         public SpirvFunctionType():base(SpirvTypeCategory.Function)
         {
         }
+
+        public override Op OpCode => Op.OpTypeFunction;
 
         public SpirvTypeBase ReturnType { get; set; }
 

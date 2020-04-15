@@ -255,6 +255,7 @@ namespace Toe.SPIRV.Reflection
                         break;
                     case Op.OpEntryPoint:
                         entryPoint = (OpEntryPoint)instruction;
+                        ExecutionModel = entryPoint.ExecutionModel;
                         break;
                     case Op.OpTypeFunction:
                         ParseFunctionType((OpTypeFunction)instruction);
@@ -315,6 +316,7 @@ namespace Toe.SPIRV.Reflection
         }
 
         public Function EntryFunction { get; set; }
+        public ExecutionModel ExecutionModel { get; set; }
         public IEnumerable<SpirvTypeBase> Types => _types.Values;
 
         

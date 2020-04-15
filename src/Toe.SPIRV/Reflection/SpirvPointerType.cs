@@ -9,6 +9,8 @@ namespace Toe.SPIRV.Reflection
             
         }
 
+        public override Op OpCode => Op.OpTypePointer;
+
         public string Name { get; set; }
         public SpirvTypeBase Type { get; set; }
         public StorageClass.Enumerant StorageClass { get; set; }

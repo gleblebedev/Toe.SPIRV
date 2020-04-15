@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
@@ -17,6 +18,9 @@ namespace Toe.SPIRV.Reflection
             if (_fields.Any(_ => _.ByteOffset == null)) UpdateFieldOffsets();
             EvaluateSizeAndAlignment();
         }
+
+        public override Op OpCode => Op.OpTypeStruct;
+
 
         public override uint Alignment
         {

@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
 {
     public class SpirvVector : SpirvTypeBase
     {
@@ -8,6 +10,9 @@
             ComponentType = componentType;
             VectorType = GetType(ComponentType, ComponentCount);
         }
+
+        public override Op OpCode => Op.OpTypeVector;
+
 
         public override uint Alignment
         {

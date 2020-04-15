@@ -7,7 +7,7 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public abstract class Node
+    public abstract class Node: ReflectedInstruction
     {
         public virtual SpirvTypeBase GetResultType()
         {
@@ -18,8 +18,6 @@ namespace Toe.SPIRV.Reflection
         {
             return null;
         }
-
-        public abstract Spv.Op OpCode { get; }
 
         public virtual IEnumerable<NodePin> EnterPins
         {
@@ -40,8 +38,6 @@ namespace Toe.SPIRV.Reflection
         {
             get { return Enumerable.Empty<NodePin>(); }
         }
-
-        public string Name { get; set; }
 
         protected NodePinWithConnection CreateInputPin(string name, Node node)
         {
