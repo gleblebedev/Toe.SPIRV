@@ -13,5 +13,4 @@ namespace Toe.SPIRV.CodeGenerator
         [Option('o', "output", Required = false, HelpText = "Path to the output folder")]
         public string Output { get; set; } = Path.Combine(Directory.GetCurrentDirectory(),"Nodes");
     }
-    
 }

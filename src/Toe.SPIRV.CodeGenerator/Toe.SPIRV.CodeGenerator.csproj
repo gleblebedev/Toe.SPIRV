@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -22,6 +22,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NodeTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Views\NodeVisitor.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>NodeVisitor.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +37,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>NodeTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NodeVisitor.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NodeVisitor.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

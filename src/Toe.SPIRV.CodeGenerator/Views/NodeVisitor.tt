@@ -1,0 +1,135 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
+using System;
+using System.Collections.Generic;
+using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
+{
+    public class SpirvInstructionsBuilderBase
+    {
+        protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
+
+        protected readonly Dictionary<ReflectedInstruction, Instruction> _instructionMap =
+            new Dictionary<ReflectedInstruction, Instruction>();
+
+        protected virtual Instruction Visit(ReflectedInstruction node)
+        {
+            if (_instructionMap.TryGetValue(node, out var instruction)) return instruction;
+            switch (node.OpCode)
+            {
+<#
+foreach (var codeAndInstruction in _grammar.Instructions)
+{
+    var instruction = codeAndInstruction.Value;
+    switch (instruction.Kind)
+    {
+        case InstructionKind.Other:
+        {
+#>
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>(node);
+<#
+            break;
+        }
+        case InstructionKind.Type:
+        {
+#>
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>(node);
+<#
+            break;
+        }
+        case InstructionKind.Function:
+        case InstructionKind.Executable:
+        {
+#>
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((<#=instruction.Name.Substring(2)#>) node);
+<#
+            break;
+        }
+    }
+}
+#>
+            }
+
+            throw new NotImplementedException(node.OpCode + " not implemented yet.");
+        }
+<#
+foreach (var codeAndInstruction in _grammar.Instructions)
+{
+    var instruction = codeAndInstruction.Value;
+    switch (instruction.Kind)
+    {
+        case InstructionKind.Other:
+        {
+#>
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(ReflectedInstruction node)
+        {
+            var instruction = new <#=instruction.Name#>();
+            _instructionMap.Add(node, instruction);
+
+            return instruction;
+        }
+<#
+            break;
+        }
+        case InstructionKind.Type:
+        {
+#>
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(ReflectedInstruction node)
+        {
+            var instruction = new <#=instruction.Name#>();
+            _instructionMap.Add(node, instruction);
+
+            return instruction;
+        }
+<#
+            break;
+        }
+        case InstructionKind.Function:
+        case InstructionKind.Executable:
+        {
+#>
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(<#=instruction.Name.Substring(2)#> node)
+        {
+            var instruction = new <#=instruction.Name#>();
+            _instructionMap.Add(node, instruction);
+
+<#
+    if (instruction.IdResult != null)
+    {
+#>
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+
+<#
+    }
+    if (instruction.IdResultType != null)
+    {
+#>
+            Visit(node.ResultType);
+<#
+    }
+    if (instruction.HasDefaultExit)
+    {
+#>
+            Visit(node.Next);
+
+<#
+    }
+#>
+            return instruction;
+        }
+<#
+            break;
+        }
+    }
+}
+#>
+    }
+}

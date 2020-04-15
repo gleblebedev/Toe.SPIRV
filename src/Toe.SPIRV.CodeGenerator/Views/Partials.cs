@@ -87,4 +87,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
             return "object";
         }
     }
+
+    public partial class NodeVisitor
+    {
+        private readonly SpirvInstructions _grammar;
+
+        public NodeVisitor(SpirvInstructions grammar)
+        {
+            _grammar = grammar;
+        }
+    }
 }

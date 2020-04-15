@@ -2,7 +2,7 @@
   "profiles": {
     "Toe.SPIRV.CodeGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "genreflectionnodes"
+      "commandLineArgs": "genreflectionvisitor"
     }
   }
 }

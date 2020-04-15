@@ -6,10 +6,8 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvInstructionsBuilder
+    public class SpirvInstructionsBuilder: SpirvInstructionsBuilderBase
     {
-        private Dictionary<object, Instruction> _instructionMap = new Dictionary<object, Instruction>();
-        private List<InstructionWithId> _results = new List<InstructionWithId>();
         private List<IdRef> _interface = new List<IdRef>();
         private List<Instruction> _debugInfo = new List<Instruction>();
         private List<Instruction> _annotations = new List<Instruction>();
@@ -81,36 +79,14 @@ namespace Toe.SPIRV.Reflection
             return false;
         }
 
-
-        private void Visit(ReflectedInstruction reflectedInstruction)
+        protected override Instruction Visit(ReflectedInstruction node)
         {
-            if (reflectedInstruction == null)
-                return;
-            if (_instructionMap.ContainsKey(reflectedInstruction))
-                return;
-            var instruction = InstructionFactory.Create(reflectedInstruction.OpCode);
-            _instructionMap.Add(reflectedInstruction, instruction);
-
-            AddInstructionResult(instruction as InstructionWithId, reflectedInstruction.Name);
-
-            switch (reflectedInstruction.OpCode)
+            var instruction = base.Visit(node);
+            if (node is SpirvTypeBase || node.OpCode == Op.OpVariable || node.OpCode == Op.OpConstant || node.OpCode == Op.OpConstantComposite)
             {
-                case Op.OpVariable:
-                    VisitVariable((Variable) reflectedInstruction, (OpVariable) instruction);
-                    break;
-                case Op.OpLabel:
-                    VisitLabel((Label)reflectedInstruction, (OpLabel)instruction);
-                    break;
+                _declarations.Add(instruction);
             }
-        }
-
-        private void VisitLabel(Label reflectedInstruction, OpLabel instruction)
-        {
-        }
-
-        private void VisitVariable(Variable reflectedInstruction, OpVariable instruction)
-        {
-            
+            return instruction;
         }
     }
 }
