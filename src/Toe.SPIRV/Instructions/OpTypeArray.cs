@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeArray; } }
 
         public Spv.IdRef ElementType { get; set; }
+
         public Spv.IdRef Length { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("ElementType", ElementType);

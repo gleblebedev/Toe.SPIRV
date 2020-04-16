@@ -58,6 +58,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             LeftMatrix = treeBuilder.GetNode(op.LeftMatrix);
             RightMatrix = treeBuilder.GetNode(op.RightMatrix);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

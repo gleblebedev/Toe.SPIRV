@@ -64,6 +64,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             NumEvents = treeBuilder.GetNode(op.NumEvents);
             WaitEvents = treeBuilder.GetNode(op.WaitEvents);
             RetEvent = treeBuilder.GetNode(op.RetEvent);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

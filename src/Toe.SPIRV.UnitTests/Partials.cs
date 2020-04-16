@@ -4,9 +4,9 @@ namespace Toe.SPIRV.UnitTests
 {
     partial class VertexShaderTemplate
     {
-        protected readonly SpirvStructure _fields;
+        protected readonly SpirvStruct _fields;
 
-        public VertexShaderTemplate(SpirvStructure fields)
+        public VertexShaderTemplate(SpirvStruct fields)
         {
             _fields = fields;
         }

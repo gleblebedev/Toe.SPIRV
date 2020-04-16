@@ -13,6 +13,7 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpRetainEvent; } }
 
         public Spv.IdRef Event { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Event", Event);

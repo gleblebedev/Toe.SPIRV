@@ -30,8 +30,17 @@ namespace Toe.SPIRV.CodeGenerator.Views
         {
             _instruction = instruction;
             opname = _instruction.Name;
-            name = _instruction.Name.Substring(2);
-            baseClass = _instruction.HasDefaultEnter ? "ExecutableNode" : "Node";
+            switch (instruction.Kind)
+            {
+                case InstructionKind.Type:
+                    baseClass = "SpirvTypeBase";
+                    name = "Spirv"+_instruction.Name.Substring(6);
+                    break;
+                default:
+                    baseClass = _instruction.HasDefaultEnter ? "ExecutableNode" : "Node";
+                    name = _instruction.Name.Substring(2);
+                    break;
+            }
         }
 
         private string GetPropertyType(SpirvOperand op)
@@ -95,6 +104,46 @@ namespace Toe.SPIRV.CodeGenerator.Views
         public NodeVisitor(SpirvInstructions grammar)
         {
             _grammar = grammar;
+        }
+    }
+
+    public partial class InstructionTemplate
+    {
+        private readonly SpirvInstruction _instruction;
+
+        public InstructionTemplate(SpirvInstruction instruction)
+        {
+            _instruction = instruction;
+        }
+
+        public static string GetOperandParser(SpirvOperand operand)
+        {
+            if (operand.Kind == SpirvOperandKind.LiteralContextDependentNumber)
+            {
+                return "Spv." + operand.Kind + ".ParseOptional(reader, end-reader.Position, IdResultType.Instruction)";
+            }
+            if (operand.Quantifier == SpirvOperandQuantifier.Optional)
+                return "Spv." + operand.Kind + ".ParseOptional(reader, end-reader.Position)";
+            if (operand.Quantifier == SpirvOperandQuantifier.Repeated)
+                return "Spv." + operand.Kind + ".ParseCollection(reader, end-reader.Position)";
+            return "Spv." + operand.Kind + ".Parse(reader, end-reader.Position)";
+        }
+
+        public static string GetOperandType(SpirvOperand operand)
+        {
+            var type = ViewUtils.GetTypeName(operand.Kind);
+            if (operand.Quantifier == SpirvOperandQuantifier.Optional)
+            {
+                if (type == "uint")
+                    return "uint?";
+                return type;
+            }
+            if (operand.Quantifier == SpirvOperandQuantifier.Repeated)
+            {
+                return "IList<" + type + ">";
+            }
+
+            return type;
         }
     }
 }

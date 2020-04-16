@@ -12,7 +12,8 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpCapability; } }
 
-        public Spv.Capability Capability { get; set; }
+        public Spv.Capability Value { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -21,24 +22,24 @@ namespace Toe.SPIRV.Instructions
         public override void Parse(WordReader reader, uint wordCount)
         {
             var end = reader.Position+wordCount-1;
-            Capability = Spv.Capability.Parse(reader, end-reader.Position);
+            Value = Spv.Capability.Parse(reader, end-reader.Position);
         }
 
         public override uint GetWordCount()
         {
             uint wordCount = 0;
-            wordCount += Capability.GetWordCount();
+            wordCount += Value.GetWordCount();
             return wordCount;
         }
 
         public override void Write(WordWriter writer)
         {
-            Capability.Write(writer);
+            Value.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{OpCode} {Capability}";
+            return $"{OpCode} {Value}";
         }
     }
 }

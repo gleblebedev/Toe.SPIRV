@@ -63,7 +63,7 @@ namespace Toe.SPIRV
         protected virtual void WriteStructs()
         {
             var structs = new ShaderReflection(_shader).Structures
-                .Where(_=>_.Name != "gl_PerVertex")
+                .Where(_=>_.DebugName != "gl_PerVertex")
                 .ToList();
 
             for (var index = 0; index < structs.Count; index++)
@@ -73,11 +73,11 @@ namespace Toe.SPIRV
             }
         }
 
-        protected virtual void WriteStruct(SpirvStructure structure)
+        protected virtual void WriteStruct(SpirvStruct structure)
         {
             var fields = structure.Fields;
             WriteLine("[StructLayout(LayoutKind.Explicit)]");
-            WriteLine("public partial struct " + structure.Name);
+            WriteLine("public partial struct " + structure.DebugName);
             WriteLine("{");
             for (var memberIndex = 0; memberIndex < fields.Count; memberIndex++)
             {
@@ -343,7 +343,7 @@ namespace Toe.SPIRV
                 case Op.OpTypeStruct:
                     {
                         var opType = (OpTypeStruct)type;
-                        return new TypeDesc(opType.OpName?.Name ?? ("Struct"+opType.IdResult), 0); //TODO: calc size
+                        return new TypeDesc(opType.OpName?.Value ?? ("Struct"+opType.IdResult), 0); //TODO: calc size
                     }
                 case Op.OpTypeArray:
                     {

@@ -67,6 +67,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Param = treeBuilder.GetNode(op.Param);
             ParamSize = treeBuilder.GetNode(op.ParamSize);
             ParamAlign = treeBuilder.GetNode(op.ParamAlign);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

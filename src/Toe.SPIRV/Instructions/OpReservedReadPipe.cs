@@ -12,13 +12,20 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpReservedReadPipe; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Pipe { get; set; }
+
         public Spv.IdRef ReserveId { get; set; }
+
         public Spv.IdRef Index { get; set; }
+
         public Spv.IdRef Pointer { get; set; }
+
         public Spv.IdRef PacketSize { get; set; }
+
         public Spv.IdRef PacketAlignment { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pipe", Pipe);

@@ -18,6 +18,34 @@
     <None Update="spirv.core.grammar.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Views\CompositeTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CompositeTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Views\EnumTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>EnumTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Views\FlagTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>FlagTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Views\InstructionFactoryTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InstructionFactoryTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Views\InstructionSerializerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InstructionSerializerTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Views\InstructionTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InstructionTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Views\LiteralTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>LiteralTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Views\NodeTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NodeTemplate.cs</LastGenOutput>
@@ -33,6 +61,41 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\CompositeTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CompositeTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EnumTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnumTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FlagTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FlagTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\InstructionFactoryTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InstructionFactoryTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\InstructionSerializerTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InstructionSerializerTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\InstructionTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InstructionTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LiteralTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LiteralTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Views\NodeTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

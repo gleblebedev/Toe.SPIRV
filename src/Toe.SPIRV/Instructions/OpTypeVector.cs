@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeVector; } }
 
         public Spv.IdRef ComponentType { get; set; }
+
         public uint ComponentCount { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("ComponentType", ComponentType);

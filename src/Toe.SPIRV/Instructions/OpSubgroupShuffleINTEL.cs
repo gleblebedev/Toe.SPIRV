@@ -12,9 +12,12 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpSubgroupShuffleINTEL; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Data { get; set; }
+
         public Spv.IdRef InvocationId { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Data", Data);

@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpMemoryModel; } }
 
         public Spv.AddressingModel AddressingModel { get; set; }
-        public Spv.MemoryModel MemoryModel { get; set; }
+
+        public Spv.MemoryModel Value { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -23,26 +25,26 @@ namespace Toe.SPIRV.Instructions
         {
             var end = reader.Position+wordCount-1;
             AddressingModel = Spv.AddressingModel.Parse(reader, end-reader.Position);
-            MemoryModel = Spv.MemoryModel.Parse(reader, end-reader.Position);
+            Value = Spv.MemoryModel.Parse(reader, end-reader.Position);
         }
 
         public override uint GetWordCount()
         {
             uint wordCount = 0;
             wordCount += AddressingModel.GetWordCount();
-            wordCount += MemoryModel.GetWordCount();
+            wordCount += Value.GetWordCount();
             return wordCount;
         }
 
         public override void Write(WordWriter writer)
         {
             AddressingModel.Write(writer);
-            MemoryModel.Write(writer);
+            Value.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{OpCode} {AddressingModel} {MemoryModel}";
+            return $"{OpCode} {AddressingModel} {Value}";
         }
     }
 }

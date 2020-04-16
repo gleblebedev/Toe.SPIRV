@@ -6,6 +6,7 @@
 <#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Spv;
@@ -21,6 +22,7 @@ namespace Toe.SPIRV.Reflection
 
         protected virtual Instruction Visit(ReflectedInstruction node)
         {
+            if (node == null) return null;
             if (_instructionMap.TryGetValue(node, out var instruction)) return instruction;
             switch (node.OpCode)
             {
@@ -33,14 +35,14 @@ foreach (var codeAndInstruction in _grammar.Instructions)
         case InstructionKind.Other:
         {
 #>
-                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>(node);
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((Nodes.<#=instruction.Name.Substring(2)#>) node);
 <#
             break;
         }
         case InstructionKind.Type:
         {
 #>
-                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>(node);
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((Spirv<#=instruction.Name.Substring(6)#>)node);
 <#
             break;
         }
@@ -59,33 +61,94 @@ foreach (var codeAndInstruction in _grammar.Instructions)
 
             throw new NotImplementedException(node.OpCode + " not implemented yet.");
         }
+        
+        protected void VisitDecorations(Node node)
+        {
+            foreach (var decoration in node.GetDecorations())
+            {
+                Visit(new Decorate() {Decoration = decoration, Target = node});
+            }
+        }
+
+        protected virtual string Visit(string instruction)
+        {
+            return instruction;
+        }
+
+        protected virtual uint Visit(uint instruction)
+        {
+            return instruction;
+        }
+
+        protected virtual IList<uint> Visit(IList<uint> instructions)
+        {
+            return instructions;
+        }
+
+        protected virtual LiteralContextDependentNumber Visit(LiteralContextDependentNumber instruction)
+        {
+            return instruction;
+        }
+
+        protected virtual IList<IdRef> Visit(IList<Node> instructions)
+        {
+            if (instructions == null)
+                return null;
+            return instructions.Select(_ => (IdRef)Visit(_)).ToList();
+        }
+
 <#
+foreach (var codeAndOperand in _grammar.OperandKinds)
+{
+    switch (codeAndOperand.Value.category)
+    {
+        case "Id":
+        case "Literal":
+            break;
+        case "Composite":
+        {
+#>
+        protected virtual IList<Spv.<#=codeAndOperand.Value.kind#>> Visit(IList<Spv.<#=codeAndOperand.Value.kind#>> operand)
+        {
+            return operand;
+        }
+<#
+            break;
+        }
+        default:
+        {
+#>
+        protected virtual Spv.<#=codeAndOperand.Value.kind#> Visit(Spv.<#=codeAndOperand.Value.kind#> operand)
+        {
+            return operand;
+        }
+<#
+            break;
+        }
+    }
+}
 foreach (var codeAndInstruction in _grammar.Instructions)
 {
     var instruction = codeAndInstruction.Value;
     switch (instruction.Kind)
     {
-        case InstructionKind.Other:
-        {
-#>
-        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(ReflectedInstruction node)
-        {
-            var instruction = new <#=instruction.Name#>();
-            _instructionMap.Add(node, instruction);
-
-            return instruction;
-        }
-<#
-            break;
-        }
         case InstructionKind.Type:
         {
 #>
-        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(ReflectedInstruction node)
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(Spirv<#=instruction.Name.Substring(6)#> node)
         {
             var instruction = new <#=instruction.Name#>();
             _instructionMap.Add(node, instruction);
+<#
+    if (instruction.IdResult != null)
+    {
+#>
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
 
+<#
+    }
+#>
             return instruction;
         }
 <#
@@ -93,9 +156,10 @@ foreach (var codeAndInstruction in _grammar.Instructions)
         }
         case InstructionKind.Function:
         case InstructionKind.Executable:
+        case InstructionKind.Other:
         {
 #>
-        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(<#=instruction.Name.Substring(2)#> node)
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(Nodes.<#=instruction.Name.Substring(2)#> node)
         {
             var instruction = new <#=instruction.Name#>();
             _instructionMap.Add(node, instruction);
@@ -106,13 +170,24 @@ foreach (var codeAndInstruction in _grammar.Instructions)
 #>
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
 <#
     }
     if (instruction.IdResultType != null)
     {
 #>
-            Visit(node.ResultType);
+            instruction.IdResultType = Visit(node.ResultType);
+
+<#
+    }
+    foreach (var operand in instruction.Operands)
+    {
+#>
+            instruction.<#=operand.Name#> = Visit(node.<#=operand.Name#>);
 <#
     }
     if (instruction.HasDefaultExit)

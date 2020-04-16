@@ -61,6 +61,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Image = treeBuilder.GetNode(op.Image);
             Coordinate = treeBuilder.GetNode(op.Coordinate);
             FragmentIndex = treeBuilder.GetNode(op.FragmentIndex);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

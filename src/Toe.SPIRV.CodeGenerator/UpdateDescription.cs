@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommandLine;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
 using Toe.SPIRV.CodeGenerator.Model.Spv;
 
@@ -8,11 +9,24 @@ namespace Toe.SPIRV.CodeGenerator
 {
     public class UpdateDescription
     {
+        [Verb("updategrammar")]
+        public class Options
+        {
+            [Option('i', "input", Required = false, HelpText = "Path to spirv.core.grammar.json file")]
+            public string Input { get; set; } = "spirv.core.grammar.json";
+
+            [Option('o', "output", Required = false, HelpText = "Path to toe.spirv.grammar.json file")]
+            public string Output { get; set; } = "toe.spirv.grammar.json";
+
+            [Option('r', "rebuild", Required = false, HelpText = "Completely rebuild toe.spirv.grammar.json")]
+            public bool Rebuild { get; set; }
+        }
+
         private Operands _operands;
         private SpirvInstructions _grammar;
         private Dictionary<SpirvOperandKind, SpirvOperandCategory> _operandKindCategories = new Dictionary<SpirvOperandKind, SpirvOperandCategory>();
 
-        public void Run(UpdateDescriptionOptions options)
+        public void Run(Options options)
         {
             _operands =  Utils.LoadOperands(options.Input);
 
@@ -40,6 +54,14 @@ namespace Toe.SPIRV.CodeGenerator
                 if (!_grammar.Instructions.ContainsKey(instruction.opcode))
                 {
                     _grammar.Instructions.Add(instruction.opcode, CreateInstruction(instruction));
+                }
+            }
+            foreach (var operandKind in _operands.operand_kinds)
+            {
+                var spirvOperandKind = GetKind(operandKind.kind);
+                if (!_grammar.OperandKinds.ContainsKey(spirvOperandKind))
+                {
+                    _grammar.OperandKinds.Add(spirvOperandKind, operandKind);
                 }
             }
             Utils.SaveGrammar(options.Output, _grammar);
@@ -121,7 +143,7 @@ namespace Toe.SPIRV.CodeGenerator
                     spirvInstruction.HasDefaultEnter = false;
                     spirvInstruction.HasDefaultExit = false;
                     break;
-                default:
+                case InstructionKind.Executable:
                     spirvInstruction.HasDefaultEnter = spirvInstruction.Name != "OpFunction";
                     if (spirvInstruction.LastInstructionInABlock)
                     {
@@ -131,7 +153,10 @@ namespace Toe.SPIRV.CodeGenerator
                     {
                         spirvInstruction.HasDefaultExit = true;
                     }
-
+                    break;
+                default:
+                    spirvInstruction.HasDefaultEnter = false;
+                    spirvInstruction.HasDefaultExit = false;
                     break;
             }
 
@@ -166,7 +191,7 @@ namespace Toe.SPIRV.CodeGenerator
                 Category = _operandKindCategories[spirvOperandKind]
             };
 
-            spirvOperand.Name = GetOperandName(spirvOperand);
+            spirvOperand.Name = GetOperandName(instruction,spirvOperand);
             SetOperandClass(instruction, spirvOperand);
             return spirvOperand;
         }
@@ -234,6 +259,13 @@ namespace Toe.SPIRV.CodeGenerator
                             return;
                         }
                         break;
+                    case "OpMemberName":
+                        if (spirvOperand.Name == "Type")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
                 }
 
                 if (spirvOperand.Quantifier == SpirvOperandQuantifier.Repeated)
@@ -260,11 +292,18 @@ namespace Toe.SPIRV.CodeGenerator
             spirvOperand.Class = SpirvOperandClassification.Other;
         }
 
-        private string GetOperandName(SpirvOperand spirvOperand)
+        private string GetOperandName(Instruction instruction, SpirvOperand spirvOperand)
         {
+            string name;
             if (spirvOperand.SpirvName == null)
-                return spirvOperand.Kind.ToString();
-            var name = spirvOperand.SpirvName;
+            {
+                name = spirvOperand.Kind.ToString();
+                if (name == instruction.opname.Substring(2))
+                    return "Value";
+                return name;
+            }
+
+            name = spirvOperand.SpirvName;
             name = name.Trim('\'').Trim('.');
             name = name.Replace(" ", "");
             name = name.Replace("<<Invocation,invocations>>", "Invocations");
@@ -293,6 +332,8 @@ namespace Toe.SPIRV.CodeGenerator
                     name = name.Substring(0, collectionIndex) + "Types";
                 }
             }
+            if (name == instruction.opname.Substring(2))
+                return "Value";
             return name;
         }
 

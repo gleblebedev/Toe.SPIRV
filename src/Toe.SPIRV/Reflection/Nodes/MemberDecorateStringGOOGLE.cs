@@ -69,5 +69,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Member = op.Member;
             Decoration = op.Decoration;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

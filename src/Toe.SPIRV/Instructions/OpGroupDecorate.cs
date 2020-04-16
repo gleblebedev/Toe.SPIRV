@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpGroupDecorate; } }
 
         public Spv.IdRef DecorationGroup { get; set; }
+
         public IList<Spv.IdRef> Targets { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("DecorationGroup", DecorationGroup);

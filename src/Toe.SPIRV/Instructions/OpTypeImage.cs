@@ -13,13 +13,21 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeImage; } }
 
         public Spv.IdRef SampledType { get; set; }
+
         public Spv.Dim Dim { get; set; }
+
         public uint Depth { get; set; }
+
         public uint Arrayed { get; set; }
+
         public uint MS { get; set; }
+
         public uint Sampled { get; set; }
+
         public Spv.ImageFormat ImageFormat { get; set; }
+
         public Spv.AccessQualifier AccessQualifier { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("SampledType", SampledType);

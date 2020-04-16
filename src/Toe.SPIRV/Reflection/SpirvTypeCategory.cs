@@ -21,5 +21,17 @@
         Function,
 
         Pointer,
+
+        Image,
+
+        Sampler,
+
+        SampledImage,
+        Event,
+        DeviceEvent,
+        ReserveId,
+        Queue,
+        Pipe,
+        ForwardPointer
     }
 }

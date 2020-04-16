@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpControlBarrier; } }
 
         public uint Execution { get; set; }
+
         public uint Memory { get; set; }
+
         public uint Semantics { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;

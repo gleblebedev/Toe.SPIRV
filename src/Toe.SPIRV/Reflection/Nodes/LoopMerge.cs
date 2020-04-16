@@ -63,5 +63,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             ContinueTarget = treeBuilder.GetNode(op.ContinueTarget);
             LoopControl = op.LoopControl;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

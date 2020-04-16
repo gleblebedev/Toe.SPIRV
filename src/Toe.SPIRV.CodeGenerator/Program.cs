@@ -8,10 +8,12 @@ namespace Toe.SPIRV.CodeGenerator
     {
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<UpdateDescriptionOptions, GenerateReflectionNodesOptions, ReflectionVisiorOptions>(args)
-                .WithParsed<UpdateDescriptionOptions>(o => { new UpdateDescription().Run(o); })
-                .WithParsed<GenerateReflectionNodesOptions>(o => { new GenerateReflectionNodes().Run(o); })
-                .WithParsed<ReflectionVisiorOptions>(o => { new ReflectionVisior().Run(o); })
+            Parser.Default.ParseArguments<UpdateDescription.Options, GenerateReflectionNodes.Options, ReflectionVisior.Options, GenerateInstructions.Options, Custom.Options>(args)
+                .WithParsed<UpdateDescription.Options>(o => { new UpdateDescription().Run(o); })
+                .WithParsed<GenerateReflectionNodes.Options>(o => { new GenerateReflectionNodes().Run(o); })
+                .WithParsed<ReflectionVisior.Options>(o => { new ReflectionVisior().Run(o); })
+                .WithParsed<GenerateInstructions.Options>(o => { new GenerateInstructions().Run(o); })
+                .WithParsed<Custom.Options>(o => { new Custom().Run(o); })
                 .WithNotParsed(errors =>
                 {
                     foreach (var error in errors)

@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpStore; } }
 
         public Spv.IdRef Pointer { get; set; }
+
         public Spv.IdRef Object { get; set; }
+
         public Spv.MemoryAccess MemoryAccess { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pointer", Pointer);

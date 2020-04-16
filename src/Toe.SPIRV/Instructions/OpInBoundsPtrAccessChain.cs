@@ -12,10 +12,14 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpInBoundsPtrAccessChain; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Base { get; set; }
+
         public Spv.IdRef Element { get; set; }
+
         public IList<Spv.IdRef> Indexes { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Base", Base);

@@ -13,6 +13,7 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpSourceContinued; } }
 
         public string ContinuedSource { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;

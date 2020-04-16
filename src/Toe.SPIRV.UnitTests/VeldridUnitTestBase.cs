@@ -30,7 +30,7 @@ namespace Toe.SPIRV.UnitTests
         public virtual void Setup()
         {
             Disposables = new List<IDisposable>();
-            GraphicsDevice = GraphicsDevice.CreateVulkan(new GraphicsDeviceOptions(true));
+            GraphicsDevice = GraphicsDevice.CreateVulkan(new GraphicsDeviceOptions(false));
             ResourceFactory = GraphicsDevice.ResourceFactory;
             _offscreenColor = ResourceFactory.CreateTexture(TextureDescription.Texture2D(
                 Width, Height, 1, 1,

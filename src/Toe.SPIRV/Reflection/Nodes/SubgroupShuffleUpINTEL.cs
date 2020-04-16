@@ -61,6 +61,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Previous = treeBuilder.GetNode(op.Previous);
             Current = treeBuilder.GetNode(op.Current);
             Delta = treeBuilder.GetNode(op.Delta);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

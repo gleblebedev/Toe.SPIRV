@@ -63,6 +63,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Coordinate = treeBuilder.GetNode(op.Coordinate);
             D_ref = treeBuilder.GetNode(op.D_ref);
             ImageOperands = op.ImageOperands;
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

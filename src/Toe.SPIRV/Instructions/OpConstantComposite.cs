@@ -12,8 +12,10 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpConstantComposite; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public IList<Spv.IdRef> Constituents { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             for (int i=0; i<Constituents.Count; ++i)

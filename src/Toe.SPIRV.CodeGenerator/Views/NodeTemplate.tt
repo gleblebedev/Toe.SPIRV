@@ -207,7 +207,15 @@ foreach (var op in _instruction.Operands)
             break;
     }
 }
+if (_instruction.IdResult != null)
+{
+#>
+            SetUpDecorations(op.Decorations);
+<# 
+}
 #>
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

@@ -51,6 +51,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             SamplerAddressingMode = op.SamplerAddressingMode;
             Param = op.Param;
             SamplerFilterMode = op.SamplerFilterMode;
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

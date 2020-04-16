@@ -57,6 +57,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pointer = treeBuilder.GetNode(op.Pointer);
             Storage = op.Storage;
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

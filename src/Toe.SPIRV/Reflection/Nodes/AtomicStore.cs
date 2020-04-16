@@ -72,5 +72,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Semantics = op.Semantics;
             Value = treeBuilder.GetNode(op.Value);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

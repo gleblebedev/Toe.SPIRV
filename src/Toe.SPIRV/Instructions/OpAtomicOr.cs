@@ -12,11 +12,16 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpAtomicOr; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Pointer { get; set; }
+
         public uint Scope { get; set; }
+
         public uint Semantics { get; set; }
+
         public Spv.IdRef Value { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pointer", Pointer);

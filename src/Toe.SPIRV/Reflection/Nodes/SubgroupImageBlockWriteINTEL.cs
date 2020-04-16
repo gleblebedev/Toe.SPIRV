@@ -71,5 +71,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Coordinate = treeBuilder.GetNode(op.Coordinate);
             Data = treeBuilder.GetNode(op.Data);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

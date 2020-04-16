@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpSwitch; } }
 
         public Spv.IdRef Selector { get; set; }
+
         public Spv.IdRef Default { get; set; }
+
         public IList<Spv.PairLiteralIntegerIdRef> Target { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Selector", Selector);

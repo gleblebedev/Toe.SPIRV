@@ -12,9 +12,12 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpMatrixTimesMatrix; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef LeftMatrix { get; set; }
+
         public Spv.IdRef RightMatrix { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("LeftMatrix", LeftMatrix);

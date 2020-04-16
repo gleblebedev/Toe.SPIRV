@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeInt; } }
 
         public uint Width { get; set; }
+
         public uint Signedness { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;

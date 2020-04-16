@@ -63,5 +63,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             FalseLabel = (Label)treeBuilder.GetNode(op.FalseLabel);
             Branchweights = op.Branchweights;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

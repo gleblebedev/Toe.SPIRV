@@ -12,10 +12,14 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpSelect; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Condition { get; set; }
+
         public Spv.IdRef Object1 { get; set; }
+
         public Spv.IdRef Object2 { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Condition", Condition);

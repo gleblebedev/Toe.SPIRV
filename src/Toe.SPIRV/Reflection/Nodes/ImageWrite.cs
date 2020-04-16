@@ -73,5 +73,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Texel = treeBuilder.GetNode(op.Texel);
             ImageOperands = op.ImageOperands;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

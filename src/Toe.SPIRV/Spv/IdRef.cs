@@ -4,52 +4,6 @@ using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Spv
 {
-    public class IdRef<T> : IdRef where T : InstructionWithId
-    {
-        public IdRef(uint id, InstructionRegistry registry) : base(id, registry)
-        {
-        }
-
-        public IdRef(T instruction) : base(instruction)
-        {
-        }
-
-        public IdRef(T instruction, InstructionRegistry registry) : base(instruction, registry)
-        {
-        }
-
-        public new T Instruction => (T) base.Instruction;
-
-        public new static IdRef<T> Parse(WordReader reader, uint wordCount)
-        {
-            var id = reader.ReadWord();
-            return new IdRef<T>(id, reader.Instructions);
-        }
-
-        public new static IdRef<T> ParseOptional(WordReader reader, uint wordCount)
-        {
-            if (wordCount == 0) return null;
-            return Parse(reader, wordCount);
-        }
-
-        public new static IList<IdRef<T>> ParseCollection(WordReader reader, uint wordCount)
-        {
-            var end = reader.Position + wordCount;
-            var res = new PrintableList<IdRef<T>>();
-            while (reader.Position < end) res.Add(Parse(reader, end - reader.Position));
-            return res;
-        }
-        public override uint GetWordCount()
-        {
-            return 1;
-        }
-
-        public override void Write(WordWriter writer)
-        {
-            writer.WriteWord(base.Id);
-        }
-    }
-
     public class IdRef
     {
         private readonly InstructionRegistry _registry;
@@ -68,6 +22,25 @@ namespace Toe.SPIRV.Spv
             if (_id == 0)
                 throw new ArgumentException("Instruction IdResult should not be zeo.");
             _instruction = instruction;
+        }
+
+        public static implicit operator IdRef(InstructionWithId instruction)
+        {
+            if (instruction == null)
+                return null;
+            return new IdRef(instruction);
+        }
+
+        public static implicit operator IdRef(Instruction instruction)
+        {
+            if (instruction == null)
+                return null;
+            return new IdRef((InstructionWithId)instruction);
+        }
+
+        public static implicit operator InstructionWithId(IdRef idRef)
+        {
+            return idRef.Instruction;
         }
 
         public IdRef(InstructionWithId instruction, InstructionRegistry registry)
@@ -123,12 +96,12 @@ namespace Toe.SPIRV.Spv
         {
             if (_id != 0)
             {
-                if (_instruction != null) return $"#{_id}({_instruction.OpName?.Name ?? _instruction.ToString()})";
+                if (_instruction != null) return $"#{_id}({_instruction.OpName?.Value ?? _instruction.ToString()})";
                 return $"#{_id}";
             }
 
-            if (_instruction != null && !string.IsNullOrWhiteSpace(_instruction.OpName?.Name))
-                return $"{_instruction.OpName.Name}";
+            if (_instruction != null && !string.IsNullOrWhiteSpace(_instruction.OpName?.Value))
+                return $"{_instruction.OpName.Value}";
             if (_instruction != null)
                 return _instruction.ToString();
             return "<null>";

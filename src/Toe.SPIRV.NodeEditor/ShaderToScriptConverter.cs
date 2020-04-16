@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Toe.Scripting;
 using Toe.SPIRV.Reflection;
 using Toe.SPIRV.Reflection.Nodes;
@@ -12,7 +13,10 @@ namespace Toe.SPIRV.NodeEditor
 
         public Script Convert(ShaderReflection reflection)
         {
-            VisitNode(reflection.EntryFunction);
+            foreach (var node in reflection.EntryPointInstructions)
+            {
+                VisitNode(node.Value);
+            }
             return _script;
         }
 
@@ -29,7 +33,7 @@ namespace Toe.SPIRV.NodeEditor
             }
             else
             {
-                scriptNode.Value = node.Name;
+                scriptNode.Value = node.DebugName;
             }
             _script.Nodes.Add(scriptNode);
             _nodeMap.Add(node, scriptNode);

@@ -12,9 +12,12 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpVariable; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.StorageClass StorageClass { get; set; }
+
         public Spv.IdRef Initializer { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Initializer", Initializer);

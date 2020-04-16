@@ -64,6 +64,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             NumPackets = treeBuilder.GetNode(op.NumPackets);
             PacketSize = treeBuilder.GetNode(op.PacketSize);
             PacketAlignment = treeBuilder.GetNode(op.PacketAlignment);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

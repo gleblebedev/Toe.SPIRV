@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpLine; } }
 
         public Spv.IdRef File { get; set; }
-        public uint Line { get; set; }
+
+        public uint Value { get; set; }
+
         public uint Column { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("File", File);
@@ -25,7 +28,7 @@ namespace Toe.SPIRV.Instructions
         {
             var end = reader.Position+wordCount-1;
             File = Spv.IdRef.Parse(reader, end-reader.Position);
-            Line = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+            Value = Spv.LiteralInteger.Parse(reader, end-reader.Position);
             Column = Spv.LiteralInteger.Parse(reader, end-reader.Position);
         }
 
@@ -33,7 +36,7 @@ namespace Toe.SPIRV.Instructions
         {
             uint wordCount = 0;
             wordCount += File.GetWordCount();
-            wordCount += Line.GetWordCount();
+            wordCount += Value.GetWordCount();
             wordCount += Column.GetWordCount();
             return wordCount;
         }
@@ -41,13 +44,13 @@ namespace Toe.SPIRV.Instructions
         public override void Write(WordWriter writer)
         {
             File.Write(writer);
-            Line.Write(writer);
+            Value.Write(writer);
             Column.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{OpCode} {File} {Line} {Column}";
+            return $"{OpCode} {File} {Value} {Column}";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Toe.SPIRV.Spv;
+﻿using System.Collections.Generic;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {

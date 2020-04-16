@@ -13,7 +13,7 @@ namespace Toe.SPIRV.Instructions
         {
             if (OpName != null)
             {
-                name = OpName.Name;
+                name = OpName.Value;
                 return true;
             }
 

@@ -57,7 +57,22 @@ namespace Toe.SPIRV.Reflection
         {
             switch (instruction.OpCode)
             {
+                case Op.OpNop: return new Nop();
                 case Op.OpUndef: return new Undef();
+                case Op.OpSourceContinued: return new SourceContinued();
+                case Op.OpSource: return new Source();
+                case Op.OpSourceExtension: return new SourceExtension();
+                case Op.OpName: return new Name();
+                case Op.OpMemberName: return new MemberName();
+                case Op.OpString: return new Nodes.String();
+                case Op.OpLine: return new Line();
+                case Op.OpExtension: return new Extension();
+                case Op.OpExtInstImport: return new ExtInstImport();
+                case Op.OpExtInst: return new ExtInst();
+                case Op.OpMemoryModel: return new Nodes.MemoryModel();
+                case Op.OpEntryPoint: return new EntryPoint();
+                case Op.OpExecutionMode: return new Nodes.ExecutionMode();
+                case Op.OpCapability: return new Nodes.Capability();
                 case Op.OpConstantTrue: return new ConstantTrue();
                 case Op.OpConstantFalse: return new ConstantFalse();
                 case Op.OpConstant: return new Constant();
@@ -342,12 +357,16 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpSubgroupImageBlockWriteINTEL: return new SubgroupImageBlockWriteINTEL();
                 case Op.OpDecorateStringGOOGLE: return new DecorateStringGOOGLE();
                 case Op.OpMemberDecorateStringGOOGLE: return new MemberDecorateStringGOOGLE();
-                case Op.OpLine: return null;
                 default:
                     throw new NotImplementedException(instruction + " not implemented");
             }
         }
 
         public abstract void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder);
+
+        public virtual IEnumerable<Decoration> GetDecorations()
+        {
+            return Enumerable.Empty<Decoration>();
+        }
     }
 }

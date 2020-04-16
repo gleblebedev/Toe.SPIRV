@@ -65,5 +65,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             Stream = treeBuilder.GetNode(op.Stream);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

@@ -509,11 +509,23 @@ foreach (var op in _instruction.Operands)
             break;
     }
 }
+if (_instruction.IdResult != null)
+{
 
             
             #line default
             #line hidden
-            this.Write("        }\r\n    }\r\n}");
+            this.Write("            SetUpDecorations(op.Decorations);\r\n");
+            
+            #line 214 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+ 
+}
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n        \r\n        partial void SetUpDecorations(IList<OpDecorate> deco" +
+                    "rations);\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

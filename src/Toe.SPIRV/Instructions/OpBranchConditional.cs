@@ -13,9 +13,13 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpBranchConditional; } }
 
         public Spv.IdRef Condition { get; set; }
+
         public Spv.IdRef TrueLabel { get; set; }
+
         public Spv.IdRef FalseLabel { get; set; }
+
         public IList<uint> Branchweights { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Condition", Condition);

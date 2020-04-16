@@ -70,5 +70,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Source = treeBuilder.GetNode(op.Source);
             MemoryAccess = op.MemoryAccess;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

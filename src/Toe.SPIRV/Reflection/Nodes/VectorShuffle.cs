@@ -60,6 +60,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Vector1 = treeBuilder.GetNode(op.Vector1);
             Vector2 = treeBuilder.GetNode(op.Vector2);
             Components = op.Components;
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

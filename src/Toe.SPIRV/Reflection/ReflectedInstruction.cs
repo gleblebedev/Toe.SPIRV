@@ -6,6 +6,6 @@ namespace Toe.SPIRV.Reflection
     {
         public abstract Op OpCode { get; }
 
-        public string Name { get; set; }
+        public string DebugName { get; set; }
     }
 }

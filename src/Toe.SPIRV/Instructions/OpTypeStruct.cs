@@ -13,6 +13,7 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeStruct; } }
 
         public IList<Spv.IdRef> MemberTypes { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             for (int i=0; i<MemberTypes.Count; ++i)

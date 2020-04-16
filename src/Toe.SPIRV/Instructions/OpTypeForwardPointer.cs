@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeForwardPointer; } }
 
         public Spv.IdRef PointerType { get; set; }
+
         public Spv.StorageClass StorageClass { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("PointerType", PointerType);

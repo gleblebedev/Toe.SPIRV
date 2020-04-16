@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpLoopMerge; } }
 
         public Spv.IdRef MergeBlock { get; set; }
+
         public Spv.IdRef ContinueTarget { get; set; }
+
         public Spv.LoopControl LoopControl { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("MergeBlock", MergeBlock);

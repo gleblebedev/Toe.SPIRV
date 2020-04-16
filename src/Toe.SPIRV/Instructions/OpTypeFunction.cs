@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeFunction; } }
 
         public Spv.IdRef ReturnType { get; set; }
+
         public IList<Spv.IdRef> ParameterTypes { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("ReturnType", ReturnType);

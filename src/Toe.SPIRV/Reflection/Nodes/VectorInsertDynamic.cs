@@ -61,6 +61,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Vector = treeBuilder.GetNode(op.Vector);
             Component = treeBuilder.GetNode(op.Component);
             Index = treeBuilder.GetNode(op.Index);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

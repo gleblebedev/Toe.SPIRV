@@ -13,9 +13,13 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpCopyMemorySized; } }
 
         public Spv.IdRef Target { get; set; }
+
         public Spv.IdRef Source { get; set; }
+
         public Spv.IdRef Size { get; set; }
+
         public Spv.MemoryAccess MemoryAccess { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Target", Target);

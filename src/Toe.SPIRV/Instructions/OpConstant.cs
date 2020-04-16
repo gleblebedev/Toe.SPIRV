@@ -12,8 +12,10 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpConstant; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.LiteralContextDependentNumber Value { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -25,7 +27,7 @@ namespace Toe.SPIRV.Instructions
             IdResultType = Spv.IdResultType.Parse(reader, end-reader.Position);
             IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            Value = Spv.LiteralContextDependentNumber.ParseOptional(reader, end-reader.Position, IdResultType.Instruction);
+            Value = Spv.LiteralContextDependentNumber.ParseOptional(reader, end-reader.Position, (TypeInstruction)IdResultType.Instruction);
         }
 
         public override uint GetWordCount()

@@ -12,8 +12,10 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpNot; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Operand { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Operand", Operand);

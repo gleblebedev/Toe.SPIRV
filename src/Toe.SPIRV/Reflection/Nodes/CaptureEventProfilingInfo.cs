@@ -71,5 +71,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             ProfilingInfo = treeBuilder.GetNode(op.ProfilingInfo);
             Value = treeBuilder.GetNode(op.Value);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

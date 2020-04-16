@@ -67,6 +67,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Unequal = op.Unequal;
             Value = treeBuilder.GetNode(op.Value);
             Comparator = treeBuilder.GetNode(op.Comparator);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

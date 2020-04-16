@@ -12,8 +12,10 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpSubgroupBlockReadINTEL; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Ptr { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Ptr", Ptr);

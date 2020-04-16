@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpSelectionMerge; } }
 
         public Spv.IdRef MergeBlock { get; set; }
+
         public Spv.SelectionControl SelectionControl { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("MergeBlock", MergeBlock);

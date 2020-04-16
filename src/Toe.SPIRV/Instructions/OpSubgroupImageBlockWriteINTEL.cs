@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpSubgroupImageBlockWriteINTEL; } }
 
         public Spv.IdRef Image { get; set; }
+
         public Spv.IdRef Coordinate { get; set; }
+
         public Spv.IdRef Data { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Image", Image);

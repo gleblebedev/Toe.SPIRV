@@ -12,7 +12,8 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpString; } }
 
-        public string String { get; set; }
+        public string Value { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;
@@ -23,26 +24,26 @@ namespace Toe.SPIRV.Instructions
             var end = reader.Position+wordCount-1;
             IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
-            String = Spv.LiteralString.Parse(reader, end-reader.Position);
+            Value = Spv.LiteralString.Parse(reader, end-reader.Position);
         }
 
         public override uint GetWordCount()
         {
             uint wordCount = 0;
             wordCount += IdResult.GetWordCount();
-            wordCount += String.GetWordCount();
+            wordCount += Value.GetWordCount();
             return wordCount;
         }
 
         public override void Write(WordWriter writer)
         {
             IdResult.Write(writer);
-            String.Write(writer);
+            Value.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{IdResult} = {OpCode} {String}";
+            return $"{IdResult} = {OpCode} {Value}";
         }
     }
 }

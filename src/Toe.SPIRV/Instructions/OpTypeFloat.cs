@@ -13,6 +13,7 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeFloat; } }
 
         public uint Width { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;

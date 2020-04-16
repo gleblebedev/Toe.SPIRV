@@ -16,12 +16,12 @@ layout(location = 0) out vec4 fsout_color;
 
 void main()
 {
-    fsout_color = vec4(0,0,0,0);
+    //fsout_color = vec4(0,0,0,0);
 }", ShaderStages.Vertex);
             var fragmentShader = CompileToBytecode(@"#version 450
 void main()
 {
-    gl_Position = vec4(0,0,0,0);
+    //gl_Position = vec4(0,0,0,0);
 }", ShaderStages.Vertex);
             var originalCode = DecompileBytecode(vertexShader, fragmentShader);
 

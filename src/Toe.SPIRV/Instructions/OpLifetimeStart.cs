@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpLifetimeStart; } }
 
         public Spv.IdRef Pointer { get; set; }
+
         public uint Size { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pointer", Pointer);

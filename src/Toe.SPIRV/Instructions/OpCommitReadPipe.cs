@@ -13,9 +13,13 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpCommitReadPipe; } }
 
         public Spv.IdRef Pipe { get; set; }
+
         public Spv.IdRef ReserveId { get; set; }
+
         public Spv.IdRef PacketSize { get; set; }
+
         public Spv.IdRef PacketAlignment { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pipe", Pipe);

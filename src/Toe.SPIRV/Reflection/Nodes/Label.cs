@@ -54,6 +54,9 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpLabel op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

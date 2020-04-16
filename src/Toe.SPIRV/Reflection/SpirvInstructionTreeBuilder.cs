@@ -5,6 +5,10 @@ using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Spv;
+using Capability = Toe.SPIRV.Reflection.Nodes.Capability;
+using ExecutionMode = Toe.SPIRV.Reflection.Nodes.ExecutionMode;
+using MemoryModel = Toe.SPIRV.Reflection.Nodes.MemoryModel;
+using String = System.String;
 
 namespace Toe.SPIRV.Reflection
 {
@@ -33,6 +37,7 @@ namespace Toe.SPIRV.Reflection
         public void AddType(InstructionWithId instruction, SpirvTypeBase type)
         {
             _types.Add(instruction.IdResult, type);
+            TypeInstructions.Add(type);
         }
         public void ParseFloat(Instruction instruction)
         {
@@ -153,14 +158,14 @@ namespace Toe.SPIRV.Reflection
             }
 
             Array.Sort(fields);
-            var structure = new SpirvStructure(instruction.OpName?.Name, fields);
+            var structure = new SpirvStruct(instruction.OpName?.Value, fields);
             AddType(instruction, structure);
         }
 
         public void ParseFunctionType(OpTypeFunction instruction)
         {
-            var function = new SpirvFunctionType();
-            function.Name = instruction.OpName?.Name;
+            var function = new SpirvFunction();
+            function.DebugName = instruction.OpName?.Value;
             function.ReturnType = ResolveType(instruction.ReturnType);
             foreach (var parameterType in instruction.ParameterTypes)
             {
@@ -171,10 +176,10 @@ namespace Toe.SPIRV.Reflection
 
         public void ParsePointerType(OpTypePointer instruction)
         {
-            var function = new SpirvPointerType();
-            function.Name = instruction.OpName?.Name;
+            var function = new SpirvPointer();
+            function.DebugName = instruction.OpName?.Value;
             function.Type = ResolveType(instruction.Type);
-            function.StorageClass = instruction.StorageClass.Value;
+            function.StorageClass = instruction.StorageClass;
             AddType(instruction, function);
         }
 
@@ -207,7 +212,6 @@ namespace Toe.SPIRV.Reflection
         public void BuildTree(Shader shader)
         {
             _shader = shader;
-            OpEntryPoint entryPoint = null;
             Function currentFunction = null;
             for (var index = 0; index < _shader.Instructions.Count; index++)
             {
@@ -215,20 +219,54 @@ namespace Toe.SPIRV.Reflection
                 switch (instruction.OpCode)
                 {
                     case Op.OpCapability:
+                        CapabilityInstructions.Add((Capability)ParseNode(instruction));
+                        break;
                     case Op.OpExtInstImport:
-                    case Op.OpExtInst:
+                        ExtInstImportInstructions.Add((ExtInstImport)ParseNode(instruction));
+                        break;
+                    case Op.OpExtension:
+                        ExtensionInstructions.Add((Extension)ParseNode(instruction));
+                        break;
                     case Op.OpMemoryModel:
+                        MemoryModel = (MemoryModel)ParseNode(instruction);
+                        break;
+                    case Op.OpEntryPoint:
+                    {
+                        EntryPointInstructions.Add((EntryPoint) ParseNode(instruction));
+                        break;
+                    }
+                    case Op.OpExecutionMode:
+                    {
+                        ExecutionModeInstructions.Add((ExecutionMode)ParseNode(instruction));
+                        break;
+                    }
                     case Op.OpString:
                     case Op.OpSource:
                     case Op.OpSourceExtension:
-                    case Op.OpDecorate:
+                    case Op.OpSourceContinued:
+                    {
+                        ParseNode(instruction);
+                        break;
+                    }
+                    
+                    case Op.OpName:
+                        _names[((OpName) instruction).Target.Id] = ((OpName) instruction).Value;
+                        break;
                     case Op.OpMemberName:
-                    case Op.OpLine:
+                        break;
+
+                    case Op.OpDecorate:
                     case Op.OpMemberDecorate:
                         break;
-                    case Op.OpName:
-                        _names[((OpName) instruction).Target.Id] = ((OpName) instruction).Name;
+                    case Op.OpGroupDecorate:
+                    case Op.OpGroupMemberDecorate:
+                    case Op.OpDecorationGroup:
+                        throw new NotImplementedException(instruction.OpCode+" not implemented yet.");
+
+                    case Op.OpLine:
+                    case Op.OpExtInst:
                         break;
+
                     case Op.OpTypeVector:
                         ParseVector((OpTypeVector)instruction);
                         break;
@@ -253,10 +291,7 @@ namespace Toe.SPIRV.Reflection
                     case Op.OpTypeInt:
                         ParseInt(instruction);
                         break;
-                    case Op.OpEntryPoint:
-                        entryPoint = (OpEntryPoint)instruction;
-                        ExecutionModel = entryPoint.ExecutionModel;
-                        break;
+                 
                     case Op.OpTypeFunction:
                         ParseFunctionType((OpTypeFunction)instruction);
                         break;
@@ -270,10 +305,10 @@ namespace Toe.SPIRV.Reflection
                         var hasId = _shader.Instructions[index].TryGetResultId(out var id);
                         if (hasId)
                         {
-                            if (entryPoint != null && id == entryPoint.EntryPoint.Id)
-                            {
-                                EntryFunction = (Function)function;
-                            }
+                            //if (entryPoint != null && id == entryPoint.Value.Id)
+                            //{
+                            //    function = (Function)function;
+                            //}
                         }
                         break;
                     }
@@ -315,11 +350,35 @@ namespace Toe.SPIRV.Reflection
             }
         }
 
-        public Function EntryFunction { get; set; }
-        public ExecutionModel ExecutionModel { get; set; }
-        public IEnumerable<SpirvTypeBase> Types => _types.Values;
+        /// <summary>
+        /// All OpCapability instructions. 
+        /// </summary>
+        public List<Capability> CapabilityInstructions { get; } = new List<Capability>();
+        /// <summary>
+        /// Optional OpExtension instructions (extensions to SPIR-V).
+        /// </summary>
+        public List<Extension> ExtensionInstructions { get; } = new List<Extension>();
+        /// <summary>
+        /// Optional OpExtInstImport instructions.
+        /// </summary>
+        public List<ExtInstImport> ExtInstImportInstructions { get; } = new List<ExtInstImport>();
+        /// <summary>
+        /// The single required OpMemoryModel instruction.
+        /// </summary>
+        public MemoryModel MemoryModel { get; set; }
+        /// <summary>
+        /// All entry point declarations, using OpEntryPoint.
+        /// </summary>
+        public List<EntryPoint> EntryPointInstructions { get; } = new List<EntryPoint>();
+        /// <summary>
+        /// All entry point declarations, using OpEntryPoint.
+        /// </summary>
+        public List<ExecutionMode> ExecutionModeInstructions { get; } = new List<ExecutionMode>();
+        /// <summary>
+        /// All type declarations (OpTypeXXX instructions).
+        /// </summary>
+        public List<SpirvTypeBase> TypeInstructions { get; } = new List<SpirvTypeBase>();
 
-        
         private void AddNode(Instruction instruction, Node node)
         {
             _nodes.Add(new KeyValuePair<Instruction, Node>(instruction, node));
@@ -333,7 +392,7 @@ namespace Toe.SPIRV.Reflection
                 if (op.TryGetResultId(out var id))
                 {
                     if (_names.TryGetValue(id, out var name))
-                        node.Name = name;
+                        node.DebugName = name;
                     RegisterNodeResult(id, node);
                 }
 

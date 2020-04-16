@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpSetUserEventStatus; } }
 
         public Spv.IdRef Event { get; set; }
+
         public Spv.IdRef Status { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Event", Event);

@@ -60,5 +60,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             MergeBlock = treeBuilder.GetNode(op.MergeBlock);
             SelectionControl = op.SelectionControl;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

@@ -2,23 +2,22 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvPointerType : SpirvTypeBase
+    public class SpirvPointer : SpirvTypeBase
     {
-        public SpirvPointerType() : base(SpirvTypeCategory.Pointer)
+        public SpirvPointer() : base(SpirvTypeCategory.Pointer)
         {
             
         }
 
         public override Op OpCode => Op.OpTypePointer;
 
-        public string Name { get; set; }
         public SpirvTypeBase Type { get; set; }
-        public StorageClass.Enumerant StorageClass { get; set; }
+        public StorageClass StorageClass { get; set; }
 
         public override string ToString()
         {
-            if (Name != null)
-                return Name;
+            if (DebugName != null)
+                return DebugName;
             if (Type != null)
                 return $"{Type}*";
             return base.ToString();

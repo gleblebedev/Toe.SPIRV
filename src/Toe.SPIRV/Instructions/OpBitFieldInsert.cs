@@ -12,11 +12,16 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpBitFieldInsert; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Base { get; set; }
+
         public Spv.IdRef Insert { get; set; }
+
         public Spv.IdRef Offset { get; set; }
+
         public Spv.IdRef Count { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Base", Base);

@@ -61,6 +61,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Condition = treeBuilder.GetNode(op.Condition);
             Object1 = treeBuilder.GetNode(op.Object1);
             Object2 = treeBuilder.GetNode(op.Object2);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

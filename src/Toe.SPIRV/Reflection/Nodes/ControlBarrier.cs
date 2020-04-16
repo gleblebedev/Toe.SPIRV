@@ -61,5 +61,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Memory = op.Memory;
             Semantics = op.Semantics;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

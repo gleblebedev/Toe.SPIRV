@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpMemberDecorate; } }
 
         public Spv.IdRef StructureType { get; set; }
+
         public uint Member { get; set; }
+
         public Spv.Decoration Decoration { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("StructureType", StructureType);

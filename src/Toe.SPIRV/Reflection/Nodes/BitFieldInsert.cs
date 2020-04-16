@@ -64,6 +64,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Insert = treeBuilder.GetNode(op.Insert);
             Offset = treeBuilder.GetNode(op.Offset);
             Count = treeBuilder.GetNode(op.Count);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

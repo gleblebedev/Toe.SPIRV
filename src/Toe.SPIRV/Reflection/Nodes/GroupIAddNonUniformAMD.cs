@@ -59,6 +59,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             Execution = op.Execution;
             Operation = op.Operation;
             X = treeBuilder.GetNode(op.X);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

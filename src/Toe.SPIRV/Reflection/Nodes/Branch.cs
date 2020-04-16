@@ -48,5 +48,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             TargetLabel = (Label)treeBuilder.GetNode(op.TargetLabel);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

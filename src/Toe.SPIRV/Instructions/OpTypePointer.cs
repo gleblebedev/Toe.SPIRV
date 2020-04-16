@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypePointer; } }
 
         public Spv.StorageClass StorageClass { get; set; }
+
         public Spv.IdRef Type { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Type", Type);

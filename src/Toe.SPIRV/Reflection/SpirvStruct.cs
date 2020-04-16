@@ -5,15 +5,15 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvStructure : SpirvTypeBase
+    public class SpirvStruct : SpirvTypeBase
     {
         private readonly List<SpirvStructureField> _fields = new List<SpirvStructureField>();
         private uint? _sizeInBytes;
         private uint? _alignment;
 
-        public SpirvStructure(string name, params SpirvStructureField[] fields) : base(SpirvTypeCategory.Struct)
+        public SpirvStruct(string name, params SpirvStructureField[] fields) : base(SpirvTypeCategory.Struct)
         {
-            Name = name;
+            DebugName = name;
             _fields.AddRange(fields);
             if (_fields.Any(_ => _.ByteOffset == null)) UpdateFieldOffsets();
             EvaluateSizeAndAlignment();
@@ -47,13 +47,11 @@ namespace Toe.SPIRV.Reflection
             }
         }
 
-        public string Name { get; }
-
         public IReadOnlyList<SpirvStructureField> Fields => _fields;
 
         public override string ToString()
         {
-            return Name ?? base.ToString();
+            return DebugName ?? base.ToString();
         }
 
         private void UpdateFieldOffsets()

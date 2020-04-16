@@ -35,14 +35,14 @@ namespace Toe.SPIRV.UnitTests
 #line 9 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
             foreach (var structDef in _fields.Fields.Where(_ => _.Type.TypeCategory == SpirvTypeCategory.Struct)
-                .Select(_ => (SpirvStructure) _.Type).Distinct())
+                .Select(_ => (SpirvStruct) _.Type).Distinct())
             {
 #line default
 #line hidden
                 Write("struct ");
 
 #line 13 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.Name));
+                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
 
 #line default
 #line hidden
@@ -114,7 +114,7 @@ namespace Toe.SPIRV.UnitTests
                 Write("}; // end of ");
 
 #line 33 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.Name));
+                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
 
 #line default
 #line hidden
@@ -131,7 +131,7 @@ namespace Toe.SPIRV.UnitTests
             Write("\r\nlayout(set = 0, binding = 0) uniform ");
 
 #line 38 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-            Write(ToStringHelper.ToStringWithCulture(_fields.Name));
+            Write(ToStringHelper.ToStringWithCulture(_fields.DebugName));
 
 #line default
 #line hidden
@@ -235,14 +235,14 @@ namespace Toe.SPIRV.UnitTests
 #line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
             foreach (var structDef in _fields.Fields.Where(_ => _.Type.TypeCategory == SpirvTypeCategory.Struct)
-                .Select(_ => (SpirvStructure) _.Type).Distinct())
+                .Select(_ => (SpirvStruct) _.Type).Distinct())
             {
 #line default
 #line hidden
                 Write("int AppendHash(int hash, ");
 
 #line 166 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.Name));
+                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
 
 #line default
 #line hidden
@@ -301,7 +301,7 @@ namespace Toe.SPIRV.UnitTests
                 Write("    return hash;\r\n} // end of ");
 
 #line 190 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.Name));
+                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
 
 #line default
 #line hidden

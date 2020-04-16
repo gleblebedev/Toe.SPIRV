@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpCaptureEventProfilingInfo; } }
 
         public Spv.IdRef Event { get; set; }
+
         public Spv.IdRef ProfilingInfo { get; set; }
+
         public Spv.IdRef Value { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Event", Event);

@@ -59,6 +59,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             FunctionControl = op.FunctionControl;
             FunctionType = treeBuilder.ResolveType(op.FunctionType);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

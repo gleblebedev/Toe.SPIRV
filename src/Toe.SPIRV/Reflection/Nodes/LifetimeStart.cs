@@ -67,5 +67,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Pointer = treeBuilder.GetNode(op.Pointer);
             Size = op.Size;
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

@@ -13,8 +13,11 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpGroupWaitEvents; } }
 
         public uint Execution { get; set; }
+
         public Spv.IdRef NumEvents { get; set; }
+
         public Spv.IdRef EventsList { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("NumEvents", NumEvents);

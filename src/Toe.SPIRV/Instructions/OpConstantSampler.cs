@@ -12,10 +12,14 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpConstantSampler; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.SamplerAddressingMode SamplerAddressingMode { get; set; }
+
         public uint Param { get; set; }
+
         public Spv.SamplerFilterMode SamplerFilterMode { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield break;

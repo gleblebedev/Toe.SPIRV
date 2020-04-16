@@ -1,0 +1,137 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
+using System.Collections.Generic;
+using Toe.SPIRV.Spv;
+
+<#
+    var isType = _instruction.IdResult!=null && _instruction.Name.StartsWith("OpType");
+#>
+
+namespace Toe.SPIRV.Instructions
+{
+    public partial class <#= _instruction.Name #>: <#= isType ? "TypeInstruction" : (_instruction.IdResult!=null ? "InstructionWithId" : "Instruction") #>
+    {
+        public <#= _instruction.Name #>()
+        {
+        }
+
+        public override Op OpCode { get { return Op.<#= _instruction.Name #>; } }
+
+<#
+    foreach(var op in _instruction.AllOperands().Where(_=>_.Kind != SpirvOperandKind.IdResult))
+    {
+#>
+        public <#=ViewUtils.GetOperandType(op)#> <#=op.Name#> { get; set; }
+
+<#
+    }
+#>
+        public override IEnumerable<ReferenceProperty> GetReferences()
+        {
+<#
+    foreach(var op in _instruction.AllOperands().Where(_=>_.Kind == SpirvOperandKind.IdRef))
+    {
+        if (op.Quantifier == SpirvOperandQuantifier.Repeated)
+        {
+#>
+            for (int i=0; i<<#=op.Name #>.Count; ++i)
+                yield return new ReferenceProperty("<#=op.Name #>"+i, <#=op.Name #>[i]);
+<#
+        }
+        else
+        {
+#>
+            yield return new ReferenceProperty("<#=op.Name #>", <#=op.Name #>);
+<#
+        }
+    }
+#>
+            yield break;
+        }
+
+        public override void Parse(WordReader reader, uint wordCount)
+        {
+            var end = reader.Position+wordCount-1;
+<#
+    foreach(var op in _instruction.AllOperands())
+    {
+#>
+            <#=op.Name#> = <#=ViewUtils.GetOperandParser(op)#>;
+<#
+        if (op.Kind == SpirvOperandKind.IdResult)
+        {
+#>
+            reader.Instructions.Add(this);
+<#
+        }
+    }
+#>
+        }
+
+        public override uint GetWordCount()
+        {
+            uint wordCount = 0;
+<#
+    foreach(var op in _instruction.AllOperands())
+    {
+        if (op.Quantifier == SpirvOperandQuantifier.Optional)
+        {
+#>
+            wordCount += <#=op.Name#>?.GetWordCount() ?? (uint)0;
+<#
+        }
+        else
+        {
+#>
+            wordCount += <#=op.Name#>.GetWordCount();
+<#
+        }
+    }
+#>
+            return wordCount;
+        }
+
+        public override void Write(WordWriter writer)
+        {
+<#
+    foreach(var op in _instruction.AllOperands())
+    {
+        if (op.Quantifier == SpirvOperandQuantifier.Optional)
+        {
+#>
+            if (<#=op.Name#> != null) <#=op.Name#>.Write(writer);
+<#
+        }
+        else
+        {
+#>
+            <#=op.Name#>.Write(writer);
+<#
+        }
+    }
+#>
+        }
+
+        public override string ToString()
+        {
+<#
+if (_instruction.IdResultType != null && _instruction.IdResult != null)
+{
+    WriteLine("            return $\"{IdResultType} {IdResult} = {OpCode} "+string.Join(" ", _instruction.Operands.Select(_=>"{"+_.Name+"}"))+"\";");
+}
+else if (_instruction.IdResult != null)
+{
+    WriteLine("            return $\"{IdResult} = {OpCode} "+string.Join(" ", _instruction.Operands.Select(_=>"{"+_.Name+"}"))+"\";");
+}
+else
+{
+    WriteLine("            return $\"{OpCode} "+string.Join(" ", _instruction.Operands.Select(_=>"{"+_.Name+"}"))+"\";");
+}
+#>
+        }
+    }
+}

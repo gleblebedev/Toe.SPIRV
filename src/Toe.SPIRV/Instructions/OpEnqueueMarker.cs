@@ -12,11 +12,16 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpEnqueueMarker; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Queue { get; set; }
+
         public Spv.IdRef NumEvents { get; set; }
+
         public Spv.IdRef WaitEvents { get; set; }
+
         public Spv.IdRef RetEvent { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Queue", Queue);

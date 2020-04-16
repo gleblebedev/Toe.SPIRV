@@ -61,6 +61,9 @@ namespace Toe.SPIRV.Reflection.Nodes
             GlobalWorkSize = treeBuilder.GetNode(op.GlobalWorkSize);
             LocalWorkSize = treeBuilder.GetNode(op.LocalWorkSize);
             GlobalWorkOffset = treeBuilder.GetNode(op.GlobalWorkOffset);
+            SetUpDecorations(op.Decorations);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

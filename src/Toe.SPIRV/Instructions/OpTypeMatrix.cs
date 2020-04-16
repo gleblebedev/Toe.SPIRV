@@ -13,7 +13,9 @@ namespace Toe.SPIRV.Instructions
         public override Op OpCode { get { return Op.OpTypeMatrix; } }
 
         public Spv.IdRef ColumnType { get; set; }
+
         public uint ColumnCount { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("ColumnType", ColumnType);

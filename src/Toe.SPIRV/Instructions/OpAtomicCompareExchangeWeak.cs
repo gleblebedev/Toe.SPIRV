@@ -12,13 +12,20 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpAtomicCompareExchangeWeak; } }
 
-        public Spv.IdRef<TypeInstruction> IdResultType { get; set; }
+        public Spv.IdRef IdResultType { get; set; }
+
         public Spv.IdRef Pointer { get; set; }
+
         public uint Scope { get; set; }
+
         public uint Equal { get; set; }
+
         public uint Unequal { get; set; }
+
         public Spv.IdRef Value { get; set; }
+
         public Spv.IdRef Comparator { get; set; }
+
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
             yield return new ReferenceProperty("Pointer", Pointer);

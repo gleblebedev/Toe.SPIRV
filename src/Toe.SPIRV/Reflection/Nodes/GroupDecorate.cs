@@ -71,5 +71,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             DecorationGroup = treeBuilder.GetNode(op.DecorationGroup);
             Targets = treeBuilder.GetNodes(op.Targets);
         }
+        
+        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }
