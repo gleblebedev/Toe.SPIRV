@@ -4,8 +4,10 @@ using Toe.SPIRV.Instructions;
 
 namespace Toe.SPIRV.Spv
 {
-    public class IdRef
+    public struct IdRef : IEquatable<IdRef>
     {
+        public static readonly IdRef Empty = new IdRef();
+
         private readonly InstructionRegistry _registry;
         private readonly uint _id;
         private InstructionWithId _instruction;
@@ -14,6 +16,7 @@ namespace Toe.SPIRV.Spv
         {
             _id = id;
             _registry = registry;
+            _instruction = null;
         }
 
         public IdRef(InstructionWithId instruction)
@@ -22,25 +25,7 @@ namespace Toe.SPIRV.Spv
             if (_id == 0)
                 throw new ArgumentException("Instruction IdResult should not be zeo.");
             _instruction = instruction;
-        }
-
-        public static implicit operator IdRef(InstructionWithId instruction)
-        {
-            if (instruction == null)
-                return null;
-            return new IdRef(instruction);
-        }
-
-        public static implicit operator IdRef(Instruction instruction)
-        {
-            if (instruction == null)
-                return null;
-            return new IdRef((InstructionWithId)instruction);
-        }
-
-        public static implicit operator InstructionWithId(IdRef idRef)
-        {
-            return idRef.Instruction;
+            _registry = null;
         }
 
         public IdRef(InstructionWithId instruction, InstructionRegistry registry)
@@ -50,10 +35,65 @@ namespace Toe.SPIRV.Spv
             _registry = registry;
         }
 
+        public static implicit operator IdRef(InstructionWithId instruction)
+        {
+            if (instruction == null)
+                return IdRef.Empty;
+            return new IdRef(instruction);
+        }
+
+        public static implicit operator IdRef(Instruction instruction)
+        {
+            if (instruction == null)
+                return IdRef.Empty;
+            return new IdRef((InstructionWithId)instruction);
+        }
+
+        public static implicit operator InstructionWithId(IdRef idRef)
+        {
+            return idRef.Instruction;
+        }
+
+        public bool Equals(IdRef other)
+        {
+            return _id == other._id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is IdRef other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return (int) _id;
+        }
+
+        public static bool operator ==(IdRef left, IdRef right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(IdRef left, IdRef right)
+        {
+            return !left.Equals(right);
+        }
+
+        public static bool operator ==(IdRef left, object right)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool operator !=(IdRef left, object right)
+        {
+            throw new NotImplementedException();
+        }
         public InstructionWithId Instruction
         {
             get
             {
+                if (_id == 0)
+                    return null;
                 if (_instruction != null)
                     return _instruction;
                 return _instruction = _registry[_id];
@@ -80,7 +120,7 @@ namespace Toe.SPIRV.Spv
 
         public static IdRef ParseOptional(WordReader reader, uint wordCount)
         {
-            if (wordCount == 0) return null;
+            if (wordCount == 0) return IdRef.Empty;
             return Parse(reader, wordCount);
         }
 
@@ -107,13 +147,17 @@ namespace Toe.SPIRV.Spv
             return "<null>";
         }
 
-        public virtual uint GetWordCount()
+        public uint GetWordCount()
         {
-            return 1;
+            return (_id!=0)?1u:0;
         }
-        public virtual void Write(WordWriter writer)
+
+        public void Write(WordWriter writer)
         {
-            writer.WriteWord(_id);
+            if (_id != 0)
+            {
+                writer.WriteWord(_id);
+            }
         }
     }
 }

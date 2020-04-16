@@ -12,7 +12,7 @@ namespace Toe.SPIRV.Spv
 
         public static IdRef ParseOptional(WordReader reader, uint wordCount)
         {
-            if (wordCount == 0) return null;
+            if (wordCount == 0) return IdRef.Empty;
             return Parse(reader, wordCount);
         }
 

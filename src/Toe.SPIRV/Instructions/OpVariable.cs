@@ -40,7 +40,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += IdResultType.GetWordCount();
             wordCount += IdResult.GetWordCount();
             wordCount += StorageClass.GetWordCount();
-            wordCount += Initializer?.GetWordCount() ?? (uint)0;
+            wordCount += Initializer.GetWordCount();
             return wordCount;
         }
 
@@ -49,7 +49,7 @@ namespace Toe.SPIRV.Instructions
             IdResultType.Write(writer);
             IdResult.Write(writer);
             StorageClass.Write(writer);
-            if (Initializer != null) Initializer.Write(writer);
+            Initializer.Write(writer);
         }
 
         public override string ToString()

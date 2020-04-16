@@ -23,7 +23,7 @@ namespace Toe.SPIRV.Reflection
 
         public SpirvTypeBase ResolveType(IdRef idRef)
         {
-            if (idRef == null)
+            if (idRef == IdRef.Empty)
                 return null;
             return _types[idRef.Id];
         }
@@ -190,7 +190,7 @@ namespace Toe.SPIRV.Reflection
 
         public Node GetNode(IdRef id)
         {
-            if (id == null)
+            if (id == IdRef.Empty)
                 return null;
             return _nodeMap[id.Id];
         }

@@ -40,7 +40,7 @@ namespace Toe.SPIRV.Instructions
             uint wordCount = 0;
             wordCount += SourceLanguage.GetWordCount();
             wordCount += Version.GetWordCount();
-            wordCount += File?.GetWordCount() ?? (uint)0;
+            wordCount += File.GetWordCount();
             wordCount += Value?.GetWordCount() ?? (uint)0;
             return wordCount;
         }
@@ -49,7 +49,7 @@ namespace Toe.SPIRV.Instructions
         {
             SourceLanguage.Write(writer);
             Version.Write(writer);
-            if (File != null) File.Write(writer);
+            File.Write(writer);
             if (Value != null) Value.Write(writer);
         }
 
