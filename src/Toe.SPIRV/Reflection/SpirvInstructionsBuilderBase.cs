@@ -45,7 +45,7 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpTypeImage: return VisitTypeImage((SpirvImage)node);
                 case Op.OpTypeSampler: return VisitTypeSampler((SpirvSampler)node);
                 case Op.OpTypeSampledImage: return VisitTypeSampledImage((SpirvSampledImage)node);
-                case Op.OpTypeArray: return VisitTypeArray((SpirvArray)node);
+                case Op.OpTypeArray: return VisitTypeArray((SpirvArrayBase)node);
                 case Op.OpTypeRuntimeArray: return VisitTypeRuntimeArray((SpirvRuntimeArray)node);
                 case Op.OpTypeStruct: return VisitTypeStruct((SpirvStruct)node);
                 case Op.OpTypeOpaque: return VisitTypeOpaque((SpirvOpaque)node);
@@ -767,7 +767,7 @@ namespace Toe.SPIRV.Reflection
 
             return instruction;
         }
-        protected virtual OpTypeArray VisitTypeArray(SpirvArray node)
+        protected virtual OpTypeArray VisitTypeArray(SpirvArrayBase node)
         {
             var instruction = new OpTypeArray();
             _instructionMap.Add(node, instruction);

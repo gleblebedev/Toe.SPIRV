@@ -22,13 +22,12 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public Node Target { get; set; }
+        public ReflectedInstruction Target { get; set; }
         public Spv.Decoration Decoration { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
             {
-                yield return CreateInputPin(nameof(Target), Target);
                 yield break;
             }
         }
@@ -64,7 +63,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpDecorate op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            Target = treeBuilder.GetNode(op.Target);
+            Target = treeBuilder.ResolveType(op.Target);
             Decoration = op.Decoration;
         }
         

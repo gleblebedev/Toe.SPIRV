@@ -266,6 +266,20 @@ namespace Toe.SPIRV.CodeGenerator
                             return;
                         }
                         break;
+                    case "OpMemberDecorate":
+                        if (spirvOperand.Name == "StructureType")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpDecorate":
+                        if (spirvOperand.Name == "Target")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
                 }
 
                 if (spirvOperand.Quantifier == SpirvOperandQuantifier.Repeated)

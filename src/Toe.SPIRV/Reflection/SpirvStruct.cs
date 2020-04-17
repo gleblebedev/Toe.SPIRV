@@ -48,6 +48,7 @@ namespace Toe.SPIRV.Reflection
         }
 
         public IReadOnlyList<SpirvStructureField> Fields => _fields;
+        public bool Block { get; set; }
 
         public override string ToString()
         {

@@ -9,20 +9,11 @@ namespace Toe.SPIRV.UnitTests
     {
 
         [Test]
-        public void SimpleShader()
+        [TestCaseSource(typeof(TestShaders), nameof(TestShaders.EnumerateTestShaders))]
+        public void SimpleShader(string vertexShaderCode, string fragmentShaderCode)
         {
-            var vertexShader = CompileToBytecode(@"#version 450
-layout(location = 0) out vec4 fsout_color;
-
-void main()
-{
-    //fsout_color = vec4(0,0,0,0);
-}", ShaderStages.Vertex);
-            var fragmentShader = CompileToBytecode(@"#version 450
-void main()
-{
-    //gl_Position = vec4(0,0,0,0);
-}", ShaderStages.Vertex);
+            var vertexShader = CompileToBytecode(vertexShaderCode, ShaderStages.Vertex);
+            var fragmentShader = CompileToBytecode(fragmentShaderCode, ShaderStages.Fragment);
             var originalCode = DecompileBytecode(vertexShader, fragmentShader);
 
             var translatedVertexShader = TranslateShaderViaReflection(vertexShader);

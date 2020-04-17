@@ -22,14 +22,13 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public Node StructureType { get; set; }
+        public SpirvTypeBase StructureType { get; set; }
         public uint Member { get; set; }
         public Spv.Decoration Decoration { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
             {
-                yield return CreateInputPin(nameof(StructureType), StructureType);
                 yield break;
             }
         }
@@ -65,7 +64,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpMemberDecorate op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            StructureType = treeBuilder.GetNode(op.StructureType);
+            StructureType = treeBuilder.ResolveType(op.StructureType);
             Member = op.Member;
             Decoration = op.Decoration;
         }

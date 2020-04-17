@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Veldrid;
 
 namespace Toe.SPIRV.UnitTests
 {
@@ -8,32 +9,30 @@ namespace Toe.SPIRV.UnitTests
 
 
         [Test]
-        public void SimpleShader()
+        [TestCaseSource(typeof(TestShaders), nameof(TestShaders.EnumerateTestShaders))]
+        public void SimpleShader(string vertexShaderCode, string fragmentShaderCode)
         {
-            var shaderBytes = CompileToBytecode(@"#version 450
-
-vec4 GetColor(float x)
-{
-    //vec4 res;
-    //if (x > 0.5)
-    //    res = vec4(x,x-1,x,1);
-    //else
-    //    res = vec4(x,x+1,x,1);
-    //return res;
-    return (x>0.5)?vec4(x,x-1,x,1):vec4(x,x+1,x,1);
-}
-
-void main()
-{
-    gl_Position = GetColor(0.1);
-}");
-            var instructions = Shader.Parse(shaderBytes);
-            var generatedBytecode = instructions.Build();
-
-            //Assert.AreEqual(shaderBytes.Length, generatedBytecode.Length);
-            for (var index = 16; index < shaderBytes.Length; index++)
             {
-                Assert.AreEqual(shaderBytes[index], generatedBytecode[index]);
+                var shaderBytes = CompileToBytecode(vertexShaderCode, ShaderStages.Vertex);
+                var instructions = Shader.Parse(shaderBytes);
+                var generatedBytecode = instructions.Build();
+
+                //Assert.AreEqual(shaderBytes.Length, generatedBytecode.Length);
+                for (var index = 16; index < shaderBytes.Length; index++)
+                {
+                    Assert.AreEqual(shaderBytes[index], generatedBytecode[index]);
+                }
+            }
+            {
+                var shaderBytes = CompileToBytecode(fragmentShaderCode, ShaderStages.Fragment);
+                var instructions = Shader.Parse(shaderBytes);
+                var generatedBytecode = instructions.Build();
+
+                //Assert.AreEqual(shaderBytes.Length, generatedBytecode.Length);
+                for (var index = 16; index < shaderBytes.Length; index++)
+                {
+                    Assert.AreEqual(shaderBytes[index], generatedBytecode[index]);
+                }
             }
         }
     }

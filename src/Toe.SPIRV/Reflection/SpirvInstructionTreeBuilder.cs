@@ -127,7 +127,6 @@ namespace Toe.SPIRV.Reflection
                 string name = null;
                 if (instruction.MemberNames != null && instruction.MemberNames.Count > index)
                     name = instruction.MemberNames[index].Name;
-                var byteOffset = instruction.FindMemberDecoration<Decoration.Offset>((uint)index)?.ByteOffset;
                 var spirvTypeBase = _types[instructionMemberType.Id];
                 if (spirvTypeBase.TypeCategory == SpirvTypeCategory.Array)
                 {
@@ -154,11 +153,22 @@ namespace Toe.SPIRV.Reflection
                         new SpirvMatrixLayout((SpirvMatrixBase)spirvTypeBase, matrixOrientation, matrixStride);
                 }
 
-                fields[index] = new SpirvStructureField(spirvTypeBase, name, byteOffset);
+                fields[index] = new SpirvStructureField(spirvTypeBase, name, instruction.MemberDecorations.Where(_=>_.Member == index));
             }
 
             Array.Sort(fields);
             var structure = new SpirvStruct(instruction.OpName?.Value, fields);
+            foreach (var decoration in instruction.Decorations)
+            {
+                switch (decoration.Decoration.Value)
+                {
+                    case Decoration.Enumerant.Block:
+                        structure.Block = true;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
             AddType(instruction, structure);
         }
 

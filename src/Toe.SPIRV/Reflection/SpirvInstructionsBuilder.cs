@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Spv;
 using Capability = Toe.SPIRV.Spv.Capability;
 using ExecutionMode = Toe.SPIRV.Reflection.Nodes.ExecutionMode;
 using MemoryModel = Toe.SPIRV.Spv.MemoryModel;
+using String = Toe.SPIRV.Reflection.Nodes.String;
 
 namespace Toe.SPIRV.Reflection
 {
     public class SpirvInstructionsBuilder: SpirvInstructionsBuilderBase
     {
-        private List<IdRef> _interface = new List<IdRef>();
         /// <summary>
         /// All OpCapability instructions. 
         /// </summary>
@@ -146,9 +147,40 @@ namespace Toe.SPIRV.Reflection
         {
             while (node != null)
             {
-                instructions.Add(Visit(node));
+                EnsureInputs(instructions, node);
                 node = node.GetNext();
             }
+        }
+
+        private void EnsureInputs(List<Instruction> instructions, Node node)
+        {
+            var instruction = Visit(node);
+            switch (node.OpCode)
+            {
+                case Op.OpConstant:
+                case Op.OpConstantComposite:
+                case Op.OpConstantFalse:
+                case Op.OpConstantNull:
+                case Op.OpConstantSampler:
+                case Op.OpConstantTrue:
+                case Op.OpFunctionParameter:
+                    return;
+                case Op.OpVariable:
+                {
+                    if (((OpVariable)instruction).StorageClass.Value != StorageClass.Enumerant.Function)
+                        return;
+                    break;
+                }
+            }
+            foreach (var input in node.InputPins)
+            {
+                var inputNode = input.ConnectedPin?.Node;
+                if (inputNode != null)
+                {
+                    EnsureInputs(instructions, inputNode);
+                }
+            }
+            instructions.Add(instruction);
         }
 
         protected override OpCapability VisitCapability(Nodes.Capability node)
@@ -331,7 +363,10 @@ namespace Toe.SPIRV.Reflection
 
         protected override OpTypeInt VisitTypeInt(SpirvInt node)
         {
-            return Register(base.VisitTypeInt(node), _typeInstructions);
+            var visitTypeInt = base.VisitTypeInt(node);
+            visitTypeInt.Signedness = node.Signed?1u:0;
+            visitTypeInt.Width = node.Width;
+            return Register(visitTypeInt, _typeInstructions);
         }
 
         protected override OpTypeMatrix VisitTypeMatrix(SpirvMatrix node)
@@ -391,6 +426,7 @@ namespace Toe.SPIRV.Reflection
         {
             var structure = base.VisitTypeStruct(node);
             uint memberIndex = 0;
+            structure.MemberTypes = new List<IdRef>(node.Fields.Count);
             foreach (var nodeField in node.Fields)
             {
                 var fieldType = Visit(nodeField.Type);
@@ -399,15 +435,76 @@ namespace Toe.SPIRV.Reflection
                 {
                     Visit(new MemberName() {Member = memberIndex, Name = nodeField.Name, Type = node});
                 }
-                //Visit(new MemberDecorate(){ Member = memberIndex, StructureType = structure, Decoration = new })
+                if (nodeField.BuiltIn != null)
+                {
+                    Visit(new MemberDecorate()
+                    {
+                        Member = memberIndex, StructureType = node, Decoration = new Decoration.BuiltIn() {BuiltInValue = nodeField.BuiltIn}
+                    });
+                }
+                if (nodeField.ByteOffset != null)
+                {
+                    Visit(new MemberDecorate()
+                    {
+                        Member = memberIndex,
+                        StructureType = node,
+                        Decoration = new Decoration.Offset() { ByteOffset = nodeField.ByteOffset.Value }
+                    });
+                }
+
+                if (nodeField.Type is SpirvArrayBase array)
+                {
+                    Visit(new MemberDecorate()
+                    {
+                        Member = memberIndex,
+                        StructureType = node,
+                        Decoration = new Decoration.ArrayStride() { ArrayStrideValue = array.ArrayStride }
+                    });
+                }
+                if (nodeField.Type is SpirvMatrixBase matrix)
+                {
+                    Visit(new MemberDecorate()
+                    {
+                        Member = memberIndex,
+                        StructureType = node,
+                        Decoration = new Decoration.MatrixStride() { MatrixStrideValue = matrix.ColumnStride }
+                    });
+                    switch (matrix.MatrixOrientation)
+                    {
+                        case MatrixOrientation.ColMajor:
+                            Visit(new MemberDecorate()
+                            {
+                                Member = memberIndex,
+                                StructureType = node,
+                                Decoration = new Decoration.ColMajor()
+                            });
+                            break;
+                        case MatrixOrientation.RowMajor:
+                            Visit(new MemberDecorate()
+                            {
+                                Member = memberIndex,
+                                StructureType = node,
+                                Decoration = new Decoration.RowMajor()
+                            });
+                            break;
+                    }
+                }
 
                 ++memberIndex;
             }
 
+            if (node.Block)
+            {
+                Visit(new Decorate()
+                {
+                    Target = node,
+                    Decoration = new Decoration.Block()
+                });
+            }
             return Register(structure, _typeInstructions);
         }
 
-        protected override OpTypeArray VisitTypeArray(SpirvArray node)
+        protected override OpTypeArray VisitTypeArray(SpirvArrayBase node)
         {
             return Register(base.VisitTypeArray(node), _typeInstructions);
         }
