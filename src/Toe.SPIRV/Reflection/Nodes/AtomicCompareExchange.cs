@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -14,12 +15,14 @@ namespace Toe.SPIRV.Reflection.Nodes
 
 
         public Node Pointer { get; set; }
-        public uint Scope { get; set; }
+        public uint Memory { get; set; }
         public uint Equal { get; set; }
         public uint Unequal { get; set; }
         public Node Value { get; set; }
         public Node Comparator { get; set; }
         public SpirvTypeBase ResultType { get; set; }
+
+        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -62,11 +65,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pointer = treeBuilder.GetNode(op.Pointer);
-            Scope = op.Scope;
+            Memory = op.Memory;
             Equal = op.Equal;
             Unequal = op.Unequal;
             Value = treeBuilder.GetNode(op.Value);
             Comparator = treeBuilder.GetNode(op.Comparator);
+            RelaxedPrecision = op.Decorations.Any(_ => _.Decoration.Value == Decoration.Enumerant.RelaxedPrecision);
             SetUpDecorations(op.Decorations);
         }
         

@@ -22,6 +22,20 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.AtomicStorage)]
             AtomicCounterMemory = 0x0400,
             ImageMemory = 0x0800,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            OutputMemory = 0x1000,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            OutputMemoryKHR = 0x1000,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeAvailable = 0x2000,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeAvailableKHR = 0x2000,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeVisible = 0x4000,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeVisibleKHR = 0x4000,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            Volatile = 0x8000,
         }
 
         public MemorySemantics(Enumerant value)

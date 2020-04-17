@@ -9,7 +9,7 @@ namespace Toe.SPIRV.UnitTests
     {
 
         [Test]
-        [TestCaseSource(typeof(TestShaders), nameof(TestShaders.EnumerateTestShaders))]
+        [TestCaseSource(typeof(TestShaders), nameof(TestShaders.EnumerateShaders))]
         public void SimpleShader(string vertexShaderCode, string fragmentShaderCode)
         {
             var vertexShader = CompileToBytecode(vertexShaderCode, ShaderStages.Vertex);

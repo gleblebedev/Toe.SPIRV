@@ -7,29 +7,9 @@ namespace Toe.SPIRV.Spv
     {
         public enum Enumerant
         {
-            [Capability(Capability.Enumerant.Kernel)]
-            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
-            [Capability(Capability.Enumerant.StorageUniform16)]
-            [Capability(Capability.Enumerant.StoragePushConstant16)]
-            [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTE = 0,
-            [Capability(Capability.Enumerant.Kernel)]
-            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
-            [Capability(Capability.Enumerant.StorageUniform16)]
-            [Capability(Capability.Enumerant.StoragePushConstant16)]
-            [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTZ = 1,
-            [Capability(Capability.Enumerant.Kernel)]
-            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
-            [Capability(Capability.Enumerant.StorageUniform16)]
-            [Capability(Capability.Enumerant.StoragePushConstant16)]
-            [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTP = 2,
-            [Capability(Capability.Enumerant.Kernel)]
-            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
-            [Capability(Capability.Enumerant.StorageUniform16)]
-            [Capability(Capability.Enumerant.StoragePushConstant16)]
-            [Capability(Capability.Enumerant.StorageInputOutput16)]
             RTN = 3,
         }
 

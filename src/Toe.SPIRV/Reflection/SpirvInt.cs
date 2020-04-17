@@ -2,7 +2,7 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvInt : SpirvTypeBase
+    public partial class SpirvInt : SpirvTypeBase
     {
         private readonly uint _width;
         private readonly bool _signed;
@@ -13,9 +13,6 @@ namespace Toe.SPIRV.Reflection
             _signed = signed;
             IntType = GetType(_width, _signed);
         }
-
-        public override Op OpCode => Op.OpTypeInt;
-
 
         public override uint SizeInBytes => _width / 8;
 

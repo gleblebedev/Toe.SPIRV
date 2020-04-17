@@ -5,7 +5,7 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvStruct : SpirvTypeBase
+    public partial class SpirvStruct : SpirvTypeBase
     {
         private readonly List<SpirvStructureField> _fields = new List<SpirvStructureField>();
         private uint? _sizeInBytes;
@@ -18,9 +18,6 @@ namespace Toe.SPIRV.Reflection
             if (_fields.Any(_ => _.ByteOffset == null)) UpdateFieldOffsets();
             EvaluateSizeAndAlignment();
         }
-
-        public override Op OpCode => Op.OpTypeStruct;
-
 
         public override uint Alignment
         {
@@ -49,6 +46,7 @@ namespace Toe.SPIRV.Reflection
 
         public IReadOnlyList<SpirvStructureField> Fields => _fields;
         public bool Block { get; set; }
+        public bool BufferBlock { get; set; }
 
         public override string ToString()
         {

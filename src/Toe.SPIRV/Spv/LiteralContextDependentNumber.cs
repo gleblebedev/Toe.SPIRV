@@ -7,21 +7,31 @@ namespace Toe.SPIRV.Spv
     {
         public Value Value { get; set; }
 
-        public static LiteralContextDependentNumber Parse(WordReader reader, uint wordCount, TypeInstruction type)
+        public LiteralContextDependentNumber()
         {
-            var size = type.SizeInWords;
-            return new LiteralContextDependentNumber {Value = new Value(reader.ReadBytes(size), type)};
+        }
+
+        public LiteralContextDependentNumber(Value value)
+        {
+            Value = value;
+        }
+
+        public static LiteralContextDependentNumber Parse(WordReader reader, uint wordCount, InstructionWithId type)
+        {
+            var typeInstruction = (TypeInstruction)type;
+            var size = typeInstruction.SizeInWords;
+            return new LiteralContextDependentNumber(new Value(reader.ReadBytes(size), typeInstruction));
         }
 
         public static LiteralContextDependentNumber ParseOptional(WordReader reader, uint wordCount,
-            TypeInstruction type)
+            InstructionWithId type)
         {
             if (wordCount == 0) return null;
             return Parse(reader, wordCount, type);
         }
 
         public static IList<LiteralContextDependentNumber> ParseCollection(WordReader reader, uint wordCount,
-            TypeInstruction type)
+            InstructionWithId type)
         {
             var end = reader.Position + wordCount;
             var res = new PrintableList<LiteralContextDependentNumber>();

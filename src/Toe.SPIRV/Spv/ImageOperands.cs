@@ -16,10 +16,29 @@ namespace Toe.SPIRV.Spv
             ConstOffset = 0x0008,
             [Capability(Capability.Enumerant.ImageGatherExtended)]
             Offset = 0x0010,
+            [Capability(Capability.Enumerant.ImageGatherExtended)]
             ConstOffsets = 0x0020,
             Sample = 0x0040,
             [Capability(Capability.Enumerant.MinLod)]
             MinLod = 0x0080,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeTexelAvailable = 0x0100,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeTexelAvailableKHR = 0x0100,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeTexelVisible = 0x0200,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakeTexelVisibleKHR = 0x0200,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            NonPrivateTexel = 0x0400,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            NonPrivateTexelKHR = 0x0400,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            VolatileTexel = 0x0800,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            VolatileTexelKHR = 0x0800,
+            SignExtend = 0x1000,
+            ZeroExtend = 0x2000,
         }
 
         public ImageOperands(Enumerant value)
@@ -38,6 +57,10 @@ namespace Toe.SPIRV.Spv
         public Spv.IdRef ConstOffsets { get; set; }
         public Spv.IdRef Sample { get; set; }
         public Spv.IdRef MinLod { get; set; }
+        public uint MakeTexelAvailable { get; set; }
+        public uint MakeTexelAvailableKHR { get; set; }
+        public uint MakeTexelVisible { get; set; }
+        public uint MakeTexelVisibleKHR { get; set; }
 
 
         public static ImageOperands Parse(WordReader reader, uint wordCount)
@@ -77,6 +100,22 @@ namespace Toe.SPIRV.Spv
             if (Enumerant.MinLod == (id & Enumerant.MinLod))
             {
                 value.MinLod = Spv.IdRef.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakeTexelAvailable == (id & Enumerant.MakeTexelAvailable))
+            {
+                value.MakeTexelAvailable = Spv.IdScope.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakeTexelAvailableKHR == (id & Enumerant.MakeTexelAvailableKHR))
+            {
+                value.MakeTexelAvailableKHR = Spv.IdScope.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakeTexelVisible == (id & Enumerant.MakeTexelVisible))
+            {
+                value.MakeTexelVisible = Spv.IdScope.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakeTexelVisibleKHR == (id & Enumerant.MakeTexelVisibleKHR))
+            {
+                value.MakeTexelVisibleKHR = Spv.IdScope.Parse(reader, wordCount - 1);
             }
             value.PostParse(reader, wordCount - 1);
             return value;
@@ -140,6 +179,22 @@ namespace Toe.SPIRV.Spv
             {
                 wordCount += MinLod.GetWordCount();
             }
+            if (Enumerant.MakeTexelAvailable == (Value & Enumerant.MakeTexelAvailable))
+            {
+                wordCount += MakeTexelAvailable.GetWordCount();
+            }
+            if (Enumerant.MakeTexelAvailableKHR == (Value & Enumerant.MakeTexelAvailableKHR))
+            {
+                wordCount += MakeTexelAvailableKHR.GetWordCount();
+            }
+            if (Enumerant.MakeTexelVisible == (Value & Enumerant.MakeTexelVisible))
+            {
+                wordCount += MakeTexelVisible.GetWordCount();
+            }
+            if (Enumerant.MakeTexelVisibleKHR == (Value & Enumerant.MakeTexelVisibleKHR))
+            {
+                wordCount += MakeTexelVisibleKHR.GetWordCount();
+            }
             return wordCount;
         }
 
@@ -178,6 +233,22 @@ namespace Toe.SPIRV.Spv
             if (Enumerant.MinLod == (Value & Enumerant.MinLod))
             {
                 MinLod.Write(writer);
+            }
+            if (Enumerant.MakeTexelAvailable == (Value & Enumerant.MakeTexelAvailable))
+            {
+                MakeTexelAvailable.Write(writer);
+            }
+            if (Enumerant.MakeTexelAvailableKHR == (Value & Enumerant.MakeTexelAvailableKHR))
+            {
+                MakeTexelAvailableKHR.Write(writer);
+            }
+            if (Enumerant.MakeTexelVisible == (Value & Enumerant.MakeTexelVisible))
+            {
+                MakeTexelVisible.Write(writer);
+            }
+            if (Enumerant.MakeTexelVisibleKHR == (Value & Enumerant.MakeTexelVisibleKHR))
+            {
+                MakeTexelVisibleKHR.Write(writer);
             }
         }
     }

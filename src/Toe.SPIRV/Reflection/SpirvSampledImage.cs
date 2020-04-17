@@ -10,9 +10,6 @@ namespace Toe.SPIRV.Reflection
 
         }
 
-        public override Op OpCode => Op.OpTypeSampledImage;
-
-
         public Node ImageType { get; set; }
        
         public void SetUp(OpTypeSampledImage op, SpirvInstructionTreeBuilder treeBuilder)

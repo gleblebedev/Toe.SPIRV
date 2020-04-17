@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -18,6 +19,8 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node Offset { get; set; }
         public Node Count { get; set; }
         public SpirvTypeBase ResultType { get; set; }
+
+        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -64,6 +67,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Insert = treeBuilder.GetNode(op.Insert);
             Offset = treeBuilder.GetNode(op.Offset);
             Count = treeBuilder.GetNode(op.Count);
+            RelaxedPrecision = op.Decorations.Any(_ => _.Decoration.Value == Decoration.Enumerant.RelaxedPrecision);
             SetUpDecorations(op.Decorations);
         }
         

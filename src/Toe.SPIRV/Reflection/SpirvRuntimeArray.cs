@@ -9,28 +9,12 @@ namespace Toe.SPIRV.Reflection
         {
         }
 
-        public override Op OpCode => Op.OpTypeRuntimeArray;
-
-
         public Node ElementType { get; set; }
         
 
         public void SetUp(OpTypeRuntimeArray op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ElementType = treeBuilder.GetNode(op.ElementType);
-        }
-    }
-    public partial class SpirvEvent : SpirvTypeBase
-    {
-        public SpirvEvent():base(SpirvTypeCategory.Event)
-        {
-        }
-
-        public override Op OpCode => Op.OpTypeEvent;
-
-
-        public void SetUp(OpTypeEvent op, SpirvInstructionTreeBuilder treeBuilder)
-        {
         }
     }
 }

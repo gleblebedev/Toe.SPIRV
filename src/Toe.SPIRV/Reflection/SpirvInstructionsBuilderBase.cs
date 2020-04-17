@@ -45,7 +45,7 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpTypeImage: return VisitTypeImage((SpirvImage)node);
                 case Op.OpTypeSampler: return VisitTypeSampler((SpirvSampler)node);
                 case Op.OpTypeSampledImage: return VisitTypeSampledImage((SpirvSampledImage)node);
-                case Op.OpTypeArray: return VisitTypeArray((SpirvArrayBase)node);
+                case Op.OpTypeArray: return VisitTypeArray((SpirvArray)node);
                 case Op.OpTypeRuntimeArray: return VisitTypeRuntimeArray((SpirvRuntimeArray)node);
                 case Op.OpTypeStruct: return VisitTypeStruct((SpirvStruct)node);
                 case Op.OpTypeOpaque: return VisitTypeOpaque((SpirvOpaque)node);
@@ -314,7 +314,56 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpAtomicFlagTestAndSet: return VisitAtomicFlagTestAndSet((AtomicFlagTestAndSet) node);
                 case Op.OpAtomicFlagClear: return VisitAtomicFlagClear((AtomicFlagClear) node);
                 case Op.OpImageSparseRead: return VisitImageSparseRead((ImageSparseRead) node);
+                case Op.OpSizeOf: return VisitSizeOf((SizeOf) node);
+                case Op.OpTypePipeStorage: return VisitTypePipeStorage((SpirvPipeStorage)node);
+                case Op.OpConstantPipeStorage: return VisitConstantPipeStorage((ConstantPipeStorage) node);
+                case Op.OpCreatePipeFromPipeStorage: return VisitCreatePipeFromPipeStorage((CreatePipeFromPipeStorage) node);
+                case Op.OpGetKernelLocalSizeForSubgroupCount: return VisitGetKernelLocalSizeForSubgroupCount((GetKernelLocalSizeForSubgroupCount) node);
+                case Op.OpGetKernelMaxNumSubgroups: return VisitGetKernelMaxNumSubgroups((GetKernelMaxNumSubgroups) node);
+                case Op.OpTypeNamedBarrier: return VisitTypeNamedBarrier((SpirvNamedBarrier)node);
+                case Op.OpNamedBarrierInitialize: return VisitNamedBarrierInitialize((NamedBarrierInitialize) node);
+                case Op.OpMemoryNamedBarrier: return VisitMemoryNamedBarrier((MemoryNamedBarrier) node);
+                case Op.OpModuleProcessed: return VisitModuleProcessed((ModuleProcessed) node);
+                case Op.OpExecutionModeId: return VisitExecutionModeId((ExecutionModeId) node);
                 case Op.OpDecorateId: return VisitDecorateId((DecorateId) node);
+                case Op.OpGroupNonUniformElect: return VisitGroupNonUniformElect((GroupNonUniformElect) node);
+                case Op.OpGroupNonUniformAll: return VisitGroupNonUniformAll((GroupNonUniformAll) node);
+                case Op.OpGroupNonUniformAny: return VisitGroupNonUniformAny((GroupNonUniformAny) node);
+                case Op.OpGroupNonUniformAllEqual: return VisitGroupNonUniformAllEqual((GroupNonUniformAllEqual) node);
+                case Op.OpGroupNonUniformBroadcast: return VisitGroupNonUniformBroadcast((GroupNonUniformBroadcast) node);
+                case Op.OpGroupNonUniformBroadcastFirst: return VisitGroupNonUniformBroadcastFirst((GroupNonUniformBroadcastFirst) node);
+                case Op.OpGroupNonUniformBallot: return VisitGroupNonUniformBallot((GroupNonUniformBallot) node);
+                case Op.OpGroupNonUniformInverseBallot: return VisitGroupNonUniformInverseBallot((GroupNonUniformInverseBallot) node);
+                case Op.OpGroupNonUniformBallotBitExtract: return VisitGroupNonUniformBallotBitExtract((GroupNonUniformBallotBitExtract) node);
+                case Op.OpGroupNonUniformBallotBitCount: return VisitGroupNonUniformBallotBitCount((GroupNonUniformBallotBitCount) node);
+                case Op.OpGroupNonUniformBallotFindLSB: return VisitGroupNonUniformBallotFindLSB((GroupNonUniformBallotFindLSB) node);
+                case Op.OpGroupNonUniformBallotFindMSB: return VisitGroupNonUniformBallotFindMSB((GroupNonUniformBallotFindMSB) node);
+                case Op.OpGroupNonUniformShuffle: return VisitGroupNonUniformShuffle((GroupNonUniformShuffle) node);
+                case Op.OpGroupNonUniformShuffleXor: return VisitGroupNonUniformShuffleXor((GroupNonUniformShuffleXor) node);
+                case Op.OpGroupNonUniformShuffleUp: return VisitGroupNonUniformShuffleUp((GroupNonUniformShuffleUp) node);
+                case Op.OpGroupNonUniformShuffleDown: return VisitGroupNonUniformShuffleDown((GroupNonUniformShuffleDown) node);
+                case Op.OpGroupNonUniformIAdd: return VisitGroupNonUniformIAdd((GroupNonUniformIAdd) node);
+                case Op.OpGroupNonUniformFAdd: return VisitGroupNonUniformFAdd((GroupNonUniformFAdd) node);
+                case Op.OpGroupNonUniformIMul: return VisitGroupNonUniformIMul((GroupNonUniformIMul) node);
+                case Op.OpGroupNonUniformFMul: return VisitGroupNonUniformFMul((GroupNonUniformFMul) node);
+                case Op.OpGroupNonUniformSMin: return VisitGroupNonUniformSMin((GroupNonUniformSMin) node);
+                case Op.OpGroupNonUniformUMin: return VisitGroupNonUniformUMin((GroupNonUniformUMin) node);
+                case Op.OpGroupNonUniformFMin: return VisitGroupNonUniformFMin((GroupNonUniformFMin) node);
+                case Op.OpGroupNonUniformSMax: return VisitGroupNonUniformSMax((GroupNonUniformSMax) node);
+                case Op.OpGroupNonUniformUMax: return VisitGroupNonUniformUMax((GroupNonUniformUMax) node);
+                case Op.OpGroupNonUniformFMax: return VisitGroupNonUniformFMax((GroupNonUniformFMax) node);
+                case Op.OpGroupNonUniformBitwiseAnd: return VisitGroupNonUniformBitwiseAnd((GroupNonUniformBitwiseAnd) node);
+                case Op.OpGroupNonUniformBitwiseOr: return VisitGroupNonUniformBitwiseOr((GroupNonUniformBitwiseOr) node);
+                case Op.OpGroupNonUniformBitwiseXor: return VisitGroupNonUniformBitwiseXor((GroupNonUniformBitwiseXor) node);
+                case Op.OpGroupNonUniformLogicalAnd: return VisitGroupNonUniformLogicalAnd((GroupNonUniformLogicalAnd) node);
+                case Op.OpGroupNonUniformLogicalOr: return VisitGroupNonUniformLogicalOr((GroupNonUniformLogicalOr) node);
+                case Op.OpGroupNonUniformLogicalXor: return VisitGroupNonUniformLogicalXor((GroupNonUniformLogicalXor) node);
+                case Op.OpGroupNonUniformQuadBroadcast: return VisitGroupNonUniformQuadBroadcast((GroupNonUniformQuadBroadcast) node);
+                case Op.OpGroupNonUniformQuadSwap: return VisitGroupNonUniformQuadSwap((GroupNonUniformQuadSwap) node);
+                case Op.OpCopyLogical: return VisitCopyLogical((CopyLogical) node);
+                case Op.OpPtrEqual: return VisitPtrEqual((PtrEqual) node);
+                case Op.OpPtrNotEqual: return VisitPtrNotEqual((PtrNotEqual) node);
+                case Op.OpPtrDiff: return VisitPtrDiff((PtrDiff) node);
                 case Op.OpSubgroupBallotKHR: return VisitSubgroupBallotKHR((SubgroupBallotKHR) node);
                 case Op.OpSubgroupFirstInvocationKHR: return VisitSubgroupFirstInvocationKHR((SubgroupFirstInvocationKHR) node);
                 case Op.OpSubgroupAllKHR: return VisitSubgroupAllKHR((SubgroupAllKHR) node);
@@ -331,6 +380,49 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpGroupSMaxNonUniformAMD: return VisitGroupSMaxNonUniformAMD((GroupSMaxNonUniformAMD) node);
                 case Op.OpFragmentMaskFetchAMD: return VisitFragmentMaskFetchAMD((FragmentMaskFetchAMD) node);
                 case Op.OpFragmentFetchAMD: return VisitFragmentFetchAMD((FragmentFetchAMD) node);
+                case Op.OpReadClockKHR: return VisitReadClockKHR((ReadClockKHR) node);
+                case Op.OpImageSampleFootprintNV: return VisitImageSampleFootprintNV((ImageSampleFootprintNV) node);
+                case Op.OpGroupNonUniformPartitionNV: return VisitGroupNonUniformPartitionNV((GroupNonUniformPartitionNV) node);
+                case Op.OpWritePackedPrimitiveIndices4x8NV: return VisitWritePackedPrimitiveIndices4x8NV((WritePackedPrimitiveIndices4x8NV) node);
+                case Op.OpReportIntersectionNV: return VisitReportIntersectionNV((ReportIntersectionNV) node);
+                case Op.OpIgnoreIntersectionNV: return VisitIgnoreIntersectionNV((IgnoreIntersectionNV) node);
+                case Op.OpTerminateRayNV: return VisitTerminateRayNV((TerminateRayNV) node);
+                case Op.OpTraceNV: return VisitTraceNV((TraceNV) node);
+                case Op.OpTypeAccelerationStructureNV: return VisitTypeAccelerationStructureNV((SpirvAccelerationStructureNV)node);
+                case Op.OpTypeRayQueryProvisionalKHR: return VisitTypeRayQueryProvisionalKHR((SpirvRayQueryProvisionalKHR)node);
+                case Op.OpRayQueryInitializeKHR: return VisitRayQueryInitializeKHR((RayQueryInitializeKHR) node);
+                case Op.OpRayQueryTerminateKHR: return VisitRayQueryTerminateKHR((RayQueryTerminateKHR) node);
+                case Op.OpRayQueryGenerateIntersectionKHR: return VisitRayQueryGenerateIntersectionKHR((RayQueryGenerateIntersectionKHR) node);
+                case Op.OpRayQueryConfirmIntersectionKHR: return VisitRayQueryConfirmIntersectionKHR((RayQueryConfirmIntersectionKHR) node);
+                case Op.OpRayQueryProceedKHR: return VisitRayQueryProceedKHR((RayQueryProceedKHR) node);
+                case Op.OpRayQueryGetIntersectionTypeKHR: return VisitRayQueryGetIntersectionTypeKHR((RayQueryGetIntersectionTypeKHR) node);
+                case Op.OpRayQueryGetRayTMinKHR: return VisitRayQueryGetRayTMinKHR((RayQueryGetRayTMinKHR) node);
+                case Op.OpRayQueryGetRayFlagsKHR: return VisitRayQueryGetRayFlagsKHR((RayQueryGetRayFlagsKHR) node);
+                case Op.OpRayQueryGetIntersectionTKHR: return VisitRayQueryGetIntersectionTKHR((RayQueryGetIntersectionTKHR) node);
+                case Op.OpRayQueryGetIntersectionInstanceCustomIndexKHR: return VisitRayQueryGetIntersectionInstanceCustomIndexKHR((RayQueryGetIntersectionInstanceCustomIndexKHR) node);
+                case Op.OpRayQueryGetIntersectionInstanceIdKHR: return VisitRayQueryGetIntersectionInstanceIdKHR((RayQueryGetIntersectionInstanceIdKHR) node);
+                case Op.OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR: return VisitRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR((RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR) node);
+                case Op.OpRayQueryGetIntersectionGeometryIndexKHR: return VisitRayQueryGetIntersectionGeometryIndexKHR((RayQueryGetIntersectionGeometryIndexKHR) node);
+                case Op.OpRayQueryGetIntersectionPrimitiveIndexKHR: return VisitRayQueryGetIntersectionPrimitiveIndexKHR((RayQueryGetIntersectionPrimitiveIndexKHR) node);
+                case Op.OpRayQueryGetIntersectionBarycentricsKHR: return VisitRayQueryGetIntersectionBarycentricsKHR((RayQueryGetIntersectionBarycentricsKHR) node);
+                case Op.OpRayQueryGetIntersectionFrontFaceKHR: return VisitRayQueryGetIntersectionFrontFaceKHR((RayQueryGetIntersectionFrontFaceKHR) node);
+                case Op.OpRayQueryGetIntersectionCandidateAABBOpaqueKHR: return VisitRayQueryGetIntersectionCandidateAABBOpaqueKHR((RayQueryGetIntersectionCandidateAABBOpaqueKHR) node);
+                case Op.OpRayQueryGetIntersectionObjectRayDirectionKHR: return VisitRayQueryGetIntersectionObjectRayDirectionKHR((RayQueryGetIntersectionObjectRayDirectionKHR) node);
+                case Op.OpRayQueryGetIntersectionObjectRayOriginKHR: return VisitRayQueryGetIntersectionObjectRayOriginKHR((RayQueryGetIntersectionObjectRayOriginKHR) node);
+                case Op.OpRayQueryGetWorldRayDirectionKHR: return VisitRayQueryGetWorldRayDirectionKHR((RayQueryGetWorldRayDirectionKHR) node);
+                case Op.OpRayQueryGetWorldRayOriginKHR: return VisitRayQueryGetWorldRayOriginKHR((RayQueryGetWorldRayOriginKHR) node);
+                case Op.OpRayQueryGetIntersectionObjectToWorldKHR: return VisitRayQueryGetIntersectionObjectToWorldKHR((RayQueryGetIntersectionObjectToWorldKHR) node);
+                case Op.OpRayQueryGetIntersectionWorldToObjectKHR: return VisitRayQueryGetIntersectionWorldToObjectKHR((RayQueryGetIntersectionWorldToObjectKHR) node);
+                case Op.OpExecuteCallableNV: return VisitExecuteCallableNV((ExecuteCallableNV) node);
+                case Op.OpTypeCooperativeMatrixNV: return VisitTypeCooperativeMatrixNV((SpirvCooperativeMatrixNV)node);
+                case Op.OpCooperativeMatrixLoadNV: return VisitCooperativeMatrixLoadNV((CooperativeMatrixLoadNV) node);
+                case Op.OpCooperativeMatrixStoreNV: return VisitCooperativeMatrixStoreNV((CooperativeMatrixStoreNV) node);
+                case Op.OpCooperativeMatrixMulAddNV: return VisitCooperativeMatrixMulAddNV((CooperativeMatrixMulAddNV) node);
+                case Op.OpCooperativeMatrixLengthNV: return VisitCooperativeMatrixLengthNV((CooperativeMatrixLengthNV) node);
+                case Op.OpBeginInvocationInterlockEXT: return VisitBeginInvocationInterlockEXT((BeginInvocationInterlockEXT) node);
+                case Op.OpEndInvocationInterlockEXT: return VisitEndInvocationInterlockEXT((EndInvocationInterlockEXT) node);
+                case Op.OpDemoteToHelperInvocationEXT: return VisitDemoteToHelperInvocationEXT((DemoteToHelperInvocationEXT) node);
+                case Op.OpIsHelperInvocationEXT: return VisitIsHelperInvocationEXT((IsHelperInvocationEXT) node);
                 case Op.OpSubgroupShuffleINTEL: return VisitSubgroupShuffleINTEL((SubgroupShuffleINTEL) node);
                 case Op.OpSubgroupShuffleDownINTEL: return VisitSubgroupShuffleDownINTEL((SubgroupShuffleDownINTEL) node);
                 case Op.OpSubgroupShuffleUpINTEL: return VisitSubgroupShuffleUpINTEL((SubgroupShuffleUpINTEL) node);
@@ -339,8 +431,142 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpSubgroupBlockWriteINTEL: return VisitSubgroupBlockWriteINTEL((SubgroupBlockWriteINTEL) node);
                 case Op.OpSubgroupImageBlockReadINTEL: return VisitSubgroupImageBlockReadINTEL((SubgroupImageBlockReadINTEL) node);
                 case Op.OpSubgroupImageBlockWriteINTEL: return VisitSubgroupImageBlockWriteINTEL((SubgroupImageBlockWriteINTEL) node);
-                case Op.OpDecorateStringGOOGLE: return VisitDecorateStringGOOGLE((DecorateStringGOOGLE) node);
-                case Op.OpMemberDecorateStringGOOGLE: return VisitMemberDecorateStringGOOGLE((MemberDecorateStringGOOGLE) node);
+                case Op.OpSubgroupImageMediaBlockReadINTEL: return VisitSubgroupImageMediaBlockReadINTEL((SubgroupImageMediaBlockReadINTEL) node);
+                case Op.OpSubgroupImageMediaBlockWriteINTEL: return VisitSubgroupImageMediaBlockWriteINTEL((SubgroupImageMediaBlockWriteINTEL) node);
+                case Op.OpUCountLeadingZerosINTEL: return VisitUCountLeadingZerosINTEL((UCountLeadingZerosINTEL) node);
+                case Op.OpUCountTrailingZerosINTEL: return VisitUCountTrailingZerosINTEL((UCountTrailingZerosINTEL) node);
+                case Op.OpAbsISubINTEL: return VisitAbsISubINTEL((AbsISubINTEL) node);
+                case Op.OpAbsUSubINTEL: return VisitAbsUSubINTEL((AbsUSubINTEL) node);
+                case Op.OpIAddSatINTEL: return VisitIAddSatINTEL((IAddSatINTEL) node);
+                case Op.OpUAddSatINTEL: return VisitUAddSatINTEL((UAddSatINTEL) node);
+                case Op.OpIAverageINTEL: return VisitIAverageINTEL((IAverageINTEL) node);
+                case Op.OpUAverageINTEL: return VisitUAverageINTEL((UAverageINTEL) node);
+                case Op.OpIAverageRoundedINTEL: return VisitIAverageRoundedINTEL((IAverageRoundedINTEL) node);
+                case Op.OpUAverageRoundedINTEL: return VisitUAverageRoundedINTEL((UAverageRoundedINTEL) node);
+                case Op.OpISubSatINTEL: return VisitISubSatINTEL((ISubSatINTEL) node);
+                case Op.OpUSubSatINTEL: return VisitUSubSatINTEL((USubSatINTEL) node);
+                case Op.OpIMul32x16INTEL: return VisitIMul32x16INTEL((IMul32x16INTEL) node);
+                case Op.OpUMul32x16INTEL: return VisitUMul32x16INTEL((UMul32x16INTEL) node);
+                case Op.OpDecorateString: return VisitDecorateString((DecorateString) node);
+                case Op.OpMemberDecorateString: return VisitMemberDecorateString((MemberDecorateString) node);
+                case Op.OpVmeImageINTEL: return VisitVmeImageINTEL((VmeImageINTEL) node);
+                case Op.OpTypeVmeImageINTEL: return VisitTypeVmeImageINTEL((SpirvVmeImageINTEL)node);
+                case Op.OpTypeAvcImePayloadINTEL: return VisitTypeAvcImePayloadINTEL((SpirvAvcImePayloadINTEL)node);
+                case Op.OpTypeAvcRefPayloadINTEL: return VisitTypeAvcRefPayloadINTEL((SpirvAvcRefPayloadINTEL)node);
+                case Op.OpTypeAvcSicPayloadINTEL: return VisitTypeAvcSicPayloadINTEL((SpirvAvcSicPayloadINTEL)node);
+                case Op.OpTypeAvcMcePayloadINTEL: return VisitTypeAvcMcePayloadINTEL((SpirvAvcMcePayloadINTEL)node);
+                case Op.OpTypeAvcMceResultINTEL: return VisitTypeAvcMceResultINTEL((SpirvAvcMceResultINTEL)node);
+                case Op.OpTypeAvcImeResultINTEL: return VisitTypeAvcImeResultINTEL((SpirvAvcImeResultINTEL)node);
+                case Op.OpTypeAvcImeResultSingleReferenceStreamoutINTEL: return VisitTypeAvcImeResultSingleReferenceStreamoutINTEL((SpirvAvcImeResultSingleReferenceStreamoutINTEL)node);
+                case Op.OpTypeAvcImeResultDualReferenceStreamoutINTEL: return VisitTypeAvcImeResultDualReferenceStreamoutINTEL((SpirvAvcImeResultDualReferenceStreamoutINTEL)node);
+                case Op.OpTypeAvcImeSingleReferenceStreaminINTEL: return VisitTypeAvcImeSingleReferenceStreaminINTEL((SpirvAvcImeSingleReferenceStreaminINTEL)node);
+                case Op.OpTypeAvcImeDualReferenceStreaminINTEL: return VisitTypeAvcImeDualReferenceStreaminINTEL((SpirvAvcImeDualReferenceStreaminINTEL)node);
+                case Op.OpTypeAvcRefResultINTEL: return VisitTypeAvcRefResultINTEL((SpirvAvcRefResultINTEL)node);
+                case Op.OpTypeAvcSicResultINTEL: return VisitTypeAvcSicResultINTEL((SpirvAvcSicResultINTEL)node);
+                case Op.OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL((SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL: return VisitSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL((SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultInterShapePenaltyINTEL((SubgroupAvcMceGetDefaultInterShapePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceSetInterShapePenaltyINTEL: return VisitSubgroupAvcMceSetInterShapePenaltyINTEL((SubgroupAvcMceSetInterShapePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL: return VisitSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL((SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceSetInterDirectionPenaltyINTEL: return VisitSubgroupAvcMceSetInterDirectionPenaltyINTEL((SubgroupAvcMceSetInterDirectionPenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL((SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL: return VisitSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL((SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL: return VisitSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL((SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL: return VisitSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL((SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL: return VisitSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL((SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL) node);
+                case Op.OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL: return VisitSubgroupAvcMceSetMotionVectorCostFunctionINTEL((SubgroupAvcMceSetMotionVectorCostFunctionINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL((SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL: return VisitSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL((SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL((SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL) node);
+                case Op.OpSubgroupAvcMceSetAcOnlyHaarINTEL: return VisitSubgroupAvcMceSetAcOnlyHaarINTEL((SubgroupAvcMceSetAcOnlyHaarINTEL) node);
+                case Op.OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL: return VisitSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL((SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL) node);
+                case Op.OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL: return VisitSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL((SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL) node);
+                case Op.OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL: return VisitSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL((SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL) node);
+                case Op.OpSubgroupAvcMceConvertToImePayloadINTEL: return VisitSubgroupAvcMceConvertToImePayloadINTEL((SubgroupAvcMceConvertToImePayloadINTEL) node);
+                case Op.OpSubgroupAvcMceConvertToImeResultINTEL: return VisitSubgroupAvcMceConvertToImeResultINTEL((SubgroupAvcMceConvertToImeResultINTEL) node);
+                case Op.OpSubgroupAvcMceConvertToRefPayloadINTEL: return VisitSubgroupAvcMceConvertToRefPayloadINTEL((SubgroupAvcMceConvertToRefPayloadINTEL) node);
+                case Op.OpSubgroupAvcMceConvertToRefResultINTEL: return VisitSubgroupAvcMceConvertToRefResultINTEL((SubgroupAvcMceConvertToRefResultINTEL) node);
+                case Op.OpSubgroupAvcMceConvertToSicPayloadINTEL: return VisitSubgroupAvcMceConvertToSicPayloadINTEL((SubgroupAvcMceConvertToSicPayloadINTEL) node);
+                case Op.OpSubgroupAvcMceConvertToSicResultINTEL: return VisitSubgroupAvcMceConvertToSicResultINTEL((SubgroupAvcMceConvertToSicResultINTEL) node);
+                case Op.OpSubgroupAvcMceGetMotionVectorsINTEL: return VisitSubgroupAvcMceGetMotionVectorsINTEL((SubgroupAvcMceGetMotionVectorsINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterDistortionsINTEL: return VisitSubgroupAvcMceGetInterDistortionsINTEL((SubgroupAvcMceGetInterDistortionsINTEL) node);
+                case Op.OpSubgroupAvcMceGetBestInterDistortionsINTEL: return VisitSubgroupAvcMceGetBestInterDistortionsINTEL((SubgroupAvcMceGetBestInterDistortionsINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterMajorShapeINTEL: return VisitSubgroupAvcMceGetInterMajorShapeINTEL((SubgroupAvcMceGetInterMajorShapeINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterMinorShapeINTEL: return VisitSubgroupAvcMceGetInterMinorShapeINTEL((SubgroupAvcMceGetInterMinorShapeINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterDirectionsINTEL: return VisitSubgroupAvcMceGetInterDirectionsINTEL((SubgroupAvcMceGetInterDirectionsINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterMotionVectorCountINTEL: return VisitSubgroupAvcMceGetInterMotionVectorCountINTEL((SubgroupAvcMceGetInterMotionVectorCountINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterReferenceIdsINTEL: return VisitSubgroupAvcMceGetInterReferenceIdsINTEL((SubgroupAvcMceGetInterReferenceIdsINTEL) node);
+                case Op.OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL: return VisitSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL((SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL) node);
+                case Op.OpSubgroupAvcImeInitializeINTEL: return VisitSubgroupAvcImeInitializeINTEL((SubgroupAvcImeInitializeINTEL) node);
+                case Op.OpSubgroupAvcImeSetSingleReferenceINTEL: return VisitSubgroupAvcImeSetSingleReferenceINTEL((SubgroupAvcImeSetSingleReferenceINTEL) node);
+                case Op.OpSubgroupAvcImeSetDualReferenceINTEL: return VisitSubgroupAvcImeSetDualReferenceINTEL((SubgroupAvcImeSetDualReferenceINTEL) node);
+                case Op.OpSubgroupAvcImeRefWindowSizeINTEL: return VisitSubgroupAvcImeRefWindowSizeINTEL((SubgroupAvcImeRefWindowSizeINTEL) node);
+                case Op.OpSubgroupAvcImeAdjustRefOffsetINTEL: return VisitSubgroupAvcImeAdjustRefOffsetINTEL((SubgroupAvcImeAdjustRefOffsetINTEL) node);
+                case Op.OpSubgroupAvcImeConvertToMcePayloadINTEL: return VisitSubgroupAvcImeConvertToMcePayloadINTEL((SubgroupAvcImeConvertToMcePayloadINTEL) node);
+                case Op.OpSubgroupAvcImeSetMaxMotionVectorCountINTEL: return VisitSubgroupAvcImeSetMaxMotionVectorCountINTEL((SubgroupAvcImeSetMaxMotionVectorCountINTEL) node);
+                case Op.OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL: return VisitSubgroupAvcImeSetUnidirectionalMixDisableINTEL((SubgroupAvcImeSetUnidirectionalMixDisableINTEL) node);
+                case Op.OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL: return VisitSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL((SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL) node);
+                case Op.OpSubgroupAvcImeSetWeightedSadINTEL: return VisitSubgroupAvcImeSetWeightedSadINTEL((SubgroupAvcImeSetWeightedSadINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL: return VisitSubgroupAvcImeEvaluateWithSingleReferenceINTEL((SubgroupAvcImeEvaluateWithSingleReferenceINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithDualReferenceINTEL: return VisitSubgroupAvcImeEvaluateWithDualReferenceINTEL((SubgroupAvcImeEvaluateWithDualReferenceINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL: return VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL((SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL: return VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL((SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL: return VisitSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL((SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL: return VisitSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL((SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL: return VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL((SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL) node);
+                case Op.OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL: return VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL((SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL) node);
+                case Op.OpSubgroupAvcImeConvertToMceResultINTEL: return VisitSubgroupAvcImeConvertToMceResultINTEL((SubgroupAvcImeConvertToMceResultINTEL) node);
+                case Op.OpSubgroupAvcImeGetSingleReferenceStreaminINTEL: return VisitSubgroupAvcImeGetSingleReferenceStreaminINTEL((SubgroupAvcImeGetSingleReferenceStreaminINTEL) node);
+                case Op.OpSubgroupAvcImeGetDualReferenceStreaminINTEL: return VisitSubgroupAvcImeGetDualReferenceStreaminINTEL((SubgroupAvcImeGetDualReferenceStreaminINTEL) node);
+                case Op.OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL: return VisitSubgroupAvcImeStripSingleReferenceStreamoutINTEL((SubgroupAvcImeStripSingleReferenceStreamoutINTEL) node);
+                case Op.OpSubgroupAvcImeStripDualReferenceStreamoutINTEL: return VisitSubgroupAvcImeStripDualReferenceStreamoutINTEL((SubgroupAvcImeStripDualReferenceStreamoutINTEL) node);
+                case Op.OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL: return VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL((SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL) node);
+                case Op.OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL: return VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL((SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL) node);
+                case Op.OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL: return VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL((SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL) node);
+                case Op.OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL: return VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL((SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL) node);
+                case Op.OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL: return VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL((SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL) node);
+                case Op.OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL: return VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL((SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL) node);
+                case Op.OpSubgroupAvcImeGetBorderReachedINTEL: return VisitSubgroupAvcImeGetBorderReachedINTEL((SubgroupAvcImeGetBorderReachedINTEL) node);
+                case Op.OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL: return VisitSubgroupAvcImeGetTruncatedSearchIndicationINTEL((SubgroupAvcImeGetTruncatedSearchIndicationINTEL) node);
+                case Op.OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL: return VisitSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL((SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL) node);
+                case Op.OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL: return VisitSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL((SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL) node);
+                case Op.OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL: return VisitSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL((SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL) node);
+                case Op.OpSubgroupAvcFmeInitializeINTEL: return VisitSubgroupAvcFmeInitializeINTEL((SubgroupAvcFmeInitializeINTEL) node);
+                case Op.OpSubgroupAvcBmeInitializeINTEL: return VisitSubgroupAvcBmeInitializeINTEL((SubgroupAvcBmeInitializeINTEL) node);
+                case Op.OpSubgroupAvcRefConvertToMcePayloadINTEL: return VisitSubgroupAvcRefConvertToMcePayloadINTEL((SubgroupAvcRefConvertToMcePayloadINTEL) node);
+                case Op.OpSubgroupAvcRefSetBidirectionalMixDisableINTEL: return VisitSubgroupAvcRefSetBidirectionalMixDisableINTEL((SubgroupAvcRefSetBidirectionalMixDisableINTEL) node);
+                case Op.OpSubgroupAvcRefSetBilinearFilterEnableINTEL: return VisitSubgroupAvcRefSetBilinearFilterEnableINTEL((SubgroupAvcRefSetBilinearFilterEnableINTEL) node);
+                case Op.OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL: return VisitSubgroupAvcRefEvaluateWithSingleReferenceINTEL((SubgroupAvcRefEvaluateWithSingleReferenceINTEL) node);
+                case Op.OpSubgroupAvcRefEvaluateWithDualReferenceINTEL: return VisitSubgroupAvcRefEvaluateWithDualReferenceINTEL((SubgroupAvcRefEvaluateWithDualReferenceINTEL) node);
+                case Op.OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL: return VisitSubgroupAvcRefEvaluateWithMultiReferenceINTEL((SubgroupAvcRefEvaluateWithMultiReferenceINTEL) node);
+                case Op.OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL: return VisitSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL((SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL) node);
+                case Op.OpSubgroupAvcRefConvertToMceResultINTEL: return VisitSubgroupAvcRefConvertToMceResultINTEL((SubgroupAvcRefConvertToMceResultINTEL) node);
+                case Op.OpSubgroupAvcSicInitializeINTEL: return VisitSubgroupAvcSicInitializeINTEL((SubgroupAvcSicInitializeINTEL) node);
+                case Op.OpSubgroupAvcSicConfigureSkcINTEL: return VisitSubgroupAvcSicConfigureSkcINTEL((SubgroupAvcSicConfigureSkcINTEL) node);
+                case Op.OpSubgroupAvcSicConfigureIpeLumaINTEL: return VisitSubgroupAvcSicConfigureIpeLumaINTEL((SubgroupAvcSicConfigureIpeLumaINTEL) node);
+                case Op.OpSubgroupAvcSicConfigureIpeLumaChromaINTEL: return VisitSubgroupAvcSicConfigureIpeLumaChromaINTEL((SubgroupAvcSicConfigureIpeLumaChromaINTEL) node);
+                case Op.OpSubgroupAvcSicGetMotionVectorMaskINTEL: return VisitSubgroupAvcSicGetMotionVectorMaskINTEL((SubgroupAvcSicGetMotionVectorMaskINTEL) node);
+                case Op.OpSubgroupAvcSicConvertToMcePayloadINTEL: return VisitSubgroupAvcSicConvertToMcePayloadINTEL((SubgroupAvcSicConvertToMcePayloadINTEL) node);
+                case Op.OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL: return VisitSubgroupAvcSicSetIntraLumaShapePenaltyINTEL((SubgroupAvcSicSetIntraLumaShapePenaltyINTEL) node);
+                case Op.OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL: return VisitSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL((SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL) node);
+                case Op.OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL: return VisitSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL((SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL) node);
+                case Op.OpSubgroupAvcSicSetBilinearFilterEnableINTEL: return VisitSubgroupAvcSicSetBilinearFilterEnableINTEL((SubgroupAvcSicSetBilinearFilterEnableINTEL) node);
+                case Op.OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL: return VisitSubgroupAvcSicSetSkcForwardTransformEnableINTEL((SubgroupAvcSicSetSkcForwardTransformEnableINTEL) node);
+                case Op.OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL: return VisitSubgroupAvcSicSetBlockBasedRawSkipSadINTEL((SubgroupAvcSicSetBlockBasedRawSkipSadINTEL) node);
+                case Op.OpSubgroupAvcSicEvaluateIpeINTEL: return VisitSubgroupAvcSicEvaluateIpeINTEL((SubgroupAvcSicEvaluateIpeINTEL) node);
+                case Op.OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL: return VisitSubgroupAvcSicEvaluateWithSingleReferenceINTEL((SubgroupAvcSicEvaluateWithSingleReferenceINTEL) node);
+                case Op.OpSubgroupAvcSicEvaluateWithDualReferenceINTEL: return VisitSubgroupAvcSicEvaluateWithDualReferenceINTEL((SubgroupAvcSicEvaluateWithDualReferenceINTEL) node);
+                case Op.OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL: return VisitSubgroupAvcSicEvaluateWithMultiReferenceINTEL((SubgroupAvcSicEvaluateWithMultiReferenceINTEL) node);
+                case Op.OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL: return VisitSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL((SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL) node);
+                case Op.OpSubgroupAvcSicConvertToMceResultINTEL: return VisitSubgroupAvcSicConvertToMceResultINTEL((SubgroupAvcSicConvertToMceResultINTEL) node);
+                case Op.OpSubgroupAvcSicGetIpeLumaShapeINTEL: return VisitSubgroupAvcSicGetIpeLumaShapeINTEL((SubgroupAvcSicGetIpeLumaShapeINTEL) node);
+                case Op.OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL: return VisitSubgroupAvcSicGetBestIpeLumaDistortionINTEL((SubgroupAvcSicGetBestIpeLumaDistortionINTEL) node);
+                case Op.OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL: return VisitSubgroupAvcSicGetBestIpeChromaDistortionINTEL((SubgroupAvcSicGetBestIpeChromaDistortionINTEL) node);
+                case Op.OpSubgroupAvcSicGetPackedIpeLumaModesINTEL: return VisitSubgroupAvcSicGetPackedIpeLumaModesINTEL((SubgroupAvcSicGetPackedIpeLumaModesINTEL) node);
+                case Op.OpSubgroupAvcSicGetIpeChromaModeINTEL: return VisitSubgroupAvcSicGetIpeChromaModeINTEL((SubgroupAvcSicGetIpeChromaModeINTEL) node);
+                case Op.OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL: return VisitSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL((SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL) node);
+                case Op.OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL: return VisitSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL((SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL) node);
+                case Op.OpSubgroupAvcSicGetInterRawSadsINTEL: return VisitSubgroupAvcSicGetInterRawSadsINTEL((SubgroupAvcSicGetInterRawSadsINTEL) node);
             }
 
             throw new NotImplementedException(node.OpCode + " not implemented yet.");
@@ -410,6 +636,10 @@ namespace Toe.SPIRV.Reflection
             return operand;
         }
         protected virtual Spv.KernelProfilingInfo Visit(Spv.KernelProfilingInfo operand)
+        {
+            return operand;
+        }
+        protected virtual Spv.RayFlags Visit(Spv.RayFlags operand)
         {
             return operand;
         }
@@ -498,6 +728,18 @@ namespace Toe.SPIRV.Reflection
             return operand;
         }
         protected virtual Spv.Capability Visit(Spv.Capability operand)
+        {
+            return operand;
+        }
+        protected virtual Spv.RayQueryIntersection Visit(Spv.RayQueryIntersection operand)
+        {
+            return operand;
+        }
+        protected virtual Spv.RayQueryCommittedIntersectionType Visit(Spv.RayQueryCommittedIntersectionType operand)
+        {
+            return operand;
+        }
+        protected virtual Spv.RayQueryCandidateIntersectionType Visit(Spv.RayQueryCandidateIntersectionType operand)
         {
             return operand;
         }
@@ -692,7 +934,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeBool VisitTypeBool(SpirvBool node)
@@ -701,7 +946,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeInt VisitTypeInt(SpirvInt node)
@@ -710,7 +958,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeFloat VisitTypeFloat(SpirvFloat node)
@@ -719,7 +970,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeVector VisitTypeVector(SpirvVector node)
@@ -728,7 +982,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeMatrix VisitTypeMatrix(SpirvMatrix node)
@@ -737,7 +994,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeImage VisitTypeImage(SpirvImage node)
@@ -746,7 +1006,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeSampler VisitTypeSampler(SpirvSampler node)
@@ -755,7 +1018,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeSampledImage VisitTypeSampledImage(SpirvSampledImage node)
@@ -764,16 +1030,22 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
-        protected virtual OpTypeArray VisitTypeArray(SpirvArrayBase node)
+        protected virtual OpTypeArray VisitTypeArray(SpirvArray node)
         {
             var instruction = new OpTypeArray();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeRuntimeArray VisitTypeRuntimeArray(SpirvRuntimeArray node)
@@ -782,7 +1054,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeStruct VisitTypeStruct(SpirvStruct node)
@@ -791,7 +1066,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeOpaque VisitTypeOpaque(SpirvOpaque node)
@@ -800,7 +1078,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypePointer VisitTypePointer(SpirvPointer node)
@@ -809,7 +1090,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeFunction VisitTypeFunction(SpirvFunction node)
@@ -818,7 +1102,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeEvent VisitTypeEvent(SpirvEvent node)
@@ -827,7 +1114,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeDeviceEvent VisitTypeDeviceEvent(SpirvDeviceEvent node)
@@ -836,7 +1126,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeReserveId VisitTypeReserveId(SpirvReserveId node)
@@ -845,7 +1138,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeQueue VisitTypeQueue(SpirvQueue node)
@@ -854,7 +1150,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypePipe VisitTypePipe(SpirvPipe node)
@@ -863,7 +1162,10 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
             return instruction;
         }
         protected virtual OpTypeForwardPointer VisitTypeForwardPointer(SpirvForwardPointer node)
@@ -1054,7 +1356,6 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Opcode = Visit(node.Opcode);
-            instruction.Operands = Visit(node.Operands);
             return instruction;
         }
         protected virtual OpFunction VisitFunction(Nodes.Function node)
@@ -1759,7 +2060,6 @@ namespace Toe.SPIRV.Reflection
             instruction.Coordinate = Visit(node.Coordinate);
             instruction.D_ref = Visit(node.D_ref);
             instruction.ImageOperands = Visit(node.ImageOperands);
-            instruction.Operands = Visit(node.Operands);
             return instruction;
         }
         protected virtual OpImageRead VisitImageRead(Nodes.ImageRead node)
@@ -3812,7 +4112,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             return instruction;
         }
@@ -3822,7 +4122,7 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             Visit(node.Next);
@@ -3844,7 +4144,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -3864,7 +4164,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Equal = Visit(node.Equal);
             instruction.Unequal = Visit(node.Unequal);
             instruction.Value = Visit(node.Value);
@@ -3886,7 +4186,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Equal = Visit(node.Equal);
             instruction.Unequal = Visit(node.Unequal);
             instruction.Value = Visit(node.Value);
@@ -3908,7 +4208,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             return instruction;
         }
@@ -3927,7 +4227,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             return instruction;
         }
@@ -3946,7 +4246,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -3966,7 +4266,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -3986,7 +4286,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -4006,7 +4306,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -4026,7 +4326,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -4046,7 +4346,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -4066,7 +4366,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -4086,7 +4386,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -4106,7 +4406,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -5259,7 +5559,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             return instruction;
         }
@@ -5269,7 +5569,7 @@ namespace Toe.SPIRV.Reflection
             _instructionMap.Add(node, instruction);
 
             instruction.Pointer = Visit(node.Pointer);
-            instruction.Scope = Visit(node.Scope);
+            instruction.Memory = Visit(node.Memory);
             instruction.Semantics = Visit(node.Semantics);
             Visit(node.Next);
 
@@ -5294,6 +5594,174 @@ namespace Toe.SPIRV.Reflection
             instruction.ImageOperands = Visit(node.ImageOperands);
             return instruction;
         }
+        protected virtual OpSizeOf VisitSizeOf(Nodes.SizeOf node)
+        {
+            var instruction = new OpSizeOf();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Pointer = Visit(node.Pointer);
+            return instruction;
+        }
+        protected virtual OpTypePipeStorage VisitTypePipeStorage(SpirvPipeStorage node)
+        {
+            var instruction = new OpTypePipeStorage();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpConstantPipeStorage VisitConstantPipeStorage(Nodes.ConstantPipeStorage node)
+        {
+            var instruction = new OpConstantPipeStorage();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PacketSize = Visit(node.PacketSize);
+            instruction.PacketAlignment = Visit(node.PacketAlignment);
+            instruction.Capacity = Visit(node.Capacity);
+            return instruction;
+        }
+        protected virtual OpCreatePipeFromPipeStorage VisitCreatePipeFromPipeStorage(Nodes.CreatePipeFromPipeStorage node)
+        {
+            var instruction = new OpCreatePipeFromPipeStorage();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PipeStorage = Visit(node.PipeStorage);
+            return instruction;
+        }
+        protected virtual OpGetKernelLocalSizeForSubgroupCount VisitGetKernelLocalSizeForSubgroupCount(Nodes.GetKernelLocalSizeForSubgroupCount node)
+        {
+            var instruction = new OpGetKernelLocalSizeForSubgroupCount();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SubgroupCount = Visit(node.SubgroupCount);
+            instruction.Invoke = Visit(node.Invoke);
+            instruction.Param = Visit(node.Param);
+            instruction.ParamSize = Visit(node.ParamSize);
+            instruction.ParamAlign = Visit(node.ParamAlign);
+            return instruction;
+        }
+        protected virtual OpGetKernelMaxNumSubgroups VisitGetKernelMaxNumSubgroups(Nodes.GetKernelMaxNumSubgroups node)
+        {
+            var instruction = new OpGetKernelMaxNumSubgroups();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Invoke = Visit(node.Invoke);
+            instruction.Param = Visit(node.Param);
+            instruction.ParamSize = Visit(node.ParamSize);
+            instruction.ParamAlign = Visit(node.ParamAlign);
+            return instruction;
+        }
+        protected virtual OpTypeNamedBarrier VisitTypeNamedBarrier(SpirvNamedBarrier node)
+        {
+            var instruction = new OpTypeNamedBarrier();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpNamedBarrierInitialize VisitNamedBarrierInitialize(Nodes.NamedBarrierInitialize node)
+        {
+            var instruction = new OpNamedBarrierInitialize();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SubgroupCount = Visit(node.SubgroupCount);
+            return instruction;
+        }
+        protected virtual OpMemoryNamedBarrier VisitMemoryNamedBarrier(Nodes.MemoryNamedBarrier node)
+        {
+            var instruction = new OpMemoryNamedBarrier();
+            _instructionMap.Add(node, instruction);
+
+            instruction.NamedBarrier = Visit(node.NamedBarrier);
+            instruction.Memory = Visit(node.Memory);
+            instruction.Semantics = Visit(node.Semantics);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpModuleProcessed VisitModuleProcessed(Nodes.ModuleProcessed node)
+        {
+            var instruction = new OpModuleProcessed();
+            _instructionMap.Add(node, instruction);
+
+            instruction.Process = Visit(node.Process);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpExecutionModeId VisitExecutionModeId(Nodes.ExecutionModeId node)
+        {
+            var instruction = new OpExecutionModeId();
+            _instructionMap.Add(node, instruction);
+
+            instruction.EntryPoint = Visit(node.EntryPoint);
+            instruction.Mode = Visit(node.Mode);
+            Visit(node.Next);
+
+            return instruction;
+        }
         protected virtual OpDecorateId VisitDecorateId(Nodes.DecorateId node)
         {
             var instruction = new OpDecorateId();
@@ -5303,6 +5771,729 @@ namespace Toe.SPIRV.Reflection
             instruction.Decoration = Visit(node.Decoration);
             Visit(node.Next);
 
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformElect VisitGroupNonUniformElect(Nodes.GroupNonUniformElect node)
+        {
+            var instruction = new OpGroupNonUniformElect();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformAll VisitGroupNonUniformAll(Nodes.GroupNonUniformAll node)
+        {
+            var instruction = new OpGroupNonUniformAll();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Predicate = Visit(node.Predicate);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformAny VisitGroupNonUniformAny(Nodes.GroupNonUniformAny node)
+        {
+            var instruction = new OpGroupNonUniformAny();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Predicate = Visit(node.Predicate);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformAllEqual VisitGroupNonUniformAllEqual(Nodes.GroupNonUniformAllEqual node)
+        {
+            var instruction = new OpGroupNonUniformAllEqual();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBroadcast VisitGroupNonUniformBroadcast(Nodes.GroupNonUniformBroadcast node)
+        {
+            var instruction = new OpGroupNonUniformBroadcast();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Id = Visit(node.Id);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBroadcastFirst VisitGroupNonUniformBroadcastFirst(Nodes.GroupNonUniformBroadcastFirst node)
+        {
+            var instruction = new OpGroupNonUniformBroadcastFirst();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBallot VisitGroupNonUniformBallot(Nodes.GroupNonUniformBallot node)
+        {
+            var instruction = new OpGroupNonUniformBallot();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Predicate = Visit(node.Predicate);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformInverseBallot VisitGroupNonUniformInverseBallot(Nodes.GroupNonUniformInverseBallot node)
+        {
+            var instruction = new OpGroupNonUniformInverseBallot();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBallotBitExtract VisitGroupNonUniformBallotBitExtract(Nodes.GroupNonUniformBallotBitExtract node)
+        {
+            var instruction = new OpGroupNonUniformBallotBitExtract();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Index = Visit(node.Index);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBallotBitCount VisitGroupNonUniformBallotBitCount(Nodes.GroupNonUniformBallotBitCount node)
+        {
+            var instruction = new OpGroupNonUniformBallotBitCount();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBallotFindLSB VisitGroupNonUniformBallotFindLSB(Nodes.GroupNonUniformBallotFindLSB node)
+        {
+            var instruction = new OpGroupNonUniformBallotFindLSB();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBallotFindMSB VisitGroupNonUniformBallotFindMSB(Nodes.GroupNonUniformBallotFindMSB node)
+        {
+            var instruction = new OpGroupNonUniformBallotFindMSB();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformShuffle VisitGroupNonUniformShuffle(Nodes.GroupNonUniformShuffle node)
+        {
+            var instruction = new OpGroupNonUniformShuffle();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Id = Visit(node.Id);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformShuffleXor VisitGroupNonUniformShuffleXor(Nodes.GroupNonUniformShuffleXor node)
+        {
+            var instruction = new OpGroupNonUniformShuffleXor();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Mask = Visit(node.Mask);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformShuffleUp VisitGroupNonUniformShuffleUp(Nodes.GroupNonUniformShuffleUp node)
+        {
+            var instruction = new OpGroupNonUniformShuffleUp();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Delta = Visit(node.Delta);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformShuffleDown VisitGroupNonUniformShuffleDown(Nodes.GroupNonUniformShuffleDown node)
+        {
+            var instruction = new OpGroupNonUniformShuffleDown();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Delta = Visit(node.Delta);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformIAdd VisitGroupNonUniformIAdd(Nodes.GroupNonUniformIAdd node)
+        {
+            var instruction = new OpGroupNonUniformIAdd();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformFAdd VisitGroupNonUniformFAdd(Nodes.GroupNonUniformFAdd node)
+        {
+            var instruction = new OpGroupNonUniformFAdd();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformIMul VisitGroupNonUniformIMul(Nodes.GroupNonUniformIMul node)
+        {
+            var instruction = new OpGroupNonUniformIMul();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformFMul VisitGroupNonUniformFMul(Nodes.GroupNonUniformFMul node)
+        {
+            var instruction = new OpGroupNonUniformFMul();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformSMin VisitGroupNonUniformSMin(Nodes.GroupNonUniformSMin node)
+        {
+            var instruction = new OpGroupNonUniformSMin();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformUMin VisitGroupNonUniformUMin(Nodes.GroupNonUniformUMin node)
+        {
+            var instruction = new OpGroupNonUniformUMin();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformFMin VisitGroupNonUniformFMin(Nodes.GroupNonUniformFMin node)
+        {
+            var instruction = new OpGroupNonUniformFMin();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformSMax VisitGroupNonUniformSMax(Nodes.GroupNonUniformSMax node)
+        {
+            var instruction = new OpGroupNonUniformSMax();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformUMax VisitGroupNonUniformUMax(Nodes.GroupNonUniformUMax node)
+        {
+            var instruction = new OpGroupNonUniformUMax();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformFMax VisitGroupNonUniformFMax(Nodes.GroupNonUniformFMax node)
+        {
+            var instruction = new OpGroupNonUniformFMax();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBitwiseAnd VisitGroupNonUniformBitwiseAnd(Nodes.GroupNonUniformBitwiseAnd node)
+        {
+            var instruction = new OpGroupNonUniformBitwiseAnd();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBitwiseOr VisitGroupNonUniformBitwiseOr(Nodes.GroupNonUniformBitwiseOr node)
+        {
+            var instruction = new OpGroupNonUniformBitwiseOr();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformBitwiseXor VisitGroupNonUniformBitwiseXor(Nodes.GroupNonUniformBitwiseXor node)
+        {
+            var instruction = new OpGroupNonUniformBitwiseXor();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformLogicalAnd VisitGroupNonUniformLogicalAnd(Nodes.GroupNonUniformLogicalAnd node)
+        {
+            var instruction = new OpGroupNonUniformLogicalAnd();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformLogicalOr VisitGroupNonUniformLogicalOr(Nodes.GroupNonUniformLogicalOr node)
+        {
+            var instruction = new OpGroupNonUniformLogicalOr();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformLogicalXor VisitGroupNonUniformLogicalXor(Nodes.GroupNonUniformLogicalXor node)
+        {
+            var instruction = new OpGroupNonUniformLogicalXor();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Operation = Visit(node.Operation);
+            instruction.Value = Visit(node.Value);
+            instruction.ClusterSize = Visit(node.ClusterSize);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformQuadBroadcast VisitGroupNonUniformQuadBroadcast(Nodes.GroupNonUniformQuadBroadcast node)
+        {
+            var instruction = new OpGroupNonUniformQuadBroadcast();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Index = Visit(node.Index);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformQuadSwap VisitGroupNonUniformQuadSwap(Nodes.GroupNonUniformQuadSwap node)
+        {
+            var instruction = new OpGroupNonUniformQuadSwap();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            instruction.Value = Visit(node.Value);
+            instruction.Direction = Visit(node.Direction);
+            return instruction;
+        }
+        protected virtual OpCopyLogical VisitCopyLogical(Nodes.CopyLogical node)
+        {
+            var instruction = new OpCopyLogical();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand = Visit(node.Operand);
+            return instruction;
+        }
+        protected virtual OpPtrEqual VisitPtrEqual(Nodes.PtrEqual node)
+        {
+            var instruction = new OpPtrEqual();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpPtrNotEqual VisitPtrNotEqual(Nodes.PtrNotEqual node)
+        {
+            var instruction = new OpPtrNotEqual();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpPtrDiff VisitPtrDiff(Nodes.PtrDiff node)
+        {
+            var instruction = new OpPtrDiff();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
             return instruction;
         }
         protected virtual OpSubgroupBallotKHR VisitSubgroupBallotKHR(Nodes.SubgroupBallotKHR node)
@@ -5597,6 +6788,672 @@ namespace Toe.SPIRV.Reflection
             instruction.FragmentIndex = Visit(node.FragmentIndex);
             return instruction;
         }
+        protected virtual OpReadClockKHR VisitReadClockKHR(Nodes.ReadClockKHR node)
+        {
+            var instruction = new OpReadClockKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Execution = Visit(node.Execution);
+            return instruction;
+        }
+        protected virtual OpImageSampleFootprintNV VisitImageSampleFootprintNV(Nodes.ImageSampleFootprintNV node)
+        {
+            var instruction = new OpImageSampleFootprintNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SampledImage = Visit(node.SampledImage);
+            instruction.Coordinate = Visit(node.Coordinate);
+            instruction.Granularity = Visit(node.Granularity);
+            instruction.Coarse = Visit(node.Coarse);
+            instruction.ImageOperands = Visit(node.ImageOperands);
+            return instruction;
+        }
+        protected virtual OpGroupNonUniformPartitionNV VisitGroupNonUniformPartitionNV(Nodes.GroupNonUniformPartitionNV node)
+        {
+            var instruction = new OpGroupNonUniformPartitionNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Value = Visit(node.Value);
+            return instruction;
+        }
+        protected virtual OpWritePackedPrimitiveIndices4x8NV VisitWritePackedPrimitiveIndices4x8NV(Nodes.WritePackedPrimitiveIndices4x8NV node)
+        {
+            var instruction = new OpWritePackedPrimitiveIndices4x8NV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IndexOffset = Visit(node.IndexOffset);
+            instruction.PackedIndices = Visit(node.PackedIndices);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpReportIntersectionNV VisitReportIntersectionNV(Nodes.ReportIntersectionNV node)
+        {
+            var instruction = new OpReportIntersectionNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Hit = Visit(node.Hit);
+            instruction.HitKind = Visit(node.HitKind);
+            return instruction;
+        }
+        protected virtual OpIgnoreIntersectionNV VisitIgnoreIntersectionNV(Nodes.IgnoreIntersectionNV node)
+        {
+            var instruction = new OpIgnoreIntersectionNV();
+            _instructionMap.Add(node, instruction);
+
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpTerminateRayNV VisitTerminateRayNV(Nodes.TerminateRayNV node)
+        {
+            var instruction = new OpTerminateRayNV();
+            _instructionMap.Add(node, instruction);
+
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpTraceNV VisitTraceNV(Nodes.TraceNV node)
+        {
+            var instruction = new OpTraceNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.Accel = Visit(node.Accel);
+            instruction.RayFlags = Visit(node.RayFlags);
+            instruction.CullMask = Visit(node.CullMask);
+            instruction.SBTOffset = Visit(node.SBTOffset);
+            instruction.SBTStride = Visit(node.SBTStride);
+            instruction.MissIndex = Visit(node.MissIndex);
+            instruction.RayOrigin = Visit(node.RayOrigin);
+            instruction.RayTmin = Visit(node.RayTmin);
+            instruction.RayDirection = Visit(node.RayDirection);
+            instruction.RayTmax = Visit(node.RayTmax);
+            instruction.PayloadId = Visit(node.PayloadId);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpTypeAccelerationStructureNV VisitTypeAccelerationStructureNV(SpirvAccelerationStructureNV node)
+        {
+            var instruction = new OpTypeAccelerationStructureNV();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeRayQueryProvisionalKHR VisitTypeRayQueryProvisionalKHR(SpirvRayQueryProvisionalKHR node)
+        {
+            var instruction = new OpTypeRayQueryProvisionalKHR();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpRayQueryInitializeKHR VisitRayQueryInitializeKHR(Nodes.RayQueryInitializeKHR node)
+        {
+            var instruction = new OpRayQueryInitializeKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Accel = Visit(node.Accel);
+            instruction.RayFlags = Visit(node.RayFlags);
+            instruction.CullMask = Visit(node.CullMask);
+            instruction.RayOrigin = Visit(node.RayOrigin);
+            instruction.RayTMin = Visit(node.RayTMin);
+            instruction.RayDirection = Visit(node.RayDirection);
+            instruction.RayTMax = Visit(node.RayTMax);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpRayQueryTerminateKHR VisitRayQueryTerminateKHR(Nodes.RayQueryTerminateKHR node)
+        {
+            var instruction = new OpRayQueryTerminateKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpRayQueryGenerateIntersectionKHR VisitRayQueryGenerateIntersectionKHR(Nodes.RayQueryGenerateIntersectionKHR node)
+        {
+            var instruction = new OpRayQueryGenerateIntersectionKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.HitT = Visit(node.HitT);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpRayQueryConfirmIntersectionKHR VisitRayQueryConfirmIntersectionKHR(Nodes.RayQueryConfirmIntersectionKHR node)
+        {
+            var instruction = new OpRayQueryConfirmIntersectionKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpRayQueryProceedKHR VisitRayQueryProceedKHR(Nodes.RayQueryProceedKHR node)
+        {
+            var instruction = new OpRayQueryProceedKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionTypeKHR VisitRayQueryGetIntersectionTypeKHR(Nodes.RayQueryGetIntersectionTypeKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionTypeKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetRayTMinKHR VisitRayQueryGetRayTMinKHR(Nodes.RayQueryGetRayTMinKHR node)
+        {
+            var instruction = new OpRayQueryGetRayTMinKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetRayFlagsKHR VisitRayQueryGetRayFlagsKHR(Nodes.RayQueryGetRayFlagsKHR node)
+        {
+            var instruction = new OpRayQueryGetRayFlagsKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionTKHR VisitRayQueryGetIntersectionTKHR(Nodes.RayQueryGetIntersectionTKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionTKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionInstanceCustomIndexKHR VisitRayQueryGetIntersectionInstanceCustomIndexKHR(Nodes.RayQueryGetIntersectionInstanceCustomIndexKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionInstanceCustomIndexKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionInstanceIdKHR VisitRayQueryGetIntersectionInstanceIdKHR(Nodes.RayQueryGetIntersectionInstanceIdKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionInstanceIdKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR VisitRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(Nodes.RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionGeometryIndexKHR VisitRayQueryGetIntersectionGeometryIndexKHR(Nodes.RayQueryGetIntersectionGeometryIndexKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionGeometryIndexKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionPrimitiveIndexKHR VisitRayQueryGetIntersectionPrimitiveIndexKHR(Nodes.RayQueryGetIntersectionPrimitiveIndexKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionPrimitiveIndexKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionBarycentricsKHR VisitRayQueryGetIntersectionBarycentricsKHR(Nodes.RayQueryGetIntersectionBarycentricsKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionBarycentricsKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionFrontFaceKHR VisitRayQueryGetIntersectionFrontFaceKHR(Nodes.RayQueryGetIntersectionFrontFaceKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionFrontFaceKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionCandidateAABBOpaqueKHR VisitRayQueryGetIntersectionCandidateAABBOpaqueKHR(Nodes.RayQueryGetIntersectionCandidateAABBOpaqueKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionCandidateAABBOpaqueKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionObjectRayDirectionKHR VisitRayQueryGetIntersectionObjectRayDirectionKHR(Nodes.RayQueryGetIntersectionObjectRayDirectionKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionObjectRayDirectionKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionObjectRayOriginKHR VisitRayQueryGetIntersectionObjectRayOriginKHR(Nodes.RayQueryGetIntersectionObjectRayOriginKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionObjectRayOriginKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetWorldRayDirectionKHR VisitRayQueryGetWorldRayDirectionKHR(Nodes.RayQueryGetWorldRayDirectionKHR node)
+        {
+            var instruction = new OpRayQueryGetWorldRayDirectionKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetWorldRayOriginKHR VisitRayQueryGetWorldRayOriginKHR(Nodes.RayQueryGetWorldRayOriginKHR node)
+        {
+            var instruction = new OpRayQueryGetWorldRayOriginKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionObjectToWorldKHR VisitRayQueryGetIntersectionObjectToWorldKHR(Nodes.RayQueryGetIntersectionObjectToWorldKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionObjectToWorldKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpRayQueryGetIntersectionWorldToObjectKHR VisitRayQueryGetIntersectionWorldToObjectKHR(Nodes.RayQueryGetIntersectionWorldToObjectKHR node)
+        {
+            var instruction = new OpRayQueryGetIntersectionWorldToObjectKHR();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RayQuery = Visit(node.RayQuery);
+            instruction.Intersection = Visit(node.Intersection);
+            return instruction;
+        }
+        protected virtual OpExecuteCallableNV VisitExecuteCallableNV(Nodes.ExecuteCallableNV node)
+        {
+            var instruction = new OpExecuteCallableNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.SBTIndex = Visit(node.SBTIndex);
+            instruction.CallableDataId = Visit(node.CallableDataId);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpTypeCooperativeMatrixNV VisitTypeCooperativeMatrixNV(SpirvCooperativeMatrixNV node)
+        {
+            var instruction = new OpTypeCooperativeMatrixNV();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpCooperativeMatrixLoadNV VisitCooperativeMatrixLoadNV(Nodes.CooperativeMatrixLoadNV node)
+        {
+            var instruction = new OpCooperativeMatrixLoadNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Pointer = Visit(node.Pointer);
+            instruction.Stride = Visit(node.Stride);
+            instruction.ColumnMajor = Visit(node.ColumnMajor);
+            instruction.MemoryAccess = Visit(node.MemoryAccess);
+            return instruction;
+        }
+        protected virtual OpCooperativeMatrixStoreNV VisitCooperativeMatrixStoreNV(Nodes.CooperativeMatrixStoreNV node)
+        {
+            var instruction = new OpCooperativeMatrixStoreNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.Pointer = Visit(node.Pointer);
+            instruction.Object = Visit(node.Object);
+            instruction.Stride = Visit(node.Stride);
+            instruction.ColumnMajor = Visit(node.ColumnMajor);
+            instruction.MemoryAccess = Visit(node.MemoryAccess);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpCooperativeMatrixMulAddNV VisitCooperativeMatrixMulAddNV(Nodes.CooperativeMatrixMulAddNV node)
+        {
+            var instruction = new OpCooperativeMatrixMulAddNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.A = Visit(node.A);
+            instruction.B = Visit(node.B);
+            instruction.C = Visit(node.C);
+            return instruction;
+        }
+        protected virtual OpCooperativeMatrixLengthNV VisitCooperativeMatrixLengthNV(Nodes.CooperativeMatrixLengthNV node)
+        {
+            var instruction = new OpCooperativeMatrixLengthNV();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Type = Visit(node.Type);
+            return instruction;
+        }
+        protected virtual OpBeginInvocationInterlockEXT VisitBeginInvocationInterlockEXT(Nodes.BeginInvocationInterlockEXT node)
+        {
+            var instruction = new OpBeginInvocationInterlockEXT();
+            _instructionMap.Add(node, instruction);
+
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpEndInvocationInterlockEXT VisitEndInvocationInterlockEXT(Nodes.EndInvocationInterlockEXT node)
+        {
+            var instruction = new OpEndInvocationInterlockEXT();
+            _instructionMap.Add(node, instruction);
+
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpDemoteToHelperInvocationEXT VisitDemoteToHelperInvocationEXT(Nodes.DemoteToHelperInvocationEXT node)
+        {
+            var instruction = new OpDemoteToHelperInvocationEXT();
+            _instructionMap.Add(node, instruction);
+
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpIsHelperInvocationEXT VisitIsHelperInvocationEXT(Nodes.IsHelperInvocationEXT node)
+        {
+            var instruction = new OpIsHelperInvocationEXT();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            return instruction;
+        }
         protected virtual OpSubgroupShuffleINTEL VisitSubgroupShuffleINTEL(Nodes.SubgroupShuffleINTEL node)
         {
             var instruction = new OpSubgroupShuffleINTEL();
@@ -5729,9 +7586,293 @@ namespace Toe.SPIRV.Reflection
 
             return instruction;
         }
-        protected virtual OpDecorateStringGOOGLE VisitDecorateStringGOOGLE(Nodes.DecorateStringGOOGLE node)
+        protected virtual OpSubgroupImageMediaBlockReadINTEL VisitSubgroupImageMediaBlockReadINTEL(Nodes.SubgroupImageMediaBlockReadINTEL node)
         {
-            var instruction = new OpDecorateStringGOOGLE();
+            var instruction = new OpSubgroupImageMediaBlockReadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Image = Visit(node.Image);
+            instruction.Coordinate = Visit(node.Coordinate);
+            instruction.Width = Visit(node.Width);
+            instruction.Height = Visit(node.Height);
+            return instruction;
+        }
+        protected virtual OpSubgroupImageMediaBlockWriteINTEL VisitSubgroupImageMediaBlockWriteINTEL(Nodes.SubgroupImageMediaBlockWriteINTEL node)
+        {
+            var instruction = new OpSubgroupImageMediaBlockWriteINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.Image = Visit(node.Image);
+            instruction.Coordinate = Visit(node.Coordinate);
+            instruction.Width = Visit(node.Width);
+            instruction.Height = Visit(node.Height);
+            instruction.Data = Visit(node.Data);
+            Visit(node.Next);
+
+            return instruction;
+        }
+        protected virtual OpUCountLeadingZerosINTEL VisitUCountLeadingZerosINTEL(Nodes.UCountLeadingZerosINTEL node)
+        {
+            var instruction = new OpUCountLeadingZerosINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand = Visit(node.Operand);
+            return instruction;
+        }
+        protected virtual OpUCountTrailingZerosINTEL VisitUCountTrailingZerosINTEL(Nodes.UCountTrailingZerosINTEL node)
+        {
+            var instruction = new OpUCountTrailingZerosINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand = Visit(node.Operand);
+            return instruction;
+        }
+        protected virtual OpAbsISubINTEL VisitAbsISubINTEL(Nodes.AbsISubINTEL node)
+        {
+            var instruction = new OpAbsISubINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpAbsUSubINTEL VisitAbsUSubINTEL(Nodes.AbsUSubINTEL node)
+        {
+            var instruction = new OpAbsUSubINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpIAddSatINTEL VisitIAddSatINTEL(Nodes.IAddSatINTEL node)
+        {
+            var instruction = new OpIAddSatINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpUAddSatINTEL VisitUAddSatINTEL(Nodes.UAddSatINTEL node)
+        {
+            var instruction = new OpUAddSatINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpIAverageINTEL VisitIAverageINTEL(Nodes.IAverageINTEL node)
+        {
+            var instruction = new OpIAverageINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpUAverageINTEL VisitUAverageINTEL(Nodes.UAverageINTEL node)
+        {
+            var instruction = new OpUAverageINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpIAverageRoundedINTEL VisitIAverageRoundedINTEL(Nodes.IAverageRoundedINTEL node)
+        {
+            var instruction = new OpIAverageRoundedINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpUAverageRoundedINTEL VisitUAverageRoundedINTEL(Nodes.UAverageRoundedINTEL node)
+        {
+            var instruction = new OpUAverageRoundedINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpISubSatINTEL VisitISubSatINTEL(Nodes.ISubSatINTEL node)
+        {
+            var instruction = new OpISubSatINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpUSubSatINTEL VisitUSubSatINTEL(Nodes.USubSatINTEL node)
+        {
+            var instruction = new OpUSubSatINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpIMul32x16INTEL VisitIMul32x16INTEL(Nodes.IMul32x16INTEL node)
+        {
+            var instruction = new OpIMul32x16INTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpUMul32x16INTEL VisitUMul32x16INTEL(Nodes.UMul32x16INTEL node)
+        {
+            var instruction = new OpUMul32x16INTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Operand1 = Visit(node.Operand1);
+            instruction.Operand2 = Visit(node.Operand2);
+            return instruction;
+        }
+        protected virtual OpDecorateString VisitDecorateString(Nodes.DecorateString node)
+        {
+            var instruction = new OpDecorateString();
             _instructionMap.Add(node, instruction);
 
             instruction.Target = Visit(node.Target);
@@ -5740,9 +7881,9 @@ namespace Toe.SPIRV.Reflection
 
             return instruction;
         }
-        protected virtual OpMemberDecorateStringGOOGLE VisitMemberDecorateStringGOOGLE(Nodes.MemberDecorateStringGOOGLE node)
+        protected virtual OpMemberDecorateString VisitMemberDecorateString(Nodes.MemberDecorateString node)
         {
-            var instruction = new OpMemberDecorateStringGOOGLE();
+            var instruction = new OpMemberDecorateString();
             _instructionMap.Add(node, instruction);
 
             instruction.StructType = Visit(node.StructType);
@@ -5750,6 +7891,2073 @@ namespace Toe.SPIRV.Reflection
             instruction.Decoration = Visit(node.Decoration);
             Visit(node.Next);
 
+            return instruction;
+        }
+        protected virtual OpVmeImageINTEL VisitVmeImageINTEL(Nodes.VmeImageINTEL node)
+        {
+            var instruction = new OpVmeImageINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.ImageType = Visit(node.ImageType);
+            instruction.Sampler = Visit(node.Sampler);
+            return instruction;
+        }
+        protected virtual OpTypeVmeImageINTEL VisitTypeVmeImageINTEL(SpirvVmeImageINTEL node)
+        {
+            var instruction = new OpTypeVmeImageINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcImePayloadINTEL VisitTypeAvcImePayloadINTEL(SpirvAvcImePayloadINTEL node)
+        {
+            var instruction = new OpTypeAvcImePayloadINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcRefPayloadINTEL VisitTypeAvcRefPayloadINTEL(SpirvAvcRefPayloadINTEL node)
+        {
+            var instruction = new OpTypeAvcRefPayloadINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcSicPayloadINTEL VisitTypeAvcSicPayloadINTEL(SpirvAvcSicPayloadINTEL node)
+        {
+            var instruction = new OpTypeAvcSicPayloadINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcMcePayloadINTEL VisitTypeAvcMcePayloadINTEL(SpirvAvcMcePayloadINTEL node)
+        {
+            var instruction = new OpTypeAvcMcePayloadINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcMceResultINTEL VisitTypeAvcMceResultINTEL(SpirvAvcMceResultINTEL node)
+        {
+            var instruction = new OpTypeAvcMceResultINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcImeResultINTEL VisitTypeAvcImeResultINTEL(SpirvAvcImeResultINTEL node)
+        {
+            var instruction = new OpTypeAvcImeResultINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcImeResultSingleReferenceStreamoutINTEL VisitTypeAvcImeResultSingleReferenceStreamoutINTEL(SpirvAvcImeResultSingleReferenceStreamoutINTEL node)
+        {
+            var instruction = new OpTypeAvcImeResultSingleReferenceStreamoutINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcImeResultDualReferenceStreamoutINTEL VisitTypeAvcImeResultDualReferenceStreamoutINTEL(SpirvAvcImeResultDualReferenceStreamoutINTEL node)
+        {
+            var instruction = new OpTypeAvcImeResultDualReferenceStreamoutINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcImeSingleReferenceStreaminINTEL VisitTypeAvcImeSingleReferenceStreaminINTEL(SpirvAvcImeSingleReferenceStreaminINTEL node)
+        {
+            var instruction = new OpTypeAvcImeSingleReferenceStreaminINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcImeDualReferenceStreaminINTEL VisitTypeAvcImeDualReferenceStreaminINTEL(SpirvAvcImeDualReferenceStreaminINTEL node)
+        {
+            var instruction = new OpTypeAvcImeDualReferenceStreaminINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcRefResultINTEL VisitTypeAvcRefResultINTEL(SpirvAvcRefResultINTEL node)
+        {
+            var instruction = new OpTypeAvcRefResultINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpTypeAvcSicResultINTEL VisitTypeAvcSicResultINTEL(SpirvAvcSicResultINTEL node)
+        {
+            var instruction = new OpTypeAvcSicResultINTEL();
+            _instructionMap.Add(node, instruction);
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL VisitSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SliceType = Visit(node.SliceType);
+            instruction.Qp = Visit(node.Qp);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL VisitSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(Nodes.SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.ReferenceBasePenalty = Visit(node.ReferenceBasePenalty);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL VisitSubgroupAvcMceGetDefaultInterShapePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterShapePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SliceType = Visit(node.SliceType);
+            instruction.Qp = Visit(node.Qp);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetInterShapePenaltyINTEL VisitSubgroupAvcMceSetInterShapePenaltyINTEL(Nodes.SubgroupAvcMceSetInterShapePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetInterShapePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PackedShapePenalty = Visit(node.PackedShapePenalty);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL VisitSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SliceType = Visit(node.SliceType);
+            instruction.Qp = Visit(node.Qp);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetInterDirectionPenaltyINTEL VisitSubgroupAvcMceSetInterDirectionPenaltyINTEL(Nodes.SubgroupAvcMceSetInterDirectionPenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetInterDirectionPenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.DirectionCost = Visit(node.DirectionCost);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL VisitSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SliceType = Visit(node.SliceType);
+            instruction.Qp = Visit(node.Qp);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL VisitSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SliceType = Visit(node.SliceType);
+            instruction.Qp = Visit(node.Qp);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL VisitSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL VisitSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL VisitSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL VisitSubgroupAvcMceSetMotionVectorCostFunctionINTEL(Nodes.SubgroupAvcMceSetMotionVectorCostFunctionINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PackedCostCenterDelta = Visit(node.PackedCostCenterDelta);
+            instruction.PackedCostTable = Visit(node.PackedCostTable);
+            instruction.CostPrecision = Visit(node.CostPrecision);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL VisitSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SliceType = Visit(node.SliceType);
+            instruction.Qp = Visit(node.Qp);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL VisitSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL VisitSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetAcOnlyHaarINTEL VisitSubgroupAvcMceSetAcOnlyHaarINTEL(Nodes.SubgroupAvcMceSetAcOnlyHaarINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetAcOnlyHaarINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL VisitSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(Nodes.SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SourceFieldPolarity = Visit(node.SourceFieldPolarity);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL VisitSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(Nodes.SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.ReferenceFieldPolarity = Visit(node.ReferenceFieldPolarity);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL VisitSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(Nodes.SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.ForwardReferenceFieldPolarity = Visit(node.ForwardReferenceFieldPolarity);
+            instruction.BackwardReferenceFieldPolarity = Visit(node.BackwardReferenceFieldPolarity);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceConvertToImePayloadINTEL VisitSubgroupAvcMceConvertToImePayloadINTEL(Nodes.SubgroupAvcMceConvertToImePayloadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceConvertToImePayloadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceConvertToImeResultINTEL VisitSubgroupAvcMceConvertToImeResultINTEL(Nodes.SubgroupAvcMceConvertToImeResultINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceConvertToImeResultINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceConvertToRefPayloadINTEL VisitSubgroupAvcMceConvertToRefPayloadINTEL(Nodes.SubgroupAvcMceConvertToRefPayloadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceConvertToRefPayloadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceConvertToRefResultINTEL VisitSubgroupAvcMceConvertToRefResultINTEL(Nodes.SubgroupAvcMceConvertToRefResultINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceConvertToRefResultINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceConvertToSicPayloadINTEL VisitSubgroupAvcMceConvertToSicPayloadINTEL(Nodes.SubgroupAvcMceConvertToSicPayloadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceConvertToSicPayloadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceConvertToSicResultINTEL VisitSubgroupAvcMceConvertToSicResultINTEL(Nodes.SubgroupAvcMceConvertToSicResultINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceConvertToSicResultINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetMotionVectorsINTEL VisitSubgroupAvcMceGetMotionVectorsINTEL(Nodes.SubgroupAvcMceGetMotionVectorsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetMotionVectorsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterDistortionsINTEL VisitSubgroupAvcMceGetInterDistortionsINTEL(Nodes.SubgroupAvcMceGetInterDistortionsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterDistortionsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetBestInterDistortionsINTEL VisitSubgroupAvcMceGetBestInterDistortionsINTEL(Nodes.SubgroupAvcMceGetBestInterDistortionsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetBestInterDistortionsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterMajorShapeINTEL VisitSubgroupAvcMceGetInterMajorShapeINTEL(Nodes.SubgroupAvcMceGetInterMajorShapeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterMajorShapeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterMinorShapeINTEL VisitSubgroupAvcMceGetInterMinorShapeINTEL(Nodes.SubgroupAvcMceGetInterMinorShapeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterMinorShapeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterDirectionsINTEL VisitSubgroupAvcMceGetInterDirectionsINTEL(Nodes.SubgroupAvcMceGetInterDirectionsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterDirectionsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterMotionVectorCountINTEL VisitSubgroupAvcMceGetInterMotionVectorCountINTEL(Nodes.SubgroupAvcMceGetInterMotionVectorCountINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterMotionVectorCountINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterReferenceIdsINTEL VisitSubgroupAvcMceGetInterReferenceIdsINTEL(Nodes.SubgroupAvcMceGetInterReferenceIdsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterReferenceIdsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL VisitSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(Nodes.SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL node)
+        {
+            var instruction = new OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PackedReferenceIds = Visit(node.PackedReferenceIds);
+            instruction.PackedReferenceParameterFieldPolarities = Visit(node.PackedReferenceParameterFieldPolarities);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeInitializeINTEL VisitSubgroupAvcImeInitializeINTEL(Nodes.SubgroupAvcImeInitializeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeInitializeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcCoord = Visit(node.SrcCoord);
+            instruction.PartitionMask = Visit(node.PartitionMask);
+            instruction.SADAdjustment = Visit(node.SADAdjustment);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeSetSingleReferenceINTEL VisitSubgroupAvcImeSetSingleReferenceINTEL(Nodes.SubgroupAvcImeSetSingleReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeSetSingleReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RefOffset = Visit(node.RefOffset);
+            instruction.SearchWindowConfig = Visit(node.SearchWindowConfig);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeSetDualReferenceINTEL VisitSubgroupAvcImeSetDualReferenceINTEL(Nodes.SubgroupAvcImeSetDualReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeSetDualReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.FwdRefOffset = Visit(node.FwdRefOffset);
+            instruction.BwdRefOffset = Visit(node.BwdRefOffset);
+            instruction.SearchWindowConfig = Visit(node.SearchWindowConfig);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeRefWindowSizeINTEL VisitSubgroupAvcImeRefWindowSizeINTEL(Nodes.SubgroupAvcImeRefWindowSizeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeRefWindowSizeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SearchWindowConfig = Visit(node.SearchWindowConfig);
+            instruction.DualRef = Visit(node.DualRef);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeAdjustRefOffsetINTEL VisitSubgroupAvcImeAdjustRefOffsetINTEL(Nodes.SubgroupAvcImeAdjustRefOffsetINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeAdjustRefOffsetINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.RefOffset = Visit(node.RefOffset);
+            instruction.SrcCoord = Visit(node.SrcCoord);
+            instruction.RefWindowSize = Visit(node.RefWindowSize);
+            instruction.ImageSize = Visit(node.ImageSize);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeConvertToMcePayloadINTEL VisitSubgroupAvcImeConvertToMcePayloadINTEL(Nodes.SubgroupAvcImeConvertToMcePayloadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeConvertToMcePayloadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeSetMaxMotionVectorCountINTEL VisitSubgroupAvcImeSetMaxMotionVectorCountINTEL(Nodes.SubgroupAvcImeSetMaxMotionVectorCountINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeSetMaxMotionVectorCountINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.MaxMotionVectorCount = Visit(node.MaxMotionVectorCount);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL VisitSubgroupAvcImeSetUnidirectionalMixDisableINTEL(Nodes.SubgroupAvcImeSetUnidirectionalMixDisableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL VisitSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(Nodes.SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Threshold = Visit(node.Threshold);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeSetWeightedSadINTEL VisitSubgroupAvcImeSetWeightedSadINTEL(Nodes.SubgroupAvcImeSetWeightedSadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeSetWeightedSadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PackedSadWeights = Visit(node.PackedSadWeights);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL VisitSubgroupAvcImeEvaluateWithSingleReferenceINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.RefImage = Visit(node.RefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithDualReferenceINTEL VisitSubgroupAvcImeEvaluateWithDualReferenceINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithDualReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.FwdRefImage = Visit(node.FwdRefImage);
+            instruction.BwdRefImage = Visit(node.BwdRefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.RefImage = Visit(node.RefImage);
+            instruction.Payload = Visit(node.Payload);
+            instruction.StreaminComponents = Visit(node.StreaminComponents);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.FwdRefImage = Visit(node.FwdRefImage);
+            instruction.BwdRefImage = Visit(node.BwdRefImage);
+            instruction.Payload = Visit(node.Payload);
+            instruction.StreaminComponents = Visit(node.StreaminComponents);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL VisitSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.RefImage = Visit(node.RefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL VisitSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.FwdRefImage = Visit(node.FwdRefImage);
+            instruction.BwdRefImage = Visit(node.BwdRefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.RefImage = Visit(node.RefImage);
+            instruction.Payload = Visit(node.Payload);
+            instruction.StreaminComponents = Visit(node.StreaminComponents);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.FwdRefImage = Visit(node.FwdRefImage);
+            instruction.BwdRefImage = Visit(node.BwdRefImage);
+            instruction.Payload = Visit(node.Payload);
+            instruction.StreaminComponents = Visit(node.StreaminComponents);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeConvertToMceResultINTEL VisitSubgroupAvcImeConvertToMceResultINTEL(Nodes.SubgroupAvcImeConvertToMceResultINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeConvertToMceResultINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetSingleReferenceStreaminINTEL VisitSubgroupAvcImeGetSingleReferenceStreaminINTEL(Nodes.SubgroupAvcImeGetSingleReferenceStreaminINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetSingleReferenceStreaminINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetDualReferenceStreaminINTEL VisitSubgroupAvcImeGetDualReferenceStreaminINTEL(Nodes.SubgroupAvcImeGetDualReferenceStreaminINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetDualReferenceStreaminINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL VisitSubgroupAvcImeStripSingleReferenceStreamoutINTEL(Nodes.SubgroupAvcImeStripSingleReferenceStreamoutINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeStripDualReferenceStreamoutINTEL VisitSubgroupAvcImeStripDualReferenceStreamoutINTEL(Nodes.SubgroupAvcImeStripDualReferenceStreamoutINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeStripDualReferenceStreamoutINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(Nodes.SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            instruction.MajorShape = Visit(node.MajorShape);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(Nodes.SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            instruction.MajorShape = Visit(node.MajorShape);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(Nodes.SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            instruction.MajorShape = Visit(node.MajorShape);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(Nodes.SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            instruction.MajorShape = Visit(node.MajorShape);
+            instruction.Direction = Visit(node.Direction);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(Nodes.SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            instruction.MajorShape = Visit(node.MajorShape);
+            instruction.Direction = Visit(node.Direction);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(Nodes.SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            instruction.MajorShape = Visit(node.MajorShape);
+            instruction.Direction = Visit(node.Direction);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetBorderReachedINTEL VisitSubgroupAvcImeGetBorderReachedINTEL(Nodes.SubgroupAvcImeGetBorderReachedINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetBorderReachedINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.ImageSelect = Visit(node.ImageSelect);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL VisitSubgroupAvcImeGetTruncatedSearchIndicationINTEL(Nodes.SubgroupAvcImeGetTruncatedSearchIndicationINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL VisitSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(Nodes.SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL VisitSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(Nodes.SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL VisitSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(Nodes.SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL node)
+        {
+            var instruction = new OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcFmeInitializeINTEL VisitSubgroupAvcFmeInitializeINTEL(Nodes.SubgroupAvcFmeInitializeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcFmeInitializeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcCoord = Visit(node.SrcCoord);
+            instruction.MotionVectors = Visit(node.MotionVectors);
+            instruction.MajorShapes = Visit(node.MajorShapes);
+            instruction.MinorShapes = Visit(node.MinorShapes);
+            instruction.Direction = Visit(node.Direction);
+            instruction.PixelResolution = Visit(node.PixelResolution);
+            instruction.SadAdjustment = Visit(node.SadAdjustment);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcBmeInitializeINTEL VisitSubgroupAvcBmeInitializeINTEL(Nodes.SubgroupAvcBmeInitializeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcBmeInitializeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcCoord = Visit(node.SrcCoord);
+            instruction.MotionVectors = Visit(node.MotionVectors);
+            instruction.MajorShapes = Visit(node.MajorShapes);
+            instruction.MinorShapes = Visit(node.MinorShapes);
+            instruction.Direction = Visit(node.Direction);
+            instruction.PixelResolution = Visit(node.PixelResolution);
+            instruction.BidirectionalWeight = Visit(node.BidirectionalWeight);
+            instruction.SadAdjustment = Visit(node.SadAdjustment);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefConvertToMcePayloadINTEL VisitSubgroupAvcRefConvertToMcePayloadINTEL(Nodes.SubgroupAvcRefConvertToMcePayloadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefConvertToMcePayloadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefSetBidirectionalMixDisableINTEL VisitSubgroupAvcRefSetBidirectionalMixDisableINTEL(Nodes.SubgroupAvcRefSetBidirectionalMixDisableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefSetBidirectionalMixDisableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefSetBilinearFilterEnableINTEL VisitSubgroupAvcRefSetBilinearFilterEnableINTEL(Nodes.SubgroupAvcRefSetBilinearFilterEnableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefSetBilinearFilterEnableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL VisitSubgroupAvcRefEvaluateWithSingleReferenceINTEL(Nodes.SubgroupAvcRefEvaluateWithSingleReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.RefImage = Visit(node.RefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefEvaluateWithDualReferenceINTEL VisitSubgroupAvcRefEvaluateWithDualReferenceINTEL(Nodes.SubgroupAvcRefEvaluateWithDualReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefEvaluateWithDualReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.FwdRefImage = Visit(node.FwdRefImage);
+            instruction.BwdRefImage = Visit(node.BwdRefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL VisitSubgroupAvcRefEvaluateWithMultiReferenceINTEL(Nodes.SubgroupAvcRefEvaluateWithMultiReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.PackedReferenceIds = Visit(node.PackedReferenceIds);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL VisitSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(Nodes.SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.PackedReferenceIds = Visit(node.PackedReferenceIds);
+            instruction.PackedReferenceFieldPolarities = Visit(node.PackedReferenceFieldPolarities);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcRefConvertToMceResultINTEL VisitSubgroupAvcRefConvertToMceResultINTEL(Nodes.SubgroupAvcRefConvertToMceResultINTEL node)
+        {
+            var instruction = new OpSubgroupAvcRefConvertToMceResultINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicInitializeINTEL VisitSubgroupAvcSicInitializeINTEL(Nodes.SubgroupAvcSicInitializeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicInitializeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcCoord = Visit(node.SrcCoord);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicConfigureSkcINTEL VisitSubgroupAvcSicConfigureSkcINTEL(Nodes.SubgroupAvcSicConfigureSkcINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicConfigureSkcINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SkipBlockPartitionType = Visit(node.SkipBlockPartitionType);
+            instruction.SkipMotionVectorMask = Visit(node.SkipMotionVectorMask);
+            instruction.MotionVectors = Visit(node.MotionVectors);
+            instruction.BidirectionalWeight = Visit(node.BidirectionalWeight);
+            instruction.SadAdjustment = Visit(node.SadAdjustment);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicConfigureIpeLumaINTEL VisitSubgroupAvcSicConfigureIpeLumaINTEL(Nodes.SubgroupAvcSicConfigureIpeLumaINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicConfigureIpeLumaINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.LumaIntraPartitionMask = Visit(node.LumaIntraPartitionMask);
+            instruction.IntraNeighbourAvailabilty = Visit(node.IntraNeighbourAvailabilty);
+            instruction.LeftEdgeLumaPixels = Visit(node.LeftEdgeLumaPixels);
+            instruction.UpperLeftCornerLumaPixel = Visit(node.UpperLeftCornerLumaPixel);
+            instruction.UpperEdgeLumaPixels = Visit(node.UpperEdgeLumaPixels);
+            instruction.UpperRightEdgeLumaPixels = Visit(node.UpperRightEdgeLumaPixels);
+            instruction.SadAdjustment = Visit(node.SadAdjustment);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicConfigureIpeLumaChromaINTEL VisitSubgroupAvcSicConfigureIpeLumaChromaINTEL(Nodes.SubgroupAvcSicConfigureIpeLumaChromaINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicConfigureIpeLumaChromaINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.LumaIntraPartitionMask = Visit(node.LumaIntraPartitionMask);
+            instruction.IntraNeighbourAvailabilty = Visit(node.IntraNeighbourAvailabilty);
+            instruction.LeftEdgeLumaPixels = Visit(node.LeftEdgeLumaPixels);
+            instruction.UpperLeftCornerLumaPixel = Visit(node.UpperLeftCornerLumaPixel);
+            instruction.UpperEdgeLumaPixels = Visit(node.UpperEdgeLumaPixels);
+            instruction.UpperRightEdgeLumaPixels = Visit(node.UpperRightEdgeLumaPixels);
+            instruction.LeftEdgeChromaPixels = Visit(node.LeftEdgeChromaPixels);
+            instruction.UpperLeftCornerChromaPixel = Visit(node.UpperLeftCornerChromaPixel);
+            instruction.UpperEdgeChromaPixels = Visit(node.UpperEdgeChromaPixels);
+            instruction.SadAdjustment = Visit(node.SadAdjustment);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetMotionVectorMaskINTEL VisitSubgroupAvcSicGetMotionVectorMaskINTEL(Nodes.SubgroupAvcSicGetMotionVectorMaskINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetMotionVectorMaskINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SkipBlockPartitionType = Visit(node.SkipBlockPartitionType);
+            instruction.Direction = Visit(node.Direction);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicConvertToMcePayloadINTEL VisitSubgroupAvcSicConvertToMcePayloadINTEL(Nodes.SubgroupAvcSicConvertToMcePayloadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicConvertToMcePayloadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL VisitSubgroupAvcSicSetIntraLumaShapePenaltyINTEL(Nodes.SubgroupAvcSicSetIntraLumaShapePenaltyINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PackedShapePenalty = Visit(node.PackedShapePenalty);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL VisitSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(Nodes.SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.LumaModePenalty = Visit(node.LumaModePenalty);
+            instruction.LumaPackedNeighborModes = Visit(node.LumaPackedNeighborModes);
+            instruction.LumaPackedNonDcPenalty = Visit(node.LumaPackedNonDcPenalty);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL VisitSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(Nodes.SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.ChromaModeBasePenalty = Visit(node.ChromaModeBasePenalty);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicSetBilinearFilterEnableINTEL VisitSubgroupAvcSicSetBilinearFilterEnableINTEL(Nodes.SubgroupAvcSicSetBilinearFilterEnableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicSetBilinearFilterEnableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL VisitSubgroupAvcSicSetSkcForwardTransformEnableINTEL(Nodes.SubgroupAvcSicSetSkcForwardTransformEnableINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.PackedSadCoefficients = Visit(node.PackedSadCoefficients);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL VisitSubgroupAvcSicSetBlockBasedRawSkipSadINTEL(Nodes.SubgroupAvcSicSetBlockBasedRawSkipSadINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.BlockBasedSkipType = Visit(node.BlockBasedSkipType);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicEvaluateIpeINTEL VisitSubgroupAvcSicEvaluateIpeINTEL(Nodes.SubgroupAvcSicEvaluateIpeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicEvaluateIpeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL VisitSubgroupAvcSicEvaluateWithSingleReferenceINTEL(Nodes.SubgroupAvcSicEvaluateWithSingleReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.RefImage = Visit(node.RefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicEvaluateWithDualReferenceINTEL VisitSubgroupAvcSicEvaluateWithDualReferenceINTEL(Nodes.SubgroupAvcSicEvaluateWithDualReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicEvaluateWithDualReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.FwdRefImage = Visit(node.FwdRefImage);
+            instruction.BwdRefImage = Visit(node.BwdRefImage);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL VisitSubgroupAvcSicEvaluateWithMultiReferenceINTEL(Nodes.SubgroupAvcSicEvaluateWithMultiReferenceINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.PackedReferenceIds = Visit(node.PackedReferenceIds);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL VisitSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(Nodes.SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.SrcImage = Visit(node.SrcImage);
+            instruction.PackedReferenceIds = Visit(node.PackedReferenceIds);
+            instruction.PackedReferenceFieldPolarities = Visit(node.PackedReferenceFieldPolarities);
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicConvertToMceResultINTEL VisitSubgroupAvcSicConvertToMceResultINTEL(Nodes.SubgroupAvcSicConvertToMceResultINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicConvertToMceResultINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetIpeLumaShapeINTEL VisitSubgroupAvcSicGetIpeLumaShapeINTEL(Nodes.SubgroupAvcSicGetIpeLumaShapeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetIpeLumaShapeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL VisitSubgroupAvcSicGetBestIpeLumaDistortionINTEL(Nodes.SubgroupAvcSicGetBestIpeLumaDistortionINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL VisitSubgroupAvcSicGetBestIpeChromaDistortionINTEL(Nodes.SubgroupAvcSicGetBestIpeChromaDistortionINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetPackedIpeLumaModesINTEL VisitSubgroupAvcSicGetPackedIpeLumaModesINTEL(Nodes.SubgroupAvcSicGetPackedIpeLumaModesINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetPackedIpeLumaModesINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetIpeChromaModeINTEL VisitSubgroupAvcSicGetIpeChromaModeINTEL(Nodes.SubgroupAvcSicGetIpeChromaModeINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetIpeChromaModeINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL VisitSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(Nodes.SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL VisitSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(Nodes.SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
+            return instruction;
+        }
+        protected virtual OpSubgroupAvcSicGetInterRawSadsINTEL VisitSubgroupAvcSicGetInterRawSadsINTEL(Nodes.SubgroupAvcSicGetInterRawSadsINTEL node)
+        {
+            var instruction = new OpSubgroupAvcSicGetInterRawSadsINTEL();
+            _instructionMap.Add(node, instruction);
+
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
+            VisitDecorations(node);
+            instruction.IdResultType = Visit(node.ResultType);
+
+            instruction.Payload = Visit(node.Payload);
             return instruction;
         }
     }

@@ -452,7 +452,7 @@ namespace Toe.SPIRV.Reflection
                     });
                 }
 
-                if (nodeField.Type is SpirvArrayBase array)
+                if (nodeField.Type is SpirvArray array)
                 {
                     Visit(new MemberDecorate()
                     {
@@ -461,7 +461,7 @@ namespace Toe.SPIRV.Reflection
                         Decoration = new Decoration.ArrayStride() { ArrayStrideValue = array.ArrayStride }
                     });
                 }
-                if (nodeField.Type is SpirvMatrixBase matrix)
+                if (nodeField.Type is SpirvMatrix matrix)
                 {
                     Visit(new MemberDecorate()
                     {
@@ -501,12 +501,24 @@ namespace Toe.SPIRV.Reflection
                     Decoration = new Decoration.Block()
                 });
             }
+            if (node.BufferBlock)
+            {
+                Visit(new Decorate()
+                {
+                    Target = node,
+                    Decoration = new Decoration.BufferBlock()
+                });
+            }
             return Register(structure, _typeInstructions);
         }
 
-        protected override OpTypeArray VisitTypeArray(SpirvArrayBase node)
+        protected override OpTypeArray VisitTypeArray(SpirvArray node)
         {
-            return Register(base.VisitTypeArray(node), _typeInstructions);
+            var visitTypeArray = base.VisitTypeArray(node);
+            visitTypeArray.ElementType = Visit(node.ElementType);
+            var val = new Value(BitConverter.GetBytes(node.Length), (TypeInstruction)Visit(SpirvTypeBase.UInt));
+            visitTypeArray.Length = Visit(new Constant(SpirvTypeBase.UInt, new LiteralContextDependentNumber(val)));
+            return Register(visitTypeArray, _typeInstructions);
         }
     }
 }

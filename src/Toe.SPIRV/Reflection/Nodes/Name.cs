@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -13,13 +14,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         public override Op OpCode => Op.OpName;
 
 
-        public Node Target { get; set; }
+        public ReflectedInstruction Target { get; set; }
         public string Value { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
             {
-                yield return CreateInputPin(nameof(Target), Target);
                 yield break;
             }
         }

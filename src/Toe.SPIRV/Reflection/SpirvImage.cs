@@ -4,14 +4,11 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvImage : SpirvTypeBase
+    public partial class SpirvImage : SpirvTypeBase
     {
         public SpirvImage():base(SpirvTypeCategory.Image)
         {
         }
-
-        public override Op OpCode => Op.OpTypeImage;
-
 
         public Node SampledType { get; set; }
         public Spv.Dim Dim { get; set; }

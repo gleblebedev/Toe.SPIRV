@@ -21,6 +21,46 @@ namespace Toe.SPIRV.Spv
             GLCompute = 5,
             [Capability(Capability.Enumerant.Kernel)]
             Kernel = 6,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            TaskNV = 5267,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            MeshNV = 5268,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayGenerationNV = 5313,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayGenerationKHR = 5313,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IntersectionNV = 5314,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IntersectionKHR = 5314,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            AnyHitNV = 5315,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            AnyHitKHR = 5315,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ClosestHitNV = 5316,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ClosestHitKHR = 5316,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            MissNV = 5317,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            MissKHR = 5317,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            CallableNV = 5318,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            CallableKHR = 5318,
         }
 
         public class Vertex: ExecutionModel
@@ -93,6 +133,146 @@ namespace Toe.SPIRV.Spv
                 return res;
             }
         }
+        public class TaskNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.TaskNV;
+            public new static TaskNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new TaskNV();
+                return res;
+            }
+        }
+        public class MeshNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.MeshNV;
+            public new static MeshNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MeshNV();
+                return res;
+            }
+        }
+        public class RayGenerationNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.RayGenerationNV;
+            public new static RayGenerationNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayGenerationNV();
+                return res;
+            }
+        }
+        public class RayGenerationKHR: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.RayGenerationKHR;
+            public new static RayGenerationKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayGenerationKHR();
+                return res;
+            }
+        }
+        public class IntersectionNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.IntersectionNV;
+            public new static IntersectionNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IntersectionNV();
+                return res;
+            }
+        }
+        public class IntersectionKHR: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.IntersectionKHR;
+            public new static IntersectionKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IntersectionKHR();
+                return res;
+            }
+        }
+        public class AnyHitNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.AnyHitNV;
+            public new static AnyHitNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new AnyHitNV();
+                return res;
+            }
+        }
+        public class AnyHitKHR: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.AnyHitKHR;
+            public new static AnyHitKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new AnyHitKHR();
+                return res;
+            }
+        }
+        public class ClosestHitNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.ClosestHitNV;
+            public new static ClosestHitNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ClosestHitNV();
+                return res;
+            }
+        }
+        public class ClosestHitKHR: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.ClosestHitKHR;
+            public new static ClosestHitKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ClosestHitKHR();
+                return res;
+            }
+        }
+        public class MissNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.MissNV;
+            public new static MissNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MissNV();
+                return res;
+            }
+        }
+        public class MissKHR: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.MissKHR;
+            public new static MissKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MissKHR();
+                return res;
+            }
+        }
+        public class CallableNV: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.CallableNV;
+            public new static CallableNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CallableNV();
+                return res;
+            }
+        }
+        public class CallableKHR: ExecutionModel
+        {
+            public override Enumerant Value => ExecutionModel.Enumerant.CallableKHR;
+            public new static CallableKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CallableKHR();
+                return res;
+            }
+        }
 
         public abstract Enumerant Value { get; }
 
@@ -115,6 +295,40 @@ namespace Toe.SPIRV.Spv
                     return GLCompute.Parse(reader, wordCount - 1);
                 case Enumerant.Kernel :
                     return Kernel.Parse(reader, wordCount - 1);
+                case Enumerant.TaskNV :
+                    return TaskNV.Parse(reader, wordCount - 1);
+                case Enumerant.MeshNV :
+                    return MeshNV.Parse(reader, wordCount - 1);
+                case Enumerant.RayGenerationNV :
+                    return RayGenerationNV.Parse(reader, wordCount - 1);
+                //RayGenerationKHR has the same id as another value in enum.
+                //case Enumerant.RayGenerationKHR :
+                //    return RayGenerationKHR.Parse(reader, wordCount - 1);
+                case Enumerant.IntersectionNV :
+                    return IntersectionNV.Parse(reader, wordCount - 1);
+                //IntersectionKHR has the same id as another value in enum.
+                //case Enumerant.IntersectionKHR :
+                //    return IntersectionKHR.Parse(reader, wordCount - 1);
+                case Enumerant.AnyHitNV :
+                    return AnyHitNV.Parse(reader, wordCount - 1);
+                //AnyHitKHR has the same id as another value in enum.
+                //case Enumerant.AnyHitKHR :
+                //    return AnyHitKHR.Parse(reader, wordCount - 1);
+                case Enumerant.ClosestHitNV :
+                    return ClosestHitNV.Parse(reader, wordCount - 1);
+                //ClosestHitKHR has the same id as another value in enum.
+                //case Enumerant.ClosestHitKHR :
+                //    return ClosestHitKHR.Parse(reader, wordCount - 1);
+                case Enumerant.MissNV :
+                    return MissNV.Parse(reader, wordCount - 1);
+                //MissKHR has the same id as another value in enum.
+                //case Enumerant.MissKHR :
+                //    return MissKHR.Parse(reader, wordCount - 1);
+                case Enumerant.CallableNV :
+                    return CallableNV.Parse(reader, wordCount - 1);
+                //CallableKHR has the same id as another value in enum.
+                //case Enumerant.CallableKHR :
+                //    return CallableKHR.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown ExecutionModel "+id);
             }

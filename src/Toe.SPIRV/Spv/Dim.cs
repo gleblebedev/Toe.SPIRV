@@ -8,14 +8,21 @@ namespace Toe.SPIRV.Spv
         public enum Enumerant
         {
             [Capability(Capability.Enumerant.Sampled1D)]
+            [Capability(Capability.Enumerant.Image1D)]
             Dim1D = 0,
+            [Capability(Capability.Enumerant.Shader)]
+            [Capability(Capability.Enumerant.Kernel)]
+            [Capability(Capability.Enumerant.ImageMSArray)]
             Dim2D = 1,
             Dim3D = 2,
             [Capability(Capability.Enumerant.Shader)]
+            [Capability(Capability.Enumerant.ImageCubeArray)]
             Cube = 3,
             [Capability(Capability.Enumerant.SampledRect)]
+            [Capability(Capability.Enumerant.ImageRect)]
             Rect = 4,
             [Capability(Capability.Enumerant.SampledBuffer)]
+            [Capability(Capability.Enumerant.ImageBuffer)]
             Buffer = 5,
             [Capability(Capability.Enumerant.InputAttachment)]
             SubpassData = 6,

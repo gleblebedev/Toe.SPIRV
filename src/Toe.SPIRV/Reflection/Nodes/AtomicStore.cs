@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -23,7 +24,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         }
 
         public Node Pointer { get; set; }
-        public uint Scope { get; set; }
+        public uint Memory { get; set; }
         public uint Semantics { get; set; }
         public Node Value { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
@@ -68,7 +69,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpAtomicStore op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Pointer = treeBuilder.GetNode(op.Pointer);
-            Scope = op.Scope;
+            Memory = op.Memory;
             Semantics = op.Semantics;
             Value = treeBuilder.GetNode(op.Value);
         }

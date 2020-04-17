@@ -2,12 +2,12 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvMatrixLayout : SpirvMatrixBase
+    public class SpirvMatrixLayout : SpirvMatrix
     {
-        private readonly SpirvMatrixBase _matrixType;
+        private readonly SpirvMatrix _matrixType;
         private readonly uint? _columnStride;
 
-        public SpirvMatrixLayout(SpirvMatrixBase matrixType,
+        public SpirvMatrixLayout(SpirvMatrix matrixType,
             MatrixOrientation matrixOrientation = MatrixOrientation.ColMajor, uint? columnStride = null)
         {
             _matrixType = matrixType;

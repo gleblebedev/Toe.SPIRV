@@ -2,12 +2,12 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvArrayLayout : SpirvArrayBase
+    public class SpirvArrayLayout : SpirvArray
     {
-        private readonly SpirvArrayBase _arrayType;
+        private readonly SpirvArray _arrayType;
         private readonly uint? _arrayStride;
 
-        public SpirvArrayLayout(SpirvArrayBase arrayType, uint? arrayStride = null)
+        public SpirvArrayLayout(SpirvArray arrayType, uint? arrayStride = null)
         {
             _arrayType = arrayType;
             _arrayStride = arrayStride;

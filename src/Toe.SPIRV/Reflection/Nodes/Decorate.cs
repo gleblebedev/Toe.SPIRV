@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -24,13 +25,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public ReflectedInstruction Target { get; set; }
         public Spv.Decoration Decoration { get; set; }
-        public override IEnumerable<NodePinWithConnection> InputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
 
         public override IEnumerable<NodePin> OutputPins
         {

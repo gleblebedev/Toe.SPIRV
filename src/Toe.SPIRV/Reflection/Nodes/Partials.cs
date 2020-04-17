@@ -7,6 +7,14 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
+    public partial class Constant
+    {
+        public Constant(SpirvTypeBase type, LiteralContextDependentNumber value)
+        {
+            ResultType = type;
+            Value = value;
+        }
+    }
     public partial class Function
     {
         public IList<FunctionParameter> Parameters { get; } = new List<FunctionParameter>();

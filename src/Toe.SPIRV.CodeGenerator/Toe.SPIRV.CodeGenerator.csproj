@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="..\..\submodules\SPIRV-Headers\include\spirv\unified1\spirv.core.grammar.json" Link="spirv.core.grammar.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.CodeDom" Version="4.7.0" />
@@ -13,9 +19,6 @@
 
   <ItemGroup>
     <None Update="RebuildNodes.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="spirv.core.grammar.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Views\CompositeTemplate.tt">
@@ -53,6 +56,10 @@
     <None Update="Views\NodeVisitor.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NodeVisitor.cs</LastGenOutput>
+    </None>
+    <None Update="Views\TypeTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TypeTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -105,6 +112,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>NodeVisitor.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TypeTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TypeTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

@@ -27,7 +27,7 @@ namespace Toe.SPIRV.UnitTests
             var mat2Field = new SpirvStructureField(SpirvTypeBase.Mat2, "mat2Field");
             var mat3Field = new SpirvStructureField(SpirvTypeBase.Mat3, "mat3Field");
             var mat4Field = new SpirvStructureField(SpirvTypeBase.Mat4, "mat4Field");
-            var intArrayField = new SpirvStructureField(new SpirvArray(SpirvTypeBase.Int, 2), "intArrayField");
+            var intArrayField = new SpirvStructureField(new SpirvArrayDefinition(SpirvTypeBase.Int, 2), "intArrayField");
             marker = new SpirvStructureField(SpirvTypeBase.Float, "marker");
 
             WellKnownTypes = new[]
@@ -132,7 +132,7 @@ namespace Toe.SPIRV.UnitTests
                 return;
             }
 
-            if (type is SpirvArrayBase spirvArray)
+            if (type is SpirvArray spirvArray)
             {
                 for (uint i = 0; i < spirvArray.Length; ++i)
                     PopulateBuffer(bytes, offset + spirvArray.ArrayStride * i, spirvArray.ElementType, ref counter,
@@ -140,7 +140,7 @@ namespace Toe.SPIRV.UnitTests
                 return;
             }
 
-            if (type is SpirvMatrixBase spirvMatrix)
+            if (type is SpirvMatrix spirvMatrix)
             {
                 var columnType = spirvMatrix.ColumnType;
                 var elementType = columnType.ComponentType;
@@ -212,13 +212,13 @@ namespace Toe.SPIRV.UnitTests
         {
             if (field.Type.TypeCategory == SpirvTypeCategory.Array)
                 Assert.Ignore("Can't make array of arrays.");
-            var originalArrayType = new SpirvArray(field.Type, 2);
+            var originalArrayType = new SpirvArrayDefinition(field.Type, 2);
             var (shaderInstructions, shaders) = CompileShaderForFieldSet(new SpirvStruct("ModelBuffer", marker,
                 new SpirvStructureField(originalArrayType, "testArray")));
             var shaderReflection = new ShaderReflection(shaderInstructions);
             var structure = shaderReflection.Structures[0];
             var spirvStructureField = structure.Fields[1];
-            var arrayType = (SpirvArrayBase) spirvStructureField.Type;
+            var arrayType = (SpirvArray) spirvStructureField.Type;
             Assert.AreEqual(spirvStructureField.ByteOffset, spirvStructureField.Type.Alignment);
             Assert.AreEqual(arrayType.ArrayStride, originalArrayType.ArrayStride);
         }

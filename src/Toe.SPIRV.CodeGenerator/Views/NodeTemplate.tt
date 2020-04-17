@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -69,6 +70,15 @@ if (_instruction.IdResultType != null)
 #>
         public SpirvTypeBase ResultType { get; set; }
 
+<# 
+    if (_instruction.IdResult != null)
+    {
+#>
+        public bool RelaxedPrecision { get; set; }
+
+<# 
+    }
+#>
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
@@ -209,6 +219,12 @@ foreach (var op in _instruction.Operands)
 }
 if (_instruction.IdResult != null)
 {
+    if (_instruction.IdResultType != null)
+    {
+#>
+            RelaxedPrecision = op.Decorations.Any(_ => _.Decoration.Value == Decoration.Enumerant.RelaxedPrecision);
+<# 
+    }
 #>
             SetUpDecorations(op.Decorations);
 <# 

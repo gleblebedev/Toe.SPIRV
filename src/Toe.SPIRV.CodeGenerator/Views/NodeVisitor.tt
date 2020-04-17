@@ -100,15 +100,15 @@ foreach (var codeAndInstruction in _grammar.Instructions)
 <#
 foreach (var codeAndOperand in _grammar.OperandKinds)
 {
-    switch (codeAndOperand.Value.category)
+    switch (codeAndOperand.Value.Category)
     {
-        case "Id":
-        case "Literal":
+        case SpirvOperandCategory.Id:
+        case SpirvOperandCategory.Literal:
             break;
-        case "Composite":
+        case SpirvOperandCategory.Composite:
         {
 #>
-        protected virtual IList<Spv.<#=codeAndOperand.Value.kind#>> Visit(IList<Spv.<#=codeAndOperand.Value.kind#>> operand)
+        protected virtual IList<Spv.<#=codeAndOperand.Value.Kind#>> Visit(IList<Spv.<#=codeAndOperand.Value.Kind#>> operand)
         {
             return operand;
         }
@@ -118,7 +118,7 @@ foreach (var codeAndOperand in _grammar.OperandKinds)
         default:
         {
 #>
-        protected virtual Spv.<#=codeAndOperand.Value.kind#> Visit(Spv.<#=codeAndOperand.Value.kind#> operand)
+        protected virtual Spv.<#=codeAndOperand.Value.Kind#> Visit(Spv.<#=codeAndOperand.Value.Kind#> operand)
         {
             return operand;
         }
@@ -145,7 +145,10 @@ foreach (var codeAndInstruction in _grammar.Instructions)
 #>
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-
+            if (node.DebugName != null)
+            {
+                Visit(new Name() {Target = node, Value = node.DebugName});
+            }
 <#
     }
 #>

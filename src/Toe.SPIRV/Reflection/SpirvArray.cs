@@ -1,24 +1,57 @@
-﻿using System.Collections.Generic;
-using Toe.SPIRV.Spv;
+﻿using System;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvArray : SpirvArrayBase
+    public abstract partial class SpirvArray : SpirvTypeBase, IEquatable<SpirvArray>
     {
-        private readonly SpirvTypeBase _elementType;
-
-        public SpirvArray(SpirvTypeBase elementType, uint length)
+        public SpirvArray() : base(SpirvTypeCategory.Array)
         {
-            _elementType = elementType;
-            Length = length;
         }
 
-        public override Op OpCode => Op.OpTypeArray;
+        public abstract uint ArrayStride { get; }
 
-        public override uint ArrayStride => SpirvUtils.RoundUp(_elementType.SizeInBytes, 16);
+        public abstract uint Length { get; }
 
-        public override SpirvTypeBase ElementType => _elementType;
+        public abstract SpirvTypeBase ElementType { get; }
 
-        public override uint Length { get; }
+        public override uint SizeInBytes => Alignment * Length;
+
+        public override uint Alignment => SpirvUtils.RoundUp(ElementType.Alignment, 16);
+
+        public static bool operator ==(SpirvArray left, SpirvArray right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(SpirvArray left, SpirvArray right)
+        {
+            return !Equals(left, right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return ReferenceEquals(this, obj) || obj is SpirvArray other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = ElementType.GetHashCode();
+            hashCode = (hashCode * 397) ^ Length.GetHashCode();
+            hashCode = (hashCode * 397) ^ ArrayStride.GetHashCode();
+            return hashCode;
+        }
+
+        public override string ToString()
+        {
+            return $"{ElementType}[{Length}]";
+        }
+
+        public bool Equals(SpirvArray other)
+        {
+            return ElementType == other.ElementType
+                   && Length == other.Length
+                   && ArrayStride == other.ArrayStride
+                   && Alignment == other.Alignment;
+        }
     }
 }

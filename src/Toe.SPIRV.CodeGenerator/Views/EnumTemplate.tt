@@ -3,3 +3,167 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Spv" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
+using System;
+using System.Collections.Generic;
+
+namespace Toe.SPIRV.Spv
+{
+    public abstract partial class <#= _operand.Name #> : ValueEnum
+    {
+        public enum Enumerant
+        {
+<#
+        foreach (var kv in _operand.Enumerants)
+        {
+            foreach (var capability in kv.capabilities ?? new List<string>())
+            {
+#>
+            [Capability(Capability.Enumerant.<#= capability #>)]
+<#
+            }
+#>
+            <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> = <#= kv.value #>,
+<#
+        }
+#>
+        }
+
+<#
+        foreach (var kv in _operand.Enumerants)
+        {
+            var parameters = kv.parameters ?? new List<Parameter>();
+            //if (parameters.Count > 0)
+            {
+#>
+        public class <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>: <#= _operand.Name #>
+        {
+            public override Enumerant Value => <#= _operand.Name #>.Enumerant.<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>;
+<#
+        foreach (var parameter in parameters)
+        {
+#>
+            public <#= ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(parameter.kind)) #> <#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #> { get; set; }
+<#
+        }
+#>
+            public new static <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>();
+<#
+        foreach (var parameter in parameters)
+        {
+#>
+                res.<#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #> = Spv.<#= parameter.kind #>.Parse(reader, end-reader.Position);
+<#
+        }
+#>
+                return res;
+            }
+<#
+        if (parameters.Count > 0)
+        {
+#>
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+<#
+        foreach (var parameter in parameters)
+        {
+#>
+                wordCount += <#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #>.GetWordCount();
+<#
+        }
+#>
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+<#
+        foreach (var parameter in parameters)
+        {
+#>
+                <#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #>.Write(writer);
+<#
+        }
+#>
+            }
+<#
+        } // if (parameters.Count > 0)
+#>
+        }
+<#
+            }
+        }
+#>
+
+        public abstract Enumerant Value { get; }
+
+        public static <#= _operand.Name #> Parse(WordReader reader, uint wordCount)
+        {
+            var id = (Enumerant) reader.ReadWord();
+            switch (id)
+            {
+<#
+        var visitedEnumerants = new HashSet<object>();
+        foreach (var kv in _operand.Enumerants)
+        {
+            if (visitedEnumerants.Add(kv.value))
+            {
+#>
+                case Enumerant.<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> :
+                    return <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>.Parse(reader, wordCount - 1);
+<#
+            }
+            else
+            {
+#>
+                //<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> has the same id as another value in enum.
+                //case Enumerant.<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> :
+                //    return <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>.Parse(reader, wordCount - 1);
+<#
+            }
+        }
+#>
+                default:
+                    throw new IndexOutOfRangeException("Unknown <#= _operand.Name #> "+id);
+            }
+        }
+        
+        public static <#= _operand.Name #> ParseOptional(WordReader reader, uint wordCount)
+        {
+            if (wordCount == 0) return null;
+            return Parse(reader, wordCount);
+        }
+
+        public static IList<<#= _operand.Name #>> ParseCollection(WordReader reader, uint wordCount)
+        {
+            var end = reader.Position + wordCount;
+            var res = new PrintableList<<#= _operand.Name #>>();
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
+            return res;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
+        }
+    }
+}

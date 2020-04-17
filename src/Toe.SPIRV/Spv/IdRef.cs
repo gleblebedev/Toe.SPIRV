@@ -136,7 +136,7 @@ namespace Toe.SPIRV.Spv
         {
             if (_id != 0)
             {
-                if (_instruction != null) return $"#{_id}({_instruction.OpName?.Value ?? _instruction.ToString()})";
+                //if (_instruction != null) return $"#{_id}({_instruction.OpName?.Value ?? _instruction.ToString()})";
                 return $"#{_id}";
             }
 

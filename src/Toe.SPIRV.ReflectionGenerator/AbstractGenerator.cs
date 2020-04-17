@@ -97,7 +97,7 @@ namespace Toe.SPIRV
                     return;
                 case SpirvTypeCategory.Array:
                 {
-                    WriteArrayField(fieldName, byteOffset, (SpirvArrayBase)fieldType);
+                    WriteArrayField(fieldName, byteOffset, (SpirvArray)fieldType);
                     return;
                 }
                 case SpirvTypeCategory.Float:
@@ -117,7 +117,7 @@ namespace Toe.SPIRV
                 }
                 case SpirvTypeCategory.Matrix:
                 {
-                    if (WriteMatrixField(fieldName, byteOffset, (SpirvMatrixBase)fieldType)) return;
+                    if (WriteMatrixField(fieldName, byteOffset, (SpirvMatrix)fieldType)) return;
                     break;
                 }
                 case SpirvTypeCategory.Struct:
@@ -131,7 +131,7 @@ namespace Toe.SPIRV
             WriteLine($"    //public {fieldType} {fieldName};");
         }
 
-        protected virtual bool WriteMatrixField(string fieldName, uint byteOffset, SpirvMatrixBase fieldType)
+        protected virtual bool WriteMatrixField(string fieldName, uint byteOffset, SpirvMatrix fieldType)
         {
             if (fieldType.ColumnType == SpirvTypeBase.Vec4 && fieldType.ColumnCount == 4 &&
                 fieldType.ColumnStride == 16 && fieldType.MatrixOrientation == MatrixOrientation.ColMajor)
@@ -257,7 +257,7 @@ namespace Toe.SPIRV
             return false;
         }
 
-        private void WriteArrayField(string fieldName, uint byteOffset, SpirvArrayBase arrayType)
+        private void WriteArrayField(string fieldName, uint byteOffset, SpirvArray arrayType)
         {
             var sep = char.IsDigit(fieldName[fieldName.Length - 1]) ? "_" : "";
             for (uint i = 0; i < arrayType.Length; ++i)

@@ -16,7 +16,7 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Pointer { get; set; }
 
-        public uint Scope { get; set; }
+        public uint Memory { get; set; }
 
         public uint Semantics { get; set; }
 
@@ -36,7 +36,7 @@ namespace Toe.SPIRV.Instructions
             IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
             Pointer = Spv.IdRef.Parse(reader, end-reader.Position);
-            Scope = Spv.IdScope.Parse(reader, end-reader.Position);
+            Memory = Spv.IdScope.Parse(reader, end-reader.Position);
             Semantics = Spv.IdMemorySemantics.Parse(reader, end-reader.Position);
             Value = Spv.IdRef.Parse(reader, end-reader.Position);
         }
@@ -47,7 +47,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += IdResultType.GetWordCount();
             wordCount += IdResult.GetWordCount();
             wordCount += Pointer.GetWordCount();
-            wordCount += Scope.GetWordCount();
+            wordCount += Memory.GetWordCount();
             wordCount += Semantics.GetWordCount();
             wordCount += Value.GetWordCount();
             return wordCount;
@@ -58,14 +58,14 @@ namespace Toe.SPIRV.Instructions
             IdResultType.Write(writer);
             IdResult.Write(writer);
             Pointer.Write(writer);
-            Scope.Write(writer);
+            Memory.Write(writer);
             Semantics.Write(writer);
             Value.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{IdResultType} {IdResult} = {OpCode} {Pointer} {Scope} {Semantics} {Value}";
+            return $"{IdResultType} {IdResult} = {OpCode} {Pointer} {Memory} {Semantics} {Value}";
         }
     }
 }

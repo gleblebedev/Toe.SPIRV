@@ -13,6 +13,10 @@ namespace Toe.SPIRV.Spv
             GLSL450 = 1,
             [Capability(Capability.Enumerant.Kernel)]
             OpenCL = 2,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            Vulkan = 3,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            VulkanKHR = 3,
         }
 
         public class Simple: MemoryModel
@@ -45,6 +49,26 @@ namespace Toe.SPIRV.Spv
                 return res;
             }
         }
+        public class Vulkan: MemoryModel
+        {
+            public override Enumerant Value => MemoryModel.Enumerant.Vulkan;
+            public new static Vulkan Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new Vulkan();
+                return res;
+            }
+        }
+        public class VulkanKHR: MemoryModel
+        {
+            public override Enumerant Value => MemoryModel.Enumerant.VulkanKHR;
+            public new static VulkanKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new VulkanKHR();
+                return res;
+            }
+        }
 
         public abstract Enumerant Value { get; }
 
@@ -59,6 +83,11 @@ namespace Toe.SPIRV.Spv
                     return GLSL450.Parse(reader, wordCount - 1);
                 case Enumerant.OpenCL :
                     return OpenCL.Parse(reader, wordCount - 1);
+                case Enumerant.Vulkan :
+                    return Vulkan.Parse(reader, wordCount - 1);
+                //VulkanKHR has the same id as another value in enum.
+                //case Enumerant.VulkanKHR :
+                //    return VulkanKHR.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown MemoryModel "+id);
             }

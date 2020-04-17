@@ -53,7 +53,7 @@ namespace Toe.SPIRV.UnitTests
                 foreach (var field in structDef.Fields)
                     if (field.Type.TypeCategory == SpirvTypeCategory.Array)
                     {
-                        var arrayType = (SpirvArrayBase) field.Type;
+                        var arrayType = (SpirvArray) field.Type;
 
 
 #line default
@@ -142,7 +142,7 @@ namespace Toe.SPIRV.UnitTests
             foreach (var field in _fields.Fields)
                 if (field.Type.TypeCategory == SpirvTypeCategory.Array)
                 {
-                    var arrayType = (SpirvArrayBase) field.Type;
+                    var arrayType = (SpirvArray) field.Type;
 
 
 #line default
@@ -253,7 +253,7 @@ namespace Toe.SPIRV.UnitTests
                 foreach (var field in structDef.Fields)
                     if (field.Type.TypeCategory == SpirvTypeCategory.Array)
                     {
-                        var arrayType = (SpirvArrayBase) field.Type;
+                        var arrayType = (SpirvArray) field.Type;
                         for (var i = 0; i < arrayType.Length; ++i)
                         {
 #line default
@@ -322,7 +322,7 @@ namespace Toe.SPIRV.UnitTests
             foreach (var field in _fields.Fields)
                 if (field.Type.TypeCategory == SpirvTypeCategory.Array)
                 {
-                    var arrayType = (SpirvArrayBase) field.Type;
+                    var arrayType = (SpirvArray) field.Type;
                     for (var i = 0; i < arrayType.Length; ++i)
                     {
 #line default

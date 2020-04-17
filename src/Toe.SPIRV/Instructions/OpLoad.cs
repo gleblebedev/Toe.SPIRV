@@ -40,7 +40,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += IdResultType.GetWordCount();
             wordCount += IdResult.GetWordCount();
             wordCount += Pointer.GetWordCount();
-            wordCount += MemoryAccess?.GetWordCount() ?? (uint)0;
+            wordCount += MemoryAccess?.GetWordCount() ?? 0u;
             return wordCount;
         }
 

@@ -60,7 +60,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += MS.GetWordCount();
             wordCount += Sampled.GetWordCount();
             wordCount += ImageFormat.GetWordCount();
-            wordCount += AccessQualifier?.GetWordCount() ?? (uint)0;
+            wordCount += AccessQualifier?.GetWordCount() ?? 0u;
             return wordCount;
         }
 

@@ -6,13 +6,38 @@ using Toe.SPIRV.CodeGenerator.Model.Grammar;
 
 namespace Toe.SPIRV.CodeGenerator.Views
 {
+    public partial class TypeTemplate
+    {
+        private SpirvInstruction _instruction;
+        private string name;
+        public TypeTemplate(SpirvInstruction instruction)
+        {
+            _instruction = instruction;
+            name = "Spirv" + _instruction.Name.Substring(6);
+        }
+    }
     public partial class NodeTemplate
     {
         private readonly SpirvInstruction _instruction;
         private readonly string opname;
         private readonly string name;
         private readonly string baseClass;
-
+        public NodeTemplate(SpirvInstruction instruction)
+        {
+            _instruction = instruction;
+            opname = _instruction.Name;
+            switch (instruction.Kind)
+            {
+                case InstructionKind.Type:
+                    baseClass = "SpirvTypeBase";
+                    name = "Spirv" + _instruction.Name.Substring(6);
+                    break;
+                default:
+                    baseClass = _instruction.HasDefaultEnter ? "ExecutableNode" : "Node";
+                    name = _instruction.Name.Substring(2);
+                    break;
+            }
+        }
         public string GetNodeType(SpirvOperand operand)
         {
             if (!string.IsNullOrWhiteSpace(operand.OperandType))
@@ -26,22 +51,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
                 return "";
             return "("+t+")";
         }
-        public NodeTemplate(SpirvInstruction instruction)
-        {
-            _instruction = instruction;
-            opname = _instruction.Name;
-            switch (instruction.Kind)
-            {
-                case InstructionKind.Type:
-                    baseClass = "SpirvTypeBase";
-                    name = "Spirv"+_instruction.Name.Substring(6);
-                    break;
-                default:
-                    baseClass = _instruction.HasDefaultEnter ? "ExecutableNode" : "Node";
-                    name = _instruction.Name.Substring(2);
-                    break;
-            }
-        }
+
 
         private string GetPropertyType(SpirvOperand op)
         {
@@ -104,6 +114,25 @@ namespace Toe.SPIRV.CodeGenerator.Views
         public NodeVisitor(SpirvInstructions grammar)
         {
             _grammar = grammar;
+        }
+    }
+
+    public partial class EnumTemplate
+    {
+        private readonly SpirvOperandDescription _operand;
+
+        public EnumTemplate(SpirvOperandDescription operand)
+        {
+            _operand = operand;
+        }
+    }
+    public partial class FlagTemplate
+    {
+        private readonly SpirvOperandDescription _operand;
+
+        public FlagTemplate(SpirvOperandDescription operand)
+        {
+            _operand = operand;
         }
     }
 

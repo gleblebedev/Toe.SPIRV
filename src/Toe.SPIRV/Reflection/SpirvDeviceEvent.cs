@@ -9,9 +9,6 @@ namespace Toe.SPIRV.Reflection
         {
         }
 
-        public override Op OpCode => Op.OpTypeDeviceEvent;
-
-
         public void SetUp(OpTypeEvent op, SpirvInstructionTreeBuilder treeBuilder)
         {
         }

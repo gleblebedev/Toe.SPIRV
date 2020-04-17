@@ -1,4 +1,5 @@
-﻿using Veldrid;
+﻿using NUnit.Framework;
+using Veldrid;
 using Veldrid.SPIRV;
 
 namespace Toe.SPIRV.UnitTests
@@ -7,8 +8,17 @@ namespace Toe.SPIRV.UnitTests
     {
         public static byte[] CompileToBytecode(string vertexShaderText, ShaderStages stage = ShaderStages.Vertex, bool debug = true)
         {
-            var vertex = SpirvCompilation.CompileGlslToSpirv(vertexShaderText, "shader.vk", stage, new GlslCompileOptions { Debug = debug });
-            return vertex.SpirvBytes;
+            try
+            {
+                var vertex = SpirvCompilation.CompileGlslToSpirv(vertexShaderText, "shader.vk", stage,
+                    new GlslCompileOptions {Debug = debug});
+                return vertex.SpirvBytes;
+            }
+            catch (SpirvCompilationException exception)
+            {
+                Assert.Ignore(exception.Message);
+                return null;
+            }
         }
 
         public static VertexFragmentCompilationResult DecompileBytecode(byte[] vertexShader, byte[] fragmentShader, CrossCompileTarget target = CrossCompileTarget.GLSL)

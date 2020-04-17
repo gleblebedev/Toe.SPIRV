@@ -9,9 +9,6 @@ namespace Toe.SPIRV.Reflection
         {
         }
 
-        public override Op OpCode => Op.OpTypeReserveId;
-
-
         public void SetUp(OpTypeReserveId op, SpirvInstructionTreeBuilder treeBuilder)
         {
         }

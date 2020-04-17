@@ -2,14 +2,12 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvPointer : SpirvTypeBase
+    public partial class SpirvPointer : SpirvTypeBase
     {
         public SpirvPointer() : base(SpirvTypeCategory.Pointer)
         {
             
         }
-
-        public override Op OpCode => Op.OpTypePointer;
 
         public SpirvTypeBase Type { get; set; }
         public StorageClass StorageClass { get; set; }

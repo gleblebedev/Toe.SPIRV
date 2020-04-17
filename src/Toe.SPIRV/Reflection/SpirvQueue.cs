@@ -8,8 +8,6 @@ namespace Toe.SPIRV.Reflection
         public SpirvQueue():base(SpirvTypeCategory.Queue)
         {
         }
-        public override Op OpCode => Op.OpTypeQueue;
-
         public void SetUp(OpTypeQueue op, SpirvInstructionTreeBuilder treeBuilder)
         {
         }

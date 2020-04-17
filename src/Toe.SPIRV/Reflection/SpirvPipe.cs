@@ -9,9 +9,6 @@ namespace Toe.SPIRV.Reflection
         {
         }
 
-        public override Op OpCode => Op.OpTypePipe;
-
-
         public Spv.AccessQualifier Qualifier { get; set; }
 
         public void SetUp(OpTypePipe op, SpirvInstructionTreeBuilder treeBuilder)

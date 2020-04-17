@@ -12,6 +12,10 @@ namespace Toe.SPIRV.Spv
             Physical32 = 1,
             [Capability(Capability.Enumerant.Addresses)]
             Physical64 = 2,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            PhysicalStorageBuffer64 = 5348,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            PhysicalStorageBuffer64EXT = 5348,
         }
 
         public class Logical: AddressingModel
@@ -44,6 +48,26 @@ namespace Toe.SPIRV.Spv
                 return res;
             }
         }
+        public class PhysicalStorageBuffer64: AddressingModel
+        {
+            public override Enumerant Value => AddressingModel.Enumerant.PhysicalStorageBuffer64;
+            public new static PhysicalStorageBuffer64 Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PhysicalStorageBuffer64();
+                return res;
+            }
+        }
+        public class PhysicalStorageBuffer64EXT: AddressingModel
+        {
+            public override Enumerant Value => AddressingModel.Enumerant.PhysicalStorageBuffer64EXT;
+            public new static PhysicalStorageBuffer64EXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PhysicalStorageBuffer64EXT();
+                return res;
+            }
+        }
 
         public abstract Enumerant Value { get; }
 
@@ -58,6 +82,11 @@ namespace Toe.SPIRV.Spv
                     return Physical32.Parse(reader, wordCount - 1);
                 case Enumerant.Physical64 :
                     return Physical64.Parse(reader, wordCount - 1);
+                case Enumerant.PhysicalStorageBuffer64 :
+                    return PhysicalStorageBuffer64.Parse(reader, wordCount - 1);
+                //PhysicalStorageBuffer64EXT has the same id as another value in enum.
+                //case Enumerant.PhysicalStorageBuffer64EXT :
+                //    return PhysicalStorageBuffer64EXT.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown AddressingModel "+id);
             }

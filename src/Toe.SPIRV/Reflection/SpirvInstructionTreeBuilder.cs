@@ -90,11 +90,11 @@ namespace Toe.SPIRV.Reflection
             var arrayStrideValue = instruction.FindDecoration<Decoration.ArrayStride>()?.ArrayStrideValue;
             if (lengthType == SpirvTypeBase.UInt)
                 array = new SpirvArrayLayout(
-                    new SpirvArray(_types[instruction.ElementType.Id], length.Value.Value.ToUInt32()),
+                    new SpirvArrayDefinition(_types[instruction.ElementType.Id], length.Value.Value.ToUInt32()),
                     arrayStrideValue);
             else if (lengthType == SpirvTypeBase.Int)
                 array = new SpirvArrayLayout(
-                    new SpirvArray(_types[instruction.ElementType.Id], (uint)length.Value.Value.ToInt32()),
+                    new SpirvArrayDefinition(_types[instruction.ElementType.Id], (uint)length.Value.Value.ToInt32()),
                     arrayStrideValue);
             else
                 throw new NotImplementedException();
@@ -132,7 +132,7 @@ namespace Toe.SPIRV.Reflection
                 {
                     var arrayStride = instruction.FindMemberDecoration<Decoration.ArrayStride>((uint)index)
                         ?.ArrayStrideValue;
-                    spirvTypeBase = new SpirvArrayLayout((SpirvArrayBase)spirvTypeBase, arrayStride);
+                    spirvTypeBase = new SpirvArrayLayout((SpirvArray)spirvTypeBase, arrayStride);
                 }
                 else if (spirvTypeBase.TypeCategory == SpirvTypeCategory.Matrix)
                 {
@@ -150,7 +150,7 @@ namespace Toe.SPIRV.Reflection
                     else if (colMajor)
                         matrixOrientation = MatrixOrientation.ColMajor;
                     spirvTypeBase =
-                        new SpirvMatrixLayout((SpirvMatrixBase)spirvTypeBase, matrixOrientation, matrixStride);
+                        new SpirvMatrixLayout((SpirvMatrix)spirvTypeBase, matrixOrientation, matrixStride);
                 }
 
                 fields[index] = new SpirvStructureField(spirvTypeBase, name, instruction.MemberDecorations.Where(_=>_.Member == index));
@@ -164,6 +164,9 @@ namespace Toe.SPIRV.Reflection
                 {
                     case Decoration.Enumerant.Block:
                         structure.Block = true;
+                        break;
+                    case Decoration.Enumerant.BufferBlock:
+                        structure.BufferBlock = true;
                         break;
                     default:
                         throw new NotImplementedException();

@@ -10,6 +10,7 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.Shader)]
             RelaxedPrecision = 0,
             [Capability(Capability.Enumerant.Shader)]
+            [Capability(Capability.Enumerant.Kernel)]
             SpecId = 1,
             [Capability(Capability.Enumerant.Shader)]
             Block = 2,
@@ -52,6 +53,8 @@ namespace Toe.SPIRV.Spv
             NonReadable = 25,
             [Capability(Capability.Enumerant.Shader)]
             Uniform = 26,
+            [Capability(Capability.Enumerant.Shader)]
+            UniformId = 27,
             [Capability(Capability.Enumerant.Kernel)]
             SaturatedConversion = 28,
             [Capability(Capability.Enumerant.GeometryStreams)]
@@ -74,11 +77,6 @@ namespace Toe.SPIRV.Spv
             XfbStride = 37,
             [Capability(Capability.Enumerant.Kernel)]
             FuncParamAttr = 38,
-            [Capability(Capability.Enumerant.Kernel)]
-            [Capability(Capability.Enumerant.StorageUniformBufferBlock16)]
-            [Capability(Capability.Enumerant.StorageUniform16)]
-            [Capability(Capability.Enumerant.StoragePushConstant16)]
-            [Capability(Capability.Enumerant.StorageInputOutput16)]
             FPRoundingMode = 39,
             [Capability(Capability.Enumerant.Kernel)]
             FPFastMathMode = 40,
@@ -90,6 +88,14 @@ namespace Toe.SPIRV.Spv
             InputAttachmentIndex = 43,
             [Capability(Capability.Enumerant.Kernel)]
             Alignment = 44,
+            [Capability(Capability.Enumerant.Addresses)]
+            MaxByteOffset = 45,
+            [Capability(Capability.Enumerant.Kernel)]
+            AlignmentId = 46,
+            [Capability(Capability.Enumerant.Addresses)]
+            MaxByteOffsetId = 47,
+            NoSignedWrap = 4469,
+            NoUnsignedWrap = 4470,
             ExplicitInterpAMD = 4999,
             [Capability(Capability.Enumerant.SampleMaskOverrideCoverageNV)]
             OverrideCoverageNV = 5248,
@@ -99,8 +105,31 @@ namespace Toe.SPIRV.Spv
             ViewportRelativeNV = 5252,
             [Capability(Capability.Enumerant.ShaderStereoViewNV)]
             SecondaryViewportRelativeNV = 5256,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            PerPrimitiveNV = 5271,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            PerViewNV = 5272,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            PerTaskNV = 5273,
+            [Capability(Capability.Enumerant.FragmentBarycentricNV)]
+            PerVertexNV = 5285,
+            [Capability(Capability.Enumerant.ShaderNonUniform)]
+            NonUniform = 5300,
+            [Capability(Capability.Enumerant.ShaderNonUniform)]
+            NonUniformEXT = 5300,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            RestrictPointer = 5355,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            RestrictPointerEXT = 5355,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            AliasedPointer = 5356,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            AliasedPointerEXT = 5356,
+            CounterBuffer = 5634,
             HlslCounterBufferGOOGLE = 5634,
+            UserSemantic = 5635,
             HlslSemanticGOOGLE = 5635,
+            UserTypeGOOGLE = 5636,
         }
 
         public class RelaxedPrecision: Decoration
@@ -417,6 +446,30 @@ namespace Toe.SPIRV.Spv
                 var end = reader.Position+wordCount;
                 var res = new Uniform();
                 return res;
+            }
+        }
+        public class UniformId: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.UniformId;
+            public uint Execution { get; set; }
+            public new static UniformId Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new UniformId();
+                res.Execution = Spv.IdScope.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += Execution.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                Execution.Write(writer);
             }
         }
         public class SaturatedConversion: Decoration
@@ -803,6 +856,98 @@ namespace Toe.SPIRV.Spv
                 AlignmentValue.Write(writer);
             }
         }
+        public class MaxByteOffset: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.MaxByteOffset;
+            public uint MaxByteOffsetValue { get; set; }
+            public new static MaxByteOffset Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MaxByteOffset();
+                res.MaxByteOffsetValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += MaxByteOffsetValue.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                MaxByteOffsetValue.Write(writer);
+            }
+        }
+        public class AlignmentId: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.AlignmentId;
+            public Spv.IdRef Alignment { get; set; }
+            public new static AlignmentId Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new AlignmentId();
+                res.Alignment = Spv.IdRef.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += Alignment.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                Alignment.Write(writer);
+            }
+        }
+        public class MaxByteOffsetId: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.MaxByteOffsetId;
+            public Spv.IdRef MaxByteOffset { get; set; }
+            public new static MaxByteOffsetId Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MaxByteOffsetId();
+                res.MaxByteOffset = Spv.IdRef.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += MaxByteOffset.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                MaxByteOffset.Write(writer);
+            }
+        }
+        public class NoSignedWrap: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.NoSignedWrap;
+            public new static NoSignedWrap Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new NoSignedWrap();
+                return res;
+            }
+        }
+        public class NoUnsignedWrap: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.NoUnsignedWrap;
+            public new static NoUnsignedWrap Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new NoUnsignedWrap();
+                return res;
+            }
+        }
         public class ExplicitInterpAMD: Decoration
         {
             public override Enumerant Value => Decoration.Enumerant.ExplicitInterpAMD;
@@ -867,6 +1012,130 @@ namespace Toe.SPIRV.Spv
                 Offset.Write(writer);
             }
         }
+        public class PerPrimitiveNV: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.PerPrimitiveNV;
+            public new static PerPrimitiveNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PerPrimitiveNV();
+                return res;
+            }
+        }
+        public class PerViewNV: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.PerViewNV;
+            public new static PerViewNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PerViewNV();
+                return res;
+            }
+        }
+        public class PerTaskNV: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.PerTaskNV;
+            public new static PerTaskNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PerTaskNV();
+                return res;
+            }
+        }
+        public class PerVertexNV: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.PerVertexNV;
+            public new static PerVertexNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PerVertexNV();
+                return res;
+            }
+        }
+        public class NonUniform: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.NonUniform;
+            public new static NonUniform Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new NonUniform();
+                return res;
+            }
+        }
+        public class NonUniformEXT: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.NonUniformEXT;
+            public new static NonUniformEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new NonUniformEXT();
+                return res;
+            }
+        }
+        public class RestrictPointer: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.RestrictPointer;
+            public new static RestrictPointer Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RestrictPointer();
+                return res;
+            }
+        }
+        public class RestrictPointerEXT: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.RestrictPointerEXT;
+            public new static RestrictPointerEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RestrictPointerEXT();
+                return res;
+            }
+        }
+        public class AliasedPointer: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.AliasedPointer;
+            public new static AliasedPointer Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new AliasedPointer();
+                return res;
+            }
+        }
+        public class AliasedPointerEXT: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.AliasedPointerEXT;
+            public new static AliasedPointerEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new AliasedPointerEXT();
+                return res;
+            }
+        }
+        public class CounterBuffer: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.CounterBuffer;
+            public Spv.IdRef CounterBufferValue { get; set; }
+            public new static CounterBuffer Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CounterBuffer();
+                res.CounterBufferValue = Spv.IdRef.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += CounterBufferValue.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                CounterBufferValue.Write(writer);
+            }
+        }
         public class HlslCounterBufferGOOGLE: Decoration
         {
             public override Enumerant Value => Decoration.Enumerant.HlslCounterBufferGOOGLE;
@@ -891,6 +1160,30 @@ namespace Toe.SPIRV.Spv
                 CounterBuffer.Write(writer);
             }
         }
+        public class UserSemantic: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.UserSemantic;
+            public string Semantic { get; set; }
+            public new static UserSemantic Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new UserSemantic();
+                res.Semantic = Spv.LiteralString.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += Semantic.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                Semantic.Write(writer);
+            }
+        }
         public class HlslSemanticGOOGLE: Decoration
         {
             public override Enumerant Value => Decoration.Enumerant.HlslSemanticGOOGLE;
@@ -913,6 +1206,30 @@ namespace Toe.SPIRV.Spv
             {
                 base.Write(writer);
                 Semantic.Write(writer);
+            }
+        }
+        public class UserTypeGOOGLE: Decoration
+        {
+            public override Enumerant Value => Decoration.Enumerant.UserTypeGOOGLE;
+            public string UserType { get; set; }
+            public new static UserTypeGOOGLE Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new UserTypeGOOGLE();
+                res.UserType = Spv.LiteralString.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += UserType.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                UserType.Write(writer);
             }
         }
 
@@ -975,6 +1292,8 @@ namespace Toe.SPIRV.Spv
                     return NonReadable.Parse(reader, wordCount - 1);
                 case Enumerant.Uniform :
                     return Uniform.Parse(reader, wordCount - 1);
+                case Enumerant.UniformId :
+                    return UniformId.Parse(reader, wordCount - 1);
                 case Enumerant.SaturatedConversion :
                     return SaturatedConversion.Parse(reader, wordCount - 1);
                 case Enumerant.Stream :
@@ -1009,6 +1328,16 @@ namespace Toe.SPIRV.Spv
                     return InputAttachmentIndex.Parse(reader, wordCount - 1);
                 case Enumerant.Alignment :
                     return Alignment.Parse(reader, wordCount - 1);
+                case Enumerant.MaxByteOffset :
+                    return MaxByteOffset.Parse(reader, wordCount - 1);
+                case Enumerant.AlignmentId :
+                    return AlignmentId.Parse(reader, wordCount - 1);
+                case Enumerant.MaxByteOffsetId :
+                    return MaxByteOffsetId.Parse(reader, wordCount - 1);
+                case Enumerant.NoSignedWrap :
+                    return NoSignedWrap.Parse(reader, wordCount - 1);
+                case Enumerant.NoUnsignedWrap :
+                    return NoUnsignedWrap.Parse(reader, wordCount - 1);
                 case Enumerant.ExplicitInterpAMD :
                     return ExplicitInterpAMD.Parse(reader, wordCount - 1);
                 case Enumerant.OverrideCoverageNV :
@@ -1019,10 +1348,41 @@ namespace Toe.SPIRV.Spv
                     return ViewportRelativeNV.Parse(reader, wordCount - 1);
                 case Enumerant.SecondaryViewportRelativeNV :
                     return SecondaryViewportRelativeNV.Parse(reader, wordCount - 1);
-                case Enumerant.HlslCounterBufferGOOGLE :
-                    return HlslCounterBufferGOOGLE.Parse(reader, wordCount - 1);
-                case Enumerant.HlslSemanticGOOGLE :
-                    return HlslSemanticGOOGLE.Parse(reader, wordCount - 1);
+                case Enumerant.PerPrimitiveNV :
+                    return PerPrimitiveNV.Parse(reader, wordCount - 1);
+                case Enumerant.PerViewNV :
+                    return PerViewNV.Parse(reader, wordCount - 1);
+                case Enumerant.PerTaskNV :
+                    return PerTaskNV.Parse(reader, wordCount - 1);
+                case Enumerant.PerVertexNV :
+                    return PerVertexNV.Parse(reader, wordCount - 1);
+                case Enumerant.NonUniform :
+                    return NonUniform.Parse(reader, wordCount - 1);
+                //NonUniformEXT has the same id as another value in enum.
+                //case Enumerant.NonUniformEXT :
+                //    return NonUniformEXT.Parse(reader, wordCount - 1);
+                case Enumerant.RestrictPointer :
+                    return RestrictPointer.Parse(reader, wordCount - 1);
+                //RestrictPointerEXT has the same id as another value in enum.
+                //case Enumerant.RestrictPointerEXT :
+                //    return RestrictPointerEXT.Parse(reader, wordCount - 1);
+                case Enumerant.AliasedPointer :
+                    return AliasedPointer.Parse(reader, wordCount - 1);
+                //AliasedPointerEXT has the same id as another value in enum.
+                //case Enumerant.AliasedPointerEXT :
+                //    return AliasedPointerEXT.Parse(reader, wordCount - 1);
+                case Enumerant.CounterBuffer :
+                    return CounterBuffer.Parse(reader, wordCount - 1);
+                //HlslCounterBufferGOOGLE has the same id as another value in enum.
+                //case Enumerant.HlslCounterBufferGOOGLE :
+                //    return HlslCounterBufferGOOGLE.Parse(reader, wordCount - 1);
+                case Enumerant.UserSemantic :
+                    return UserSemantic.Parse(reader, wordCount - 1);
+                //HlslSemanticGOOGLE has the same id as another value in enum.
+                //case Enumerant.HlslSemanticGOOGLE :
+                //    return HlslSemanticGOOGLE.Parse(reader, wordCount - 1);
+                case Enumerant.UserTypeGOOGLE :
+                    return UserTypeGOOGLE.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown Decoration "+id);
             }

@@ -1,4 +1,6 @@
-﻿using Toe.SPIRV.CodeGenerator.Model.Grammar;
+﻿using System;
+using Toe.SPIRV.CodeGenerator.Model.Grammar;
+using Toe.SPIRV.CodeGenerator.Model.Spv;
 
 namespace Toe.SPIRV.CodeGenerator.Views
 {
@@ -66,6 +68,61 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     return true;
             }
             return false;
+        }
+
+        public static string GetParameterName(string enumerant, Parameter parameter)
+        {
+            var res = GetParameterName(parameter);
+            if (res == enumerant)
+                return res + "Value";
+            return res;
+        }
+
+        private static string GetParameterName(Parameter parameter)
+        {
+            if (string.IsNullOrWhiteSpace(parameter.name))
+                return parameter.kind;
+            return GetPropertyName(parameter.name);
+        }
+
+        public static string GetParameterId(SpirvOperandDescription operand, string id)
+        {
+            if (char.IsDigit(id[0]))
+                return operand.Name + id;
+            return id;
+        }
+
+        public static string GetPropertyName(string name)
+        {
+            name = name.Trim('\'').Trim('.');
+            name = name.Replace(" ", "");
+            name = name.Replace("<<Invocation,invocations>>", "Invocations");
+            name = name.Replace("-", "");
+            name = name.Replace(",", "");
+            name = name.Replace("~ref~", "_ref");
+
+            {
+                var collectionIndex = name.IndexOf("0\'");
+                if (collectionIndex > 0)
+                {
+                    name = name.Substring(0, collectionIndex) + "s";
+                }
+            }
+            {
+                var collectionIndex = name.IndexOf("1\'");
+                if (collectionIndex > 0)
+                {
+                    name = name.Substring(0, collectionIndex) + "s";
+                }
+            }
+            {
+                var collectionIndex = name.IndexOf("0Type\'", StringComparison.InvariantCultureIgnoreCase);
+                if (collectionIndex > 0)
+                {
+                    name = name.Substring(0, collectionIndex) + "Types";
+                }
+            }
+            return name;
         }
     }
 }

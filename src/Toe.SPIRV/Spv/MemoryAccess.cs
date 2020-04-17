@@ -12,6 +12,18 @@ namespace Toe.SPIRV.Spv
             Volatile = 0x0001,
             Aligned = 0x0002,
             Nontemporal = 0x0004,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakePointerAvailable = 0x0008,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakePointerAvailableKHR = 0x0008,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakePointerVisible = 0x0010,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            MakePointerVisibleKHR = 0x0010,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            NonPrivatePointer = 0x0020,
+            [Capability(Capability.Enumerant.VulkanMemoryModel)]
+            NonPrivatePointerKHR = 0x0020,
         }
 
         public MemoryAccess(Enumerant value)
@@ -22,6 +34,10 @@ namespace Toe.SPIRV.Spv
         public Enumerant Value { get; }
 
         public uint Aligned { get; set; }
+        public uint MakePointerAvailable { get; set; }
+        public uint MakePointerAvailableKHR { get; set; }
+        public uint MakePointerVisible { get; set; }
+        public uint MakePointerVisibleKHR { get; set; }
 
 
         public static MemoryAccess Parse(WordReader reader, uint wordCount)
@@ -32,6 +48,22 @@ namespace Toe.SPIRV.Spv
             if (Enumerant.Aligned == (id & Enumerant.Aligned))
             {
                 value.Aligned = Spv.LiteralInteger.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakePointerAvailable == (id & Enumerant.MakePointerAvailable))
+            {
+                value.MakePointerAvailable = Spv.IdScope.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakePointerAvailableKHR == (id & Enumerant.MakePointerAvailableKHR))
+            {
+                value.MakePointerAvailableKHR = Spv.IdScope.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakePointerVisible == (id & Enumerant.MakePointerVisible))
+            {
+                value.MakePointerVisible = Spv.IdScope.Parse(reader, wordCount - 1);
+            }
+            if (Enumerant.MakePointerVisibleKHR == (id & Enumerant.MakePointerVisibleKHR))
+            {
+                value.MakePointerVisibleKHR = Spv.IdScope.Parse(reader, wordCount - 1);
             }
             value.PostParse(reader, wordCount - 1);
             return value;
@@ -66,6 +98,22 @@ namespace Toe.SPIRV.Spv
             {
                 wordCount += Aligned.GetWordCount();
             }
+            if (Enumerant.MakePointerAvailable == (Value & Enumerant.MakePointerAvailable))
+            {
+                wordCount += MakePointerAvailable.GetWordCount();
+            }
+            if (Enumerant.MakePointerAvailableKHR == (Value & Enumerant.MakePointerAvailableKHR))
+            {
+                wordCount += MakePointerAvailableKHR.GetWordCount();
+            }
+            if (Enumerant.MakePointerVisible == (Value & Enumerant.MakePointerVisible))
+            {
+                wordCount += MakePointerVisible.GetWordCount();
+            }
+            if (Enumerant.MakePointerVisibleKHR == (Value & Enumerant.MakePointerVisibleKHR))
+            {
+                wordCount += MakePointerVisibleKHR.GetWordCount();
+            }
             return wordCount;
         }
 
@@ -75,6 +123,22 @@ namespace Toe.SPIRV.Spv
             if (Enumerant.Aligned == (Value & Enumerant.Aligned))
             {
                 Aligned.Write(writer);
+            }
+            if (Enumerant.MakePointerAvailable == (Value & Enumerant.MakePointerAvailable))
+            {
+                MakePointerAvailable.Write(writer);
+            }
+            if (Enumerant.MakePointerAvailableKHR == (Value & Enumerant.MakePointerAvailableKHR))
+            {
+                MakePointerAvailableKHR.Write(writer);
+            }
+            if (Enumerant.MakePointerVisible == (Value & Enumerant.MakePointerVisible))
+            {
+                MakePointerVisible.Write(writer);
+            }
+            if (Enumerant.MakePointerVisibleKHR == (Value & Enumerant.MakePointerVisibleKHR))
+            {
+                MakePointerVisibleKHR.Write(writer);
             }
         }
     }

@@ -12,6 +12,8 @@ namespace Toe.SPIRV.CodeGenerator.Views
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using Toe.SPIRV.CodeGenerator.Model.Spv;
+    using Toe.SPIRV.CodeGenerator.Model.Grammar;
     using System;
     
     /// <summary>
@@ -28,6 +30,404 @@ namespace Toe.SPIRV.CodeGenerator.Views
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\n\r\nnamespace Toe.SPIRV.Spv\r\n{\r\n " +
+                    "   public abstract partial class ");
+            
+            #line 13 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" : ValueEnum\r\n    {\r\n        public enum Enumerant\r\n        {\r\n");
+            
+            #line 17 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        foreach (var kv in _operand.Enumerants)
+        {
+            foreach (var capability in kv.capabilities ?? new List<string>())
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("            [Capability(Capability.Enumerant.");
+            
+            #line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(capability));
+            
+            #line default
+            #line hidden
+            this.Write(")]\r\n");
+            
+            #line 24 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 27 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 27 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(kv.value));
+            
+            #line default
+            #line hidden
+            this.Write(",\r\n");
+            
+            #line 28 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n\r\n");
+            
+            #line 33 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        foreach (var kv in _operand.Enumerants)
+        {
+            var parameters = kv.parameters ?? new List<Parameter>();
+            //if (parameters.Count > 0)
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("        public class ");
+            
+            #line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(": ");
+            
+            #line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        {\r\n            public override Enumerant Value => ");
+            
+            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(".Enumerant.");
+            
+            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 43 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        foreach (var parameter in parameters)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("            public ");
+            
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(parameter.kind))));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter)));
+            
+            #line default
+            #line hidden
+            this.Write(" { get; set; }\r\n");
+            
+            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("            public new static ");
+            
+            #line 51 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(" Parse(WordReader reader, uint wordCount)\r\n            {\r\n                var end" +
+                    " = reader.Position+wordCount;\r\n                var res = new ");
+            
+            #line 54 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write("();\r\n");
+            
+            #line 55 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        foreach (var parameter in parameters)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("                res.");
+            
+            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter)));
+            
+            #line default
+            #line hidden
+            this.Write(" = Spv.");
+            
+            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(parameter.kind));
+            
+            #line default
+            #line hidden
+            this.Write(".Parse(reader, end-reader.Position);\r\n");
+            
+            #line 60 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("                return res;\r\n            }\r\n");
+            
+            #line 65 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        if (parameters.Count > 0)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("            public override uint GetWordCount()\r\n            {\r\n                u" +
+                    "int wordCount = base.GetWordCount();\r\n");
+            
+            #line 72 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        foreach (var parameter in parameters)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("                wordCount += ");
+            
+            #line 76 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter)));
+            
+            #line default
+            #line hidden
+            this.Write(".GetWordCount();\r\n");
+            
+            #line 77 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("                return wordCount;\r\n            }\r\n\r\n            public override v" +
+                    "oid Write(WordWriter writer)\r\n            {\r\n                base.Write(writer);" +
+                    "\r\n");
+            
+            #line 86 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        foreach (var parameter in parameters)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("                ");
+            
+            #line 90 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter)));
+            
+            #line default
+            #line hidden
+            this.Write(".Write(writer);\r\n");
+            
+            #line 91 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("            }\r\n");
+            
+            #line 95 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        } // if (parameters.Count > 0)
+
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n");
+            
+            #line 99 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+            }
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        public abstract Enumerant Value { get; }\r\n\r\n        public static ");
+            
+            #line 106 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" Parse(WordReader reader, uint wordCount)\r\n        {\r\n            var id = (Enume" +
+                    "rant) reader.ReadWord();\r\n            switch (id)\r\n            {\r\n");
+            
+            #line 111 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+        var visitedEnumerants = new HashSet<object>();
+        foreach (var kv in _operand.Enumerants)
+        {
+            if (visitedEnumerants.Add(kv.value))
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("                case Enumerant.");
+            
+            #line 118 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(" :\r\n                    return ");
+            
+            #line 119 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(".Parse(reader, wordCount - 1);\r\n");
+            
+            #line 120 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("                //");
+            
+            #line 125 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(" has the same id as another value in enum.\r\n                //case Enumerant.");
+            
+            #line 126 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(" :\r\n                //    return ");
+            
+            #line 127 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetParameterId(_operand, kv.enumerant)));
+            
+            #line default
+            #line hidden
+            this.Write(".Parse(reader, wordCount - 1);\r\n");
+            
+            #line 128 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+
+            }
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("                default:\r\n                    throw new IndexOutOfRangeException(" +
+                    "\"Unknown ");
+            
+            #line 133 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" \"+id);\r\n            }\r\n        }\r\n        \r\n        public static ");
+            
+            #line 137 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ParseOptional(WordReader reader, uint wordCount)\r\n        {\r\n            if (wor" +
+                    "dCount == 0) return null;\r\n            return Parse(reader, wordCount);\r\n       " +
+                    " }\r\n\r\n        public static IList<");
+            
+            #line 143 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write("> ParseCollection(WordReader reader, uint wordCount)\r\n        {\r\n            var " +
+                    "end = reader.Position + wordCount;\r\n            var res = new PrintableList<");
+            
+            #line 146 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\EnumTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(@">();
+            while (reader.Position < end)
+            {
+                res.Add(Parse(reader, end-reader.Position));
+            }
+            return res;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
+        public virtual uint GetWordCount()
+        {
+            return 1;
+        }
+
+        public virtual void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)Value);
+        }
+    }
+}");
             return this.GenerationEnvironment.ToString();
         }
     }

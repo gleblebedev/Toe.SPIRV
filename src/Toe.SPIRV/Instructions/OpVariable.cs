@@ -49,7 +49,7 @@ namespace Toe.SPIRV.Instructions
             IdResultType.Write(writer);
             IdResult.Write(writer);
             StorageClass.Write(writer);
-            Initializer.Write(writer);
+            if (Initializer != null) Initializer.Write(writer);
         }
 
         public override string ToString()

@@ -30,9 +30,12 @@ namespace Toe.SPIRV.CodeGenerator
         {
             _operands =  Utils.LoadOperands(options.Input);
 
-            //foreach (var kind  in _operands.operand_kinds.Select(_=>_.kind).Distinct().OrderBy(_=>_))
+            ////var enumerable = _operands.operand_kinds.Select(_=>_.kind);
+            //var enumerable = _operands.operand_kinds.Select(_ => _.category);
+            //foreach (var kind  in enumerable.Distinct().OrderBy(_=>_))
             //{
             //    Console.WriteLine($"                {kind},");
+            //    Console.WriteLine($"                case \"{kind}\": return SpirvOperandKind.{kind};");
             //}
             foreach (var operandKind in _operands.operand_kinds)
             {
@@ -61,10 +64,23 @@ namespace Toe.SPIRV.CodeGenerator
                 var spirvOperandKind = GetKind(operandKind.kind);
                 if (!_grammar.OperandKinds.ContainsKey(spirvOperandKind))
                 {
-                    _grammar.OperandKinds.Add(spirvOperandKind, operandKind);
+                    _grammar.OperandKinds.Add(spirvOperandKind, GetOperandDescription(operandKind));
                 }
             }
             Utils.SaveGrammar(options.Output, _grammar);
+        }
+
+        private SpirvOperandDescription GetOperandDescription(OperandKind operandKind)
+        {
+            return new SpirvOperandDescription()
+            {
+                Name = operandKind.kind,
+                Category = GetOperandCategory(operandKind.category),
+                Kind = GetKind(operandKind.kind),
+                Bases = operandKind.bases,
+                Doc = operandKind.doc,
+                Enumerants = operandKind.enumerants
+            };
         }
 
         private SpirvOperandCategory GetOperandCategory(string category)
@@ -319,6 +335,8 @@ namespace Toe.SPIRV.CodeGenerator
 
             name = spirvOperand.SpirvName;
             name = name.Trim('\'').Trim('.');
+            if (name.StartsWith("id> "))
+                name = name.Substring("id> ".Length);
             name = name.Replace(" ", "");
             name = name.Replace("<<Invocation,invocations>>", "Invocations");
             name = name.Replace("-", "");
@@ -403,6 +421,10 @@ namespace Toe.SPIRV.CodeGenerator
                 case "PairIdRefIdRef": return SpirvOperandKind.PairIdRefIdRef;
                 case "PairIdRefLiteralInteger": return SpirvOperandKind.PairIdRefLiteralInteger;
                 case "PairLiteralIntegerIdRef": return SpirvOperandKind.PairLiteralIntegerIdRef;
+                case "RayFlags": return SpirvOperandKind.RayFlags;
+                case "RayQueryCandidateIntersectionType": return SpirvOperandKind.RayQueryCandidateIntersectionType;
+                case "RayQueryCommittedIntersectionType": return SpirvOperandKind.RayQueryCommittedIntersectionType;
+                case "RayQueryIntersection": return SpirvOperandKind.RayQueryIntersection;
                 case "SamplerAddressingMode": return SpirvOperandKind.SamplerAddressingMode;
                 case "SamplerFilterMode": return SpirvOperandKind.SamplerFilterMode;
                 case "Scope": return SpirvOperandKind.Scope;

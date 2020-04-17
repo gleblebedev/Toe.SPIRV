@@ -9,8 +9,6 @@ namespace Toe.SPIRV.Reflection
         {
         }
 
-        public override Op OpCode => Op.OpTypeForwardPointer;
-
 
         public SpirvTypeBase PointerType { get; set; }
 

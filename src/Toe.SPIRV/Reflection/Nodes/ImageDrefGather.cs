@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -17,8 +18,9 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node Coordinate { get; set; }
         public Node D_ref { get; set; }
         public Spv.ImageOperands ImageOperands { get; set; }
-        public IList<Node> Operands { get; set; }
         public SpirvTypeBase ResultType { get; set; }
+
+        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -31,10 +33,6 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield return CreateInputPin(nameof(SampledImage), SampledImage);
                 yield return CreateInputPin(nameof(Coordinate), Coordinate);
                 yield return CreateInputPin(nameof(D_ref), D_ref);
-                for (var index = 0; index < Operands.Count; index++)
-                {
-                    yield return CreateInputPin(nameof(Operands) + index, Operands[index]);
-                }
                 yield break;
             }
         }
@@ -68,7 +66,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Coordinate = treeBuilder.GetNode(op.Coordinate);
             D_ref = treeBuilder.GetNode(op.D_ref);
             ImageOperands = op.ImageOperands;
-            Operands = treeBuilder.GetNodes(op.Operands);
+            RelaxedPrecision = op.Decorations.Any(_ => _.Decoration.Value == Decoration.Enumerant.RelaxedPrecision);
             SetUpDecorations(op.Decorations);
         }
         

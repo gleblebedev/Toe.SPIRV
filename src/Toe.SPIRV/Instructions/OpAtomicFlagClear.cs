@@ -14,7 +14,7 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Pointer { get; set; }
 
-        public uint Scope { get; set; }
+        public uint Memory { get; set; }
 
         public uint Semantics { get; set; }
 
@@ -28,7 +28,7 @@ namespace Toe.SPIRV.Instructions
         {
             var end = reader.Position+wordCount-1;
             Pointer = Spv.IdRef.Parse(reader, end-reader.Position);
-            Scope = Spv.IdScope.Parse(reader, end-reader.Position);
+            Memory = Spv.IdScope.Parse(reader, end-reader.Position);
             Semantics = Spv.IdMemorySemantics.Parse(reader, end-reader.Position);
         }
 
@@ -36,7 +36,7 @@ namespace Toe.SPIRV.Instructions
         {
             uint wordCount = 0;
             wordCount += Pointer.GetWordCount();
-            wordCount += Scope.GetWordCount();
+            wordCount += Memory.GetWordCount();
             wordCount += Semantics.GetWordCount();
             return wordCount;
         }
@@ -44,13 +44,13 @@ namespace Toe.SPIRV.Instructions
         public override void Write(WordWriter writer)
         {
             Pointer.Write(writer);
-            Scope.Write(writer);
+            Memory.Write(writer);
             Semantics.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{OpCode} {Pointer} {Scope} {Semantics}";
+            return $"{OpCode} {Pointer} {Memory} {Semantics}";
         }
     }
 }

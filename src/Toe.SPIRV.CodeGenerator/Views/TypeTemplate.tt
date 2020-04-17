@@ -1,0 +1,18 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
+using System.Collections.Generic;
+using System.Linq;
+using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
+{
+    public partial class <#= name #> : SpirvTypeBase
+    {
+        public override Op OpCode => Op.<#=_instruction.Name#>;
+    }
+}

@@ -4,7 +4,7 @@ namespace Toe.SPIRV.UnitTests
 {
     public class TestShaders
     {
-        public static IEnumerable<object[]> EnumerateTestShaders()
+        public static IEnumerable<object[]> EnumerateShaders()
         {
             yield return new[]
             {

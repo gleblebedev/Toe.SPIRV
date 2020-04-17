@@ -38,7 +38,7 @@ namespace Toe.SPIRV.Instructions
             uint wordCount = 0;
             wordCount += Pointer.GetWordCount();
             wordCount += Object.GetWordCount();
-            wordCount += MemoryAccess?.GetWordCount() ?? (uint)0;
+            wordCount += MemoryAccess?.GetWordCount() ?? 0u;
             return wordCount;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
@@ -47,9 +48,21 @@ namespace Toe.SPIRV.CodeGenerator
 
         public static Operands LoadOperands(string fileName)
         {
-            return LoadJsonOrDefault<Operands>(fileName,
+            var operands = LoadJsonOrDefault<Operands>(fileName,
                 () => throw new FileNotFoundException("File " + fileName +
                                                       " not found. Expected path to spirv.core.grammar.json."));
+            foreach (var instruction in operands.instructions)
+            {
+                if (instruction.opname == "OpCopyMemory" || instruction.opname == "OpCopyMemorySized")
+                {
+                    var memAssess = instruction.operands.Where(_ => _.kind == "MemoryAccess").ToList();
+                    foreach (var operand in memAssess.Skip(1))
+                    {
+                        instruction.operands.Remove(operand);
+                    }
+                }
+            }
+            return operands;
         }
 
         public static SpirvInstructions LoadGrammar(string fileName)

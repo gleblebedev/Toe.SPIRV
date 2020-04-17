@@ -355,8 +355,6 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpSubgroupBlockWriteINTEL: return new SubgroupBlockWriteINTEL();
                 case Op.OpSubgroupImageBlockReadINTEL: return new SubgroupImageBlockReadINTEL();
                 case Op.OpSubgroupImageBlockWriteINTEL: return new SubgroupImageBlockWriteINTEL();
-                case Op.OpDecorateStringGOOGLE: return new DecorateStringGOOGLE();
-                case Op.OpMemberDecorateStringGOOGLE: return new MemberDecorateStringGOOGLE();
                 default:
                     throw new NotImplementedException(instruction + " not implemented");
             }

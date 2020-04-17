@@ -16,7 +16,7 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Pointer { get; set; }
 
-        public uint Scope { get; set; }
+        public uint Memory { get; set; }
 
         public uint Equal { get; set; }
 
@@ -41,7 +41,7 @@ namespace Toe.SPIRV.Instructions
             IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
             Pointer = Spv.IdRef.Parse(reader, end-reader.Position);
-            Scope = Spv.IdScope.Parse(reader, end-reader.Position);
+            Memory = Spv.IdScope.Parse(reader, end-reader.Position);
             Equal = Spv.IdMemorySemantics.Parse(reader, end-reader.Position);
             Unequal = Spv.IdMemorySemantics.Parse(reader, end-reader.Position);
             Value = Spv.IdRef.Parse(reader, end-reader.Position);
@@ -54,7 +54,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += IdResultType.GetWordCount();
             wordCount += IdResult.GetWordCount();
             wordCount += Pointer.GetWordCount();
-            wordCount += Scope.GetWordCount();
+            wordCount += Memory.GetWordCount();
             wordCount += Equal.GetWordCount();
             wordCount += Unequal.GetWordCount();
             wordCount += Value.GetWordCount();
@@ -67,7 +67,7 @@ namespace Toe.SPIRV.Instructions
             IdResultType.Write(writer);
             IdResult.Write(writer);
             Pointer.Write(writer);
-            Scope.Write(writer);
+            Memory.Write(writer);
             Equal.Write(writer);
             Unequal.Write(writer);
             Value.Write(writer);
@@ -76,7 +76,7 @@ namespace Toe.SPIRV.Instructions
 
         public override string ToString()
         {
-            return $"{IdResultType} {IdResult} = {OpCode} {Pointer} {Scope} {Equal} {Unequal} {Value} {Comparator}";
+            return $"{IdResultType} {IdResult} = {OpCode} {Pointer} {Memory} {Equal} {Unequal} {Value} {Comparator}";
         }
     }
 }

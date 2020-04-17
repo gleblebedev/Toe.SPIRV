@@ -34,6 +34,12 @@ namespace Toe.SPIRV.CodeGenerator
                     Utils.SaveText(Path.Combine(options.Output, spirvInstruction.Name.Substring(2)+".cs"), text);
                     Console.WriteLine($"                case Op.{spirvInstruction.Name}: return new {spirvInstruction.Name.Substring(2)}();");
                 }
+                else
+                {
+                    var text = new TypeTemplate(spirvInstruction).TransformText();
+                    Utils.SaveText(Path.Combine(options.Output, spirvInstruction.Name.Substring(2) + ".cs"), text);
+                    //Console.WriteLine($"                case Op.{spirvInstruction.Name}: return new {spirvInstruction.Name.Substring(2)}();");
+                }
             }
         }
     }

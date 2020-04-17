@@ -30,9 +30,9 @@ namespace Toe.SPIRV.Reflection
         public static readonly SpirvVector Bvec2;
         public static readonly SpirvVector Bvec3;
         public static readonly SpirvVector Bvec4;
-        public static readonly SpirvMatrix Mat2Base;
-        public static readonly SpirvMatrix Mat3Base;
-        public static readonly SpirvMatrix Mat4Base;
+        public static readonly SpirvMatrixDeclaration Mat2Base;
+        public static readonly SpirvMatrixDeclaration Mat3Base;
+        public static readonly SpirvMatrixDeclaration Mat4Base;
         public static readonly SpirvMatrixLayout Mat2;
         public static readonly SpirvMatrixLayout Mat3;
         public static readonly SpirvMatrixLayout Mat4;
@@ -65,14 +65,18 @@ namespace Toe.SPIRV.Reflection
             Dvec2 = new SpirvVector(Double, 2);
             Dvec3 = new SpirvVector(Double, 3);
             Dvec4 = new SpirvVector(Double, 4);
-            Mat2Base = new SpirvMatrix(Vec2, 2);
-            Mat3Base = new SpirvMatrix(Vec3, 3);
-            Mat4Base = new SpirvMatrix(Vec4, 4);
+            Mat2Base = new SpirvMatrixDeclaration(Vec2, 2);
+            Mat3Base = new SpirvMatrixDeclaration(Vec3, 3);
+            Mat4Base = new SpirvMatrixDeclaration(Vec4, 4);
             Mat2 = new SpirvMatrixLayout(Mat2Base, MatrixOrientation.ColMajor, 16);
             Mat3 = new SpirvMatrixLayout(Mat3Base, MatrixOrientation.ColMajor, 16);
             Mat4 = new SpirvMatrixLayout(Mat4Base, MatrixOrientation.ColMajor, 16);
         }
 
+        protected SpirvTypeBase()
+        {
+            TypeCategory = SpirvTypeCategory.Unknown;
+        }
         protected SpirvTypeBase(SpirvTypeCategory type)
         {
             TypeCategory = type;
@@ -167,7 +171,7 @@ namespace Toe.SPIRV.Reflection
                     break;
             }
 
-            return new SpirvMatrix((SpirvVector) columnType, columnCount);
+            return new SpirvMatrixDeclaration((SpirvVector) columnType, columnCount);
         }
 
         public override string ToString()

@@ -16,12 +16,8 @@ namespace Toe.SPIRV.Instructions
 
         public uint Opcode { get; set; }
 
-        public IList<Spv.IdRef> Operands { get; set; }
-
         public override IEnumerable<ReferenceProperty> GetReferences()
         {
-            for (int i=0; i<Operands.Count; ++i)
-                yield return new ReferenceProperty("Operands"+i, Operands[i]);
             yield break;
         }
 
@@ -32,7 +28,6 @@ namespace Toe.SPIRV.Instructions
             IdResult = Spv.IdResult.Parse(reader, end-reader.Position);
             reader.Instructions.Add(this);
             Opcode = Spv.LiteralSpecConstantOpInteger.Parse(reader, end-reader.Position);
-            Operands = Spv.IdRef.ParseCollection(reader, end-reader.Position);
         }
 
         public override uint GetWordCount()
@@ -41,7 +36,6 @@ namespace Toe.SPIRV.Instructions
             wordCount += IdResultType.GetWordCount();
             wordCount += IdResult.GetWordCount();
             wordCount += Opcode.GetWordCount();
-            wordCount += Operands.GetWordCount();
             return wordCount;
         }
 
@@ -50,12 +44,11 @@ namespace Toe.SPIRV.Instructions
             IdResultType.Write(writer);
             IdResult.Write(writer);
             Opcode.Write(writer);
-            Operands.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{IdResultType} {IdResult} = {OpCode} {Opcode} {Operands}";
+            return $"{IdResultType} {IdResult} = {OpCode} {Opcode}";
         }
     }
 }

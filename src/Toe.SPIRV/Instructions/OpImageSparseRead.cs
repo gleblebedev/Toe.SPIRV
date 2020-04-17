@@ -45,7 +45,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += IdResult.GetWordCount();
             wordCount += Image.GetWordCount();
             wordCount += Coordinate.GetWordCount();
-            wordCount += ImageOperands?.GetWordCount() ?? (uint)0;
+            wordCount += ImageOperands?.GetWordCount() ?? 0u;
             return wordCount;
         }
 

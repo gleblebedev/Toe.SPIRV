@@ -32,6 +32,8 @@
         ReserveId,
         Queue,
         Pipe,
-        ForwardPointer
+        ForwardPointer,
+        Opaque,
+        Unknown
     }
 }

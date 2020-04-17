@@ -2,7 +2,7 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvFloat : SpirvTypeBase
+    public partial class SpirvFloat : SpirvTypeBase
     {
         private readonly uint _width;
 
@@ -11,8 +11,6 @@ namespace Toe.SPIRV.Reflection
             _width = width;
             FloatType = GetType(_width);
         }
-
-        public override Op OpCode => Op.OpTypeFloat;
 
         public override uint SizeInBytes => _width / 8;
         public uint Width => _width;

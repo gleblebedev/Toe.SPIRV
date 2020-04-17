@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
@@ -17,6 +18,8 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node LocalWorkSize { get; set; }
         public Node GlobalWorkOffset { get; set; }
         public SpirvTypeBase ResultType { get; set; }
+
+        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -61,6 +64,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             GlobalWorkSize = treeBuilder.GetNode(op.GlobalWorkSize);
             LocalWorkSize = treeBuilder.GetNode(op.LocalWorkSize);
             GlobalWorkOffset = treeBuilder.GetNode(op.GlobalWorkOffset);
+            RelaxedPrecision = op.Decorations.Any(_ => _.Decoration.Value == Decoration.Enumerant.RelaxedPrecision);
             SetUpDecorations(op.Decorations);
         }
         

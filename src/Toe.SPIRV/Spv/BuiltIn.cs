@@ -21,13 +21,19 @@ namespace Toe.SPIRV.Spv
             InstanceId = 6,
             [Capability(Capability.Enumerant.Geometry)]
             [Capability(Capability.Enumerant.Tessellation)]
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
             PrimitiveId = 7,
             [Capability(Capability.Enumerant.Geometry)]
             [Capability(Capability.Enumerant.Tessellation)]
             InvocationId = 8,
             [Capability(Capability.Enumerant.Geometry)]
+            [Capability(Capability.Enumerant.ShaderLayer)]
+            [Capability(Capability.Enumerant.ShaderViewportIndexLayerEXT)]
             Layer = 9,
             [Capability(Capability.Enumerant.MultiViewport)]
+            [Capability(Capability.Enumerant.ShaderViewportIndex)]
+            [Capability(Capability.Enumerant.ShaderViewportIndexLayerEXT)]
             ViewportIndex = 10,
             [Capability(Capability.Enumerant.Tessellation)]
             TessLevelOuter = 11,
@@ -70,17 +76,21 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.Kernel)]
             GlobalLinearId = 34,
             [Capability(Capability.Enumerant.Kernel)]
+            [Capability(Capability.Enumerant.GroupNonUniform)]
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
             SubgroupSize = 36,
             [Capability(Capability.Enumerant.Kernel)]
             SubgroupMaxSize = 37,
             [Capability(Capability.Enumerant.Kernel)]
+            [Capability(Capability.Enumerant.GroupNonUniform)]
             NumSubgroups = 38,
             [Capability(Capability.Enumerant.Kernel)]
             NumEnqueuedSubgroups = 39,
             [Capability(Capability.Enumerant.Kernel)]
+            [Capability(Capability.Enumerant.GroupNonUniform)]
             SubgroupId = 40,
             [Capability(Capability.Enumerant.Kernel)]
+            [Capability(Capability.Enumerant.GroupNonUniform)]
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
             SubgroupLocalInvocationId = 41,
             [Capability(Capability.Enumerant.Shader)]
@@ -88,20 +98,41 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.Shader)]
             InstanceIndex = 43,
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
+            SubgroupEqMask = 4416,
+            [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
+            SubgroupGeMask = 4417,
+            [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
+            SubgroupGtMask = 4418,
+            [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
+            SubgroupLeMask = 4419,
+            [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
+            SubgroupLtMask = 4420,
+            [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
             SubgroupEqMaskKHR = 4416,
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
             SubgroupGeMaskKHR = 4417,
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
             SubgroupGtMaskKHR = 4418,
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
             SubgroupLeMaskKHR = 4419,
             [Capability(Capability.Enumerant.SubgroupBallotKHR)]
+            [Capability(Capability.Enumerant.GroupNonUniformBallot)]
             SubgroupLtMaskKHR = 4420,
             [Capability(Capability.Enumerant.DrawParameters)]
             BaseVertex = 4424,
             [Capability(Capability.Enumerant.DrawParameters)]
             BaseInstance = 4425,
             [Capability(Capability.Enumerant.DrawParameters)]
+            [Capability(Capability.Enumerant.MeshShadingNV)]
             DrawIndex = 4426,
             [Capability(Capability.Enumerant.DeviceGroup)]
             DeviceIndex = 4438,
@@ -117,15 +148,146 @@ namespace Toe.SPIRV.Spv
             [Capability(Capability.Enumerant.StencilExportEXT)]
             FragStencilRefEXT = 5014,
             [Capability(Capability.Enumerant.ShaderViewportMaskNV)]
+            [Capability(Capability.Enumerant.MeshShadingNV)]
             ViewportMaskNV = 5253,
             [Capability(Capability.Enumerant.ShaderStereoViewNV)]
             SecondaryPositionNV = 5257,
             [Capability(Capability.Enumerant.ShaderStereoViewNV)]
             SecondaryViewportMaskNV = 5258,
             [Capability(Capability.Enumerant.PerViewAttributesNV)]
+            [Capability(Capability.Enumerant.MeshShadingNV)]
             PositionPerViewNV = 5261,
             [Capability(Capability.Enumerant.PerViewAttributesNV)]
+            [Capability(Capability.Enumerant.MeshShadingNV)]
             ViewportMaskPerViewNV = 5262,
+            [Capability(Capability.Enumerant.FragmentFullyCoveredEXT)]
+            FullyCoveredEXT = 5264,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            TaskCountNV = 5274,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            PrimitiveCountNV = 5275,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            PrimitiveIndicesNV = 5276,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            ClipDistancePerViewNV = 5277,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            CullDistancePerViewNV = 5278,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            LayerPerViewNV = 5279,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            MeshViewCountNV = 5280,
+            [Capability(Capability.Enumerant.MeshShadingNV)]
+            MeshViewIndicesNV = 5281,
+            [Capability(Capability.Enumerant.FragmentBarycentricNV)]
+            BaryCoordNV = 5286,
+            [Capability(Capability.Enumerant.FragmentBarycentricNV)]
+            BaryCoordNoPerspNV = 5287,
+            [Capability(Capability.Enumerant.FragmentDensityEXT)]
+            [Capability(Capability.Enumerant.ShadingRateNV)]
+            FragSizeEXT = 5292,
+            [Capability(Capability.Enumerant.ShadingRateNV)]
+            [Capability(Capability.Enumerant.FragmentDensityEXT)]
+            FragmentSizeNV = 5292,
+            [Capability(Capability.Enumerant.FragmentDensityEXT)]
+            [Capability(Capability.Enumerant.ShadingRateNV)]
+            FragInvocationCountEXT = 5293,
+            [Capability(Capability.Enumerant.ShadingRateNV)]
+            [Capability(Capability.Enumerant.FragmentDensityEXT)]
+            InvocationsPerPixelNV = 5293,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            LaunchIdNV = 5319,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            LaunchIdKHR = 5319,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            LaunchSizeNV = 5320,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            LaunchSizeKHR = 5320,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            WorldRayOriginNV = 5321,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            WorldRayOriginKHR = 5321,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            WorldRayDirectionNV = 5322,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            WorldRayDirectionKHR = 5322,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ObjectRayOriginNV = 5323,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ObjectRayOriginKHR = 5323,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ObjectRayDirectionNV = 5324,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ObjectRayDirectionKHR = 5324,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayTminNV = 5325,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayTminKHR = 5325,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayTmaxNV = 5326,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayTmaxKHR = 5326,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            InstanceCustomIndexNV = 5327,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            InstanceCustomIndexKHR = 5327,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ObjectToWorldNV = 5330,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ObjectToWorldKHR = 5330,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            WorldToObjectNV = 5331,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            WorldToObjectKHR = 5331,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            HitTNV = 5332,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            HitTKHR = 5332,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            HitKindNV = 5333,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            HitKindKHR = 5333,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IncomingRayFlagsNV = 5351,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IncomingRayFlagsKHR = 5351,
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayGeometryIndexKHR = 5352,
+            [Capability(Capability.Enumerant.ShaderSMBuiltinsNV)]
+            WarpsPerSMNV = 5374,
+            [Capability(Capability.Enumerant.ShaderSMBuiltinsNV)]
+            SMCountNV = 5375,
+            [Capability(Capability.Enumerant.ShaderSMBuiltinsNV)]
+            WarpIDNV = 5376,
+            [Capability(Capability.Enumerant.ShaderSMBuiltinsNV)]
+            SMIDNV = 5377,
         }
 
         public class Position: BuiltIn
@@ -538,6 +700,56 @@ namespace Toe.SPIRV.Spv
                 return res;
             }
         }
+        public class SubgroupEqMask: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SubgroupEqMask;
+            public new static SubgroupEqMask Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SubgroupEqMask();
+                return res;
+            }
+        }
+        public class SubgroupGeMask: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SubgroupGeMask;
+            public new static SubgroupGeMask Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SubgroupGeMask();
+                return res;
+            }
+        }
+        public class SubgroupGtMask: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SubgroupGtMask;
+            public new static SubgroupGtMask Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SubgroupGtMask();
+                return res;
+            }
+        }
+        public class SubgroupLeMask: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SubgroupLeMask;
+            public new static SubgroupLeMask Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SubgroupLeMask();
+                return res;
+            }
+        }
+        public class SubgroupLtMask: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SubgroupLtMask;
+            public new static SubgroupLtMask Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SubgroupLtMask();
+                return res;
+            }
+        }
         public class SubgroupEqMaskKHR: BuiltIn
         {
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupEqMaskKHR;
@@ -768,6 +980,486 @@ namespace Toe.SPIRV.Spv
                 return res;
             }
         }
+        public class FullyCoveredEXT: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.FullyCoveredEXT;
+            public new static FullyCoveredEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new FullyCoveredEXT();
+                return res;
+            }
+        }
+        public class TaskCountNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.TaskCountNV;
+            public new static TaskCountNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new TaskCountNV();
+                return res;
+            }
+        }
+        public class PrimitiveCountNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.PrimitiveCountNV;
+            public new static PrimitiveCountNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PrimitiveCountNV();
+                return res;
+            }
+        }
+        public class PrimitiveIndicesNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.PrimitiveIndicesNV;
+            public new static PrimitiveIndicesNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PrimitiveIndicesNV();
+                return res;
+            }
+        }
+        public class ClipDistancePerViewNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ClipDistancePerViewNV;
+            public new static ClipDistancePerViewNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ClipDistancePerViewNV();
+                return res;
+            }
+        }
+        public class CullDistancePerViewNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.CullDistancePerViewNV;
+            public new static CullDistancePerViewNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CullDistancePerViewNV();
+                return res;
+            }
+        }
+        public class LayerPerViewNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.LayerPerViewNV;
+            public new static LayerPerViewNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new LayerPerViewNV();
+                return res;
+            }
+        }
+        public class MeshViewCountNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.MeshViewCountNV;
+            public new static MeshViewCountNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MeshViewCountNV();
+                return res;
+            }
+        }
+        public class MeshViewIndicesNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.MeshViewIndicesNV;
+            public new static MeshViewIndicesNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new MeshViewIndicesNV();
+                return res;
+            }
+        }
+        public class BaryCoordNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNV;
+            public new static BaryCoordNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new BaryCoordNV();
+                return res;
+            }
+        }
+        public class BaryCoordNoPerspNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspNV;
+            public new static BaryCoordNoPerspNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new BaryCoordNoPerspNV();
+                return res;
+            }
+        }
+        public class FragSizeEXT: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.FragSizeEXT;
+            public new static FragSizeEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new FragSizeEXT();
+                return res;
+            }
+        }
+        public class FragmentSizeNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.FragmentSizeNV;
+            public new static FragmentSizeNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new FragmentSizeNV();
+                return res;
+            }
+        }
+        public class FragInvocationCountEXT: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.FragInvocationCountEXT;
+            public new static FragInvocationCountEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new FragInvocationCountEXT();
+                return res;
+            }
+        }
+        public class InvocationsPerPixelNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.InvocationsPerPixelNV;
+            public new static InvocationsPerPixelNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new InvocationsPerPixelNV();
+                return res;
+            }
+        }
+        public class LaunchIdNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.LaunchIdNV;
+            public new static LaunchIdNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new LaunchIdNV();
+                return res;
+            }
+        }
+        public class LaunchIdKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.LaunchIdKHR;
+            public new static LaunchIdKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new LaunchIdKHR();
+                return res;
+            }
+        }
+        public class LaunchSizeNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.LaunchSizeNV;
+            public new static LaunchSizeNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new LaunchSizeNV();
+                return res;
+            }
+        }
+        public class LaunchSizeKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.LaunchSizeKHR;
+            public new static LaunchSizeKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new LaunchSizeKHR();
+                return res;
+            }
+        }
+        public class WorldRayOriginNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WorldRayOriginNV;
+            public new static WorldRayOriginNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WorldRayOriginNV();
+                return res;
+            }
+        }
+        public class WorldRayOriginKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WorldRayOriginKHR;
+            public new static WorldRayOriginKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WorldRayOriginKHR();
+                return res;
+            }
+        }
+        public class WorldRayDirectionNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WorldRayDirectionNV;
+            public new static WorldRayDirectionNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WorldRayDirectionNV();
+                return res;
+            }
+        }
+        public class WorldRayDirectionKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WorldRayDirectionKHR;
+            public new static WorldRayDirectionKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WorldRayDirectionKHR();
+                return res;
+            }
+        }
+        public class ObjectRayOriginNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ObjectRayOriginNV;
+            public new static ObjectRayOriginNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ObjectRayOriginNV();
+                return res;
+            }
+        }
+        public class ObjectRayOriginKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ObjectRayOriginKHR;
+            public new static ObjectRayOriginKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ObjectRayOriginKHR();
+                return res;
+            }
+        }
+        public class ObjectRayDirectionNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ObjectRayDirectionNV;
+            public new static ObjectRayDirectionNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ObjectRayDirectionNV();
+                return res;
+            }
+        }
+        public class ObjectRayDirectionKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ObjectRayDirectionKHR;
+            public new static ObjectRayDirectionKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ObjectRayDirectionKHR();
+                return res;
+            }
+        }
+        public class RayTminNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.RayTminNV;
+            public new static RayTminNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayTminNV();
+                return res;
+            }
+        }
+        public class RayTminKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.RayTminKHR;
+            public new static RayTminKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayTminKHR();
+                return res;
+            }
+        }
+        public class RayTmaxNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.RayTmaxNV;
+            public new static RayTmaxNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayTmaxNV();
+                return res;
+            }
+        }
+        public class RayTmaxKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.RayTmaxKHR;
+            public new static RayTmaxKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayTmaxKHR();
+                return res;
+            }
+        }
+        public class InstanceCustomIndexNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.InstanceCustomIndexNV;
+            public new static InstanceCustomIndexNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new InstanceCustomIndexNV();
+                return res;
+            }
+        }
+        public class InstanceCustomIndexKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.InstanceCustomIndexKHR;
+            public new static InstanceCustomIndexKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new InstanceCustomIndexKHR();
+                return res;
+            }
+        }
+        public class ObjectToWorldNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ObjectToWorldNV;
+            public new static ObjectToWorldNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ObjectToWorldNV();
+                return res;
+            }
+        }
+        public class ObjectToWorldKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.ObjectToWorldKHR;
+            public new static ObjectToWorldKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ObjectToWorldKHR();
+                return res;
+            }
+        }
+        public class WorldToObjectNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WorldToObjectNV;
+            public new static WorldToObjectNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WorldToObjectNV();
+                return res;
+            }
+        }
+        public class WorldToObjectKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WorldToObjectKHR;
+            public new static WorldToObjectKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WorldToObjectKHR();
+                return res;
+            }
+        }
+        public class HitTNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.HitTNV;
+            public new static HitTNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HitTNV();
+                return res;
+            }
+        }
+        public class HitTKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.HitTKHR;
+            public new static HitTKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HitTKHR();
+                return res;
+            }
+        }
+        public class HitKindNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.HitKindNV;
+            public new static HitKindNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HitKindNV();
+                return res;
+            }
+        }
+        public class HitKindKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.HitKindKHR;
+            public new static HitKindKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HitKindKHR();
+                return res;
+            }
+        }
+        public class IncomingRayFlagsNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.IncomingRayFlagsNV;
+            public new static IncomingRayFlagsNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IncomingRayFlagsNV();
+                return res;
+            }
+        }
+        public class IncomingRayFlagsKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.IncomingRayFlagsKHR;
+            public new static IncomingRayFlagsKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IncomingRayFlagsKHR();
+                return res;
+            }
+        }
+        public class RayGeometryIndexKHR: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.RayGeometryIndexKHR;
+            public new static RayGeometryIndexKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayGeometryIndexKHR();
+                return res;
+            }
+        }
+        public class WarpsPerSMNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WarpsPerSMNV;
+            public new static WarpsPerSMNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WarpsPerSMNV();
+                return res;
+            }
+        }
+        public class SMCountNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SMCountNV;
+            public new static SMCountNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SMCountNV();
+                return res;
+            }
+        }
+        public class WarpIDNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.WarpIDNV;
+            public new static WarpIDNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new WarpIDNV();
+                return res;
+            }
+        }
+        public class SMIDNV: BuiltIn
+        {
+            public override Enumerant Value => BuiltIn.Enumerant.SMIDNV;
+            public new static SMIDNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new SMIDNV();
+                return res;
+            }
+        }
 
         public abstract Enumerant Value { get; }
 
@@ -858,16 +1550,31 @@ namespace Toe.SPIRV.Spv
                     return VertexIndex.Parse(reader, wordCount - 1);
                 case Enumerant.InstanceIndex :
                     return InstanceIndex.Parse(reader, wordCount - 1);
-                case Enumerant.SubgroupEqMaskKHR :
-                    return SubgroupEqMaskKHR.Parse(reader, wordCount - 1);
-                case Enumerant.SubgroupGeMaskKHR :
-                    return SubgroupGeMaskKHR.Parse(reader, wordCount - 1);
-                case Enumerant.SubgroupGtMaskKHR :
-                    return SubgroupGtMaskKHR.Parse(reader, wordCount - 1);
-                case Enumerant.SubgroupLeMaskKHR :
-                    return SubgroupLeMaskKHR.Parse(reader, wordCount - 1);
-                case Enumerant.SubgroupLtMaskKHR :
-                    return SubgroupLtMaskKHR.Parse(reader, wordCount - 1);
+                case Enumerant.SubgroupEqMask :
+                    return SubgroupEqMask.Parse(reader, wordCount - 1);
+                case Enumerant.SubgroupGeMask :
+                    return SubgroupGeMask.Parse(reader, wordCount - 1);
+                case Enumerant.SubgroupGtMask :
+                    return SubgroupGtMask.Parse(reader, wordCount - 1);
+                case Enumerant.SubgroupLeMask :
+                    return SubgroupLeMask.Parse(reader, wordCount - 1);
+                case Enumerant.SubgroupLtMask :
+                    return SubgroupLtMask.Parse(reader, wordCount - 1);
+                //SubgroupEqMaskKHR has the same id as another value in enum.
+                //case Enumerant.SubgroupEqMaskKHR :
+                //    return SubgroupEqMaskKHR.Parse(reader, wordCount - 1);
+                //SubgroupGeMaskKHR has the same id as another value in enum.
+                //case Enumerant.SubgroupGeMaskKHR :
+                //    return SubgroupGeMaskKHR.Parse(reader, wordCount - 1);
+                //SubgroupGtMaskKHR has the same id as another value in enum.
+                //case Enumerant.SubgroupGtMaskKHR :
+                //    return SubgroupGtMaskKHR.Parse(reader, wordCount - 1);
+                //SubgroupLeMaskKHR has the same id as another value in enum.
+                //case Enumerant.SubgroupLeMaskKHR :
+                //    return SubgroupLeMaskKHR.Parse(reader, wordCount - 1);
+                //SubgroupLtMaskKHR has the same id as another value in enum.
+                //case Enumerant.SubgroupLtMaskKHR :
+                //    return SubgroupLtMaskKHR.Parse(reader, wordCount - 1);
                 case Enumerant.BaseVertex :
                     return BaseVertex.Parse(reader, wordCount - 1);
                 case Enumerant.BaseInstance :
@@ -904,6 +1611,118 @@ namespace Toe.SPIRV.Spv
                     return PositionPerViewNV.Parse(reader, wordCount - 1);
                 case Enumerant.ViewportMaskPerViewNV :
                     return ViewportMaskPerViewNV.Parse(reader, wordCount - 1);
+                case Enumerant.FullyCoveredEXT :
+                    return FullyCoveredEXT.Parse(reader, wordCount - 1);
+                case Enumerant.TaskCountNV :
+                    return TaskCountNV.Parse(reader, wordCount - 1);
+                case Enumerant.PrimitiveCountNV :
+                    return PrimitiveCountNV.Parse(reader, wordCount - 1);
+                case Enumerant.PrimitiveIndicesNV :
+                    return PrimitiveIndicesNV.Parse(reader, wordCount - 1);
+                case Enumerant.ClipDistancePerViewNV :
+                    return ClipDistancePerViewNV.Parse(reader, wordCount - 1);
+                case Enumerant.CullDistancePerViewNV :
+                    return CullDistancePerViewNV.Parse(reader, wordCount - 1);
+                case Enumerant.LayerPerViewNV :
+                    return LayerPerViewNV.Parse(reader, wordCount - 1);
+                case Enumerant.MeshViewCountNV :
+                    return MeshViewCountNV.Parse(reader, wordCount - 1);
+                case Enumerant.MeshViewIndicesNV :
+                    return MeshViewIndicesNV.Parse(reader, wordCount - 1);
+                case Enumerant.BaryCoordNV :
+                    return BaryCoordNV.Parse(reader, wordCount - 1);
+                case Enumerant.BaryCoordNoPerspNV :
+                    return BaryCoordNoPerspNV.Parse(reader, wordCount - 1);
+                case Enumerant.FragSizeEXT :
+                    return FragSizeEXT.Parse(reader, wordCount - 1);
+                //FragmentSizeNV has the same id as another value in enum.
+                //case Enumerant.FragmentSizeNV :
+                //    return FragmentSizeNV.Parse(reader, wordCount - 1);
+                case Enumerant.FragInvocationCountEXT :
+                    return FragInvocationCountEXT.Parse(reader, wordCount - 1);
+                //InvocationsPerPixelNV has the same id as another value in enum.
+                //case Enumerant.InvocationsPerPixelNV :
+                //    return InvocationsPerPixelNV.Parse(reader, wordCount - 1);
+                case Enumerant.LaunchIdNV :
+                    return LaunchIdNV.Parse(reader, wordCount - 1);
+                //LaunchIdKHR has the same id as another value in enum.
+                //case Enumerant.LaunchIdKHR :
+                //    return LaunchIdKHR.Parse(reader, wordCount - 1);
+                case Enumerant.LaunchSizeNV :
+                    return LaunchSizeNV.Parse(reader, wordCount - 1);
+                //LaunchSizeKHR has the same id as another value in enum.
+                //case Enumerant.LaunchSizeKHR :
+                //    return LaunchSizeKHR.Parse(reader, wordCount - 1);
+                case Enumerant.WorldRayOriginNV :
+                    return WorldRayOriginNV.Parse(reader, wordCount - 1);
+                //WorldRayOriginKHR has the same id as another value in enum.
+                //case Enumerant.WorldRayOriginKHR :
+                //    return WorldRayOriginKHR.Parse(reader, wordCount - 1);
+                case Enumerant.WorldRayDirectionNV :
+                    return WorldRayDirectionNV.Parse(reader, wordCount - 1);
+                //WorldRayDirectionKHR has the same id as another value in enum.
+                //case Enumerant.WorldRayDirectionKHR :
+                //    return WorldRayDirectionKHR.Parse(reader, wordCount - 1);
+                case Enumerant.ObjectRayOriginNV :
+                    return ObjectRayOriginNV.Parse(reader, wordCount - 1);
+                //ObjectRayOriginKHR has the same id as another value in enum.
+                //case Enumerant.ObjectRayOriginKHR :
+                //    return ObjectRayOriginKHR.Parse(reader, wordCount - 1);
+                case Enumerant.ObjectRayDirectionNV :
+                    return ObjectRayDirectionNV.Parse(reader, wordCount - 1);
+                //ObjectRayDirectionKHR has the same id as another value in enum.
+                //case Enumerant.ObjectRayDirectionKHR :
+                //    return ObjectRayDirectionKHR.Parse(reader, wordCount - 1);
+                case Enumerant.RayTminNV :
+                    return RayTminNV.Parse(reader, wordCount - 1);
+                //RayTminKHR has the same id as another value in enum.
+                //case Enumerant.RayTminKHR :
+                //    return RayTminKHR.Parse(reader, wordCount - 1);
+                case Enumerant.RayTmaxNV :
+                    return RayTmaxNV.Parse(reader, wordCount - 1);
+                //RayTmaxKHR has the same id as another value in enum.
+                //case Enumerant.RayTmaxKHR :
+                //    return RayTmaxKHR.Parse(reader, wordCount - 1);
+                case Enumerant.InstanceCustomIndexNV :
+                    return InstanceCustomIndexNV.Parse(reader, wordCount - 1);
+                //InstanceCustomIndexKHR has the same id as another value in enum.
+                //case Enumerant.InstanceCustomIndexKHR :
+                //    return InstanceCustomIndexKHR.Parse(reader, wordCount - 1);
+                case Enumerant.ObjectToWorldNV :
+                    return ObjectToWorldNV.Parse(reader, wordCount - 1);
+                //ObjectToWorldKHR has the same id as another value in enum.
+                //case Enumerant.ObjectToWorldKHR :
+                //    return ObjectToWorldKHR.Parse(reader, wordCount - 1);
+                case Enumerant.WorldToObjectNV :
+                    return WorldToObjectNV.Parse(reader, wordCount - 1);
+                //WorldToObjectKHR has the same id as another value in enum.
+                //case Enumerant.WorldToObjectKHR :
+                //    return WorldToObjectKHR.Parse(reader, wordCount - 1);
+                case Enumerant.HitTNV :
+                    return HitTNV.Parse(reader, wordCount - 1);
+                //HitTKHR has the same id as another value in enum.
+                //case Enumerant.HitTKHR :
+                //    return HitTKHR.Parse(reader, wordCount - 1);
+                case Enumerant.HitKindNV :
+                    return HitKindNV.Parse(reader, wordCount - 1);
+                //HitKindKHR has the same id as another value in enum.
+                //case Enumerant.HitKindKHR :
+                //    return HitKindKHR.Parse(reader, wordCount - 1);
+                case Enumerant.IncomingRayFlagsNV :
+                    return IncomingRayFlagsNV.Parse(reader, wordCount - 1);
+                //IncomingRayFlagsKHR has the same id as another value in enum.
+                //case Enumerant.IncomingRayFlagsKHR :
+                //    return IncomingRayFlagsKHR.Parse(reader, wordCount - 1);
+                case Enumerant.RayGeometryIndexKHR :
+                    return RayGeometryIndexKHR.Parse(reader, wordCount - 1);
+                case Enumerant.WarpsPerSMNV :
+                    return WarpsPerSMNV.Parse(reader, wordCount - 1);
+                case Enumerant.SMCountNV :
+                    return SMCountNV.Parse(reader, wordCount - 1);
+                case Enumerant.WarpIDNV :
+                    return WarpIDNV.Parse(reader, wordCount - 1);
+                case Enumerant.SMIDNV :
+                    return SMIDNV.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown BuiltIn "+id);
             }

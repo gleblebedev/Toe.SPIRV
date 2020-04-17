@@ -78,10 +78,10 @@ namespace Toe.SPIRV.Instructions
 <#
     foreach(var op in _instruction.AllOperands())
     {
-        if (op.Quantifier == SpirvOperandQuantifier.Optional)
+        if (op.Quantifier == SpirvOperandQuantifier.Optional && op.Kind != SpirvOperandKind.IdRef)
         {
 #>
-            wordCount += <#=op.Name#>?.GetWordCount() ?? (uint)0;
+            wordCount += <#=op.Name#>?.GetWordCount() ?? 0u;
 <#
         }
         else

@@ -2,13 +2,11 @@
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvVoid : SpirvTypeBase
+    public partial class SpirvVoid : SpirvTypeBase
     {
         internal SpirvVoid() : base(SpirvTypeCategory.Void)
         {
         }
-
-        public override Op OpCode => Op.OpTypeVoid;
 
         public override uint SizeInBytes => 0;
 

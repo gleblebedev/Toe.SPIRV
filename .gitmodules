@@ -1,3 +1,9 @@
 [submodule "submodules/Toe.Scripting"]
 	path = submodules/Toe.Scripting
 	url = https://github.com/gleblebedev/Toe.Scripting.git
+[submodule "submodules/SPIRV-Cross"]
+	path = submodules/SPIRV-Cross
+	url = https://github.com/KhronosGroup/SPIRV-Cross.git
+[submodule "submodules/SPIRV-Headers"]
+	path = submodules/SPIRV-Headers
+	url = https://github.com/KhronosGroup/SPIRV-Headers.git

@@ -221,7 +221,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
 
     foreach(var op in _instruction.AllOperands())
     {
-        if (op.Quantifier == SpirvOperandQuantifier.Optional)
+        if (op.Quantifier == SpirvOperandQuantifier.Optional && op.Kind != SpirvOperandKind.IdRef)
         {
 
             
@@ -234,7 +234,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             
             #line default
             #line hidden
-            this.Write("?.GetWordCount() ?? (uint)0;\r\n");
+            this.Write("?.GetWordCount() ?? 0u;\r\n");
             
             #line 85 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 

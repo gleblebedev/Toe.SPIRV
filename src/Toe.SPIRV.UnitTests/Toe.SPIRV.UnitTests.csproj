@@ -52,4 +52,17 @@
         </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="SampleShaders\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="..\..\submodules\SPIRV-Cross\reference\opt\shaders\**\*.frag" Link="SampleShaders\opt\%(RecursiveDir)%(Filename)%(Extension)" />
+      <EmbeddedResource Include="..\..\submodules\SPIRV-Cross\reference\shaders\**\*.frag" Link="SampleShaders\shaders\%(RecursiveDir)%(Filename)%(Extension)" />
+      <EmbeddedResource Include="..\..\submodules\SPIRV-Cross\reference\shaders-no-opt\**\*.frag" Link="SampleShaders\shaders-no-opt\%(RecursiveDir)%(Filename)%(Extension)" />
+      <EmbeddedResource Include="..\..\submodules\SPIRV-Cross\reference\opt\shaders\**\*.vert" Link="SampleShaders\opt\%(RecursiveDir)%(Filename)%(Extension)" />
+      <EmbeddedResource Include="..\..\submodules\SPIRV-Cross\reference\shaders\**\*.vert" Link="SampleShaders\shaders\%(RecursiveDir)%(Filename)%(Extension)" />
+      <EmbeddedResource Include="..\..\submodules\SPIRV-Cross\reference\shaders-no-opt\**\*.vert" Link="SampleShaders\shaders-no-opt\%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+
 </Project>

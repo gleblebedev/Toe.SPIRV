@@ -27,6 +27,46 @@ namespace Toe.SPIRV.Spv
             Image = 11,
             [Capability(Capability.Enumerant.Shader)]
             StorageBuffer = 12,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            CallableDataNV = 5328,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            CallableDataKHR = 5328,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IncomingCallableDataNV = 5329,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IncomingCallableDataKHR = 5329,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayPayloadNV = 5338,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            RayPayloadKHR = 5338,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            HitAttributeNV = 5339,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            HitAttributeKHR = 5339,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IncomingRayPayloadNV = 5342,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            IncomingRayPayloadKHR = 5342,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ShaderRecordBufferNV = 5343,
+            [Capability(Capability.Enumerant.RayTracingNV)]
+            [Capability(Capability.Enumerant.RayTracingProvisionalKHR)]
+            ShaderRecordBufferKHR = 5343,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            PhysicalStorageBuffer = 5349,
+            [Capability(Capability.Enumerant.PhysicalStorageBufferAddresses)]
+            PhysicalStorageBufferEXT = 5349,
         }
 
         public class UniformConstant: StorageClass
@@ -159,6 +199,146 @@ namespace Toe.SPIRV.Spv
                 return res;
             }
         }
+        public class CallableDataNV: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.CallableDataNV;
+            public new static CallableDataNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CallableDataNV();
+                return res;
+            }
+        }
+        public class CallableDataKHR: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.CallableDataKHR;
+            public new static CallableDataKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new CallableDataKHR();
+                return res;
+            }
+        }
+        public class IncomingCallableDataNV: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.IncomingCallableDataNV;
+            public new static IncomingCallableDataNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IncomingCallableDataNV();
+                return res;
+            }
+        }
+        public class IncomingCallableDataKHR: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.IncomingCallableDataKHR;
+            public new static IncomingCallableDataKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IncomingCallableDataKHR();
+                return res;
+            }
+        }
+        public class RayPayloadNV: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.RayPayloadNV;
+            public new static RayPayloadNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayPayloadNV();
+                return res;
+            }
+        }
+        public class RayPayloadKHR: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.RayPayloadKHR;
+            public new static RayPayloadKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new RayPayloadKHR();
+                return res;
+            }
+        }
+        public class HitAttributeNV: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.HitAttributeNV;
+            public new static HitAttributeNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HitAttributeNV();
+                return res;
+            }
+        }
+        public class HitAttributeKHR: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.HitAttributeKHR;
+            public new static HitAttributeKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HitAttributeKHR();
+                return res;
+            }
+        }
+        public class IncomingRayPayloadNV: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.IncomingRayPayloadNV;
+            public new static IncomingRayPayloadNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IncomingRayPayloadNV();
+                return res;
+            }
+        }
+        public class IncomingRayPayloadKHR: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.IncomingRayPayloadKHR;
+            public new static IncomingRayPayloadKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new IncomingRayPayloadKHR();
+                return res;
+            }
+        }
+        public class ShaderRecordBufferNV: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.ShaderRecordBufferNV;
+            public new static ShaderRecordBufferNV Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ShaderRecordBufferNV();
+                return res;
+            }
+        }
+        public class ShaderRecordBufferKHR: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.ShaderRecordBufferKHR;
+            public new static ShaderRecordBufferKHR Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new ShaderRecordBufferKHR();
+                return res;
+            }
+        }
+        public class PhysicalStorageBuffer: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.PhysicalStorageBuffer;
+            public new static PhysicalStorageBuffer Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PhysicalStorageBuffer();
+                return res;
+            }
+        }
+        public class PhysicalStorageBufferEXT: StorageClass
+        {
+            public override Enumerant Value => StorageClass.Enumerant.PhysicalStorageBufferEXT;
+            public new static PhysicalStorageBufferEXT Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new PhysicalStorageBufferEXT();
+                return res;
+            }
+        }
 
         public abstract Enumerant Value { get; }
 
@@ -193,6 +373,41 @@ namespace Toe.SPIRV.Spv
                     return Image.Parse(reader, wordCount - 1);
                 case Enumerant.StorageBuffer :
                     return StorageBuffer.Parse(reader, wordCount - 1);
+                case Enumerant.CallableDataNV :
+                    return CallableDataNV.Parse(reader, wordCount - 1);
+                //CallableDataKHR has the same id as another value in enum.
+                //case Enumerant.CallableDataKHR :
+                //    return CallableDataKHR.Parse(reader, wordCount - 1);
+                case Enumerant.IncomingCallableDataNV :
+                    return IncomingCallableDataNV.Parse(reader, wordCount - 1);
+                //IncomingCallableDataKHR has the same id as another value in enum.
+                //case Enumerant.IncomingCallableDataKHR :
+                //    return IncomingCallableDataKHR.Parse(reader, wordCount - 1);
+                case Enumerant.RayPayloadNV :
+                    return RayPayloadNV.Parse(reader, wordCount - 1);
+                //RayPayloadKHR has the same id as another value in enum.
+                //case Enumerant.RayPayloadKHR :
+                //    return RayPayloadKHR.Parse(reader, wordCount - 1);
+                case Enumerant.HitAttributeNV :
+                    return HitAttributeNV.Parse(reader, wordCount - 1);
+                //HitAttributeKHR has the same id as another value in enum.
+                //case Enumerant.HitAttributeKHR :
+                //    return HitAttributeKHR.Parse(reader, wordCount - 1);
+                case Enumerant.IncomingRayPayloadNV :
+                    return IncomingRayPayloadNV.Parse(reader, wordCount - 1);
+                //IncomingRayPayloadKHR has the same id as another value in enum.
+                //case Enumerant.IncomingRayPayloadKHR :
+                //    return IncomingRayPayloadKHR.Parse(reader, wordCount - 1);
+                case Enumerant.ShaderRecordBufferNV :
+                    return ShaderRecordBufferNV.Parse(reader, wordCount - 1);
+                //ShaderRecordBufferKHR has the same id as another value in enum.
+                //case Enumerant.ShaderRecordBufferKHR :
+                //    return ShaderRecordBufferKHR.Parse(reader, wordCount - 1);
+                case Enumerant.PhysicalStorageBuffer :
+                    return PhysicalStorageBuffer.Parse(reader, wordCount - 1);
+                //PhysicalStorageBufferEXT has the same id as another value in enum.
+                //case Enumerant.PhysicalStorageBufferEXT :
+                //    return PhysicalStorageBufferEXT.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown StorageClass "+id);
             }
