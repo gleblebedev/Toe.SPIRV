@@ -18,12 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.PairLiteralIntegerIdRef> Target { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Selector", Selector);
-            yield return new ReferenceProperty("Default", Default);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

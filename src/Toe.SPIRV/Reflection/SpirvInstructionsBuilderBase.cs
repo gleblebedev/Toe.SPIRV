@@ -8,7 +8,7 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvInstructionsBuilderBase
+    public abstract class SpirvInstructionsBuilderBase
     {
         protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
 
@@ -919,6 +919,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeVoid for details.
             return instruction;
         }
         protected virtual OpTypeBool VisitTypeBool(Types.TypeBool node)
@@ -928,6 +929,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeBool for details.
             return instruction;
         }
         protected virtual OpTypeInt VisitTypeInt(Types.TypeInt node)
@@ -937,6 +939,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeInt for details.
             return instruction;
         }
         protected virtual OpTypeFloat VisitTypeFloat(Types.TypeFloat node)
@@ -946,6 +949,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeFloat for details.
             return instruction;
         }
         protected virtual OpTypeVector VisitTypeVector(Types.TypeVector node)
@@ -955,6 +959,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeVector for details.
             return instruction;
         }
         protected virtual OpTypeMatrix VisitTypeMatrix(Types.TypeMatrix node)
@@ -964,6 +969,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeMatrix for details.
             return instruction;
         }
         protected virtual OpTypeImage VisitTypeImage(Types.TypeImage node)
@@ -973,6 +979,14 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.SampledType = Visit(node.SampledType);
+            instruction.Dim = Visit(node.Dim);
+            instruction.Depth = Visit(node.Depth);
+            instruction.Arrayed = Visit(node.Arrayed);
+            instruction.MS = Visit(node.MS);
+            instruction.Sampled = Visit(node.Sampled);
+            instruction.ImageFormat = Visit(node.ImageFormat);
+            instruction.AccessQualifier = Visit(node.AccessQualifier);
             return instruction;
         }
         protected virtual OpTypeSampler VisitTypeSampler(Types.TypeSampler node)
@@ -991,6 +1005,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.ImageType = Visit(node.ImageType);
             return instruction;
         }
         protected virtual OpTypeArray VisitTypeArray(Types.TypeArray node)
@@ -1000,6 +1015,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeArray for details.
             return instruction;
         }
         protected virtual OpTypeRuntimeArray VisitTypeRuntimeArray(Types.TypeRuntimeArray node)
@@ -1009,6 +1025,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.ElementType = Visit(node.ElementType);
             return instruction;
         }
         protected virtual OpTypeStruct VisitTypeStruct(Types.TypeStruct node)
@@ -1018,6 +1035,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeStruct for details.
             return instruction;
         }
         protected virtual OpTypeOpaque VisitTypeOpaque(Types.TypeOpaque node)
@@ -1027,6 +1045,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.Thenameoftheopaquetype = Visit(node.Thenameoftheopaquetype);
             return instruction;
         }
         protected virtual OpTypePointer VisitTypePointer(Types.TypePointer node)
@@ -1036,6 +1055,8 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.StorageClass = Visit(node.StorageClass);
+            instruction.Type = Visit(node.Type);
             return instruction;
         }
         protected virtual OpTypeFunction VisitTypeFunction(Types.TypeFunction node)
@@ -1045,6 +1066,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            //This type should be handled manually. See SpirvInstructionsBuilder.VisitTypeFunction for details.
             return instruction;
         }
         protected virtual OpTypeEvent VisitTypeEvent(Types.TypeEvent node)
@@ -1090,12 +1112,15 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.Qualifier = Visit(node.Qualifier);
             return instruction;
         }
         protected virtual OpTypeForwardPointer VisitTypeForwardPointer(Types.TypeForwardPointer node)
         {
             var instruction = new OpTypeForwardPointer();
             _instructionMap.Add(node, instruction);
+            instruction.PointerType = Visit(node.PointerType);
+            instruction.StorageClass = Visit(node.StorageClass);
             return instruction;
         }
         protected virtual OpConstantTrue VisitConstantTrue(Nodes.ConstantTrue node)
@@ -6040,6 +6065,10 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.ComponentType = Visit(node.ComponentType);
+            instruction.Execution = Visit(node.Execution);
+            instruction.Rows = Visit(node.Rows);
+            instruction.Columns = Visit(node.Columns);
             return instruction;
         }
         protected virtual OpCooperativeMatrixLoadNV VisitCooperativeMatrixLoadNV(Nodes.CooperativeMatrixLoadNV node)
@@ -6515,6 +6544,7 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+            instruction.ImageType = Visit(node.ImageType);
             return instruction;
         }
         protected virtual OpTypeAvcImePayloadINTEL VisitTypeAvcImePayloadINTEL(Types.TypeAvcImePayloadINTEL node)

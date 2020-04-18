@@ -20,12 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<uint> Components { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Vector1", Vector1);
-            yield return new ReferenceProperty("Vector2", Vector2);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

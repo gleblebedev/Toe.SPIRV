@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.PairIdRefLiteralInteger> Targets { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("DecorationGroup", DecorationGroup);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

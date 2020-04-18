@@ -22,13 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.ImageOperands ImageOperands { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SampledImage", SampledImage);
-            yield return new ReferenceProperty("Coordinate", Coordinate);
-            yield return new ReferenceProperty("D_ref", D_ref);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

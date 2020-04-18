@@ -11,12 +11,20 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.Opaque;
 
+        public string Thenameoftheopaquetype { get; set; }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeOpaque)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeOpaque instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeOpaque op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            Thenameoftheopaquetype = op.Thenameoftheopaquetype;
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

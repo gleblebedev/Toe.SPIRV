@@ -14,11 +14,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef ElementType { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ElementType", ElementType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

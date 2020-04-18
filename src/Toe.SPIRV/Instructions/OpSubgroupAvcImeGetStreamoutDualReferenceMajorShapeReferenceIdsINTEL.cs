@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Direction { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Payload", Payload);
-            yield return new ReferenceProperty("MajorShape", MajorShape);
-            yield return new ReferenceProperty("Direction", Direction);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

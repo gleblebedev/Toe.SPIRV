@@ -11,12 +11,20 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.RuntimeArray;
 
+        public SpirvTypeBase ElementType { get; set; }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeRuntimeArray)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeRuntimeArray instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeRuntimeArray op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ElementType = treeBuilder.ResolveType(op.ElementType);
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

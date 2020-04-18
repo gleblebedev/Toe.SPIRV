@@ -16,12 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef CallableDataId { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SBTIndex", SBTIndex);
-            yield return new ReferenceProperty("CallableDataId", CallableDataId);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

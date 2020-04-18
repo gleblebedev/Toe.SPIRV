@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.AvcImePayloadINTEL;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeAvcImePayloadINTEL)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeAvcImePayloadINTEL instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeAvcImePayloadINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

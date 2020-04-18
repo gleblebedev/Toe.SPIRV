@@ -9,9 +9,5 @@ namespace Toe.SPIRV.Reflection.Types
         {
             
         }
-
-        partial void SetUp(OpTypeSampler op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-        }
     }
 }

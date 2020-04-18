@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.SelectionControl SelectionControl { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("MergeBlock", MergeBlock);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<uint> Branchweights { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Condition", Condition);
-            yield return new ReferenceProperty("TrueLabel", TrueLabel);
-            yield return new ReferenceProperty("FalseLabel", FalseLabel);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

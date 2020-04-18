@@ -14,7 +14,7 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvInstructionsBuilderBase
+    public abstract class SpirvInstructionsBuilderBase
     {
         protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
 
@@ -146,6 +146,21 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
+<#
+    }
+    if (!ViewUtils.IsCustomType(instruction.Name))
+    {
+        foreach (var operand in instruction.Operands)
+        {
+#>
+            instruction.<#=operand.Name#> = Visit(node.<#=operand.Name#>);
+<#
+        }
+    }
+    else
+    {
+#>
+            //This type should be handled manually. See SpirvInstructionsBuilder.Visit<#=instruction.Name.Substring(2)#> for details.
 <#
     }
 #>

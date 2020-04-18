@@ -30,28 +30,6 @@ namespace Toe.SPIRV.Instructions
 <#
     }
 #>
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-<#
-    foreach(var op in _instruction.AllOperands().Where(_=>_.Kind == SpirvOperandKind.IdRef))
-    {
-        if (op.Quantifier == SpirvOperandQuantifier.Repeated)
-        {
-#>
-            for (int i=0; i<<#=op.Name #>.Count; ++i)
-                yield return new ReferenceProperty("<#=op.Name #>"+i, <#=op.Name #>[i]);
-<#
-        }
-        else
-        {
-#>
-            yield return new ReferenceProperty("<#=op.Name #>", <#=op.Name #>);
-<#
-        }
-    }
-#>
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

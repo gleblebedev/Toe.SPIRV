@@ -20,11 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef X { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("X", X);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

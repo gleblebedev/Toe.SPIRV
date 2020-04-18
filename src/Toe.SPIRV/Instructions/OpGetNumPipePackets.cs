@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef PacketAlignment { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Pipe", Pipe);
-            yield return new ReferenceProperty("PacketSize", PacketSize);
-            yield return new ReferenceProperty("PacketAlignment", PacketAlignment);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

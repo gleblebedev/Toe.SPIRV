@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Reflection.Types;
@@ -59,7 +57,7 @@ namespace Toe.SPIRV.Reflection
         {
             if (idRef == IdRef.Empty)
                 return null;
-            return (SpirvTypeBase)_nodeMap[idRef.Id];
+            return (SpirvTypeBase) _nodeMap[idRef.Id];
         }
 
         public SpirvTypeBase ResolveType(uint id)
@@ -75,20 +73,14 @@ namespace Toe.SPIRV.Reflection
 
         public string GetDebugName(Instruction instruction)
         {
-            if (instruction.TryGetResultId(out var id))
-            {
-                return _decorations.GetRef(id).Name?.Value;
-            }
+            if (instruction.TryGetResultId(out var id)) return _decorations.GetRef(id).Name?.Value;
 
             return null;
         }
 
         public IReadOnlyList<Instruction> GetDecorations(Instruction instruction)
         {
-            if (instruction.TryGetResultId(out var id))
-            {
-                return _decorations.GetRef(id).Decorations;
-            }
+            if (instruction.TryGetResultId(out var id)) return _decorations.GetRef(id).Decorations;
 
             return Array.Empty<Instruction>();
         }
@@ -167,23 +159,18 @@ namespace Toe.SPIRV.Reflection
             AddType(instruction, structure);
         }
 
-        public void ParseFunctionType(OpTypeFunction instruction)
+        public void ParseFunction(OpTypeFunction instruction)
         {
             var function = new TypeFunction();
             function.SetUp(instruction, this);
             AddType(instruction, function);
         }
 
-        public void ParsePointerType(OpTypePointer instruction)
+        public void ParsePointer(OpTypePointer instruction)
         {
             var function = new TypePointer();
             function.SetUp(instruction, this);
             AddType(instruction, function);
-        }
-
-        public void RegisterNodeResult(uint id, Node node)
-        {
-            _nodeMap.Add(id, node);
         }
 
         public Node GetNode(IdRef id)
@@ -236,33 +223,25 @@ namespace Toe.SPIRV.Reflection
                         ExecutionModeInstructions.Add((ExecutionMode) ParseNode(instruction));
                         break;
                     }
-                    case Op.OpString:
-                    case Op.OpSource:
-                    case Op.OpSourceExtension:
-                    case Op.OpSourceContinued:
-                    {
-                        ParseNode(instruction);
-                        break;
-                    }
 
                     case Op.OpName:
                         _decorations.GetRef(((OpName) instruction).Target).Name = (OpName) instruction;
                         break;
                     case Op.OpMemberName:
-                        _decorations.GetRef(((OpMemberName)instruction).Type).AddDecoration(instruction);
+                        _decorations.GetRef(((OpMemberName) instruction).Type).AddDecoration(instruction);
                         break;
 
                     case Op.OpDecorate:
-                        _decorations.GetRef(((OpDecorate)instruction).Target).AddDecoration(instruction);
+                        _decorations.GetRef(((OpDecorate) instruction).Target).AddDecoration(instruction);
                         break;
                     case Op.OpDecorateId:
-                        _decorations.GetRef(((OpDecorateId)instruction).Target).AddDecoration(instruction);
+                        _decorations.GetRef(((OpDecorateId) instruction).Target).AddDecoration(instruction);
                         break;
                     case Op.OpDecorateString:
-                        _decorations.GetRef(((OpDecorateString)instruction).Target).AddDecoration(instruction);
+                        _decorations.GetRef(((OpDecorateString) instruction).Target).AddDecoration(instruction);
                         break;
                     case Op.OpMemberDecorate:
-                        _decorations.GetRef(((OpMemberDecorate)instruction).StructureType).AddDecoration(instruction);
+                        _decorations.GetRef(((OpMemberDecorate) instruction).StructureType).AddDecoration(instruction);
                         break;
                     case Op.OpGroupDecorate:
                     case Op.OpGroupMemberDecorate:
@@ -273,37 +252,25 @@ namespace Toe.SPIRV.Reflection
                     case Op.OpExtInst:
                         break;
 
+                    case Op.OpTypeVoid:
+                        ParseVoid((OpTypeVoid) instruction);
+                        break;
+                    case Op.OpTypeBool:
+                        ParseBool((OpTypeBool) instruction);
+                        break;
+                    case Op.OpTypeInt:
+                        ParseInt((OpTypeInt) instruction);
+                        break;
+                    case Op.OpTypeFloat:
+                        ParseFloat((OpTypeFloat) instruction);
+                        break;
                     case Op.OpTypeVector:
                         ParseVector((OpTypeVector) instruction);
-                        break;
-                    case Op.OpTypeStruct:
-                        ParseStructure((OpTypeStruct) instruction);
                         break;
                     case Op.OpTypeMatrix:
                         ParseMatrix((OpTypeMatrix) instruction);
                         break;
-                    case Op.OpTypeArray:
-                        ParseArray((OpTypeArray) instruction);
-                        break;
-                    case Op.OpTypeFloat:
-                        ParseFloat(instruction);
-                        break;
-                    case Op.OpTypeBool:
-                        AddType((InstructionWithId) instruction, SpirvTypeBase.Bool);
-                        break;
-                    case Op.OpTypeVoid:
-                        AddType((InstructionWithId) instruction, SpirvTypeBase.Void);
-                        break;
-                    case Op.OpTypeInt:
-                        ParseInt(instruction);
-                        break;
 
-                    case Op.OpTypeFunction:
-                        ParseFunctionType((OpTypeFunction) instruction);
-                        break;
-                    case Op.OpTypePointer:
-                        ParsePointerType((OpTypePointer) instruction);
-                        break;
                     case Op.OpFunction:
                     {
                         var function = ParseNode(instruction);
@@ -346,24 +313,44 @@ namespace Toe.SPIRV.Reflection
             }
         }
 
-        private void AddNode(Instruction instruction, Node node)
+        private void ParseBool(OpTypeBool instruction)
         {
-            _nodes.Add(new KeyValuePair<Instruction, Node>(instruction, node));
+            AddType(instruction, SpirvTypeBase.Bool);
         }
+
+        private void ParseVoid(OpTypeVoid instruction)
+        {
+            AddType(instruction, SpirvTypeBase.Void);
+        }
+
 
         private Node ParseNode(Instruction op)
         {
-            var node = Node.Create(op, this);
+            //Skip source code line references
+            if (op.OpCode == Op.OpLine)
+                return null;
+
+            var node = NodeFactory.Create(op.OpCode);
             if (node != null)
             {
                 if (op.TryGetResultId(out var id))
                 {
                     var d = _decorations.GetRef(id);
                     node.DebugName = d.Name?.Value;
-                    RegisterNodeResult(id, node);
+                    _nodeMap.Add(id, node);
                 }
 
-                AddNode(op, node);
+                if (node is SpirvTypeBase type)
+                {
+                    // Type initialization should be done now as type should has not have forward references and type initialization is essential.
+                    type.SetUp(op, this);
+                    TypeInstructions.Add(type);
+                }
+                else
+                {
+                    // Node initialization should be deferred to later because of potential forward references.
+                    _nodes.Add(new KeyValuePair<Instruction, Node>(op, node));
+                }
             }
 
             return node;

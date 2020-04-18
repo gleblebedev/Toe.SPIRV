@@ -11,12 +11,20 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.SampledImage;
 
+        public SpirvTypeBase ImageType { get; set; }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeSampledImage)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeSampledImage instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeSampledImage op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ImageType = treeBuilder.ResolveType(op.ImageType);
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

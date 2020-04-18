@@ -8,12 +8,5 @@ namespace Toe.SPIRV.Reflection.Types
         public TypePipe()
         {
         }
-
-        public Spv.AccessQualifier Qualifier { get; set; }
-
-        partial void SetUp(OpTypePipe op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-            Qualifier = op.Qualifier;
-        }
     }
 }

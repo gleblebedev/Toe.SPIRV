@@ -16,12 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.IdRef> Constituents { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            for (int i=0; i<Constituents.Count; ++i)
-                yield return new ReferenceProperty("Constituents"+i, Constituents[i]);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

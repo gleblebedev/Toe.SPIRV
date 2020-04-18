@@ -18,11 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<uint> Indexes { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Composite", Composite);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

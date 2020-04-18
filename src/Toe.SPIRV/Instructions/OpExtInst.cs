@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.IdRef> Operands { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Set", Set);
-            for (int i=0; i<Operands.Count; ++i)
-                yield return new ReferenceProperty("Operands"+i, Operands[i]);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

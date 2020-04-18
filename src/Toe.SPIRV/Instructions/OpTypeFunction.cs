@@ -16,13 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.IdRef> ParameterTypes { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ReturnType", ReturnType);
-            for (int i=0; i<ParameterTypes.Count; ++i)
-                yield return new ReferenceProperty("ParameterTypes"+i, ParameterTypes[i]);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

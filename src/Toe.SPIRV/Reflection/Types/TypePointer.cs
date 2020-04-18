@@ -10,9 +10,6 @@ namespace Toe.SPIRV.Reflection.Types
             
         }
 
-        public SpirvTypeBase Type { get; set; }
-        public StorageClass StorageClass { get; set; }
-
         public override string ToString()
         {
             if (DebugName != null)
@@ -20,12 +17,6 @@ namespace Toe.SPIRV.Reflection.Types
             if (Type != null)
                 return $"{Type}*";
             return base.ToString();
-        }
-
-        partial void SetUp(OpTypePointer instruction, SpirvInstructionTreeBuilder treeBuilder)
-        {
-            Type = treeBuilder.ResolveType(instruction.Type);
-            StorageClass = instruction.StorageClass;
         }
     }
 }

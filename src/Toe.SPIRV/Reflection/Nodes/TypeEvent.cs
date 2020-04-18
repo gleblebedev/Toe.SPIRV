@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.Event;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeEvent)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeEvent instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeEvent op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

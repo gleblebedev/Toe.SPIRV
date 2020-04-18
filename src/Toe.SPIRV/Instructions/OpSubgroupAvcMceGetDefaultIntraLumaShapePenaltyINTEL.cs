@@ -18,12 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Qp { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SliceType", SliceType);
-            yield return new ReferenceProperty("Qp", Qp);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

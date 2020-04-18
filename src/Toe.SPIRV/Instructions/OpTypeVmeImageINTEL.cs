@@ -14,11 +14,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef ImageType { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ImageType", ImageType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

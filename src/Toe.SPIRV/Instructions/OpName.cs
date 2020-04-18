@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public string Value { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Target", Target);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

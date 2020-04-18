@@ -14,10 +14,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.Capability Value { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

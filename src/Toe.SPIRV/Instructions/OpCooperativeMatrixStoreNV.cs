@@ -22,14 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.MemoryAccess MemoryAccess { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Pointer", Pointer);
-            yield return new ReferenceProperty("Object", Object);
-            yield return new ReferenceProperty("Stride", Stride);
-            yield return new ReferenceProperty("ColumnMajor", ColumnMajor);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.AvcImeResultINTEL;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeAvcImeResultINTEL)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeAvcImeResultINTEL instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeAvcImeResultINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

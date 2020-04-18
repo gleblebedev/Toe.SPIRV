@@ -22,14 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef ImageSize { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("RefOffset", RefOffset);
-            yield return new ReferenceProperty("SrcCoord", SrcCoord);
-            yield return new ReferenceProperty("RefWindowSize", RefWindowSize);
-            yield return new ReferenceProperty("ImageSize", ImageSize);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

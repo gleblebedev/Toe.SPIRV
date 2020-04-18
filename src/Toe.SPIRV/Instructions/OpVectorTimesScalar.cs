@@ -18,12 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Scalar { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Vector", Vector);
-            yield return new ReferenceProperty("Scalar", Scalar);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

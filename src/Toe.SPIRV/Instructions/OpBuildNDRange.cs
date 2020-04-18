@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef GlobalWorkOffset { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("GlobalWorkSize", GlobalWorkSize);
-            yield return new ReferenceProperty("LocalWorkSize", LocalWorkSize);
-            yield return new ReferenceProperty("GlobalWorkOffset", GlobalWorkOffset);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

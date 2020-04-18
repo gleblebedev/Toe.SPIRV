@@ -22,14 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Payload { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("FwdRefOffset", FwdRefOffset);
-            yield return new ReferenceProperty("BwdRefOffset", BwdRefOffset);
-            yield return new ReferenceProperty("SearchWindowConfig", SearchWindowConfig);
-            yield return new ReferenceProperty("Payload", Payload);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

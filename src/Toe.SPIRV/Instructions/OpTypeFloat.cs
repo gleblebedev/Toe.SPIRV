@@ -14,10 +14,6 @@ namespace Toe.SPIRV.Instructions
 
         public uint Width { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

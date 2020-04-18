@@ -22,12 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef ClusterSize { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Value", Value);
-            yield return new ReferenceProperty("ClusterSize", ClusterSize);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

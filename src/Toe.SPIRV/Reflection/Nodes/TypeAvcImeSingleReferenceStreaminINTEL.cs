@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.AvcImeSingleReferenceStreaminINTEL;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeAvcImeSingleReferenceStreaminINTEL)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeAvcImeSingleReferenceStreaminINTEL instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeAvcImeSingleReferenceStreaminINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

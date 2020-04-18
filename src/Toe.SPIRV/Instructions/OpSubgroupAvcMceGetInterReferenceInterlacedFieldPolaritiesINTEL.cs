@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Payload { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("PackedReferenceIds", PackedReferenceIds);
-            yield return new ReferenceProperty("PackedReferenceParameterFieldPolarities", PackedReferenceParameterFieldPolarities);
-            yield return new ReferenceProperty("Payload", Payload);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

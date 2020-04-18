@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using CommandLine;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
+using Toe.SPIRV.CodeGenerator.Views;
 
 namespace Toe.SPIRV.CodeGenerator
 {
@@ -23,12 +24,52 @@ namespace Toe.SPIRV.CodeGenerator
         {
             _grammar = Utils.LoadGrammar(options.Grammar);
 
-            Console.WriteLine($"_factories = new Func<Instruction>[{_grammar.Instructions.Keys.Max()+1}];");
+            BuildNodeFactory();
+            //if (instruction.Value.Name.StartsWith("OpType"))
+            //    Console.WriteLine($"{instruction.Value.Name},");
+            //Console.WriteLine($"_factories[(int)Op.{instruction.Value.Name}] = () => new {instruction.Value.Name}();");
+        }
+
+        private void BuildTreeBuilderTypeSegment()
+        {
+            foreach (var instruction in _grammar.Instructions.Where(_ => ViewUtils.IsBuildInType(_.Value.Name)))
+            {
+                Console.WriteLine($"case Op.{instruction.Value.Name}:");
+                Console.WriteLine($"Parse{instruction.Value.Name.Substring(6)}(({instruction.Value.Name})instruction);");
+                Console.WriteLine($"break;");
+            }
+
+            Console.WriteLine($"");
+
+            foreach (var instruction in _grammar.Instructions.Where(_ => _.Value.Name.StartsWith("OpType")))
+            {
+                Console.WriteLine($"case Op.{instruction.Value.Name}:");
+            }
+            Console.WriteLine($"ParseType(instruction);");
+            Console.WriteLine($"break;");
+
+        }
+
+        private void BuildNodeFactory()
+        {
+            Console.WriteLine($"_factories = new Func<Node>[{_grammar.Instructions.Keys.Max() + 1}];");
             foreach (var instruction in _grammar.Instructions)
             {
-                if (instruction.Value.Name.StartsWith("OpType"))
-                    Console.WriteLine($"{instruction.Value.Name},");
-                //Console.WriteLine($"_factories[(int)Op.{instruction.Value.Name}] = () => new {instruction.Value.Name}();");
+                if (ViewUtils.IsBuildInType(instruction.Value.Name))
+                {
+                Console.WriteLine(
+                    $"_factories[(int)Op.{instruction.Value.Name}] = ()=> throw new NotImplementedException($\"Can't create instance of {instruction.Value.Name} node. Use {{nameof(SpirvTypeBase)}} to resolve type instance.\");");
+                }
+                else if (instruction.Value.Name.StartsWith("OpType"))
+                {
+                    Console.WriteLine(
+                        $"_factories[(int)Op.{instruction.Value.Name}] = ()=> new Types.{instruction.Value.Name.Substring(2)}();");
+                }
+                else
+                {
+                    Console.WriteLine(
+                        $"_factories[(int)Op.{instruction.Value.Name}] = ()=> new Nodes.{instruction.Value.Name.Substring(2)}();");
+                }
             }
         }
     }

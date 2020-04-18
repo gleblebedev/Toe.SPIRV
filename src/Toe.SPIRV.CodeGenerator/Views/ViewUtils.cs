@@ -6,6 +6,35 @@ namespace Toe.SPIRV.CodeGenerator.Views
 {
     public class ViewUtils
     {
+        public static bool IsBuildInType(string opcode)
+        {
+            switch (opcode)
+            {
+                case "OpTypeBool":
+                case "OpTypeFloat":
+                case "OpTypeInt":
+                case "OpTypeMatrix":
+                case "OpTypeVector":
+                case "OpTypeVoid":
+                    return true;
+            }
+
+            return false;
+        }
+        public static bool IsCustomType(string opcode)
+        {
+            if (IsBuildInType(opcode))
+                return true;
+            switch (opcode)
+            {
+                case "OpTypeFunction":
+                case "OpTypeArray":
+                case "OpTypeStruct":
+                    return true;
+            }
+
+            return false;
+        }
         public static string GetTypeName(SpirvOperandKind kind)
         {
             if (kind == SpirvOperandKind.IdResultType)

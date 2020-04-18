@@ -8,8 +8,5 @@ namespace Toe.SPIRV.Reflection.Types
         public TypeQueue()
         {
         }
-        partial void SetUp(OpTypeQueue op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-        }
     }
 }

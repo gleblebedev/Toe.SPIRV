@@ -18,11 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public uint Semantics { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("NamedBarrier", NamedBarrier);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

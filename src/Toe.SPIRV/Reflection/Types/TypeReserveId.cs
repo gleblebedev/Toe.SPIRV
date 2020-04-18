@@ -8,9 +8,5 @@ namespace Toe.SPIRV.Reflection.Types
         public TypeReserveId()
         {
         }
-
-        partial void SetUp(OpTypeReserveId op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-        }
     }
 }

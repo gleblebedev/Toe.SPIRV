@@ -38,13 +38,13 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     break;
             }
         }
-        public string GetNodeType(SpirvOperand operand)
+        public static string GetNodeType(SpirvOperand operand)
         {
             if (!string.IsNullOrWhiteSpace(operand.OperandType))
                 return operand.OperandType.Substring(2);
             return "Node";
         }
-        public string CastNodeType(SpirvOperand operand)
+        public static string CastNodeType(SpirvOperand operand)
         {
             var t = GetNodeType(operand);
             if (t == "Node")
@@ -53,7 +53,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
         }
 
 
-        private string GetPropertyType(SpirvOperand op)
+        public static string GetPropertyType(SpirvOperand op)
         {
             var baseType = GetBasePropertyType(op);
             switch (op.Quantifier)
@@ -70,7 +70,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     throw new ArgumentOutOfRangeException();
             }
         }
-        private string GetBasePropertyType(SpirvOperand op)
+        private static string GetBasePropertyType(SpirvOperand op)
         {
             switch (op.Category)
             {

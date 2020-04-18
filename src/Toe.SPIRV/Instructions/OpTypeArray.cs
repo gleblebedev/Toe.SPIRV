@@ -16,12 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Length { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ElementType", ElementType);
-            yield return new ReferenceProperty("Length", Length);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public uint ComponentCount { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ComponentType", ComponentType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

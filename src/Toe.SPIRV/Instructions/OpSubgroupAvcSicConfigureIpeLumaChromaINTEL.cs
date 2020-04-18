@@ -36,21 +36,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Payload { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("LumaIntraPartitionMask", LumaIntraPartitionMask);
-            yield return new ReferenceProperty("IntraNeighbourAvailabilty", IntraNeighbourAvailabilty);
-            yield return new ReferenceProperty("LeftEdgeLumaPixels", LeftEdgeLumaPixels);
-            yield return new ReferenceProperty("UpperLeftCornerLumaPixel", UpperLeftCornerLumaPixel);
-            yield return new ReferenceProperty("UpperEdgeLumaPixels", UpperEdgeLumaPixels);
-            yield return new ReferenceProperty("UpperRightEdgeLumaPixels", UpperRightEdgeLumaPixels);
-            yield return new ReferenceProperty("LeftEdgeChromaPixels", LeftEdgeChromaPixels);
-            yield return new ReferenceProperty("UpperLeftCornerChromaPixel", UpperLeftCornerChromaPixel);
-            yield return new ReferenceProperty("UpperEdgeChromaPixels", UpperEdgeChromaPixels);
-            yield return new ReferenceProperty("SadAdjustment", SadAdjustment);
-            yield return new ReferenceProperty("Payload", Payload);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

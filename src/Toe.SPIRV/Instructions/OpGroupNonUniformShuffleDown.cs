@@ -20,12 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Delta { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Value", Value);
-            yield return new ReferenceProperty("Delta", Delta);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

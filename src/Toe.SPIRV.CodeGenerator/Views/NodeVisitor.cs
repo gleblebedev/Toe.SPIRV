@@ -39,7 +39,7 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
 {
-    public class SpirvInstructionsBuilderBase
+    public abstract class SpirvInstructionsBuilderBase
     {
         protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
 
@@ -326,13 +326,60 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             #line 149 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
     }
+    if (!ViewUtils.IsCustomType(instruction.Name))
+    {
+        foreach (var operand in instruction.Operands)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("            instruction.");
+            
+            #line 156 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" = Visit(node.");
+            
+            #line 156 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 157 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+
+        }
+    }
+    else
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("            //This type should be handled manually. See SpirvInstructionsBuilder." +
+                    "Visit");
+            
+            #line 163 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
+            
+            #line default
+            #line hidden
+            this.Write(" for details.\r\n");
+            
+            #line 164 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+
+    }
 
             
             #line default
             #line hidden
             this.Write("            return instruction;\r\n        }\r\n");
             
-            #line 154 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 169 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
             break;
         }
@@ -346,35 +393,35 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             #line hidden
             this.Write("        protected virtual ");
             
-            #line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 177 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
             
             #line default
             #line hidden
             this.Write(" Visit");
             
-            #line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 177 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write("(Nodes.");
             
-            #line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 177 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write(" node)\r\n        {\r\n            var instruction = new ");
             
-            #line 164 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 179 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
             
             #line default
             #line hidden
             this.Write("();\r\n            _instructionMap.Add(node, instruction);\r\n\r\n");
             
-            #line 167 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 182 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
     if (instruction.IdResult != null)
     {
@@ -385,7 +432,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             this.Write("            instruction.IdResult = (uint)_results.Count;\r\n            _results.Ad" +
                     "d(instruction);\r\n            VisitDecorations(node);\r\n");
             
-            #line 174 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 189 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
     }
     if (instruction.IdResultType != null)
@@ -396,7 +443,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             #line hidden
             this.Write("            instruction.IdResultType = Visit(node.ResultType);\r\n\r\n");
             
-            #line 181 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 196 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
     }
     foreach (var operand in instruction.Operands)
@@ -407,21 +454,21 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             #line hidden
             this.Write("            instruction.");
             
-            #line 186 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 201 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(operand.Name));
             
             #line default
             #line hidden
             this.Write(" = Visit(node.");
             
-            #line 186 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 201 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(operand.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 187 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 202 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
     }
     if (instruction.HasDefaultExit)
@@ -432,7 +479,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             #line hidden
             this.Write("            Visit(node.Next);\r\n\r\n");
             
-            #line 194 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 209 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
     }
 
@@ -441,7 +488,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
             #line hidden
             this.Write("            return instruction;\r\n        }\r\n");
             
-            #line 199 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 214 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
             break;
         }

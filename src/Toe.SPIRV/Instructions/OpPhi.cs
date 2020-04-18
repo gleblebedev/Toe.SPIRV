@@ -16,10 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.PairIdRefIdRef> VariableParent { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

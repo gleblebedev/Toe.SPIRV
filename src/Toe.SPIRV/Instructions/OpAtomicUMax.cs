@@ -22,12 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Value { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Pointer", Pointer);
-            yield return new ReferenceProperty("Value", Value);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

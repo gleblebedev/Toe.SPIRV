@@ -11,6 +11,7 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.Struct;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
@@ -18,5 +19,6 @@ namespace Toe.SPIRV.Reflection.Types
         }
 
         partial void SetUp(OpTypeStruct instruction, SpirvInstructionTreeBuilder treeBuilder);
+
     }
 }

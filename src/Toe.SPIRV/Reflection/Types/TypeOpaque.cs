@@ -8,12 +8,5 @@ namespace Toe.SPIRV.Reflection.Types
         public TypeOpaque()
         {
         }
-
-        public string Thenameoftheopaquetype { get; set; }
-
-        partial void SetUp(OpTypeOpaque op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-            Thenameoftheopaquetype = op.Thenameoftheopaquetype;
-        }
     }
 }

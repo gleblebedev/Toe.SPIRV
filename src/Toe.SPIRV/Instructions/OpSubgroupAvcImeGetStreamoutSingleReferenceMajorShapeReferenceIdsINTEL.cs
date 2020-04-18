@@ -18,12 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef MajorShape { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Payload", Payload);
-            yield return new ReferenceProperty("MajorShape", MajorShape);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

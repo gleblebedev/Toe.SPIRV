@@ -388,10 +388,7 @@ namespace Toe.SPIRV.Reflection
 
         protected override OpTypePointer VisitTypePointer(TypePointer node)
         {
-            var visitTypePointer = base.VisitTypePointer(node);
-            visitTypePointer.StorageClass = Visit(node.StorageClass);
-            visitTypePointer.Type = Visit(node.Type);
-            return Register(visitTypePointer, _typeInstructions);
+            return Register(base.VisitTypePointer(node), _typeInstructions);
         }
 
         protected override OpTypeQueue VisitTypeQueue(TypeQueue node)

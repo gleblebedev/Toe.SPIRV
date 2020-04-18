@@ -7,9 +7,5 @@ namespace Toe.SPIRV.Reflection.Types
         public TypeEvent()
         {
         }
-
-        partial void SetUp(OpTypeEvent op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-        }
     }
 }

@@ -24,7 +24,6 @@ namespace Toe.SPIRV.Reflection.Nodes
             get
             {
                 yield return CreateInputPin(nameof(Selector), Selector);
-                yield return CreateInputPin(nameof(Default), Default);
                 yield break;
             }
         }
@@ -49,6 +48,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             get
             {
+                yield return CreateExitPin(nameof(Default), Default);
                 yield break;
             }
         }

@@ -8,13 +8,5 @@ namespace Toe.SPIRV.Reflection.Types
         public TypeRuntimeArray()
         {
         }
-
-        public Node ElementType { get; set; }
-        
-
-        partial void SetUp(OpTypeRuntimeArray op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-            ElementType = treeBuilder.GetNode(op.ElementType);
-        }
     }
 }

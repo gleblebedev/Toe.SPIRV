@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.IdRef> Interface { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Value", Value);
-            for (int i=0; i<Interface.Count; ++i)
-                yield return new ReferenceProperty("Interface"+i, Interface[i]);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

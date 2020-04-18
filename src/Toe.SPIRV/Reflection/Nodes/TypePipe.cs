@@ -11,12 +11,20 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.Pipe;
 
+        public Spv.AccessQualifier Qualifier { get; set; }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypePipe)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypePipe instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypePipe op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            Qualifier = op.Qualifier;
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

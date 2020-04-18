@@ -34,21 +34,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef PayloadId { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Accel", Accel);
-            yield return new ReferenceProperty("RayFlags", RayFlags);
-            yield return new ReferenceProperty("CullMask", CullMask);
-            yield return new ReferenceProperty("SBTOffset", SBTOffset);
-            yield return new ReferenceProperty("SBTStride", SBTStride);
-            yield return new ReferenceProperty("MissIndex", MissIndex);
-            yield return new ReferenceProperty("RayOrigin", RayOrigin);
-            yield return new ReferenceProperty("RayTmin", RayTmin);
-            yield return new ReferenceProperty("RayDirection", RayDirection);
-            yield return new ReferenceProperty("RayTmax", RayTmax);
-            yield return new ReferenceProperty("PayloadId", PayloadId);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

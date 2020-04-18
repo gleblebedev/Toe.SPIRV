@@ -17,12 +17,99 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.<#=_instruction.Name.Substring(6)#>;
 
+<#
+    if (!ViewUtils.IsCustomType(_instruction.Name))
+    {
+        foreach (var op in _instruction.Operands)
+        {
+    switch (op.Class)
+    {
+        case SpirvOperandClassification.Type:
+#>
+        public SpirvTypeBase <#=op.Name#> { get; set; }
+<# 
+            break;
+        case SpirvOperandClassification.Exit:
+        case SpirvOperandClassification.Input:
+#>
+        public <#=NodeTemplate.GetNodeType(op)#> <#=op.Name#> { get; set; }
+<# 
+            break;
+        case SpirvOperandClassification.RepeatedInput:
+#>
+        public IList<Node> <#=op.Name#> { get; set; }
+<# 
+            break;
+        default:
+#>
+        public <#=NodeTemplate.GetPropertyType(op)#> <#=op.Name#> { get; set; }
+<# 
+            break;
+    }        
+        }
+    }
+#>
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((<#=_instruction.Name#>)op, treeBuilder);
         }
 
+<# 
+if (ViewUtils.IsCustomType(_instruction.Name))
+{
+#>
         partial void SetUp(<#=_instruction.Name#> instruction, SpirvInstructionTreeBuilder treeBuilder);
+<# 
+}
+else
+{
+#>
+
+        public void SetUp(<#=_instruction.Name#> op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+<# 
+if (_instruction.IdResultType != null)
+{
+#>
+            ResultType = treeBuilder.ResolveType(op.IdResultType);
+<# 
+}
+
+foreach (var op in _instruction.Operands)
+{
+    switch (op.Class)
+    {
+        case SpirvOperandClassification.Type:
+#>
+            <#=op.Name#> = treeBuilder.ResolveType(op.<#=op.Name#>);
+<# 
+            break;
+        case SpirvOperandClassification.Exit:
+        case SpirvOperandClassification.Input:
+#>
+            <#=op.Name#> = <#=NodeTemplate.CastNodeType(op)#>treeBuilder.GetNode(op.<#=op.Name#>);
+<# 
+            break;
+        case SpirvOperandClassification.RepeatedInput:
+#>
+            <#=op.Name#> = treeBuilder.GetNodes(op.<#=op.Name#>);
+<# 
+            break;
+        default:
+#>
+            <#=op.Name#> = op.<#=op.Name#>;
+<# 
+            break;
+    }
+}
+#>
+            SetUpDecorations(op, treeBuilder);
+        }
+<# 
+}
+#>
+
     }
 }

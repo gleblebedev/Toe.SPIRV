@@ -26,15 +26,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Event { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Destination", Destination);
-            yield return new ReferenceProperty("Source", Source);
-            yield return new ReferenceProperty("NumElements", NumElements);
-            yield return new ReferenceProperty("Stride", Stride);
-            yield return new ReferenceProperty("Event", Event);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

@@ -20,10 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public uint Capacity { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

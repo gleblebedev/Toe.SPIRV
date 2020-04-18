@@ -26,16 +26,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Payload { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SkipBlockPartitionType", SkipBlockPartitionType);
-            yield return new ReferenceProperty("SkipMotionVectorMask", SkipMotionVectorMask);
-            yield return new ReferenceProperty("MotionVectors", MotionVectors);
-            yield return new ReferenceProperty("BidirectionalWeight", BidirectionalWeight);
-            yield return new ReferenceProperty("SadAdjustment", SadAdjustment);
-            yield return new ReferenceProperty("Payload", Payload);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

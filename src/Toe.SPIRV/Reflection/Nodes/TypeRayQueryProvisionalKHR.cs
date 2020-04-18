@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.RayQueryProvisionalKHR;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeRayQueryProvisionalKHR)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeRayQueryProvisionalKHR instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeRayQueryProvisionalKHR op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

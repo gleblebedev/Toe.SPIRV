@@ -20,13 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef SADAdjustment { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SrcCoord", SrcCoord);
-            yield return new ReferenceProperty("PartitionMask", PartitionMask);
-            yield return new ReferenceProperty("SADAdjustment", SADAdjustment);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

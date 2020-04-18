@@ -11,12 +11,22 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.ForwardPointer;
 
+        public SpirvTypeBase PointerType { get; set; }
+        public Spv.StorageClass StorageClass { get; set; }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeForwardPointer)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeForwardPointer instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeForwardPointer op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            PointerType = treeBuilder.ResolveType(op.PointerType);
+            StorageClass = op.StorageClass;
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

@@ -26,13 +26,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Comparator { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Pointer", Pointer);
-            yield return new ReferenceProperty("Value", Value);
-            yield return new ReferenceProperty("Comparator", Comparator);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

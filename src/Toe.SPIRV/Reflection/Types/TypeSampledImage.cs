@@ -9,12 +9,5 @@ namespace Toe.SPIRV.Reflection.Types
         {
 
         }
-
-        public Node ImageType { get; set; }
-       
-        partial void SetUp(OpTypeSampledImage op, SpirvInstructionTreeBuilder treeBuilder)
-        {
-            ImageType = treeBuilder.GetNode(op.ImageType);
-        }
     }
 }

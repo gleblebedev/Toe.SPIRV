@@ -18,11 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.Decoration Decoration { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("StructureType", StructureType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

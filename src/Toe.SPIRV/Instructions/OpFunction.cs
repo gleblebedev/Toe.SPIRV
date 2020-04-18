@@ -18,11 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef FunctionType { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("FunctionType", FunctionType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

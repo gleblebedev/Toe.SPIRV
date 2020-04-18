@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef ReserveId { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ReserveId", ReserveId);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

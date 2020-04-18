@@ -23,7 +23,8 @@ namespace Toe.SPIRV.UnitTests
                 SpirvCompilationResult shaderBytes;
                 try
                 {
-                    shaderBytes = SpirvCompilation.CompileGlslToSpirv((string)shader[0], "shader.vk", (ShaderStages)shader[1],
+                    (var shaderSource, var stage) = SampleShaders.LoadShader(shader, typeof(SampleShaders).Assembly);
+                    shaderBytes = SpirvCompilation.CompileGlslToSpirv(shaderSource, "shader.vk", stage,
                         new GlslCompileOptions { Debug = true });
                 }
                 catch (SpirvCompilationException exception)
@@ -32,17 +33,30 @@ namespace Toe.SPIRV.UnitTests
                 }
                 var instructions = Shader.Parse(shaderBytes.SpirvBytes);
 
-                
+
+                //var decorates = instructions.Instructions
+                //    .Where(_ => _.OpCode == Op.OpDecorate)
+                //    .Select(_ => (OpDecorate) _);
+                //foreach (var opDecorate in decorates)
+                //{
+                //    if (!map.TryGetValue(opDecorate.Target.Instruction.OpCode, out var set))
+                //    {
+                //        set = new HashSet<Decoration.Enumerant>();
+                //        map.Add(opDecorate.Target.Instruction.OpCode, set);
+                //    }
+
+                //    set.Add(opDecorate.Decoration.Value);
+                //}
                 var decorates = instructions.Instructions
-                    .Where(_ => _.OpCode == Op.OpDecorate)
-                    .Select(_ => (OpDecorate) _);
+                    .Where(_ => _.OpCode == Op.OpMemberDecorate)
+                    .Select(_ => (OpMemberDecorate)_);
 
                 foreach (var opDecorate in decorates)
                 {
-                    if (!map.TryGetValue(opDecorate.Target.Instruction.OpCode, out var set))
+                    if (!map.TryGetValue(opDecorate.StructureType.Instruction.OpCode, out var set))
                     {
                         set = new HashSet<Decoration.Enumerant>();
-                        map.Add(opDecorate.Target.Instruction.OpCode, set);
+                        map.Add(opDecorate.StructureType.Instruction.OpCode, set);
                     }
 
                     set.Add(opDecorate.Decoration.Value);
@@ -60,9 +74,10 @@ namespace Toe.SPIRV.UnitTests
 
         [Test]
         [TestCaseSource(typeof(SampleShaders), nameof(SampleShaders.EnumerateShaders))]
-        public void SampleShader(string vertexShaderCode, ShaderStages stage)
+        public void SampleShader(string resourceName)
         {
-            var shaderBytes = CompileToBytecode(vertexShaderCode, stage);
+            (var shaderSource, var stage) = SampleShaders.LoadShader(resourceName, typeof(SampleShaders).Assembly);
+            var shaderBytes = CompileToBytecode(shaderSource, stage);
             var instructions = Shader.Parse(shaderBytes);
             var generatedBytecode = instructions.Build();
 

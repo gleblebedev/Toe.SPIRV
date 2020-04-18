@@ -20,12 +20,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef LocalId { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Value", Value);
-            yield return new ReferenceProperty("LocalId", LocalId);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

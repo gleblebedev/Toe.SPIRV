@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.StorageClass StorageClass { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("PointerType", PointerType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

@@ -36,22 +36,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.IdRef> LocalSize { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Queue", Queue);
-            yield return new ReferenceProperty("Flags", Flags);
-            yield return new ReferenceProperty("NDRange", NDRange);
-            yield return new ReferenceProperty("NumEvents", NumEvents);
-            yield return new ReferenceProperty("WaitEvents", WaitEvents);
-            yield return new ReferenceProperty("RetEvent", RetEvent);
-            yield return new ReferenceProperty("Invoke", Invoke);
-            yield return new ReferenceProperty("Param", Param);
-            yield return new ReferenceProperty("ParamSize", ParamSize);
-            yield return new ReferenceProperty("ParamAlign", ParamAlign);
-            for (int i=0; i<LocalSize.Count; ++i)
-                yield return new ReferenceProperty("LocalSize"+i, LocalSize[i]);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

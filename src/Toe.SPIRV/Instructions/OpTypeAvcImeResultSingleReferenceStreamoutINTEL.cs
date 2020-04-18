@@ -12,10 +12,6 @@ namespace Toe.SPIRV.Instructions
 
         public override Op OpCode { get { return Op.OpTypeAvcImeResultSingleReferenceStreamoutINTEL; } }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

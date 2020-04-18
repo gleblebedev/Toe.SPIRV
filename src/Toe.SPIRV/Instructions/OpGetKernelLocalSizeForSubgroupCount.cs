@@ -24,15 +24,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef ParamAlign { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SubgroupCount", SubgroupCount);
-            yield return new ReferenceProperty("Invoke", Invoke);
-            yield return new ReferenceProperty("Param", Param);
-            yield return new ReferenceProperty("ParamSize", ParamSize);
-            yield return new ReferenceProperty("ParamAlign", ParamAlign);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

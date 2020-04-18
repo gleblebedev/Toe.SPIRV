@@ -11,12 +11,20 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.VmeImageINTEL;
 
+        public Node ImageType { get; set; }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeVmeImageINTEL)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeVmeImageINTEL instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeVmeImageINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            ImageType = treeBuilder.GetNode(op.ImageType);
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

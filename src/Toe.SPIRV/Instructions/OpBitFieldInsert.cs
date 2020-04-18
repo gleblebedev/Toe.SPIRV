@@ -22,14 +22,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Count { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Base", Base);
-            yield return new ReferenceProperty("Insert", Insert);
-            yield return new ReferenceProperty("Offset", Offset);
-            yield return new ReferenceProperty("Count", Count);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

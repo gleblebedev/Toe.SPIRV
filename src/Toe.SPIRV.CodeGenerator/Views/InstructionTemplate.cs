@@ -99,80 +99,10 @@ namespace Toe.SPIRV.CodeGenerator.Views
             
             #line default
             #line hidden
-            this.Write("        public override IEnumerable<ReferenceProperty> GetReferences()\r\n        {" +
-                    "\r\n");
+            this.Write("\r\n        public override void Parse(WordReader reader, uint wordCount)\r\n        " +
+                    "{\r\n            var end = reader.Position+wordCount-1;\r\n");
             
-            #line 35 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-
-    foreach(var op in _instruction.AllOperands().Where(_=>_.Kind == SpirvOperandKind.IdRef))
-    {
-        if (op.Quantifier == SpirvOperandQuantifier.Repeated)
-        {
-
-            
-            #line default
-            #line hidden
-            this.Write("            for (int i=0; i<");
-            
-            #line 41 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write(".Count; ++i)\r\n                yield return new ReferenceProperty(\"");
-            
-            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\"+i, ");
-            
-            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write("[i]);\r\n");
-            
-            #line 43 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-
-        }
-        else
-        {
-
-            
-            #line default
-            #line hidden
-            this.Write("            yield return new ReferenceProperty(\"");
-            
-            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\", ");
-            
-            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n");
-            
-            #line 49 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
-
-        }
-    }
-
-            
-            #line default
-            #line hidden
-            this.Write("            yield break;\r\n        }\r\n\r\n        public override void Parse(WordRea" +
-                    "der reader, uint wordCount)\r\n        {\r\n            var end = reader.Position+wo" +
-                    "rdCount-1;\r\n");
-            
-            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 37 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
     foreach(var op in _instruction.AllOperands())
     {
@@ -182,21 +112,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            ");
             
-            #line 63 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 41 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 63 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 41 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetOperandParser(op)));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 64 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
         if (op.Kind == SpirvOperandKind.IdResult)
         {
@@ -206,7 +136,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            reader.Instructions.Add(this);\r\n");
             
-            #line 69 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
         }
     }
@@ -217,7 +147,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             this.Write("        }\r\n\r\n        public override uint GetWordCount()\r\n        {\r\n            " +
                     "uint wordCount = 0;\r\n");
             
-            #line 78 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 56 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
     foreach(var op in _instruction.AllOperands())
     {
@@ -229,14 +159,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            wordCount += ");
             
-            #line 84 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 62 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write("?.GetWordCount() ?? 0u;\r\n");
             
-            #line 85 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 63 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
         }
         else
@@ -247,14 +177,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            wordCount += ");
             
-            #line 90 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 68 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(".GetWordCount();\r\n");
             
-            #line 91 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 69 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
         }
     }
@@ -265,7 +195,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             this.Write("            return wordCount;\r\n        }\r\n\r\n        public override void Write(Wo" +
                     "rdWriter writer)\r\n        {\r\n");
             
-            #line 100 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 78 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
     foreach(var op in _instruction.AllOperands())
     {
@@ -277,21 +207,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            if (");
             
-            #line 106 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 84 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" != null) ");
             
-            #line 106 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 84 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(".Write(writer);\r\n");
             
-            #line 107 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 85 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
         }
         else
@@ -302,14 +232,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            ");
             
-            #line 112 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 90 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(".Write(writer);\r\n");
             
-            #line 113 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 91 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
         }
     }
@@ -319,7 +249,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("        }\r\n\r\n        public override string ToString()\r\n        {\r\n");
             
-            #line 121 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
+            #line 99 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\InstructionTemplate.tt"
 
 if (_instruction.IdResultType != null && _instruction.IdResult != null)
 {

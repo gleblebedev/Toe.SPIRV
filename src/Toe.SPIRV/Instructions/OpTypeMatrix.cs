@@ -16,11 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public uint ColumnCount { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("ColumnType", ColumnType);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

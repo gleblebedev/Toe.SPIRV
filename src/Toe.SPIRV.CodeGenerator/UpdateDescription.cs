@@ -298,6 +298,49 @@ namespace Toe.SPIRV.CodeGenerator
                             return;
                         }
                         break;
+                        
+                    case "OpTypeForwardPointer":
+                        if (spirvOperand.Name == "PointerType")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpTypePointer":
+                        if (spirvOperand.Name == "Type")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpTypeImage":
+                        if (spirvOperand.Name == "SampledType")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpTypeRuntimeArray":
+                        if (spirvOperand.Name == "ElementType")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpTypeSampledImage":
+                        if (spirvOperand.Name == "ImageType")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            return;
+                        }
+                        break;
+                    case "OpSwitch":
+                        if (spirvOperand.Name == "Default")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            return;
+                        }
+                        break;
                 }
 
                 if (spirvOperand.Quantifier == SpirvOperandQuantifier.Repeated)

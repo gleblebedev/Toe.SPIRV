@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.AccelerationStructureNV;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeAccelerationStructureNV)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeAccelerationStructureNV instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeAccelerationStructureNV op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

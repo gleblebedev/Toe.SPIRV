@@ -18,12 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Operand2 { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Operand1", Operand1);
-            yield return new ReferenceProperty("Operand2", Operand2);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

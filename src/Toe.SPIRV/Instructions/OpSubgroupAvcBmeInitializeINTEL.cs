@@ -30,18 +30,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef SadAdjustment { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("SrcCoord", SrcCoord);
-            yield return new ReferenceProperty("MotionVectors", MotionVectors);
-            yield return new ReferenceProperty("MajorShapes", MajorShapes);
-            yield return new ReferenceProperty("MinorShapes", MinorShapes);
-            yield return new ReferenceProperty("Direction", Direction);
-            yield return new ReferenceProperty("PixelResolution", PixelResolution);
-            yield return new ReferenceProperty("BidirectionalWeight", BidirectionalWeight);
-            yield return new ReferenceProperty("SadAdjustment", SadAdjustment);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

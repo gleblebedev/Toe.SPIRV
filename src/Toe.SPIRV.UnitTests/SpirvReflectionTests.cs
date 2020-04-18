@@ -9,6 +9,21 @@ namespace Toe.SPIRV.UnitTests
     {
 
         [Test]
+        [TestCaseSource(typeof(SampleShaders), nameof(SampleShaders.EnumerateShaders))]
+        public void SampleShader(string resourceName)
+        {
+            (var shaderSource, var stage) = SampleShaders.LoadShader(resourceName, typeof(SampleShaders).Assembly);
+            var shaderBytes = CompileToBytecode(shaderSource, stage);
+            var generatedBytecode = TranslateShaderViaReflection(shaderBytes);
+
+            //Assert.AreEqual(shaderBytes.Length, generatedBytecode.Length);
+            //for (var index = 16; index < shaderBytes.Length; index++)
+            //{
+            //    Assert.AreEqual(shaderBytes[index], generatedBytecode[index]);
+            //}
+        }
+
+        [Test]
         [TestCaseSource(typeof(TestShaders), nameof(TestShaders.EnumerateShaders))]
         public void SimpleShader(string vertexShaderCode, string fragmentShaderCode)
         {

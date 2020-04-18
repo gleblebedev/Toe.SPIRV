@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.ReserveId;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeReserveId)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeReserveId instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeReserveId op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

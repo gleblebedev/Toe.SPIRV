@@ -11,12 +11,18 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.NamedBarrier;
 
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTypeNamedBarrier)op, treeBuilder);
         }
 
-        partial void SetUp(OpTypeNamedBarrier instruction, SpirvInstructionTreeBuilder treeBuilder);
+
+        public void SetUp(OpTypeNamedBarrier op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            SetUpDecorations(op, treeBuilder);
+        }
+
     }
 }

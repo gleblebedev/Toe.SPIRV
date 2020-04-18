@@ -18,13 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public IList<Spv.IdRef> Indexes { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Base", Base);
-            for (int i=0; i<Indexes.Count; ++i)
-                yield return new ReferenceProperty("Indexes"+i, Indexes[i]);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

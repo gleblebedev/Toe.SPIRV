@@ -26,6 +26,11 @@ namespace Toe.SPIRV.Reflection.Types
             set => _arrayStride = value;
         }
 
+        public bool HasExplicitArrayStride
+        {
+            get { return _arrayStride.HasValue; }
+        }
+
         public uint Length { get; set; }
 
         public SpirvTypeBase ElementType { get; set; }
@@ -53,7 +58,8 @@ namespace Toe.SPIRV.Reflection.Types
         {
             var hashCode = ElementType.GetHashCode();
             hashCode = (hashCode * 397) ^ Length.GetHashCode();
-            hashCode = (hashCode * 397) ^ ArrayStride.GetHashCode();
+            if (_arrayStride != null)
+            hashCode = (hashCode * 397) ^ _arrayStride.GetHashCode();
             return hashCode;
         }
 

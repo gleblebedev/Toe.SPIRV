@@ -18,12 +18,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef Sampler { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("Image", Image);
-            yield return new ReferenceProperty("Sampler", Sampler);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

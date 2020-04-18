@@ -16,12 +16,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef PackedIndices { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("IndexOffset", IndexOffset);
-            yield return new ReferenceProperty("PackedIndices", PackedIndices);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

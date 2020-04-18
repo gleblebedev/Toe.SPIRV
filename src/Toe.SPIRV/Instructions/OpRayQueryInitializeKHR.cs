@@ -28,18 +28,6 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.IdRef RayTMax { get; set; }
 
-        public override IEnumerable<ReferenceProperty> GetReferences()
-        {
-            yield return new ReferenceProperty("RayQuery", RayQuery);
-            yield return new ReferenceProperty("Accel", Accel);
-            yield return new ReferenceProperty("RayFlags", RayFlags);
-            yield return new ReferenceProperty("CullMask", CullMask);
-            yield return new ReferenceProperty("RayOrigin", RayOrigin);
-            yield return new ReferenceProperty("RayTMin", RayTMin);
-            yield return new ReferenceProperty("RayDirection", RayDirection);
-            yield return new ReferenceProperty("RayTMax", RayTMax);
-            yield break;
-        }
 
         public override void Parse(WordReader reader, uint wordCount)
         {

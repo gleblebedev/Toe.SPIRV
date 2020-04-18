@@ -73,7 +73,7 @@ namespace Toe.SPIRV.Reflection.Types
             Mat4 = new TypeMatrixLayout(Mat4Base, MatrixOrientation.ColMajor, 16);
         }
 
-        public virtual uint SizeInBytes => throw new NotImplementedException();
+        public virtual uint SizeInBytes => throw new NotImplementedException("SizeInBytes is not implemented at "+this.GetType().Name);
 
         public virtual uint Alignment => SizeInBytes;
 
