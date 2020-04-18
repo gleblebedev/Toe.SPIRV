@@ -1,12 +1,12 @@
 ﻿using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public class SpirvMatrixDeclaration : SpirvMatrix
+    public class TypeMatrixDeclaration : TypeMatrix
     {
-        private readonly SpirvVector _columnType;
+        private readonly TypeVector _columnType;
 
-        public SpirvMatrixDeclaration(SpirvVector columnType, uint columnCount)
+        public TypeMatrixDeclaration(TypeVector columnType, uint columnCount)
         {
             _columnType = columnType;
             ColumnCount = columnCount;
@@ -14,7 +14,7 @@ namespace Toe.SPIRV.Reflection
 
         public override Op OpCode => Op.OpTypeMatrix;
 
-        public override SpirvVector ColumnType => _columnType;
+        public override TypeVector ColumnType => _columnType;
         public override uint ColumnStride => _columnType.Alignment;
         public override MatrixOrientation MatrixOrientation => MatrixOrientation.ColMajor;
         public override uint ColumnCount { get; }

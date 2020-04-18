@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV
@@ -73,7 +74,7 @@ namespace Toe.SPIRV
             }
         }
 
-        protected virtual void WriteStruct(SpirvStruct structure)
+        protected virtual void WriteStruct(TypeStruct structure)
         {
             var fields = structure.Fields;
             WriteLine("[StructLayout(LayoutKind.Explicit)]");
@@ -97,27 +98,27 @@ namespace Toe.SPIRV
                     return;
                 case SpirvTypeCategory.Array:
                 {
-                    WriteArrayField(fieldName, byteOffset, (SpirvArray)fieldType);
+                    WriteArrayField(fieldName, byteOffset, (TypeArray)fieldType);
                     return;
                 }
                 case SpirvTypeCategory.Float:
                 {
-                    if (WriteFloatField(fieldName, byteOffset, (SpirvFloat)fieldType)) return;
+                    if (WriteFloatField(fieldName, byteOffset, (TypeFloat)fieldType)) return;
                     break;
                 }
                 case SpirvTypeCategory.Int:
                 {
-                    if (WriteIntField(fieldName, byteOffset, (SpirvInt)fieldType)) return;
+                    if (WriteIntField(fieldName, byteOffset, (TypeInt)fieldType)) return;
                     break;
                 }
                 case SpirvTypeCategory.Vector:
                 {
-                    if (WriteVectorField(fieldName, byteOffset, (SpirvVector)fieldType)) return;
+                    if (WriteVectorField(fieldName, byteOffset, (TypeVector)fieldType)) return;
                     break;
                 }
                 case SpirvTypeCategory.Matrix:
                 {
-                    if (WriteMatrixField(fieldName, byteOffset, (SpirvMatrix)fieldType)) return;
+                    if (WriteMatrixField(fieldName, byteOffset, (TypeMatrix)fieldType)) return;
                     break;
                 }
                 case SpirvTypeCategory.Struct:
@@ -131,7 +132,7 @@ namespace Toe.SPIRV
             WriteLine($"    //public {fieldType} {fieldName};");
         }
 
-        protected virtual bool WriteMatrixField(string fieldName, uint byteOffset, SpirvMatrix fieldType)
+        protected virtual bool WriteMatrixField(string fieldName, uint byteOffset, TypeMatrix fieldType)
         {
             if (fieldType.ColumnType == SpirvTypeBase.Vec4 && fieldType.ColumnCount == 4 &&
                 fieldType.ColumnStride == 16 && fieldType.MatrixOrientation == MatrixOrientation.ColMajor)
@@ -151,7 +152,7 @@ namespace Toe.SPIRV
             return true;
         }
 
-        protected virtual bool WriteVectorField(string fieldName, uint byteOffset, SpirvVector fieldType)
+        protected virtual bool WriteVectorField(string fieldName, uint byteOffset, TypeVector fieldType)
         {
             switch (fieldType.VectorType)
             {
@@ -184,7 +185,7 @@ namespace Toe.SPIRV
             return true;
         }
 
-        protected virtual bool WriteFloatField(string fieldName, uint byteOffset, SpirvFloat floatType)
+        protected virtual bool WriteFloatField(string fieldName, uint byteOffset, TypeFloat floatType)
         {
             string actualName = null;
             switch (floatType.Width)
@@ -207,7 +208,7 @@ namespace Toe.SPIRV
             return false;
         }
 
-        protected virtual bool WriteIntField(string fieldName, uint byteOffset, SpirvInt intType)
+        protected virtual bool WriteIntField(string fieldName, uint byteOffset, TypeInt intType)
         {
             string actualName = null;
             if (intType.Signed)
@@ -257,7 +258,7 @@ namespace Toe.SPIRV
             return false;
         }
 
-        private void WriteArrayField(string fieldName, uint byteOffset, SpirvArray arrayType)
+        private void WriteArrayField(string fieldName, uint byteOffset, TypeArray arrayType)
         {
             var sep = char.IsDigit(fieldName[fieldName.Length - 1]) ? "_" : "";
             for (uint i = 0; i < arrayType.Length; ++i)
@@ -343,7 +344,8 @@ namespace Toe.SPIRV
                 case Op.OpTypeStruct:
                     {
                         var opType = (OpTypeStruct)type;
-                        return new TypeDesc(opType.OpName?.Value ?? ("Struct"+opType.IdResult), 0); //TODO: calc size
+                        //opType.OpName?.Value ?? 
+                        return new TypeDesc(("Struct"+opType.IdResult), 0); //TODO: calc size
                     }
                 case Op.OpTypeArray:
                     {

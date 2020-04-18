@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Capability = Toe.SPIRV.Spv.Capability;
 using ExecutionMode = Toe.SPIRV.Reflection.Nodes.ExecutionMode;
@@ -307,34 +309,34 @@ namespace Toe.SPIRV.Reflection
             return Register(base.VisitConstantTrue(node), _typeInstructions);
         }
 
-        protected override OpTypeBool VisitTypeBool(SpirvBool node)
+        protected override OpTypeBool VisitTypeBool(TypeBool node)
         {
             return Register(base.VisitTypeBool(node), _typeInstructions);
         }
 
-        protected override OpTypeDeviceEvent VisitTypeDeviceEvent(SpirvDeviceEvent node)
+        protected override OpTypeDeviceEvent VisitTypeDeviceEvent(TypeDeviceEvent node)
         {
             return Register(base.VisitTypeDeviceEvent(node), _typeInstructions);
         }
 
-        protected override OpTypeEvent VisitTypeEvent(SpirvEvent node)
+        protected override OpTypeEvent VisitTypeEvent(TypeEvent node)
         {
             return Register(base.VisitTypeEvent(node), _typeInstructions);
         }
 
-        protected override OpTypeFloat VisitTypeFloat(SpirvFloat node)
+        protected override OpTypeFloat VisitTypeFloat(TypeFloat node)
         {
             var visitTypeFloat = base.VisitTypeFloat(node);
             visitTypeFloat.Width = node.Width;
             return Register(visitTypeFloat, _typeInstructions);
         }
 
-        protected override OpTypeForwardPointer VisitTypeForwardPointer(SpirvForwardPointer node)
+        protected override OpTypeForwardPointer VisitTypeForwardPointer(TypeForwardPointer node)
         {
             return Register(base.VisitTypeForwardPointer(node), _typeInstructions);
         }
 
-        protected override OpTypeFunction VisitTypeFunction(SpirvFunction node)
+        protected override OpTypeFunction VisitTypeFunction(TypeFunction node)
         {
             var visitTypeFunction = base.VisitTypeFunction(node);
             Register(visitTypeFunction, _typeInstructions);
@@ -348,7 +350,7 @@ namespace Toe.SPIRV.Reflection
             visitTypeFunction.ReturnType = Visit(node.ReturnType);
             return  visitTypeFunction;
         }
-        protected override OpTypeVector VisitTypeVector(SpirvVector node)
+        protected override OpTypeVector VisitTypeVector(TypeVector node)
         {
             var vector = base.VisitTypeVector(node);
             vector.ComponentCount = node.ComponentCount;
@@ -356,12 +358,12 @@ namespace Toe.SPIRV.Reflection
             return Register(vector, _typeInstructions);
         }
 
-        protected override OpTypeImage VisitTypeImage(SpirvImage node)
+        protected override OpTypeImage VisitTypeImage(TypeImage node)
         {
             return Register(base.VisitTypeImage(node), _typeInstructions);
         }
 
-        protected override OpTypeInt VisitTypeInt(SpirvInt node)
+        protected override OpTypeInt VisitTypeInt(TypeInt node)
         {
             var visitTypeInt = base.VisitTypeInt(node);
             visitTypeInt.Signedness = node.Signed?1u:0;
@@ -369,22 +371,22 @@ namespace Toe.SPIRV.Reflection
             return Register(visitTypeInt, _typeInstructions);
         }
 
-        protected override OpTypeMatrix VisitTypeMatrix(SpirvMatrix node)
+        protected override OpTypeMatrix VisitTypeMatrix(TypeMatrix node)
         {
             return Register(base.VisitTypeMatrix(node), _typeInstructions);
         }
 
-        protected override OpTypeOpaque VisitTypeOpaque(SpirvOpaque node)
+        protected override OpTypeOpaque VisitTypeOpaque(TypeOpaque node)
         {
             return Register(base.VisitTypeOpaque(node), _typeInstructions);
         }
 
-        protected override OpTypePipe VisitTypePipe(SpirvPipe node)
+        protected override OpTypePipe VisitTypePipe(TypePipe node)
         {
             return Register(base.VisitTypePipe(node), _typeInstructions);
         }
 
-        protected override OpTypePointer VisitTypePointer(SpirvPointer node)
+        protected override OpTypePointer VisitTypePointer(TypePointer node)
         {
             var visitTypePointer = base.VisitTypePointer(node);
             visitTypePointer.StorageClass = Visit(node.StorageClass);
@@ -392,127 +394,44 @@ namespace Toe.SPIRV.Reflection
             return Register(visitTypePointer, _typeInstructions);
         }
 
-        protected override OpTypeQueue VisitTypeQueue(SpirvQueue node)
+        protected override OpTypeQueue VisitTypeQueue(TypeQueue node)
         {
             return Register(base.VisitTypeQueue(node), _typeInstructions);
         }
 
-        protected override OpTypeReserveId VisitTypeReserveId(SpirvReserveId node)
+        protected override OpTypeReserveId VisitTypeReserveId(TypeReserveId node)
         {
             return Register(base.VisitTypeReserveId(node), _typeInstructions);
         }
 
-        protected override OpTypeRuntimeArray VisitTypeRuntimeArray(SpirvRuntimeArray node)
+        protected override OpTypeRuntimeArray VisitTypeRuntimeArray(TypeRuntimeArray node)
         {
             return Register(base.VisitTypeRuntimeArray(node), _typeInstructions);
         }
 
-        protected override OpTypeSampledImage VisitTypeSampledImage(SpirvSampledImage node)
+        protected override OpTypeSampledImage VisitTypeSampledImage(TypeSampledImage node)
         {
             return Register(base.VisitTypeSampledImage(node), _typeInstructions);
         }
 
-        protected override OpTypeSampler VisitTypeSampler(SpirvSampler node)
+        protected override OpTypeSampler VisitTypeSampler(TypeSampler node)
         {
             return Register(base.VisitTypeSampler(node), _typeInstructions);
         }
 
-        protected override OpTypeVoid VisitTypeVoid(SpirvVoid node)
+        protected override OpTypeVoid VisitTypeVoid(TypeVoid node)
         {
             return Register(base.VisitTypeVoid(node), _typeInstructions);
         }
 
-        protected override OpTypeStruct VisitTypeStruct(SpirvStruct node)
+        protected override OpTypeStruct VisitTypeStruct(TypeStruct node)
         {
-            var structure = base.VisitTypeStruct(node);
-            uint memberIndex = 0;
-            structure.MemberTypes = new List<IdRef>(node.Fields.Count);
-            foreach (var nodeField in node.Fields)
-            {
-                var fieldType = Visit(nodeField.Type);
-                structure.MemberTypes.Add(fieldType);
-                if (!string.IsNullOrWhiteSpace(nodeField.Name))
-                {
-                    Visit(new MemberName() {Member = memberIndex, Name = nodeField.Name, Type = node});
-                }
-                if (nodeField.BuiltIn != null)
-                {
-                    Visit(new MemberDecorate()
-                    {
-                        Member = memberIndex, StructureType = node, Decoration = new Decoration.BuiltIn() {BuiltInValue = nodeField.BuiltIn}
-                    });
-                }
-                if (nodeField.ByteOffset != null)
-                {
-                    Visit(new MemberDecorate()
-                    {
-                        Member = memberIndex,
-                        StructureType = node,
-                        Decoration = new Decoration.Offset() { ByteOffset = nodeField.ByteOffset.Value }
-                    });
-                }
-
-                if (nodeField.Type is SpirvArray array)
-                {
-                    Visit(new MemberDecorate()
-                    {
-                        Member = memberIndex,
-                        StructureType = node,
-                        Decoration = new Decoration.ArrayStride() { ArrayStrideValue = array.ArrayStride }
-                    });
-                }
-                if (nodeField.Type is SpirvMatrix matrix)
-                {
-                    Visit(new MemberDecorate()
-                    {
-                        Member = memberIndex,
-                        StructureType = node,
-                        Decoration = new Decoration.MatrixStride() { MatrixStrideValue = matrix.ColumnStride }
-                    });
-                    switch (matrix.MatrixOrientation)
-                    {
-                        case MatrixOrientation.ColMajor:
-                            Visit(new MemberDecorate()
-                            {
-                                Member = memberIndex,
-                                StructureType = node,
-                                Decoration = new Decoration.ColMajor()
-                            });
-                            break;
-                        case MatrixOrientation.RowMajor:
-                            Visit(new MemberDecorate()
-                            {
-                                Member = memberIndex,
-                                StructureType = node,
-                                Decoration = new Decoration.RowMajor()
-                            });
-                            break;
-                    }
-                }
-
-                ++memberIndex;
-            }
-
-            if (node.Block)
-            {
-                Visit(new Decorate()
-                {
-                    Target = node,
-                    Decoration = new Decoration.Block()
-                });
-            }
-            if (node.BufferBlock)
-            {
-                Visit(new Decorate()
-                {
-                    Target = node,
-                    Decoration = new Decoration.BufferBlock()
-                });
-            }
-            return Register(structure, _typeInstructions);
+            var visitTypeStruct = base.VisitTypeStruct(node);
+            visitTypeStruct.MemberTypes = node.Fields.Select(_ => (IdRef)Visit(_.Type)).ToList();
+            return Register(visitTypeStruct, _typeInstructions);
         }
 
-        protected override OpTypeArray VisitTypeArray(SpirvArray node)
+        protected override OpTypeArray VisitTypeArray(TypeArray node)
         {
             var visitTypeArray = base.VisitTypeArray(node);
             visitTypeArray.ElementType = Visit(node.ElementType);

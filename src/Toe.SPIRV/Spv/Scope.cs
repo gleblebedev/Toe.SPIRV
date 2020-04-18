@@ -22,82 +22,74 @@ namespace Toe.SPIRV.Spv
 
         public class CrossDevice: Scope
         {
+            public static readonly CrossDevice Instance = new CrossDevice();
             public override Enumerant Value => Scope.Enumerant.CrossDevice;
             public new static CrossDevice Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CrossDevice();
-                return res;
+                return Instance;
             }
         }
         public class Device: Scope
         {
+            public static readonly Device Instance = new Device();
             public override Enumerant Value => Scope.Enumerant.Device;
             public new static Device Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Device();
-                return res;
+                return Instance;
             }
         }
         public class Workgroup: Scope
         {
+            public static readonly Workgroup Instance = new Workgroup();
             public override Enumerant Value => Scope.Enumerant.Workgroup;
             public new static Workgroup Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Workgroup();
-                return res;
+                return Instance;
             }
         }
         public class Subgroup: Scope
         {
+            public static readonly Subgroup Instance = new Subgroup();
             public override Enumerant Value => Scope.Enumerant.Subgroup;
             public new static Subgroup Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Subgroup();
-                return res;
+                return Instance;
             }
         }
         public class Invocation: Scope
         {
+            public static readonly Invocation Instance = new Invocation();
             public override Enumerant Value => Scope.Enumerant.Invocation;
             public new static Invocation Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Invocation();
-                return res;
+                return Instance;
             }
         }
         public class QueueFamily: Scope
         {
+            public static readonly QueueFamily Instance = new QueueFamily();
             public override Enumerant Value => Scope.Enumerant.QueueFamily;
             public new static QueueFamily Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new QueueFamily();
-                return res;
+                return Instance;
             }
         }
         public class QueueFamilyKHR: Scope
         {
+            public static readonly QueueFamilyKHR Instance = new QueueFamilyKHR();
             public override Enumerant Value => Scope.Enumerant.QueueFamilyKHR;
             public new static QueueFamilyKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new QueueFamilyKHR();
-                return res;
+                return Instance;
             }
         }
         public class ShaderCallKHR: Scope
         {
+            public static readonly ShaderCallKHR Instance = new ShaderCallKHR();
             public override Enumerant Value => Scope.Enumerant.ShaderCallKHR;
             public new static ShaderCallKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ShaderCallKHR();
-                return res;
+                return Instance;
             }
         }
 

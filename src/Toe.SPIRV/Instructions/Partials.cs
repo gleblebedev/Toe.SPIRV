@@ -39,31 +39,14 @@ namespace Toe.SPIRV.Instructions
 
     public partial class OpTypeStruct
     {
-        public IList<OpMemberName> MemberNames { get; } = new List<OpMemberName>();
-
-        public IList<OpMemberDecorate> MemberDecorations { get; } = new List<OpMemberDecorate>();
-
         public override uint SizeInWords
         {
             get
             {
                 uint size = 0;
                 foreach (var member in MemberTypes) size += ((TypeInstruction) member.Instruction).SizeInWords;
-
                 return size;
             }
-        }
-
-        public T FindMemberDecoration<T>(uint member) where T : Decoration
-        {
-            return MemberDecorations.Where(_ => _.Member == member).Select(_ => _.Decoration).OfType<T>()
-                .FirstOrDefault();
-        }
-
-        public Decoration FindMemberDecoration(uint member, Decoration.Enumerant id)
-        {
-            return MemberDecorations.Where(_ => _.Member == member && _.Decoration.Value == id)
-                .Select(_ => _.Decoration).FirstOrDefault();
         }
     }
 }

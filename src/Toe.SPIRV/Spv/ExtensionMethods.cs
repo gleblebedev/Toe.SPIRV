@@ -18,6 +18,8 @@ namespace Toe.SPIRV.Spv
 
         public static uint GetWordCount(this IList<IdRef> value)
         {
+            if (value == null)
+                return 0;
             return (uint)value.Count;
         }
 

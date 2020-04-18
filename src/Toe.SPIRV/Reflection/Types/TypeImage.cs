@@ -2,11 +2,11 @@
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvImage : SpirvTypeBase
+    public partial class TypeImage : SpirvTypeBase
     {
-        public SpirvImage():base(SpirvTypeCategory.Image)
+        public TypeImage()
         {
         }
 
@@ -19,7 +19,7 @@ namespace Toe.SPIRV.Reflection
         public Spv.ImageFormat ImageFormat { get; set; }
         public Spv.AccessQualifier AccessQualifier { get; set; }
       
-        public void SetUp(OpTypeImage op, SpirvInstructionTreeBuilder treeBuilder)
+        partial void SetUp(OpTypeImage op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SampledType = treeBuilder.GetNode(op.SampledType);
             Dim = op.Dim;

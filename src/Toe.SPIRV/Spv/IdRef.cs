@@ -54,6 +54,11 @@ namespace Toe.SPIRV.Spv
             return idRef.Instruction;
         }
 
+        public static implicit operator uint(IdRef idRef)
+        {
+            return idRef._id;
+        }
+
         public bool Equals(IdRef other)
         {
             return _id == other._id;
@@ -140,8 +145,6 @@ namespace Toe.SPIRV.Spv
                 return $"#{_id}";
             }
 
-            if (_instruction != null && !string.IsNullOrWhiteSpace(_instruction.OpName?.Value))
-                return $"{_instruction.OpName.Value}";
             if (_instruction != null)
                 return _instruction.ToString();
             return "<null>";

@@ -4,20 +4,21 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="Toe.SPIRV.Reflection" #>
+<#@ import namespace="Toe.SPIRV.Reflection.Types" #>
 #version 450
 
 <#
-foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStructure)_.Type).Distinct())
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(TypeStruct)_.Type).Distinct())
 {
 #>
-struct <#=structDef.Name#>
+struct <#=structDef.DebugName#>
 {
 <#
     foreach (var field in structDef.Fields)
     {
         if (field.Type.TypeCategory == SpirvTypeCategory.Array)
         {
-            var arrayType = (SpirvArrayBase)field.Type;
+            var arrayType = (TypeArray)field.Type;
 #>
     <#=arrayType.ElementType #> <#=field.Name #> [<#=arrayType.Length #>];
 <#
@@ -30,19 +31,19 @@ struct <#=structDef.Name#>
         }
     };
 #>
-}; // end of <#=structDef.Name#>
+}; // end of <#=structDef.DebugName#>
 <#
 };
 #>
 
-layout(set = 0, binding = 0) uniform <#=_fields.Name#>
+layout(set = 0, binding = 0) uniform <#=_fields.DebugName#>
 {
 <#
 foreach (var field in _fields.Fields)
 {
 if (field.Type.TypeCategory == SpirvTypeCategory.Array)
 {
-var arrayType = (SpirvArrayBase)field.Type;
+var arrayType = (TypeArray)field.Type;
 #>
     <#=arrayType.ElementType #> <#=field.Name #> [<#=arrayType.Length #>];
 <#
@@ -160,17 +161,17 @@ int AppendHash(int hash, mat4 m)
     return hash;
 }
 <#
-foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStructure)_.Type).Distinct())
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(TypeStruct)_.Type).Distinct())
 {
 #>
-int AppendHash(int hash, <#=structDef.Name#> m)
+int AppendHash(int hash, <#=structDef.DebugName#> m)
 {
 <#
     foreach (var field in structDef.Fields)
     {
         if (field.Type.TypeCategory == SpirvTypeCategory.Array)
         {
-            var arrayType = (SpirvArrayBase)field.Type;
+            var arrayType = (TypeArray)field.Type;
             for (int i=0; i<arrayType.Length; ++i)
             {
 #>
@@ -187,7 +188,7 @@ int AppendHash(int hash, <#=structDef.Name#> m)
     };
 #>
     return hash;
-} // end of <#=structDef.Name#>
+} // end of <#=structDef.DebugName#>
 <#
 };
 #>
@@ -200,7 +201,7 @@ foreach (var field in _fields.Fields)
 {
 if (field.Type.TypeCategory == SpirvTypeCategory.Array)
 {
-var arrayType = (SpirvArrayBase)field.Type;
+var arrayType = (TypeArray)field.Type;
 for (int i=0; i<arrayType.Length; ++i)
 {
 #>

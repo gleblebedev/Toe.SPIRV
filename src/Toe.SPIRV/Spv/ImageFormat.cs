@@ -90,402 +90,362 @@ namespace Toe.SPIRV.Spv
 
         public class Unknown: ImageFormat
         {
+            public static readonly Unknown Instance = new Unknown();
             public override Enumerant Value => ImageFormat.Enumerant.Unknown;
             public new static Unknown Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Unknown();
-                return res;
+                return Instance;
             }
         }
         public class Rgba32f: ImageFormat
         {
+            public static readonly Rgba32f Instance = new Rgba32f();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba32f;
             public new static Rgba32f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba32f();
-                return res;
+                return Instance;
             }
         }
         public class Rgba16f: ImageFormat
         {
+            public static readonly Rgba16f Instance = new Rgba16f();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba16f;
             public new static Rgba16f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba16f();
-                return res;
+                return Instance;
             }
         }
         public class R32f: ImageFormat
         {
+            public static readonly R32f Instance = new R32f();
             public override Enumerant Value => ImageFormat.Enumerant.R32f;
             public new static R32f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R32f();
-                return res;
+                return Instance;
             }
         }
         public class Rgba8: ImageFormat
         {
+            public static readonly Rgba8 Instance = new Rgba8();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba8;
             public new static Rgba8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba8();
-                return res;
+                return Instance;
             }
         }
         public class Rgba8Snorm: ImageFormat
         {
+            public static readonly Rgba8Snorm Instance = new Rgba8Snorm();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba8Snorm;
             public new static Rgba8Snorm Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba8Snorm();
-                return res;
+                return Instance;
             }
         }
         public class Rg32f: ImageFormat
         {
+            public static readonly Rg32f Instance = new Rg32f();
             public override Enumerant Value => ImageFormat.Enumerant.Rg32f;
             public new static Rg32f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg32f();
-                return res;
+                return Instance;
             }
         }
         public class Rg16f: ImageFormat
         {
+            public static readonly Rg16f Instance = new Rg16f();
             public override Enumerant Value => ImageFormat.Enumerant.Rg16f;
             public new static Rg16f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg16f();
-                return res;
+                return Instance;
             }
         }
         public class R11fG11fB10f: ImageFormat
         {
+            public static readonly R11fG11fB10f Instance = new R11fG11fB10f();
             public override Enumerant Value => ImageFormat.Enumerant.R11fG11fB10f;
             public new static R11fG11fB10f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R11fG11fB10f();
-                return res;
+                return Instance;
             }
         }
         public class R16f: ImageFormat
         {
+            public static readonly R16f Instance = new R16f();
             public override Enumerant Value => ImageFormat.Enumerant.R16f;
             public new static R16f Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R16f();
-                return res;
+                return Instance;
             }
         }
         public class Rgba16: ImageFormat
         {
+            public static readonly Rgba16 Instance = new Rgba16();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba16;
             public new static Rgba16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba16();
-                return res;
+                return Instance;
             }
         }
         public class Rgb10A2: ImageFormat
         {
+            public static readonly Rgb10A2 Instance = new Rgb10A2();
             public override Enumerant Value => ImageFormat.Enumerant.Rgb10A2;
             public new static Rgb10A2 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgb10A2();
-                return res;
+                return Instance;
             }
         }
         public class Rg16: ImageFormat
         {
+            public static readonly Rg16 Instance = new Rg16();
             public override Enumerant Value => ImageFormat.Enumerant.Rg16;
             public new static Rg16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg16();
-                return res;
+                return Instance;
             }
         }
         public class Rg8: ImageFormat
         {
+            public static readonly Rg8 Instance = new Rg8();
             public override Enumerant Value => ImageFormat.Enumerant.Rg8;
             public new static Rg8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg8();
-                return res;
+                return Instance;
             }
         }
         public class R16: ImageFormat
         {
+            public static readonly R16 Instance = new R16();
             public override Enumerant Value => ImageFormat.Enumerant.R16;
             public new static R16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R16();
-                return res;
+                return Instance;
             }
         }
         public class R8: ImageFormat
         {
+            public static readonly R8 Instance = new R8();
             public override Enumerant Value => ImageFormat.Enumerant.R8;
             public new static R8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R8();
-                return res;
+                return Instance;
             }
         }
         public class Rgba16Snorm: ImageFormat
         {
+            public static readonly Rgba16Snorm Instance = new Rgba16Snorm();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba16Snorm;
             public new static Rgba16Snorm Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba16Snorm();
-                return res;
+                return Instance;
             }
         }
         public class Rg16Snorm: ImageFormat
         {
+            public static readonly Rg16Snorm Instance = new Rg16Snorm();
             public override Enumerant Value => ImageFormat.Enumerant.Rg16Snorm;
             public new static Rg16Snorm Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg16Snorm();
-                return res;
+                return Instance;
             }
         }
         public class Rg8Snorm: ImageFormat
         {
+            public static readonly Rg8Snorm Instance = new Rg8Snorm();
             public override Enumerant Value => ImageFormat.Enumerant.Rg8Snorm;
             public new static Rg8Snorm Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg8Snorm();
-                return res;
+                return Instance;
             }
         }
         public class R16Snorm: ImageFormat
         {
+            public static readonly R16Snorm Instance = new R16Snorm();
             public override Enumerant Value => ImageFormat.Enumerant.R16Snorm;
             public new static R16Snorm Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R16Snorm();
-                return res;
+                return Instance;
             }
         }
         public class R8Snorm: ImageFormat
         {
+            public static readonly R8Snorm Instance = new R8Snorm();
             public override Enumerant Value => ImageFormat.Enumerant.R8Snorm;
             public new static R8Snorm Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R8Snorm();
-                return res;
+                return Instance;
             }
         }
         public class Rgba32i: ImageFormat
         {
+            public static readonly Rgba32i Instance = new Rgba32i();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba32i;
             public new static Rgba32i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba32i();
-                return res;
+                return Instance;
             }
         }
         public class Rgba16i: ImageFormat
         {
+            public static readonly Rgba16i Instance = new Rgba16i();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba16i;
             public new static Rgba16i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba16i();
-                return res;
+                return Instance;
             }
         }
         public class Rgba8i: ImageFormat
         {
+            public static readonly Rgba8i Instance = new Rgba8i();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba8i;
             public new static Rgba8i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba8i();
-                return res;
+                return Instance;
             }
         }
         public class R32i: ImageFormat
         {
+            public static readonly R32i Instance = new R32i();
             public override Enumerant Value => ImageFormat.Enumerant.R32i;
             public new static R32i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R32i();
-                return res;
+                return Instance;
             }
         }
         public class Rg32i: ImageFormat
         {
+            public static readonly Rg32i Instance = new Rg32i();
             public override Enumerant Value => ImageFormat.Enumerant.Rg32i;
             public new static Rg32i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg32i();
-                return res;
+                return Instance;
             }
         }
         public class Rg16i: ImageFormat
         {
+            public static readonly Rg16i Instance = new Rg16i();
             public override Enumerant Value => ImageFormat.Enumerant.Rg16i;
             public new static Rg16i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg16i();
-                return res;
+                return Instance;
             }
         }
         public class Rg8i: ImageFormat
         {
+            public static readonly Rg8i Instance = new Rg8i();
             public override Enumerant Value => ImageFormat.Enumerant.Rg8i;
             public new static Rg8i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg8i();
-                return res;
+                return Instance;
             }
         }
         public class R16i: ImageFormat
         {
+            public static readonly R16i Instance = new R16i();
             public override Enumerant Value => ImageFormat.Enumerant.R16i;
             public new static R16i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R16i();
-                return res;
+                return Instance;
             }
         }
         public class R8i: ImageFormat
         {
+            public static readonly R8i Instance = new R8i();
             public override Enumerant Value => ImageFormat.Enumerant.R8i;
             public new static R8i Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R8i();
-                return res;
+                return Instance;
             }
         }
         public class Rgba32ui: ImageFormat
         {
+            public static readonly Rgba32ui Instance = new Rgba32ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba32ui;
             public new static Rgba32ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba32ui();
-                return res;
+                return Instance;
             }
         }
         public class Rgba16ui: ImageFormat
         {
+            public static readonly Rgba16ui Instance = new Rgba16ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba16ui;
             public new static Rgba16ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba16ui();
-                return res;
+                return Instance;
             }
         }
         public class Rgba8ui: ImageFormat
         {
+            public static readonly Rgba8ui Instance = new Rgba8ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rgba8ui;
             public new static Rgba8ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgba8ui();
-                return res;
+                return Instance;
             }
         }
         public class R32ui: ImageFormat
         {
+            public static readonly R32ui Instance = new R32ui();
             public override Enumerant Value => ImageFormat.Enumerant.R32ui;
             public new static R32ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R32ui();
-                return res;
+                return Instance;
             }
         }
         public class Rgb10a2ui: ImageFormat
         {
+            public static readonly Rgb10a2ui Instance = new Rgb10a2ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rgb10a2ui;
             public new static Rgb10a2ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rgb10a2ui();
-                return res;
+                return Instance;
             }
         }
         public class Rg32ui: ImageFormat
         {
+            public static readonly Rg32ui Instance = new Rg32ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rg32ui;
             public new static Rg32ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg32ui();
-                return res;
+                return Instance;
             }
         }
         public class Rg16ui: ImageFormat
         {
+            public static readonly Rg16ui Instance = new Rg16ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rg16ui;
             public new static Rg16ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg16ui();
-                return res;
+                return Instance;
             }
         }
         public class Rg8ui: ImageFormat
         {
+            public static readonly Rg8ui Instance = new Rg8ui();
             public override Enumerant Value => ImageFormat.Enumerant.Rg8ui;
             public new static Rg8ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rg8ui();
-                return res;
+                return Instance;
             }
         }
         public class R16ui: ImageFormat
         {
+            public static readonly R16ui Instance = new R16ui();
             public override Enumerant Value => ImageFormat.Enumerant.R16ui;
             public new static R16ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R16ui();
-                return res;
+                return Instance;
             }
         }
         public class R8ui: ImageFormat
         {
+            public static readonly R8ui Instance = new R8ui();
             public override Enumerant Value => ImageFormat.Enumerant.R8ui;
             public new static R8ui Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R8ui();
-                return res;
+                return Instance;
             }
         }
 

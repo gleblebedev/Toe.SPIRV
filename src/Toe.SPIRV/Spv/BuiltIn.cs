@@ -292,1172 +292,1055 @@ namespace Toe.SPIRV.Spv
 
         public class Position: BuiltIn
         {
+            public static readonly Position Instance = new Position();
             public override Enumerant Value => BuiltIn.Enumerant.Position;
             public new static Position Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Position();
-                return res;
+                return Instance;
             }
         }
         public class PointSize: BuiltIn
         {
+            public static readonly PointSize Instance = new PointSize();
             public override Enumerant Value => BuiltIn.Enumerant.PointSize;
             public new static PointSize Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PointSize();
-                return res;
+                return Instance;
             }
         }
         public class ClipDistance: BuiltIn
         {
+            public static readonly ClipDistance Instance = new ClipDistance();
             public override Enumerant Value => BuiltIn.Enumerant.ClipDistance;
             public new static ClipDistance Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ClipDistance();
-                return res;
+                return Instance;
             }
         }
         public class CullDistance: BuiltIn
         {
+            public static readonly CullDistance Instance = new CullDistance();
             public override Enumerant Value => BuiltIn.Enumerant.CullDistance;
             public new static CullDistance Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CullDistance();
-                return res;
+                return Instance;
             }
         }
         public class VertexId: BuiltIn
         {
+            public static readonly VertexId Instance = new VertexId();
             public override Enumerant Value => BuiltIn.Enumerant.VertexId;
             public new static VertexId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new VertexId();
-                return res;
+                return Instance;
             }
         }
         public class InstanceId: BuiltIn
         {
+            public static readonly InstanceId Instance = new InstanceId();
             public override Enumerant Value => BuiltIn.Enumerant.InstanceId;
             public new static InstanceId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InstanceId();
-                return res;
+                return Instance;
             }
         }
         public class PrimitiveId: BuiltIn
         {
+            public static readonly PrimitiveId Instance = new PrimitiveId();
             public override Enumerant Value => BuiltIn.Enumerant.PrimitiveId;
             public new static PrimitiveId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PrimitiveId();
-                return res;
+                return Instance;
             }
         }
         public class InvocationId: BuiltIn
         {
+            public static readonly InvocationId Instance = new InvocationId();
             public override Enumerant Value => BuiltIn.Enumerant.InvocationId;
             public new static InvocationId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InvocationId();
-                return res;
+                return Instance;
             }
         }
         public class Layer: BuiltIn
         {
+            public static readonly Layer Instance = new Layer();
             public override Enumerant Value => BuiltIn.Enumerant.Layer;
             public new static Layer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Layer();
-                return res;
+                return Instance;
             }
         }
         public class ViewportIndex: BuiltIn
         {
+            public static readonly ViewportIndex Instance = new ViewportIndex();
             public override Enumerant Value => BuiltIn.Enumerant.ViewportIndex;
             public new static ViewportIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ViewportIndex();
-                return res;
+                return Instance;
             }
         }
         public class TessLevelOuter: BuiltIn
         {
+            public static readonly TessLevelOuter Instance = new TessLevelOuter();
             public override Enumerant Value => BuiltIn.Enumerant.TessLevelOuter;
             public new static TessLevelOuter Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TessLevelOuter();
-                return res;
+                return Instance;
             }
         }
         public class TessLevelInner: BuiltIn
         {
+            public static readonly TessLevelInner Instance = new TessLevelInner();
             public override Enumerant Value => BuiltIn.Enumerant.TessLevelInner;
             public new static TessLevelInner Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TessLevelInner();
-                return res;
+                return Instance;
             }
         }
         public class TessCoord: BuiltIn
         {
+            public static readonly TessCoord Instance = new TessCoord();
             public override Enumerant Value => BuiltIn.Enumerant.TessCoord;
             public new static TessCoord Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TessCoord();
-                return res;
+                return Instance;
             }
         }
         public class PatchVertices: BuiltIn
         {
+            public static readonly PatchVertices Instance = new PatchVertices();
             public override Enumerant Value => BuiltIn.Enumerant.PatchVertices;
             public new static PatchVertices Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PatchVertices();
-                return res;
+                return Instance;
             }
         }
         public class FragCoord: BuiltIn
         {
+            public static readonly FragCoord Instance = new FragCoord();
             public override Enumerant Value => BuiltIn.Enumerant.FragCoord;
             public new static FragCoord Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FragCoord();
-                return res;
+                return Instance;
             }
         }
         public class PointCoord: BuiltIn
         {
+            public static readonly PointCoord Instance = new PointCoord();
             public override Enumerant Value => BuiltIn.Enumerant.PointCoord;
             public new static PointCoord Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PointCoord();
-                return res;
+                return Instance;
             }
         }
         public class FrontFacing: BuiltIn
         {
+            public static readonly FrontFacing Instance = new FrontFacing();
             public override Enumerant Value => BuiltIn.Enumerant.FrontFacing;
             public new static FrontFacing Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FrontFacing();
-                return res;
+                return Instance;
             }
         }
         public class SampleId: BuiltIn
         {
+            public static readonly SampleId Instance = new SampleId();
             public override Enumerant Value => BuiltIn.Enumerant.SampleId;
             public new static SampleId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SampleId();
-                return res;
+                return Instance;
             }
         }
         public class SamplePosition: BuiltIn
         {
+            public static readonly SamplePosition Instance = new SamplePosition();
             public override Enumerant Value => BuiltIn.Enumerant.SamplePosition;
             public new static SamplePosition Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SamplePosition();
-                return res;
+                return Instance;
             }
         }
         public class SampleMask: BuiltIn
         {
+            public static readonly SampleMask Instance = new SampleMask();
             public override Enumerant Value => BuiltIn.Enumerant.SampleMask;
             public new static SampleMask Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SampleMask();
-                return res;
+                return Instance;
             }
         }
         public class FragDepth: BuiltIn
         {
+            public static readonly FragDepth Instance = new FragDepth();
             public override Enumerant Value => BuiltIn.Enumerant.FragDepth;
             public new static FragDepth Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FragDepth();
-                return res;
+                return Instance;
             }
         }
         public class HelperInvocation: BuiltIn
         {
+            public static readonly HelperInvocation Instance = new HelperInvocation();
             public override Enumerant Value => BuiltIn.Enumerant.HelperInvocation;
             public new static HelperInvocation Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HelperInvocation();
-                return res;
+                return Instance;
             }
         }
         public class NumWorkgroups: BuiltIn
         {
+            public static readonly NumWorkgroups Instance = new NumWorkgroups();
             public override Enumerant Value => BuiltIn.Enumerant.NumWorkgroups;
             public new static NumWorkgroups Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NumWorkgroups();
-                return res;
+                return Instance;
             }
         }
         public class WorkgroupSize: BuiltIn
         {
+            public static readonly WorkgroupSize Instance = new WorkgroupSize();
             public override Enumerant Value => BuiltIn.Enumerant.WorkgroupSize;
             public new static WorkgroupSize Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorkgroupSize();
-                return res;
+                return Instance;
             }
         }
         public class WorkgroupId: BuiltIn
         {
+            public static readonly WorkgroupId Instance = new WorkgroupId();
             public override Enumerant Value => BuiltIn.Enumerant.WorkgroupId;
             public new static WorkgroupId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorkgroupId();
-                return res;
+                return Instance;
             }
         }
         public class LocalInvocationId: BuiltIn
         {
+            public static readonly LocalInvocationId Instance = new LocalInvocationId();
             public override Enumerant Value => BuiltIn.Enumerant.LocalInvocationId;
             public new static LocalInvocationId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LocalInvocationId();
-                return res;
+                return Instance;
             }
         }
         public class GlobalInvocationId: BuiltIn
         {
+            public static readonly GlobalInvocationId Instance = new GlobalInvocationId();
             public override Enumerant Value => BuiltIn.Enumerant.GlobalInvocationId;
             public new static GlobalInvocationId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GlobalInvocationId();
-                return res;
+                return Instance;
             }
         }
         public class LocalInvocationIndex: BuiltIn
         {
+            public static readonly LocalInvocationIndex Instance = new LocalInvocationIndex();
             public override Enumerant Value => BuiltIn.Enumerant.LocalInvocationIndex;
             public new static LocalInvocationIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LocalInvocationIndex();
-                return res;
+                return Instance;
             }
         }
         public class WorkDim: BuiltIn
         {
+            public static readonly WorkDim Instance = new WorkDim();
             public override Enumerant Value => BuiltIn.Enumerant.WorkDim;
             public new static WorkDim Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorkDim();
-                return res;
+                return Instance;
             }
         }
         public class GlobalSize: BuiltIn
         {
+            public static readonly GlobalSize Instance = new GlobalSize();
             public override Enumerant Value => BuiltIn.Enumerant.GlobalSize;
             public new static GlobalSize Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GlobalSize();
-                return res;
+                return Instance;
             }
         }
         public class EnqueuedWorkgroupSize: BuiltIn
         {
+            public static readonly EnqueuedWorkgroupSize Instance = new EnqueuedWorkgroupSize();
             public override Enumerant Value => BuiltIn.Enumerant.EnqueuedWorkgroupSize;
             public new static EnqueuedWorkgroupSize Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new EnqueuedWorkgroupSize();
-                return res;
+                return Instance;
             }
         }
         public class GlobalOffset: BuiltIn
         {
+            public static readonly GlobalOffset Instance = new GlobalOffset();
             public override Enumerant Value => BuiltIn.Enumerant.GlobalOffset;
             public new static GlobalOffset Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GlobalOffset();
-                return res;
+                return Instance;
             }
         }
         public class GlobalLinearId: BuiltIn
         {
+            public static readonly GlobalLinearId Instance = new GlobalLinearId();
             public override Enumerant Value => BuiltIn.Enumerant.GlobalLinearId;
             public new static GlobalLinearId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GlobalLinearId();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupSize: BuiltIn
         {
+            public static readonly SubgroupSize Instance = new SubgroupSize();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupSize;
             public new static SubgroupSize Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupSize();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupMaxSize: BuiltIn
         {
+            public static readonly SubgroupMaxSize Instance = new SubgroupMaxSize();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupMaxSize;
             public new static SubgroupMaxSize Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupMaxSize();
-                return res;
+                return Instance;
             }
         }
         public class NumSubgroups: BuiltIn
         {
+            public static readonly NumSubgroups Instance = new NumSubgroups();
             public override Enumerant Value => BuiltIn.Enumerant.NumSubgroups;
             public new static NumSubgroups Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NumSubgroups();
-                return res;
+                return Instance;
             }
         }
         public class NumEnqueuedSubgroups: BuiltIn
         {
+            public static readonly NumEnqueuedSubgroups Instance = new NumEnqueuedSubgroups();
             public override Enumerant Value => BuiltIn.Enumerant.NumEnqueuedSubgroups;
             public new static NumEnqueuedSubgroups Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NumEnqueuedSubgroups();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupId: BuiltIn
         {
+            public static readonly SubgroupId Instance = new SubgroupId();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupId;
             public new static SubgroupId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupId();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupLocalInvocationId: BuiltIn
         {
+            public static readonly SubgroupLocalInvocationId Instance = new SubgroupLocalInvocationId();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLocalInvocationId;
             public new static SubgroupLocalInvocationId Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupLocalInvocationId();
-                return res;
+                return Instance;
             }
         }
         public class VertexIndex: BuiltIn
         {
+            public static readonly VertexIndex Instance = new VertexIndex();
             public override Enumerant Value => BuiltIn.Enumerant.VertexIndex;
             public new static VertexIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new VertexIndex();
-                return res;
+                return Instance;
             }
         }
         public class InstanceIndex: BuiltIn
         {
+            public static readonly InstanceIndex Instance = new InstanceIndex();
             public override Enumerant Value => BuiltIn.Enumerant.InstanceIndex;
             public new static InstanceIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InstanceIndex();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupEqMask: BuiltIn
         {
+            public static readonly SubgroupEqMask Instance = new SubgroupEqMask();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupEqMask;
             public new static SubgroupEqMask Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupEqMask();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupGeMask: BuiltIn
         {
+            public static readonly SubgroupGeMask Instance = new SubgroupGeMask();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGeMask;
             public new static SubgroupGeMask Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupGeMask();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupGtMask: BuiltIn
         {
+            public static readonly SubgroupGtMask Instance = new SubgroupGtMask();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGtMask;
             public new static SubgroupGtMask Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupGtMask();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupLeMask: BuiltIn
         {
+            public static readonly SubgroupLeMask Instance = new SubgroupLeMask();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLeMask;
             public new static SubgroupLeMask Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupLeMask();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupLtMask: BuiltIn
         {
+            public static readonly SubgroupLtMask Instance = new SubgroupLtMask();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLtMask;
             public new static SubgroupLtMask Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupLtMask();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupEqMaskKHR: BuiltIn
         {
+            public static readonly SubgroupEqMaskKHR Instance = new SubgroupEqMaskKHR();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupEqMaskKHR;
             public new static SubgroupEqMaskKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupEqMaskKHR();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupGeMaskKHR: BuiltIn
         {
+            public static readonly SubgroupGeMaskKHR Instance = new SubgroupGeMaskKHR();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGeMaskKHR;
             public new static SubgroupGeMaskKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupGeMaskKHR();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupGtMaskKHR: BuiltIn
         {
+            public static readonly SubgroupGtMaskKHR Instance = new SubgroupGtMaskKHR();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGtMaskKHR;
             public new static SubgroupGtMaskKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupGtMaskKHR();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupLeMaskKHR: BuiltIn
         {
+            public static readonly SubgroupLeMaskKHR Instance = new SubgroupLeMaskKHR();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLeMaskKHR;
             public new static SubgroupLeMaskKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupLeMaskKHR();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupLtMaskKHR: BuiltIn
         {
+            public static readonly SubgroupLtMaskKHR Instance = new SubgroupLtMaskKHR();
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLtMaskKHR;
             public new static SubgroupLtMaskKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubgroupLtMaskKHR();
-                return res;
+                return Instance;
             }
         }
         public class BaseVertex: BuiltIn
         {
+            public static readonly BaseVertex Instance = new BaseVertex();
             public override Enumerant Value => BuiltIn.Enumerant.BaseVertex;
             public new static BaseVertex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaseVertex();
-                return res;
+                return Instance;
             }
         }
         public class BaseInstance: BuiltIn
         {
+            public static readonly BaseInstance Instance = new BaseInstance();
             public override Enumerant Value => BuiltIn.Enumerant.BaseInstance;
             public new static BaseInstance Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaseInstance();
-                return res;
+                return Instance;
             }
         }
         public class DrawIndex: BuiltIn
         {
+            public static readonly DrawIndex Instance = new DrawIndex();
             public override Enumerant Value => BuiltIn.Enumerant.DrawIndex;
             public new static DrawIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DrawIndex();
-                return res;
+                return Instance;
             }
         }
         public class DeviceIndex: BuiltIn
         {
+            public static readonly DeviceIndex Instance = new DeviceIndex();
             public override Enumerant Value => BuiltIn.Enumerant.DeviceIndex;
             public new static DeviceIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DeviceIndex();
-                return res;
+                return Instance;
             }
         }
         public class ViewIndex: BuiltIn
         {
+            public static readonly ViewIndex Instance = new ViewIndex();
             public override Enumerant Value => BuiltIn.Enumerant.ViewIndex;
             public new static ViewIndex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ViewIndex();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordNoPerspAMD: BuiltIn
         {
+            public static readonly BaryCoordNoPerspAMD Instance = new BaryCoordNoPerspAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspAMD;
             public new static BaryCoordNoPerspAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordNoPerspAMD();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordNoPerspCentroidAMD: BuiltIn
         {
+            public static readonly BaryCoordNoPerspCentroidAMD Instance = new BaryCoordNoPerspCentroidAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspCentroidAMD;
             public new static BaryCoordNoPerspCentroidAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordNoPerspCentroidAMD();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordNoPerspSampleAMD: BuiltIn
         {
+            public static readonly BaryCoordNoPerspSampleAMD Instance = new BaryCoordNoPerspSampleAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspSampleAMD;
             public new static BaryCoordNoPerspSampleAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordNoPerspSampleAMD();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordSmoothAMD: BuiltIn
         {
+            public static readonly BaryCoordSmoothAMD Instance = new BaryCoordSmoothAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordSmoothAMD;
             public new static BaryCoordSmoothAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordSmoothAMD();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordSmoothCentroidAMD: BuiltIn
         {
+            public static readonly BaryCoordSmoothCentroidAMD Instance = new BaryCoordSmoothCentroidAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordSmoothCentroidAMD;
             public new static BaryCoordSmoothCentroidAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordSmoothCentroidAMD();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordSmoothSampleAMD: BuiltIn
         {
+            public static readonly BaryCoordSmoothSampleAMD Instance = new BaryCoordSmoothSampleAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordSmoothSampleAMD;
             public new static BaryCoordSmoothSampleAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordSmoothSampleAMD();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordPullModelAMD: BuiltIn
         {
+            public static readonly BaryCoordPullModelAMD Instance = new BaryCoordPullModelAMD();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordPullModelAMD;
             public new static BaryCoordPullModelAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordPullModelAMD();
-                return res;
+                return Instance;
             }
         }
         public class FragStencilRefEXT: BuiltIn
         {
+            public static readonly FragStencilRefEXT Instance = new FragStencilRefEXT();
             public override Enumerant Value => BuiltIn.Enumerant.FragStencilRefEXT;
             public new static FragStencilRefEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FragStencilRefEXT();
-                return res;
+                return Instance;
             }
         }
         public class ViewportMaskNV: BuiltIn
         {
+            public static readonly ViewportMaskNV Instance = new ViewportMaskNV();
             public override Enumerant Value => BuiltIn.Enumerant.ViewportMaskNV;
             public new static ViewportMaskNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ViewportMaskNV();
-                return res;
+                return Instance;
             }
         }
         public class SecondaryPositionNV: BuiltIn
         {
+            public static readonly SecondaryPositionNV Instance = new SecondaryPositionNV();
             public override Enumerant Value => BuiltIn.Enumerant.SecondaryPositionNV;
             public new static SecondaryPositionNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SecondaryPositionNV();
-                return res;
+                return Instance;
             }
         }
         public class SecondaryViewportMaskNV: BuiltIn
         {
+            public static readonly SecondaryViewportMaskNV Instance = new SecondaryViewportMaskNV();
             public override Enumerant Value => BuiltIn.Enumerant.SecondaryViewportMaskNV;
             public new static SecondaryViewportMaskNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SecondaryViewportMaskNV();
-                return res;
+                return Instance;
             }
         }
         public class PositionPerViewNV: BuiltIn
         {
+            public static readonly PositionPerViewNV Instance = new PositionPerViewNV();
             public override Enumerant Value => BuiltIn.Enumerant.PositionPerViewNV;
             public new static PositionPerViewNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PositionPerViewNV();
-                return res;
+                return Instance;
             }
         }
         public class ViewportMaskPerViewNV: BuiltIn
         {
+            public static readonly ViewportMaskPerViewNV Instance = new ViewportMaskPerViewNV();
             public override Enumerant Value => BuiltIn.Enumerant.ViewportMaskPerViewNV;
             public new static ViewportMaskPerViewNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ViewportMaskPerViewNV();
-                return res;
+                return Instance;
             }
         }
         public class FullyCoveredEXT: BuiltIn
         {
+            public static readonly FullyCoveredEXT Instance = new FullyCoveredEXT();
             public override Enumerant Value => BuiltIn.Enumerant.FullyCoveredEXT;
             public new static FullyCoveredEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FullyCoveredEXT();
-                return res;
+                return Instance;
             }
         }
         public class TaskCountNV: BuiltIn
         {
+            public static readonly TaskCountNV Instance = new TaskCountNV();
             public override Enumerant Value => BuiltIn.Enumerant.TaskCountNV;
             public new static TaskCountNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TaskCountNV();
-                return res;
+                return Instance;
             }
         }
         public class PrimitiveCountNV: BuiltIn
         {
+            public static readonly PrimitiveCountNV Instance = new PrimitiveCountNV();
             public override Enumerant Value => BuiltIn.Enumerant.PrimitiveCountNV;
             public new static PrimitiveCountNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PrimitiveCountNV();
-                return res;
+                return Instance;
             }
         }
         public class PrimitiveIndicesNV: BuiltIn
         {
+            public static readonly PrimitiveIndicesNV Instance = new PrimitiveIndicesNV();
             public override Enumerant Value => BuiltIn.Enumerant.PrimitiveIndicesNV;
             public new static PrimitiveIndicesNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PrimitiveIndicesNV();
-                return res;
+                return Instance;
             }
         }
         public class ClipDistancePerViewNV: BuiltIn
         {
+            public static readonly ClipDistancePerViewNV Instance = new ClipDistancePerViewNV();
             public override Enumerant Value => BuiltIn.Enumerant.ClipDistancePerViewNV;
             public new static ClipDistancePerViewNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ClipDistancePerViewNV();
-                return res;
+                return Instance;
             }
         }
         public class CullDistancePerViewNV: BuiltIn
         {
+            public static readonly CullDistancePerViewNV Instance = new CullDistancePerViewNV();
             public override Enumerant Value => BuiltIn.Enumerant.CullDistancePerViewNV;
             public new static CullDistancePerViewNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CullDistancePerViewNV();
-                return res;
+                return Instance;
             }
         }
         public class LayerPerViewNV: BuiltIn
         {
+            public static readonly LayerPerViewNV Instance = new LayerPerViewNV();
             public override Enumerant Value => BuiltIn.Enumerant.LayerPerViewNV;
             public new static LayerPerViewNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LayerPerViewNV();
-                return res;
+                return Instance;
             }
         }
         public class MeshViewCountNV: BuiltIn
         {
+            public static readonly MeshViewCountNV Instance = new MeshViewCountNV();
             public override Enumerant Value => BuiltIn.Enumerant.MeshViewCountNV;
             public new static MeshViewCountNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new MeshViewCountNV();
-                return res;
+                return Instance;
             }
         }
         public class MeshViewIndicesNV: BuiltIn
         {
+            public static readonly MeshViewIndicesNV Instance = new MeshViewIndicesNV();
             public override Enumerant Value => BuiltIn.Enumerant.MeshViewIndicesNV;
             public new static MeshViewIndicesNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new MeshViewIndicesNV();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordNV: BuiltIn
         {
+            public static readonly BaryCoordNV Instance = new BaryCoordNV();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNV;
             public new static BaryCoordNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordNV();
-                return res;
+                return Instance;
             }
         }
         public class BaryCoordNoPerspNV: BuiltIn
         {
+            public static readonly BaryCoordNoPerspNV Instance = new BaryCoordNoPerspNV();
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspNV;
             public new static BaryCoordNoPerspNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BaryCoordNoPerspNV();
-                return res;
+                return Instance;
             }
         }
         public class FragSizeEXT: BuiltIn
         {
+            public static readonly FragSizeEXT Instance = new FragSizeEXT();
             public override Enumerant Value => BuiltIn.Enumerant.FragSizeEXT;
             public new static FragSizeEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FragSizeEXT();
-                return res;
+                return Instance;
             }
         }
         public class FragmentSizeNV: BuiltIn
         {
+            public static readonly FragmentSizeNV Instance = new FragmentSizeNV();
             public override Enumerant Value => BuiltIn.Enumerant.FragmentSizeNV;
             public new static FragmentSizeNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FragmentSizeNV();
-                return res;
+                return Instance;
             }
         }
         public class FragInvocationCountEXT: BuiltIn
         {
+            public static readonly FragInvocationCountEXT Instance = new FragInvocationCountEXT();
             public override Enumerant Value => BuiltIn.Enumerant.FragInvocationCountEXT;
             public new static FragInvocationCountEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new FragInvocationCountEXT();
-                return res;
+                return Instance;
             }
         }
         public class InvocationsPerPixelNV: BuiltIn
         {
+            public static readonly InvocationsPerPixelNV Instance = new InvocationsPerPixelNV();
             public override Enumerant Value => BuiltIn.Enumerant.InvocationsPerPixelNV;
             public new static InvocationsPerPixelNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InvocationsPerPixelNV();
-                return res;
+                return Instance;
             }
         }
         public class LaunchIdNV: BuiltIn
         {
+            public static readonly LaunchIdNV Instance = new LaunchIdNV();
             public override Enumerant Value => BuiltIn.Enumerant.LaunchIdNV;
             public new static LaunchIdNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LaunchIdNV();
-                return res;
+                return Instance;
             }
         }
         public class LaunchIdKHR: BuiltIn
         {
+            public static readonly LaunchIdKHR Instance = new LaunchIdKHR();
             public override Enumerant Value => BuiltIn.Enumerant.LaunchIdKHR;
             public new static LaunchIdKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LaunchIdKHR();
-                return res;
+                return Instance;
             }
         }
         public class LaunchSizeNV: BuiltIn
         {
+            public static readonly LaunchSizeNV Instance = new LaunchSizeNV();
             public override Enumerant Value => BuiltIn.Enumerant.LaunchSizeNV;
             public new static LaunchSizeNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LaunchSizeNV();
-                return res;
+                return Instance;
             }
         }
         public class LaunchSizeKHR: BuiltIn
         {
+            public static readonly LaunchSizeKHR Instance = new LaunchSizeKHR();
             public override Enumerant Value => BuiltIn.Enumerant.LaunchSizeKHR;
             public new static LaunchSizeKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new LaunchSizeKHR();
-                return res;
+                return Instance;
             }
         }
         public class WorldRayOriginNV: BuiltIn
         {
+            public static readonly WorldRayOriginNV Instance = new WorldRayOriginNV();
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayOriginNV;
             public new static WorldRayOriginNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorldRayOriginNV();
-                return res;
+                return Instance;
             }
         }
         public class WorldRayOriginKHR: BuiltIn
         {
+            public static readonly WorldRayOriginKHR Instance = new WorldRayOriginKHR();
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayOriginKHR;
             public new static WorldRayOriginKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorldRayOriginKHR();
-                return res;
+                return Instance;
             }
         }
         public class WorldRayDirectionNV: BuiltIn
         {
+            public static readonly WorldRayDirectionNV Instance = new WorldRayDirectionNV();
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayDirectionNV;
             public new static WorldRayDirectionNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorldRayDirectionNV();
-                return res;
+                return Instance;
             }
         }
         public class WorldRayDirectionKHR: BuiltIn
         {
+            public static readonly WorldRayDirectionKHR Instance = new WorldRayDirectionKHR();
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayDirectionKHR;
             public new static WorldRayDirectionKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorldRayDirectionKHR();
-                return res;
+                return Instance;
             }
         }
         public class ObjectRayOriginNV: BuiltIn
         {
+            public static readonly ObjectRayOriginNV Instance = new ObjectRayOriginNV();
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayOriginNV;
             public new static ObjectRayOriginNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ObjectRayOriginNV();
-                return res;
+                return Instance;
             }
         }
         public class ObjectRayOriginKHR: BuiltIn
         {
+            public static readonly ObjectRayOriginKHR Instance = new ObjectRayOriginKHR();
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayOriginKHR;
             public new static ObjectRayOriginKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ObjectRayOriginKHR();
-                return res;
+                return Instance;
             }
         }
         public class ObjectRayDirectionNV: BuiltIn
         {
+            public static readonly ObjectRayDirectionNV Instance = new ObjectRayDirectionNV();
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayDirectionNV;
             public new static ObjectRayDirectionNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ObjectRayDirectionNV();
-                return res;
+                return Instance;
             }
         }
         public class ObjectRayDirectionKHR: BuiltIn
         {
+            public static readonly ObjectRayDirectionKHR Instance = new ObjectRayDirectionKHR();
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayDirectionKHR;
             public new static ObjectRayDirectionKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ObjectRayDirectionKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayTminNV: BuiltIn
         {
+            public static readonly RayTminNV Instance = new RayTminNV();
             public override Enumerant Value => BuiltIn.Enumerant.RayTminNV;
             public new static RayTminNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayTminNV();
-                return res;
+                return Instance;
             }
         }
         public class RayTminKHR: BuiltIn
         {
+            public static readonly RayTminKHR Instance = new RayTminKHR();
             public override Enumerant Value => BuiltIn.Enumerant.RayTminKHR;
             public new static RayTminKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayTminKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayTmaxNV: BuiltIn
         {
+            public static readonly RayTmaxNV Instance = new RayTmaxNV();
             public override Enumerant Value => BuiltIn.Enumerant.RayTmaxNV;
             public new static RayTmaxNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayTmaxNV();
-                return res;
+                return Instance;
             }
         }
         public class RayTmaxKHR: BuiltIn
         {
+            public static readonly RayTmaxKHR Instance = new RayTmaxKHR();
             public override Enumerant Value => BuiltIn.Enumerant.RayTmaxKHR;
             public new static RayTmaxKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayTmaxKHR();
-                return res;
+                return Instance;
             }
         }
         public class InstanceCustomIndexNV: BuiltIn
         {
+            public static readonly InstanceCustomIndexNV Instance = new InstanceCustomIndexNV();
             public override Enumerant Value => BuiltIn.Enumerant.InstanceCustomIndexNV;
             public new static InstanceCustomIndexNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InstanceCustomIndexNV();
-                return res;
+                return Instance;
             }
         }
         public class InstanceCustomIndexKHR: BuiltIn
         {
+            public static readonly InstanceCustomIndexKHR Instance = new InstanceCustomIndexKHR();
             public override Enumerant Value => BuiltIn.Enumerant.InstanceCustomIndexKHR;
             public new static InstanceCustomIndexKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InstanceCustomIndexKHR();
-                return res;
+                return Instance;
             }
         }
         public class ObjectToWorldNV: BuiltIn
         {
+            public static readonly ObjectToWorldNV Instance = new ObjectToWorldNV();
             public override Enumerant Value => BuiltIn.Enumerant.ObjectToWorldNV;
             public new static ObjectToWorldNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ObjectToWorldNV();
-                return res;
+                return Instance;
             }
         }
         public class ObjectToWorldKHR: BuiltIn
         {
+            public static readonly ObjectToWorldKHR Instance = new ObjectToWorldKHR();
             public override Enumerant Value => BuiltIn.Enumerant.ObjectToWorldKHR;
             public new static ObjectToWorldKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ObjectToWorldKHR();
-                return res;
+                return Instance;
             }
         }
         public class WorldToObjectNV: BuiltIn
         {
+            public static readonly WorldToObjectNV Instance = new WorldToObjectNV();
             public override Enumerant Value => BuiltIn.Enumerant.WorldToObjectNV;
             public new static WorldToObjectNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorldToObjectNV();
-                return res;
+                return Instance;
             }
         }
         public class WorldToObjectKHR: BuiltIn
         {
+            public static readonly WorldToObjectKHR Instance = new WorldToObjectKHR();
             public override Enumerant Value => BuiltIn.Enumerant.WorldToObjectKHR;
             public new static WorldToObjectKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WorldToObjectKHR();
-                return res;
+                return Instance;
             }
         }
         public class HitTNV: BuiltIn
         {
+            public static readonly HitTNV Instance = new HitTNV();
             public override Enumerant Value => BuiltIn.Enumerant.HitTNV;
             public new static HitTNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HitTNV();
-                return res;
+                return Instance;
             }
         }
         public class HitTKHR: BuiltIn
         {
+            public static readonly HitTKHR Instance = new HitTKHR();
             public override Enumerant Value => BuiltIn.Enumerant.HitTKHR;
             public new static HitTKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HitTKHR();
-                return res;
+                return Instance;
             }
         }
         public class HitKindNV: BuiltIn
         {
+            public static readonly HitKindNV Instance = new HitKindNV();
             public override Enumerant Value => BuiltIn.Enumerant.HitKindNV;
             public new static HitKindNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HitKindNV();
-                return res;
+                return Instance;
             }
         }
         public class HitKindKHR: BuiltIn
         {
+            public static readonly HitKindKHR Instance = new HitKindKHR();
             public override Enumerant Value => BuiltIn.Enumerant.HitKindKHR;
             public new static HitKindKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HitKindKHR();
-                return res;
+                return Instance;
             }
         }
         public class IncomingRayFlagsNV: BuiltIn
         {
+            public static readonly IncomingRayFlagsNV Instance = new IncomingRayFlagsNV();
             public override Enumerant Value => BuiltIn.Enumerant.IncomingRayFlagsNV;
             public new static IncomingRayFlagsNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IncomingRayFlagsNV();
-                return res;
+                return Instance;
             }
         }
         public class IncomingRayFlagsKHR: BuiltIn
         {
+            public static readonly IncomingRayFlagsKHR Instance = new IncomingRayFlagsKHR();
             public override Enumerant Value => BuiltIn.Enumerant.IncomingRayFlagsKHR;
             public new static IncomingRayFlagsKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IncomingRayFlagsKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayGeometryIndexKHR: BuiltIn
         {
+            public static readonly RayGeometryIndexKHR Instance = new RayGeometryIndexKHR();
             public override Enumerant Value => BuiltIn.Enumerant.RayGeometryIndexKHR;
             public new static RayGeometryIndexKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayGeometryIndexKHR();
-                return res;
+                return Instance;
             }
         }
         public class WarpsPerSMNV: BuiltIn
         {
+            public static readonly WarpsPerSMNV Instance = new WarpsPerSMNV();
             public override Enumerant Value => BuiltIn.Enumerant.WarpsPerSMNV;
             public new static WarpsPerSMNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WarpsPerSMNV();
-                return res;
+                return Instance;
             }
         }
         public class SMCountNV: BuiltIn
         {
+            public static readonly SMCountNV Instance = new SMCountNV();
             public override Enumerant Value => BuiltIn.Enumerant.SMCountNV;
             public new static SMCountNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SMCountNV();
-                return res;
+                return Instance;
             }
         }
         public class WarpIDNV: BuiltIn
         {
+            public static readonly WarpIDNV Instance = new WarpIDNV();
             public override Enumerant Value => BuiltIn.Enumerant.WarpIDNV;
             public new static WarpIDNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WarpIDNV();
-                return res;
+                return Instance;
             }
         }
         public class SMIDNV: BuiltIn
         {
+            public static readonly SMIDNV Instance = new SMIDNV();
             public override Enumerant Value => BuiltIn.Enumerant.SMIDNV;
             public new static SMIDNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SMIDNV();
-                return res;
+                return Instance;
             }
         }
 

@@ -1,10 +1,10 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿namespace Toe.SPIRV.Reflection.Types
 {
-    public class SpirvFunctionArgument
+    public class TypeFunctionArgument
     {
         private readonly SpirvTypeBase _type;
 
-        public SpirvFunctionArgument(SpirvTypeBase type)
+        public TypeFunctionArgument(SpirvTypeBase type)
         {
             _type = type;
         }

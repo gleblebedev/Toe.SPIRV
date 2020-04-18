@@ -134,12 +134,11 @@ namespace Toe.SPIRV.Spv
 
         public class RelaxedPrecision: Decoration
         {
+            public static readonly RelaxedPrecision Instance = new RelaxedPrecision();
             public override Enumerant Value => Decoration.Enumerant.RelaxedPrecision;
             public new static RelaxedPrecision Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RelaxedPrecision();
-                return res;
+                return Instance;
             }
         }
         public class SpecId: Decoration
@@ -168,42 +167,38 @@ namespace Toe.SPIRV.Spv
         }
         public class Block: Decoration
         {
+            public static readonly Block Instance = new Block();
             public override Enumerant Value => Decoration.Enumerant.Block;
             public new static Block Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Block();
-                return res;
+                return Instance;
             }
         }
         public class BufferBlock: Decoration
         {
+            public static readonly BufferBlock Instance = new BufferBlock();
             public override Enumerant Value => Decoration.Enumerant.BufferBlock;
             public new static BufferBlock Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BufferBlock();
-                return res;
+                return Instance;
             }
         }
         public class RowMajor: Decoration
         {
+            public static readonly RowMajor Instance = new RowMajor();
             public override Enumerant Value => Decoration.Enumerant.RowMajor;
             public new static RowMajor Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RowMajor();
-                return res;
+                return Instance;
             }
         }
         public class ColMajor: Decoration
         {
+            public static readonly ColMajor Instance = new ColMajor();
             public override Enumerant Value => Decoration.Enumerant.ColMajor;
             public new static ColMajor Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ColMajor();
-                return res;
+                return Instance;
             }
         }
         public class ArrayStride: Decoration
@@ -256,32 +251,29 @@ namespace Toe.SPIRV.Spv
         }
         public class GLSLShared: Decoration
         {
+            public static readonly GLSLShared Instance = new GLSLShared();
             public override Enumerant Value => Decoration.Enumerant.GLSLShared;
             public new static GLSLShared Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GLSLShared();
-                return res;
+                return Instance;
             }
         }
         public class GLSLPacked: Decoration
         {
+            public static readonly GLSLPacked Instance = new GLSLPacked();
             public override Enumerant Value => Decoration.Enumerant.GLSLPacked;
             public new static GLSLPacked Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GLSLPacked();
-                return res;
+                return Instance;
             }
         }
         public class CPacked: Decoration
         {
+            public static readonly CPacked Instance = new CPacked();
             public override Enumerant Value => Decoration.Enumerant.CPacked;
             public new static CPacked Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CPacked();
-                return res;
+                return Instance;
             }
         }
         public class BuiltIn: Decoration
@@ -310,142 +302,128 @@ namespace Toe.SPIRV.Spv
         }
         public class NoPerspective: Decoration
         {
+            public static readonly NoPerspective Instance = new NoPerspective();
             public override Enumerant Value => Decoration.Enumerant.NoPerspective;
             public new static NoPerspective Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoPerspective();
-                return res;
+                return Instance;
             }
         }
         public class Flat: Decoration
         {
+            public static readonly Flat Instance = new Flat();
             public override Enumerant Value => Decoration.Enumerant.Flat;
             public new static Flat Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Flat();
-                return res;
+                return Instance;
             }
         }
         public class Patch: Decoration
         {
+            public static readonly Patch Instance = new Patch();
             public override Enumerant Value => Decoration.Enumerant.Patch;
             public new static Patch Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Patch();
-                return res;
+                return Instance;
             }
         }
         public class Centroid: Decoration
         {
+            public static readonly Centroid Instance = new Centroid();
             public override Enumerant Value => Decoration.Enumerant.Centroid;
             public new static Centroid Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Centroid();
-                return res;
+                return Instance;
             }
         }
         public class Sample: Decoration
         {
+            public static readonly Sample Instance = new Sample();
             public override Enumerant Value => Decoration.Enumerant.Sample;
             public new static Sample Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Sample();
-                return res;
+                return Instance;
             }
         }
         public class Invariant: Decoration
         {
+            public static readonly Invariant Instance = new Invariant();
             public override Enumerant Value => Decoration.Enumerant.Invariant;
             public new static Invariant Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Invariant();
-                return res;
+                return Instance;
             }
         }
         public class Restrict: Decoration
         {
+            public static readonly Restrict Instance = new Restrict();
             public override Enumerant Value => Decoration.Enumerant.Restrict;
             public new static Restrict Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Restrict();
-                return res;
+                return Instance;
             }
         }
         public class Aliased: Decoration
         {
+            public static readonly Aliased Instance = new Aliased();
             public override Enumerant Value => Decoration.Enumerant.Aliased;
             public new static Aliased Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Aliased();
-                return res;
+                return Instance;
             }
         }
         public class Volatile: Decoration
         {
+            public static readonly Volatile Instance = new Volatile();
             public override Enumerant Value => Decoration.Enumerant.Volatile;
             public new static Volatile Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Volatile();
-                return res;
+                return Instance;
             }
         }
         public class Constant: Decoration
         {
+            public static readonly Constant Instance = new Constant();
             public override Enumerant Value => Decoration.Enumerant.Constant;
             public new static Constant Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Constant();
-                return res;
+                return Instance;
             }
         }
         public class Coherent: Decoration
         {
+            public static readonly Coherent Instance = new Coherent();
             public override Enumerant Value => Decoration.Enumerant.Coherent;
             public new static Coherent Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Coherent();
-                return res;
+                return Instance;
             }
         }
         public class NonWritable: Decoration
         {
+            public static readonly NonWritable Instance = new NonWritable();
             public override Enumerant Value => Decoration.Enumerant.NonWritable;
             public new static NonWritable Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NonWritable();
-                return res;
+                return Instance;
             }
         }
         public class NonReadable: Decoration
         {
+            public static readonly NonReadable Instance = new NonReadable();
             public override Enumerant Value => Decoration.Enumerant.NonReadable;
             public new static NonReadable Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NonReadable();
-                return res;
+                return Instance;
             }
         }
         public class Uniform: Decoration
         {
+            public static readonly Uniform Instance = new Uniform();
             public override Enumerant Value => Decoration.Enumerant.Uniform;
             public new static Uniform Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Uniform();
-                return res;
+                return Instance;
             }
         }
         public class UniformId: Decoration
@@ -474,12 +452,11 @@ namespace Toe.SPIRV.Spv
         }
         public class SaturatedConversion: Decoration
         {
+            public static readonly SaturatedConversion Instance = new SaturatedConversion();
             public override Enumerant Value => Decoration.Enumerant.SaturatedConversion;
             public new static SaturatedConversion Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SaturatedConversion();
-                return res;
+                return Instance;
             }
         }
         public class Stream: Decoration
@@ -800,12 +777,11 @@ namespace Toe.SPIRV.Spv
         }
         public class NoContraction: Decoration
         {
+            public static readonly NoContraction Instance = new NoContraction();
             public override Enumerant Value => Decoration.Enumerant.NoContraction;
             public new static NoContraction Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoContraction();
-                return res;
+                return Instance;
             }
         }
         public class InputAttachmentIndex: Decoration
@@ -930,62 +906,56 @@ namespace Toe.SPIRV.Spv
         }
         public class NoSignedWrap: Decoration
         {
+            public static readonly NoSignedWrap Instance = new NoSignedWrap();
             public override Enumerant Value => Decoration.Enumerant.NoSignedWrap;
             public new static NoSignedWrap Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoSignedWrap();
-                return res;
+                return Instance;
             }
         }
         public class NoUnsignedWrap: Decoration
         {
+            public static readonly NoUnsignedWrap Instance = new NoUnsignedWrap();
             public override Enumerant Value => Decoration.Enumerant.NoUnsignedWrap;
             public new static NoUnsignedWrap Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoUnsignedWrap();
-                return res;
+                return Instance;
             }
         }
         public class ExplicitInterpAMD: Decoration
         {
+            public static readonly ExplicitInterpAMD Instance = new ExplicitInterpAMD();
             public override Enumerant Value => Decoration.Enumerant.ExplicitInterpAMD;
             public new static ExplicitInterpAMD Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ExplicitInterpAMD();
-                return res;
+                return Instance;
             }
         }
         public class OverrideCoverageNV: Decoration
         {
+            public static readonly OverrideCoverageNV Instance = new OverrideCoverageNV();
             public override Enumerant Value => Decoration.Enumerant.OverrideCoverageNV;
             public new static OverrideCoverageNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OverrideCoverageNV();
-                return res;
+                return Instance;
             }
         }
         public class PassthroughNV: Decoration
         {
+            public static readonly PassthroughNV Instance = new PassthroughNV();
             public override Enumerant Value => Decoration.Enumerant.PassthroughNV;
             public new static PassthroughNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PassthroughNV();
-                return res;
+                return Instance;
             }
         }
         public class ViewportRelativeNV: Decoration
         {
+            public static readonly ViewportRelativeNV Instance = new ViewportRelativeNV();
             public override Enumerant Value => Decoration.Enumerant.ViewportRelativeNV;
             public new static ViewportRelativeNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ViewportRelativeNV();
-                return res;
+                return Instance;
             }
         }
         public class SecondaryViewportRelativeNV: Decoration
@@ -1014,102 +984,92 @@ namespace Toe.SPIRV.Spv
         }
         public class PerPrimitiveNV: Decoration
         {
+            public static readonly PerPrimitiveNV Instance = new PerPrimitiveNV();
             public override Enumerant Value => Decoration.Enumerant.PerPrimitiveNV;
             public new static PerPrimitiveNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PerPrimitiveNV();
-                return res;
+                return Instance;
             }
         }
         public class PerViewNV: Decoration
         {
+            public static readonly PerViewNV Instance = new PerViewNV();
             public override Enumerant Value => Decoration.Enumerant.PerViewNV;
             public new static PerViewNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PerViewNV();
-                return res;
+                return Instance;
             }
         }
         public class PerTaskNV: Decoration
         {
+            public static readonly PerTaskNV Instance = new PerTaskNV();
             public override Enumerant Value => Decoration.Enumerant.PerTaskNV;
             public new static PerTaskNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PerTaskNV();
-                return res;
+                return Instance;
             }
         }
         public class PerVertexNV: Decoration
         {
+            public static readonly PerVertexNV Instance = new PerVertexNV();
             public override Enumerant Value => Decoration.Enumerant.PerVertexNV;
             public new static PerVertexNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PerVertexNV();
-                return res;
+                return Instance;
             }
         }
         public class NonUniform: Decoration
         {
+            public static readonly NonUniform Instance = new NonUniform();
             public override Enumerant Value => Decoration.Enumerant.NonUniform;
             public new static NonUniform Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NonUniform();
-                return res;
+                return Instance;
             }
         }
         public class NonUniformEXT: Decoration
         {
+            public static readonly NonUniformEXT Instance = new NonUniformEXT();
             public override Enumerant Value => Decoration.Enumerant.NonUniformEXT;
             public new static NonUniformEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NonUniformEXT();
-                return res;
+                return Instance;
             }
         }
         public class RestrictPointer: Decoration
         {
+            public static readonly RestrictPointer Instance = new RestrictPointer();
             public override Enumerant Value => Decoration.Enumerant.RestrictPointer;
             public new static RestrictPointer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RestrictPointer();
-                return res;
+                return Instance;
             }
         }
         public class RestrictPointerEXT: Decoration
         {
+            public static readonly RestrictPointerEXT Instance = new RestrictPointerEXT();
             public override Enumerant Value => Decoration.Enumerant.RestrictPointerEXT;
             public new static RestrictPointerEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RestrictPointerEXT();
-                return res;
+                return Instance;
             }
         }
         public class AliasedPointer: Decoration
         {
+            public static readonly AliasedPointer Instance = new AliasedPointer();
             public override Enumerant Value => Decoration.Enumerant.AliasedPointer;
             public new static AliasedPointer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new AliasedPointer();
-                return res;
+                return Instance;
             }
         }
         public class AliasedPointerEXT: Decoration
         {
+            public static readonly AliasedPointerEXT Instance = new AliasedPointerEXT();
             public override Enumerant Value => Decoration.Enumerant.AliasedPointerEXT;
             public new static AliasedPointerEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new AliasedPointerEXT();
-                return res;
+                return Instance;
             }
         }
         public class CounterBuffer: Decoration

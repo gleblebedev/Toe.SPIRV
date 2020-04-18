@@ -15,22 +15,20 @@ namespace Toe.SPIRV.Spv
 
         public class Nearest: SamplerFilterMode
         {
+            public static readonly Nearest Instance = new Nearest();
             public override Enumerant Value => SamplerFilterMode.Enumerant.Nearest;
             public new static Nearest Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Nearest();
-                return res;
+                return Instance;
             }
         }
         public class Linear: SamplerFilterMode
         {
+            public static readonly Linear Instance = new Linear();
             public override Enumerant Value => SamplerFilterMode.Enumerant.Linear;
             public new static Linear Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Linear();
-                return res;
+                return Instance;
             }
         }
 

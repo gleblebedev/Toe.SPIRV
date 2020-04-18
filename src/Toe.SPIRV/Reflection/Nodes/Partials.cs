@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
@@ -39,45 +40,75 @@ namespace Toe.SPIRV.Reflection.Nodes
 
     public partial class Variable
     {
-        partial void SetUpDecorations(IList<OpDecorate> decorates)
-        {
-            foreach (var decorate in decorates)
-            {
-                switch (decorate.Decoration.Value)
-                {
-                    case Decoration.Enumerant.Location:
-                        Location = ((Decoration.Location) decorate.Decoration).LocationValue;
-                        break;
-                    case Decoration.Enumerant.DescriptorSet:
-                        DescriptorSet = ((Decoration.DescriptorSet)decorate.Decoration).DescriptorSetValue;
-                        break;
-                    case Decoration.Enumerant.Binding:
-                        BindingPoint = ((Decoration.Binding)decorate.Decoration).BindingPoint;
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
         public uint? DescriptorSet { get; set; }
 
         public uint? BindingPoint { get; set; }
 
         public uint? Location { get; set; }
 
-        public override IEnumerable<Decoration> GetDecorations()
+        public override void AddDecoration(Decoration decoration)
+        {
+            switch (decoration.Value)
+            {
+                case Decoration.Enumerant.Location:
+                    Location = ((Decoration.Location)decoration).LocationValue;
+                    return;
+                case Decoration.Enumerant.DescriptorSet:
+                    DescriptorSet = ((Decoration.DescriptorSet)decoration).DescriptorSetValue;
+                    return;
+                case Decoration.Enumerant.Binding:
+                    BindingPoint = ((Decoration.Binding)decoration).BindingPoint;
+                    return;
+            }
+            base.AddDecoration(decoration);
+        }
+
+        public override bool RemoveDecoration(Decoration.Enumerant decoration)
+        {
+            switch (decoration)
+            {
+                case Decoration.Enumerant.Location:
+                    Location = null;
+                    return true;
+                case Decoration.Enumerant.DescriptorSet:
+                    DescriptorSet = null;
+                    return true;
+                case Decoration.Enumerant.Binding:
+                    BindingPoint = null;
+                    return true;
+            }
+            return base.RemoveDecoration(decoration);
+        }
+
+        public override IEnumerable<Node> BuildDecorations()
+        {
+            return base.BuildDecorations()
+                .Concat(BuidlLocation())
+                .Concat(BuildDescriptorSet())
+                .Concat(Binding());
+        }
+
+        private IEnumerable<Node> Binding()
+        {
+            if (BindingPoint != null)
+            {
+                yield return new Decorate(){Target = this, Decoration = new Decoration.Binding() {BindingPoint = BindingPoint.Value}};
+            }
+        }
+
+        private IEnumerable<Node> BuildDescriptorSet()
+        {
+            if (DescriptorSet != null)
+            {
+                yield return new Decorate() { Target = this, Decoration = new Decoration.DescriptorSet() {DescriptorSetValue = DescriptorSet.Value} };
+            }
+        }
+
+        private IEnumerable<Node> BuidlLocation()
         {
             if (Location != null)
             {
-                yield return new Decoration.Location() {LocationValue = Location.Value};
-            }
-            if (DescriptorSet != null)
-            {
-                yield return new Decoration.DescriptorSet() { DescriptorSetValue = DescriptorSet.Value };
-            }
-            if (BindingPoint != null)
-            {
-                yield return new Decoration.Binding() { BindingPoint = BindingPoint.Value };
+                yield return new Decorate() { Target = this, Decoration = new Decoration.Location() {LocationValue = Location.Value} };
             }
         }
     }

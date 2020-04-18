@@ -290,9 +290,11 @@ namespace Toe.SPIRV.CodeGenerator
                         }
                         break;
                     case "OpDecorate":
+                    case "OpDecorateId":
+                    case "OpDecorateString":
                         if (spirvOperand.Name == "Target")
                         {
-                            spirvOperand.Class = SpirvOperandClassification.Type;
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
                             return;
                         }
                         break;

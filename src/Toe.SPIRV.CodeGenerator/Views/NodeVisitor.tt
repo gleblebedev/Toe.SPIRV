@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
@@ -17,10 +18,9 @@ namespace Toe.SPIRV.Reflection
     {
         protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
 
-        protected readonly Dictionary<ReflectedInstruction, Instruction> _instructionMap =
-            new Dictionary<ReflectedInstruction, Instruction>();
+        protected readonly Dictionary<Node, Instruction> _instructionMap = new Dictionary<Node, Instruction>();
 
-        protected virtual Instruction Visit(ReflectedInstruction node)
+        protected virtual Instruction Visit(Node node)
         {
             if (node == null) return null;
             if (_instructionMap.TryGetValue(node, out var instruction)) return instruction;
@@ -42,7 +42,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
         case InstructionKind.Type:
         {
 #>
-                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((Spirv<#=instruction.Name.Substring(6)#>)node);
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((Types.<#=instruction.Name.Substring(2)#>)node);
 <#
             break;
         }
@@ -64,9 +64,9 @@ foreach (var codeAndInstruction in _grammar.Instructions)
         
         protected void VisitDecorations(Node node)
         {
-            foreach (var decoration in node.GetDecorations())
+            foreach (var decoration in node.BuildDecorations())
             {
-                Visit(new Decorate() {Decoration = decoration, Target = node});
+                Visit(decoration);
             }
         }
 
@@ -135,7 +135,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
         case InstructionKind.Type:
         {
 #>
-        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(Spirv<#=instruction.Name.Substring(6)#> node)
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(Types.<#=instruction.Name.Substring(2)#> node)
         {
             var instruction = new <#=instruction.Name#>();
             _instructionMap.Add(node, instruction);
@@ -145,10 +145,7 @@ foreach (var codeAndInstruction in _grammar.Instructions)
 #>
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
 <#
     }
 #>
@@ -173,10 +170,6 @@ foreach (var codeAndInstruction in _grammar.Instructions)
 #>
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
 <#
     }

@@ -39,6 +39,14 @@ namespace Toe.SPIRV.Spv
 #>
         public class <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>: <#= _operand.Name #>
         {
+<#
+        if (parameters.Count == 0)
+        {
+#>
+            public static readonly <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> Instance = new <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>();
+<#
+        }
+#>
             public override Enumerant Value => <#= _operand.Name #>.Enumerant.<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>;
 <#
         foreach (var parameter in parameters)
@@ -50,17 +58,30 @@ namespace Toe.SPIRV.Spv
 #>
             public new static <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> Parse(WordReader reader, uint wordCount)
             {
+<#
+        if (parameters.Count == 0)
+        {
+#>
+                return Instance;
+<#
+        }
+        else
+        {
+#>
                 var end = reader.Position+wordCount;
                 var res = new <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>();
 <#
-        foreach (var parameter in parameters)
-        {
+            foreach (var parameter in parameters)
+            {
 #>
                 res.<#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #> = Spv.<#= parameter.kind #>.Parse(reader, end-reader.Position);
 <#
-        }
+            }
 #>
                 return res;
+<#
+        }
+#>
             }
 <#
         if (parameters.Count > 0)

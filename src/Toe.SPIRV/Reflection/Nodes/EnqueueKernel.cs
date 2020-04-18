@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
@@ -74,6 +76,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         }
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            base.SetUp(op, treeBuilder);
             SetUp((OpEnqueueKernel)op, treeBuilder);
         }
 
@@ -91,10 +94,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             ParamSize = treeBuilder.GetNode(op.ParamSize);
             ParamAlign = treeBuilder.GetNode(op.ParamAlign);
             LocalSize = treeBuilder.GetNodes(op.LocalSize);
-            RelaxedPrecision = op.Decorations.Any(_ => _.Decoration.Value == Decoration.Enumerant.RelaxedPrecision);
-            SetUpDecorations(op.Decorations);
+            SetUpDecorations(op, treeBuilder);
         }
-        
-        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

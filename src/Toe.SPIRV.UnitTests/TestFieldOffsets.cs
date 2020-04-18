@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using Toe.SPIRV.Reflection;
+using Toe.SPIRV.Reflection.Types;
 using Veldrid;
 using Veldrid.SPIRV;
 
@@ -14,21 +15,21 @@ namespace Toe.SPIRV.UnitTests
     {
         static TestFieldOffsets()
         {
-            var floatField = new SpirvStructureField(SpirvTypeBase.Float, "floatField");
-            var doubleField = new SpirvStructureField(SpirvTypeBase.Double, "doubleField");
-            var intField = new SpirvStructureField(SpirvTypeBase.Int, "intField");
-            var uintField = new SpirvStructureField(SpirvTypeBase.UInt, "uintField");
-            var vec2Field = new SpirvStructureField(SpirvTypeBase.Vec2, "vec2Field");
-            var vec3Field = new SpirvStructureField(SpirvTypeBase.Vec3, "vec3Field");
-            var vec4Field = new SpirvStructureField(SpirvTypeBase.Vec4, "vec4Field");
-            var dvec2Field = new SpirvStructureField(SpirvTypeBase.Dvec2, "dvec2Field");
-            var dvec3Field = new SpirvStructureField(SpirvTypeBase.Dvec3, "dvec3Field");
-            var dvec4Field = new SpirvStructureField(SpirvTypeBase.Dvec4, "dvec4Field");
-            var mat2Field = new SpirvStructureField(SpirvTypeBase.Mat2, "mat2Field");
-            var mat3Field = new SpirvStructureField(SpirvTypeBase.Mat3, "mat3Field");
-            var mat4Field = new SpirvStructureField(SpirvTypeBase.Mat4, "mat4Field");
-            var intArrayField = new SpirvStructureField(new SpirvArrayDefinition(SpirvTypeBase.Int, 2), "intArrayField");
-            marker = new SpirvStructureField(SpirvTypeBase.Float, "marker");
+            var floatField = new TypeStructureField(SpirvTypeBase.Float, "floatField");
+            var doubleField = new TypeStructureField(SpirvTypeBase.Double, "doubleField");
+            var intField = new TypeStructureField(SpirvTypeBase.Int, "intField");
+            var uintField = new TypeStructureField(SpirvTypeBase.UInt, "uintField");
+            var vec2Field = new TypeStructureField(SpirvTypeBase.Vec2, "vec2Field");
+            var vec3Field = new TypeStructureField(SpirvTypeBase.Vec3, "vec3Field");
+            var vec4Field = new TypeStructureField(SpirvTypeBase.Vec4, "vec4Field");
+            var dvec2Field = new TypeStructureField(SpirvTypeBase.Dvec2, "dvec2Field");
+            var dvec3Field = new TypeStructureField(SpirvTypeBase.Dvec3, "dvec3Field");
+            var dvec4Field = new TypeStructureField(SpirvTypeBase.Dvec4, "dvec4Field");
+            var mat2Field = new TypeStructureField(SpirvTypeBase.Mat2, "mat2Field");
+            var mat3Field = new TypeStructureField(SpirvTypeBase.Mat3, "mat3Field");
+            var mat4Field = new TypeStructureField(SpirvTypeBase.Mat4, "mat4Field");
+            var intArrayField = new TypeStructureField(new TypeArray(SpirvTypeBase.Int, 2), "intArrayField");
+            marker = new TypeStructureField(SpirvTypeBase.Float, "marker");
 
             WellKnownTypes = new[]
             {
@@ -37,10 +38,10 @@ namespace Toe.SPIRV.UnitTests
             };
         }
 
-        private static readonly SpirvStructureField marker;
-        public static SpirvStructureField[] WellKnownTypes { get; }
+        private static readonly TypeStructureField marker;
+        public static TypeStructureField[] WellKnownTypes { get; }
 
-        public static IEnumerable<SpirvStruct> FieldPermutations
+        public static IEnumerable<TypeStruct> FieldPermutations
         {
             get
             {
@@ -68,20 +69,20 @@ namespace Toe.SPIRV.UnitTests
             }
         }
 
-        private static SpirvStruct BuildStructure(params int[] indices)
+        private static TypeStruct BuildStructure(params int[] indices)
         {
-            var fields = indices.Select(index => new SpirvStructureField(WellKnownTypes[index].Type,
+            var fields = indices.Select(index => new TypeStructureField(WellKnownTypes[index].Type,
                 WellKnownTypes[index].Name)).ToArray();
-            var structure = new SpirvStruct("testStruct", fields);
-            var spirvStructureField = new SpirvStructureField(structure,
+            var structure = new TypeStruct("testStruct", fields);
+            var spirvStructureField = new TypeStructureField(structure,
                 string.Join("_", structure.Fields.Select(_ => _.Name)));
-            var endMarker = new SpirvStructureField(SpirvTypeBase.Float, "endMarker");
-            var modelStruct = new SpirvStruct("test_" + spirvStructureField.Name, marker,
+            var endMarker = new TypeStructureField(SpirvTypeBase.Float, "endMarker");
+            var modelStruct = new TypeStruct("test_" + spirvStructureField.Name, marker,
                 spirvStructureField, endMarker);
             return modelStruct;
         }
 
-        private void CompareStructureLayout(SpirvStruct expected, SpirvStruct actual)
+        private void CompareStructureLayout(TypeStruct expected, TypeStruct actual)
         {
             Assert.AreEqual(expected.Fields.Count, actual.Fields.Count);
             for (var index = 0; index < expected.Fields.Count; index++)
@@ -90,11 +91,11 @@ namespace Toe.SPIRV.UnitTests
                 var expectedField = expected.Fields[index];
                 Assert.AreEqual(expectedField.ByteOffset, actualField.ByteOffset);
                 if (expectedField.Type.TypeCategory == SpirvTypeCategory.Struct)
-                    CompareStructureLayout((SpirvStruct) expectedField.Type, (SpirvStruct) actualField.Type);
+                    CompareStructureLayout((TypeStruct) expectedField.Type, (TypeStruct) actualField.Type);
             }
         }
 
-        private (Shader, Veldrid.Shader[]) CompileShaderForFieldSet(SpirvStruct fieldSet)
+        private (Shader, Veldrid.Shader[]) CompileShaderForFieldSet(TypeStruct fieldSet)
         {
             var vertexShaderText = new VertexShaderTemplate(fieldSet).TransformText();
             var (vertexBytes, shaderInstructions) = CompileToBytecode(vertexShaderText);
@@ -117,14 +118,14 @@ namespace Toe.SPIRV.UnitTests
 
         private void PopulateBuffer(byte[] bytes, uint offset, SpirvTypeBase type, ref int counter, ref int hash)
         {
-            if (type is SpirvStruct spirvStruct)
+            if (type is TypeStruct spirvStruct)
             {
                 foreach (var field in spirvStruct.Fields)
                     PopulateBuffer(bytes, offset + field.ByteOffset.Value, field.Type, ref counter, ref hash);
                 return;
             }
 
-            if (type is SpirvVector spirvVector)
+            if (type is TypeVector spirvVector)
             {
                 for (uint i = 0; i < spirvVector.ComponentCount; ++i)
                     PopulateBuffer(bytes, offset + spirvVector.ComponentType.SizeInBytes * i, spirvVector.ComponentType,
@@ -132,7 +133,7 @@ namespace Toe.SPIRV.UnitTests
                 return;
             }
 
-            if (type is SpirvArray spirvArray)
+            if (type is TypeArray spirvArray)
             {
                 for (uint i = 0; i < spirvArray.Length; ++i)
                     PopulateBuffer(bytes, offset + spirvArray.ArrayStride * i, spirvArray.ElementType, ref counter,
@@ -140,7 +141,7 @@ namespace Toe.SPIRV.UnitTests
                 return;
             }
 
-            if (type is SpirvMatrix spirvMatrix)
+            if (type is TypeMatrix spirvMatrix)
             {
                 var columnType = spirvMatrix.ColumnType;
                 var elementType = columnType.ComponentType;
@@ -155,7 +156,7 @@ namespace Toe.SPIRV.UnitTests
                 case SpirvTypeCategory.Void:
                     return;
                 case SpirvTypeCategory.Int:
-                    var intType = (SpirvInt) type;
+                    var intType = (TypeInt) type;
                     switch (intType.IntType)
                     {
                         case IntType.Int:
@@ -171,7 +172,7 @@ namespace Toe.SPIRV.UnitTests
                     }
                     break;
                 case SpirvTypeCategory.Float:
-                    var floatType = (SpirvFloat)type;
+                    var floatType = (TypeFloat)type;
                     switch (floatType.FloatType)
                     {
                         case FloatType.Float:
@@ -197,10 +198,10 @@ namespace Toe.SPIRV.UnitTests
 
         [Test]
         [TestCaseSource(nameof(WellKnownTypes))]
-        public void TestAlignment(SpirvStructureField field)
+        public void TestAlignment(TypeStructureField field)
         {
             var (shaderInstructions, shaders) =
-                CompileShaderForFieldSet(new SpirvStruct("ModelBuffer", marker, field));
+                CompileShaderForFieldSet(new TypeStruct("ModelBuffer", marker, field));
             var shaderReflection = new ShaderReflection(shaderInstructions);
             var structure = shaderReflection.Structures[0];
             Assert.AreEqual(structure.Fields[1].ByteOffset, structure.Fields[1].Type.Alignment);
@@ -208,17 +209,17 @@ namespace Toe.SPIRV.UnitTests
 
         [Test]
         [TestCaseSource(nameof(WellKnownTypes))]
-        public void TestArrayAlignment(SpirvStructureField field)
+        public void TestArrayAlignment(TypeStructureField field)
         {
             if (field.Type.TypeCategory == SpirvTypeCategory.Array)
                 Assert.Ignore("Can't make array of arrays.");
-            var originalArrayType = new SpirvArrayDefinition(field.Type, 2);
-            var (shaderInstructions, shaders) = CompileShaderForFieldSet(new SpirvStruct("ModelBuffer", marker,
-                new SpirvStructureField(originalArrayType, "testArray")));
+            var originalArrayType = new TypeArray(field.Type, 2);
+            var (shaderInstructions, shaders) = CompileShaderForFieldSet(new TypeStruct("ModelBuffer", marker,
+                new TypeStructureField(originalArrayType, "testArray")));
             var shaderReflection = new ShaderReflection(shaderInstructions);
             var structure = shaderReflection.Structures[0];
             var spirvStructureField = structure.Fields[1];
-            var arrayType = (SpirvArray) spirvStructureField.Type;
+            var arrayType = (TypeArray) spirvStructureField.Type;
             Assert.AreEqual(spirvStructureField.ByteOffset, spirvStructureField.Type.Alignment);
             Assert.AreEqual(arrayType.ArrayStride, originalArrayType.ArrayStride);
         }
@@ -226,7 +227,7 @@ namespace Toe.SPIRV.UnitTests
         [Test]
         [Explicit("Only to be ran manually due to high number of permulations")]
         [TestCaseSource(nameof(FieldPermutations))]
-        public void TestPermutation(SpirvStruct fieldSet)
+        public void TestPermutation(TypeStruct fieldSet)
         {
             var (shaderInstructions, shaders) = CompileShaderForFieldSet(fieldSet);
             var shaderReflection = new ShaderReflection(shaderInstructions);

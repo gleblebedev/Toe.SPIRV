@@ -51,202 +51,182 @@ namespace Toe.SPIRV.Spv
 
         public class R: ImageChannelOrder
         {
+            public static readonly R Instance = new R();
             public override Enumerant Value => ImageChannelOrder.Enumerant.R;
             public new static R Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new R();
-                return res;
+                return Instance;
             }
         }
         public class A: ImageChannelOrder
         {
+            public static readonly A Instance = new A();
             public override Enumerant Value => ImageChannelOrder.Enumerant.A;
             public new static A Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new A();
-                return res;
+                return Instance;
             }
         }
         public class RG: ImageChannelOrder
         {
+            public static readonly RG Instance = new RG();
             public override Enumerant Value => ImageChannelOrder.Enumerant.RG;
             public new static RG Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RG();
-                return res;
+                return Instance;
             }
         }
         public class RA: ImageChannelOrder
         {
+            public static readonly RA Instance = new RA();
             public override Enumerant Value => ImageChannelOrder.Enumerant.RA;
             public new static RA Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RA();
-                return res;
+                return Instance;
             }
         }
         public class RGB: ImageChannelOrder
         {
+            public static readonly RGB Instance = new RGB();
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGB;
             public new static RGB Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RGB();
-                return res;
+                return Instance;
             }
         }
         public class RGBA: ImageChannelOrder
         {
+            public static readonly RGBA Instance = new RGBA();
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGBA;
             public new static RGBA Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RGBA();
-                return res;
+                return Instance;
             }
         }
         public class BGRA: ImageChannelOrder
         {
+            public static readonly BGRA Instance = new BGRA();
             public override Enumerant Value => ImageChannelOrder.Enumerant.BGRA;
             public new static BGRA Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new BGRA();
-                return res;
+                return Instance;
             }
         }
         public class ARGB: ImageChannelOrder
         {
+            public static readonly ARGB Instance = new ARGB();
             public override Enumerant Value => ImageChannelOrder.Enumerant.ARGB;
             public new static ARGB Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ARGB();
-                return res;
+                return Instance;
             }
         }
         public class Intensity: ImageChannelOrder
         {
+            public static readonly Intensity Instance = new Intensity();
             public override Enumerant Value => ImageChannelOrder.Enumerant.Intensity;
             public new static Intensity Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Intensity();
-                return res;
+                return Instance;
             }
         }
         public class Luminance: ImageChannelOrder
         {
+            public static readonly Luminance Instance = new Luminance();
             public override Enumerant Value => ImageChannelOrder.Enumerant.Luminance;
             public new static Luminance Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Luminance();
-                return res;
+                return Instance;
             }
         }
         public class Rx: ImageChannelOrder
         {
+            public static readonly Rx Instance = new Rx();
             public override Enumerant Value => ImageChannelOrder.Enumerant.Rx;
             public new static Rx Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rx();
-                return res;
+                return Instance;
             }
         }
         public class RGx: ImageChannelOrder
         {
+            public static readonly RGx Instance = new RGx();
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGx;
             public new static RGx Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RGx();
-                return res;
+                return Instance;
             }
         }
         public class RGBx: ImageChannelOrder
         {
+            public static readonly RGBx Instance = new RGBx();
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGBx;
             public new static RGBx Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RGBx();
-                return res;
+                return Instance;
             }
         }
         public class Depth: ImageChannelOrder
         {
+            public static readonly Depth Instance = new Depth();
             public override Enumerant Value => ImageChannelOrder.Enumerant.Depth;
             public new static Depth Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Depth();
-                return res;
+                return Instance;
             }
         }
         public class DepthStencil: ImageChannelOrder
         {
+            public static readonly DepthStencil Instance = new DepthStencil();
             public override Enumerant Value => ImageChannelOrder.Enumerant.DepthStencil;
             public new static DepthStencil Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DepthStencil();
-                return res;
+                return Instance;
             }
         }
         public class sRGB: ImageChannelOrder
         {
+            public static readonly sRGB Instance = new sRGB();
             public override Enumerant Value => ImageChannelOrder.Enumerant.sRGB;
             public new static sRGB Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new sRGB();
-                return res;
+                return Instance;
             }
         }
         public class sRGBx: ImageChannelOrder
         {
+            public static readonly sRGBx Instance = new sRGBx();
             public override Enumerant Value => ImageChannelOrder.Enumerant.sRGBx;
             public new static sRGBx Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new sRGBx();
-                return res;
+                return Instance;
             }
         }
         public class sRGBA: ImageChannelOrder
         {
+            public static readonly sRGBA Instance = new sRGBA();
             public override Enumerant Value => ImageChannelOrder.Enumerant.sRGBA;
             public new static sRGBA Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new sRGBA();
-                return res;
+                return Instance;
             }
         }
         public class sBGRA: ImageChannelOrder
         {
+            public static readonly sBGRA Instance = new sBGRA();
             public override Enumerant Value => ImageChannelOrder.Enumerant.sBGRA;
             public new static sBGRA Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new sBGRA();
-                return res;
+                return Instance;
             }
         }
         public class ABGR: ImageChannelOrder
         {
+            public static readonly ABGR Instance = new ABGR();
             public override Enumerant Value => ImageChannelOrder.Enumerant.ABGR;
             public new static ABGR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ABGR();
-                return res;
+                return Instance;
             }
         }
 

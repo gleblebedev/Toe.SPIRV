@@ -13,7 +13,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
         public TypeTemplate(SpirvInstruction instruction)
         {
             _instruction = instruction;
-            name = "Spirv" + _instruction.Name.Substring(6);
+            name = _instruction.Name.Substring(2);
         }
     }
     public partial class NodeTemplate
@@ -30,7 +30,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             {
                 case InstructionKind.Type:
                     baseClass = "SpirvTypeBase";
-                    name = "Spirv" + _instruction.Name.Substring(6);
+                    name = _instruction.Name.Substring(2);
                     break;
                 default:
                     baseClass = _instruction.HasDefaultEnter ? "ExecutableNode" : "Node";

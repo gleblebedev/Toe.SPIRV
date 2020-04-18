@@ -45,172 +45,155 @@ namespace Toe.SPIRV.Spv
 
         public class SnormInt8: ImageChannelDataType
         {
+            public static readonly SnormInt8 Instance = new SnormInt8();
             public override Enumerant Value => ImageChannelDataType.Enumerant.SnormInt8;
             public new static SnormInt8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SnormInt8();
-                return res;
+                return Instance;
             }
         }
         public class SnormInt16: ImageChannelDataType
         {
+            public static readonly SnormInt16 Instance = new SnormInt16();
             public override Enumerant Value => ImageChannelDataType.Enumerant.SnormInt16;
             public new static SnormInt16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SnormInt16();
-                return res;
+                return Instance;
             }
         }
         public class UnormInt8: ImageChannelDataType
         {
+            public static readonly UnormInt8 Instance = new UnormInt8();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormInt8;
             public new static UnormInt8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormInt8();
-                return res;
+                return Instance;
             }
         }
         public class UnormInt16: ImageChannelDataType
         {
+            public static readonly UnormInt16 Instance = new UnormInt16();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormInt16;
             public new static UnormInt16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormInt16();
-                return res;
+                return Instance;
             }
         }
         public class UnormShort565: ImageChannelDataType
         {
+            public static readonly UnormShort565 Instance = new UnormShort565();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormShort565;
             public new static UnormShort565 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormShort565();
-                return res;
+                return Instance;
             }
         }
         public class UnormShort555: ImageChannelDataType
         {
+            public static readonly UnormShort555 Instance = new UnormShort555();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormShort555;
             public new static UnormShort555 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormShort555();
-                return res;
+                return Instance;
             }
         }
         public class UnormInt101010: ImageChannelDataType
         {
+            public static readonly UnormInt101010 Instance = new UnormInt101010();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormInt101010;
             public new static UnormInt101010 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormInt101010();
-                return res;
+                return Instance;
             }
         }
         public class SignedInt8: ImageChannelDataType
         {
+            public static readonly SignedInt8 Instance = new SignedInt8();
             public override Enumerant Value => ImageChannelDataType.Enumerant.SignedInt8;
             public new static SignedInt8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SignedInt8();
-                return res;
+                return Instance;
             }
         }
         public class SignedInt16: ImageChannelDataType
         {
+            public static readonly SignedInt16 Instance = new SignedInt16();
             public override Enumerant Value => ImageChannelDataType.Enumerant.SignedInt16;
             public new static SignedInt16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SignedInt16();
-                return res;
+                return Instance;
             }
         }
         public class SignedInt32: ImageChannelDataType
         {
+            public static readonly SignedInt32 Instance = new SignedInt32();
             public override Enumerant Value => ImageChannelDataType.Enumerant.SignedInt32;
             public new static SignedInt32 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SignedInt32();
-                return res;
+                return Instance;
             }
         }
         public class UnsignedInt8: ImageChannelDataType
         {
+            public static readonly UnsignedInt8 Instance = new UnsignedInt8();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnsignedInt8;
             public new static UnsignedInt8 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnsignedInt8();
-                return res;
+                return Instance;
             }
         }
         public class UnsignedInt16: ImageChannelDataType
         {
+            public static readonly UnsignedInt16 Instance = new UnsignedInt16();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnsignedInt16;
             public new static UnsignedInt16 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnsignedInt16();
-                return res;
+                return Instance;
             }
         }
         public class UnsignedInt32: ImageChannelDataType
         {
+            public static readonly UnsignedInt32 Instance = new UnsignedInt32();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnsignedInt32;
             public new static UnsignedInt32 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnsignedInt32();
-                return res;
+                return Instance;
             }
         }
         public class HalfFloat: ImageChannelDataType
         {
+            public static readonly HalfFloat Instance = new HalfFloat();
             public override Enumerant Value => ImageChannelDataType.Enumerant.HalfFloat;
             public new static HalfFloat Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HalfFloat();
-                return res;
+                return Instance;
             }
         }
         public class Float: ImageChannelDataType
         {
+            public static readonly Float Instance = new Float();
             public override Enumerant Value => ImageChannelDataType.Enumerant.Float;
             public new static Float Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Float();
-                return res;
+                return Instance;
             }
         }
         public class UnormInt24: ImageChannelDataType
         {
+            public static readonly UnormInt24 Instance = new UnormInt24();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormInt24;
             public new static UnormInt24 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormInt24();
-                return res;
+                return Instance;
             }
         }
         public class UnormInt101010_2: ImageChannelDataType
         {
+            public static readonly UnormInt101010_2 Instance = new UnormInt101010_2();
             public override Enumerant Value => ImageChannelDataType.Enumerant.UnormInt101010_2;
             public new static UnormInt101010_2 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UnormInt101010_2();
-                return res;
+                return Instance;
             }
         }
 

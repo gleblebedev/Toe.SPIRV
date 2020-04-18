@@ -31,72 +31,65 @@ namespace Toe.SPIRV.Spv
 
         public class Reduce: GroupOperation
         {
+            public static readonly Reduce Instance = new Reduce();
             public override Enumerant Value => GroupOperation.Enumerant.Reduce;
             public new static Reduce Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Reduce();
-                return res;
+                return Instance;
             }
         }
         public class InclusiveScan: GroupOperation
         {
+            public static readonly InclusiveScan Instance = new InclusiveScan();
             public override Enumerant Value => GroupOperation.Enumerant.InclusiveScan;
             public new static InclusiveScan Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InclusiveScan();
-                return res;
+                return Instance;
             }
         }
         public class ExclusiveScan: GroupOperation
         {
+            public static readonly ExclusiveScan Instance = new ExclusiveScan();
             public override Enumerant Value => GroupOperation.Enumerant.ExclusiveScan;
             public new static ExclusiveScan Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ExclusiveScan();
-                return res;
+                return Instance;
             }
         }
         public class ClusteredReduce: GroupOperation
         {
+            public static readonly ClusteredReduce Instance = new ClusteredReduce();
             public override Enumerant Value => GroupOperation.Enumerant.ClusteredReduce;
             public new static ClusteredReduce Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ClusteredReduce();
-                return res;
+                return Instance;
             }
         }
         public class PartitionedReduceNV: GroupOperation
         {
+            public static readonly PartitionedReduceNV Instance = new PartitionedReduceNV();
             public override Enumerant Value => GroupOperation.Enumerant.PartitionedReduceNV;
             public new static PartitionedReduceNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PartitionedReduceNV();
-                return res;
+                return Instance;
             }
         }
         public class PartitionedInclusiveScanNV: GroupOperation
         {
+            public static readonly PartitionedInclusiveScanNV Instance = new PartitionedInclusiveScanNV();
             public override Enumerant Value => GroupOperation.Enumerant.PartitionedInclusiveScanNV;
             public new static PartitionedInclusiveScanNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PartitionedInclusiveScanNV();
-                return res;
+                return Instance;
             }
         }
         public class PartitionedExclusiveScanNV: GroupOperation
         {
+            public static readonly PartitionedExclusiveScanNV Instance = new PartitionedExclusiveScanNV();
             public override Enumerant Value => GroupOperation.Enumerant.PartitionedExclusiveScanNV;
             public new static PartitionedExclusiveScanNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PartitionedExclusiveScanNV();
-                return res;
+                return Instance;
             }
         }
 

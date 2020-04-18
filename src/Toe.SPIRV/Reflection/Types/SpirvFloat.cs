@@ -1,12 +1,12 @@
 ﻿using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvFloat : SpirvTypeBase
+    public partial class TypeFloat : SpirvTypeBase
     {
         private readonly uint _width;
 
-        internal SpirvFloat(uint width) : base(SpirvTypeCategory.Float)
+        internal TypeFloat(uint width)
         {
             _width = width;
             FloatType = GetType(_width);

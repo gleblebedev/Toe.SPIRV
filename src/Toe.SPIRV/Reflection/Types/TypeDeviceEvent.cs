@@ -1,13 +1,13 @@
 ﻿using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvEvent : SpirvTypeBase
+    public partial class TypeDeviceEvent : SpirvTypeBase
     {
-        public SpirvEvent():base(SpirvTypeCategory.Event)
+        public TypeDeviceEvent()
         {
         }
-
 
         public void SetUp(OpTypeEvent op, SpirvInstructionTreeBuilder treeBuilder)
         {

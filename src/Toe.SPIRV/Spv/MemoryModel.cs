@@ -21,52 +21,47 @@ namespace Toe.SPIRV.Spv
 
         public class Simple: MemoryModel
         {
+            public static readonly Simple Instance = new Simple();
             public override Enumerant Value => MemoryModel.Enumerant.Simple;
             public new static Simple Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Simple();
-                return res;
+                return Instance;
             }
         }
         public class GLSL450: MemoryModel
         {
+            public static readonly GLSL450 Instance = new GLSL450();
             public override Enumerant Value => MemoryModel.Enumerant.GLSL450;
             public new static GLSL450 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GLSL450();
-                return res;
+                return Instance;
             }
         }
         public class OpenCL: MemoryModel
         {
+            public static readonly OpenCL Instance = new OpenCL();
             public override Enumerant Value => MemoryModel.Enumerant.OpenCL;
             public new static OpenCL Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OpenCL();
-                return res;
+                return Instance;
             }
         }
         public class Vulkan: MemoryModel
         {
+            public static readonly Vulkan Instance = new Vulkan();
             public override Enumerant Value => MemoryModel.Enumerant.Vulkan;
             public new static Vulkan Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Vulkan();
-                return res;
+                return Instance;
             }
         }
         public class VulkanKHR: MemoryModel
         {
+            public static readonly VulkanKHR Instance = new VulkanKHR();
             public override Enumerant Value => MemoryModel.Enumerant.VulkanKHR;
             public new static VulkanKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new VulkanKHR();
-                return res;
+                return Instance;
             }
         }
 

@@ -20,52 +20,47 @@ namespace Toe.SPIRV.Spv
 
         public class Logical: AddressingModel
         {
+            public static readonly Logical Instance = new Logical();
             public override Enumerant Value => AddressingModel.Enumerant.Logical;
             public new static Logical Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Logical();
-                return res;
+                return Instance;
             }
         }
         public class Physical32: AddressingModel
         {
+            public static readonly Physical32 Instance = new Physical32();
             public override Enumerant Value => AddressingModel.Enumerant.Physical32;
             public new static Physical32 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Physical32();
-                return res;
+                return Instance;
             }
         }
         public class Physical64: AddressingModel
         {
+            public static readonly Physical64 Instance = new Physical64();
             public override Enumerant Value => AddressingModel.Enumerant.Physical64;
             public new static Physical64 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Physical64();
-                return res;
+                return Instance;
             }
         }
         public class PhysicalStorageBuffer64: AddressingModel
         {
+            public static readonly PhysicalStorageBuffer64 Instance = new PhysicalStorageBuffer64();
             public override Enumerant Value => AddressingModel.Enumerant.PhysicalStorageBuffer64;
             public new static PhysicalStorageBuffer64 Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PhysicalStorageBuffer64();
-                return res;
+                return Instance;
             }
         }
         public class PhysicalStorageBuffer64EXT: AddressingModel
         {
+            public static readonly PhysicalStorageBuffer64EXT Instance = new PhysicalStorageBuffer64EXT();
             public override Enumerant Value => AddressingModel.Enumerant.PhysicalStorageBuffer64EXT;
             public new static PhysicalStorageBuffer64EXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PhysicalStorageBuffer64EXT();
-                return res;
+                return Instance;
             }
         }
 

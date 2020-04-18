@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public abstract partial class SpirvMatrix : SpirvTypeBase, IEquatable<SpirvMatrix>
+    public abstract partial class TypeMatrix : SpirvTypeBase, IEquatable<TypeMatrix>
     {
-        public SpirvMatrix() : base(SpirvTypeCategory.Matrix)
+        public TypeMatrix()
         {
         }
 
-        public abstract SpirvVector ColumnType { get; }
+        public abstract TypeVector ColumnType { get; }
 
         public abstract uint ColumnStride { get; }
 
@@ -20,19 +20,19 @@ namespace Toe.SPIRV.Reflection
 
         public override uint SizeInBytes => ColumnStride * ColumnCount;
 
-        public static bool operator ==(SpirvMatrix left, SpirvMatrix right)
+        public static bool operator ==(TypeMatrix left, TypeMatrix right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(SpirvMatrix left, SpirvMatrix right)
+        public static bool operator !=(TypeMatrix left, TypeMatrix right)
         {
             return !Equals(left, right);
         }
 
         public override bool Equals(object obj)
         {
-            return ReferenceEquals(this, obj) || obj is SpirvMatrix other && Equals(other);
+            return ReferenceEquals(this, obj) || obj is TypeMatrix other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -52,7 +52,7 @@ namespace Toe.SPIRV.Reflection
             return "mat" + ColumnCount + "x" + componentCount;
         }
 
-        public bool Equals(SpirvMatrix other)
+        public bool Equals(TypeMatrix other)
         {
             return ColumnType == other.ColumnType
                    && ColumnCount == other.ColumnCount

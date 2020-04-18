@@ -17,32 +17,29 @@ namespace Toe.SPIRV.Spv
 
         public class ReadOnly: AccessQualifier
         {
+            public static readonly ReadOnly Instance = new ReadOnly();
             public override Enumerant Value => AccessQualifier.Enumerant.ReadOnly;
             public new static ReadOnly Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ReadOnly();
-                return res;
+                return Instance;
             }
         }
         public class WriteOnly: AccessQualifier
         {
+            public static readonly WriteOnly Instance = new WriteOnly();
             public override Enumerant Value => AccessQualifier.Enumerant.WriteOnly;
             public new static WriteOnly Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WriteOnly();
-                return res;
+                return Instance;
             }
         }
         public class ReadWrite: AccessQualifier
         {
+            public static readonly ReadWrite Instance = new ReadWrite();
             public override Enumerant Value => AccessQualifier.Enumerant.ReadWrite;
             public new static ReadWrite Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ReadWrite();
-                return res;
+                return Instance;
             }
         }
 

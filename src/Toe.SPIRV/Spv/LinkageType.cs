@@ -15,22 +15,20 @@ namespace Toe.SPIRV.Spv
 
         public class Export: LinkageType
         {
+            public static readonly Export Instance = new Export();
             public override Enumerant Value => LinkageType.Enumerant.Export;
             public new static Export Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Export();
-                return res;
+                return Instance;
             }
         }
         public class Import: LinkageType
         {
+            public static readonly Import Instance = new Import();
             public override Enumerant Value => LinkageType.Enumerant.Import;
             public new static Import Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Import();
-                return res;
+                return Instance;
             }
         }
 

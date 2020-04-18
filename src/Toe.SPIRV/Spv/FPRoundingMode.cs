@@ -15,42 +15,38 @@ namespace Toe.SPIRV.Spv
 
         public class RTE: FPRoundingMode
         {
+            public static readonly RTE Instance = new RTE();
             public override Enumerant Value => FPRoundingMode.Enumerant.RTE;
             public new static RTE Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RTE();
-                return res;
+                return Instance;
             }
         }
         public class RTZ: FPRoundingMode
         {
+            public static readonly RTZ Instance = new RTZ();
             public override Enumerant Value => FPRoundingMode.Enumerant.RTZ;
             public new static RTZ Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RTZ();
-                return res;
+                return Instance;
             }
         }
         public class RTP: FPRoundingMode
         {
+            public static readonly RTP Instance = new RTP();
             public override Enumerant Value => FPRoundingMode.Enumerant.RTP;
             public new static RTP Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RTP();
-                return res;
+                return Instance;
             }
         }
         public class RTN: FPRoundingMode
         {
+            public static readonly RTN Instance = new RTN();
             public override Enumerant Value => FPRoundingMode.Enumerant.RTN;
             public new static RTN Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RTN();
-                return res;
+                return Instance;
             }
         }
 

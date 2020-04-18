@@ -30,8 +30,8 @@ namespace Toe.SPIRV.CodeGenerator.Views
         public virtual string TransformText()
         {
             this.Write("using System.Collections.Generic;\r\nusing System.Linq;\r\nusing Toe.SPIRV.Instructio" +
-                    "ns;\r\nusing Toe.SPIRV.Spv;\r\n\r\nnamespace Toe.SPIRV.Reflection\r\n{\r\n    public parti" +
-                    "al class ");
+                    "ns;\r\nusing Toe.SPIRV.Spv;\r\n\r\nnamespace Toe.SPIRV.Reflection.Types\r\n{\r\n    public" +
+                    " partial class ");
             
             #line 14 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\TypeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
@@ -45,7 +45,31 @@ namespace Toe.SPIRV.CodeGenerator.Views
             
             #line default
             #line hidden
-            this.Write(";\r\n    }\r\n}");
+            this.Write(";\r\n\r\n        public override SpirvTypeCategory TypeCategory => SpirvTypeCategory." +
+                    "");
+            
+            #line 18 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\TypeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_instruction.Name.Substring(6)));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n\r\n        public override void SetUp(Instruction op, SpirvInstructionTreeBuild" +
+                    "er treeBuilder)\r\n        {\r\n            base.SetUp(op, treeBuilder);\r\n          " +
+                    "  SetUp((");
+            
+            #line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\TypeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_instruction.Name));
+            
+            #line default
+            #line hidden
+            this.Write(")op, treeBuilder);\r\n        }\r\n\r\n        partial void SetUp(");
+            
+            #line 26 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\TypeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_instruction.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" instruction, SpirvInstructionTreeBuilder treeBuilder);\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

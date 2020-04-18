@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
@@ -59,14 +61,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         }
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            base.SetUp(op, treeBuilder);
             SetUp((OpRayQueryTerminateKHR)op, treeBuilder);
         }
 
         public void SetUp(OpRayQueryTerminateKHR op, SpirvInstructionTreeBuilder treeBuilder)
         {
             RayQuery = treeBuilder.GetNode(op.RayQuery);
+            SetUpDecorations(op, treeBuilder);
         }
-        
-        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

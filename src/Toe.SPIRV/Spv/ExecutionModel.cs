@@ -65,212 +65,191 @@ namespace Toe.SPIRV.Spv
 
         public class Vertex: ExecutionModel
         {
+            public static readonly Vertex Instance = new Vertex();
             public override Enumerant Value => ExecutionModel.Enumerant.Vertex;
             public new static Vertex Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Vertex();
-                return res;
+                return Instance;
             }
         }
         public class TessellationControl: ExecutionModel
         {
+            public static readonly TessellationControl Instance = new TessellationControl();
             public override Enumerant Value => ExecutionModel.Enumerant.TessellationControl;
             public new static TessellationControl Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TessellationControl();
-                return res;
+                return Instance;
             }
         }
         public class TessellationEvaluation: ExecutionModel
         {
+            public static readonly TessellationEvaluation Instance = new TessellationEvaluation();
             public override Enumerant Value => ExecutionModel.Enumerant.TessellationEvaluation;
             public new static TessellationEvaluation Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TessellationEvaluation();
-                return res;
+                return Instance;
             }
         }
         public class Geometry: ExecutionModel
         {
+            public static readonly Geometry Instance = new Geometry();
             public override Enumerant Value => ExecutionModel.Enumerant.Geometry;
             public new static Geometry Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Geometry();
-                return res;
+                return Instance;
             }
         }
         public class Fragment: ExecutionModel
         {
+            public static readonly Fragment Instance = new Fragment();
             public override Enumerant Value => ExecutionModel.Enumerant.Fragment;
             public new static Fragment Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Fragment();
-                return res;
+                return Instance;
             }
         }
         public class GLCompute: ExecutionModel
         {
+            public static readonly GLCompute Instance = new GLCompute();
             public override Enumerant Value => ExecutionModel.Enumerant.GLCompute;
             public new static GLCompute Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GLCompute();
-                return res;
+                return Instance;
             }
         }
         public class Kernel: ExecutionModel
         {
+            public static readonly Kernel Instance = new Kernel();
             public override Enumerant Value => ExecutionModel.Enumerant.Kernel;
             public new static Kernel Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Kernel();
-                return res;
+                return Instance;
             }
         }
         public class TaskNV: ExecutionModel
         {
+            public static readonly TaskNV Instance = new TaskNV();
             public override Enumerant Value => ExecutionModel.Enumerant.TaskNV;
             public new static TaskNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new TaskNV();
-                return res;
+                return Instance;
             }
         }
         public class MeshNV: ExecutionModel
         {
+            public static readonly MeshNV Instance = new MeshNV();
             public override Enumerant Value => ExecutionModel.Enumerant.MeshNV;
             public new static MeshNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new MeshNV();
-                return res;
+                return Instance;
             }
         }
         public class RayGenerationNV: ExecutionModel
         {
+            public static readonly RayGenerationNV Instance = new RayGenerationNV();
             public override Enumerant Value => ExecutionModel.Enumerant.RayGenerationNV;
             public new static RayGenerationNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayGenerationNV();
-                return res;
+                return Instance;
             }
         }
         public class RayGenerationKHR: ExecutionModel
         {
+            public static readonly RayGenerationKHR Instance = new RayGenerationKHR();
             public override Enumerant Value => ExecutionModel.Enumerant.RayGenerationKHR;
             public new static RayGenerationKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayGenerationKHR();
-                return res;
+                return Instance;
             }
         }
         public class IntersectionNV: ExecutionModel
         {
+            public static readonly IntersectionNV Instance = new IntersectionNV();
             public override Enumerant Value => ExecutionModel.Enumerant.IntersectionNV;
             public new static IntersectionNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IntersectionNV();
-                return res;
+                return Instance;
             }
         }
         public class IntersectionKHR: ExecutionModel
         {
+            public static readonly IntersectionKHR Instance = new IntersectionKHR();
             public override Enumerant Value => ExecutionModel.Enumerant.IntersectionKHR;
             public new static IntersectionKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IntersectionKHR();
-                return res;
+                return Instance;
             }
         }
         public class AnyHitNV: ExecutionModel
         {
+            public static readonly AnyHitNV Instance = new AnyHitNV();
             public override Enumerant Value => ExecutionModel.Enumerant.AnyHitNV;
             public new static AnyHitNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new AnyHitNV();
-                return res;
+                return Instance;
             }
         }
         public class AnyHitKHR: ExecutionModel
         {
+            public static readonly AnyHitKHR Instance = new AnyHitKHR();
             public override Enumerant Value => ExecutionModel.Enumerant.AnyHitKHR;
             public new static AnyHitKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new AnyHitKHR();
-                return res;
+                return Instance;
             }
         }
         public class ClosestHitNV: ExecutionModel
         {
+            public static readonly ClosestHitNV Instance = new ClosestHitNV();
             public override Enumerant Value => ExecutionModel.Enumerant.ClosestHitNV;
             public new static ClosestHitNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ClosestHitNV();
-                return res;
+                return Instance;
             }
         }
         public class ClosestHitKHR: ExecutionModel
         {
+            public static readonly ClosestHitKHR Instance = new ClosestHitKHR();
             public override Enumerant Value => ExecutionModel.Enumerant.ClosestHitKHR;
             public new static ClosestHitKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ClosestHitKHR();
-                return res;
+                return Instance;
             }
         }
         public class MissNV: ExecutionModel
         {
+            public static readonly MissNV Instance = new MissNV();
             public override Enumerant Value => ExecutionModel.Enumerant.MissNV;
             public new static MissNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new MissNV();
-                return res;
+                return Instance;
             }
         }
         public class MissKHR: ExecutionModel
         {
+            public static readonly MissKHR Instance = new MissKHR();
             public override Enumerant Value => ExecutionModel.Enumerant.MissKHR;
             public new static MissKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new MissKHR();
-                return res;
+                return Instance;
             }
         }
         public class CallableNV: ExecutionModel
         {
+            public static readonly CallableNV Instance = new CallableNV();
             public override Enumerant Value => ExecutionModel.Enumerant.CallableNV;
             public new static CallableNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CallableNV();
-                return res;
+                return Instance;
             }
         }
         public class CallableKHR: ExecutionModel
         {
+            public static readonly CallableKHR Instance = new CallableKHR();
             public override Enumerant Value => ExecutionModel.Enumerant.CallableKHR;
             public new static CallableKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CallableKHR();
-                return res;
+                return Instance;
             }
         }
 

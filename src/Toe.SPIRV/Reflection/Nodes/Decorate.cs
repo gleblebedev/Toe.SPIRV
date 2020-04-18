@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
@@ -23,7 +25,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public ReflectedInstruction Target { get; set; }
+        public Node Target { get; set; }
         public Spv.Decoration Decoration { get; set; }
 
         public override IEnumerable<NodePin> OutputPins
@@ -47,20 +49,21 @@ namespace Toe.SPIRV.Reflection.Nodes
             get
             {
                 yield return CreateExitPin("", GetNext());
+                yield return CreateExitPin(nameof(Target), Target);
                 yield break;
             }
         }
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            base.SetUp(op, treeBuilder);
             SetUp((OpDecorate)op, treeBuilder);
         }
 
         public void SetUp(OpDecorate op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            Target = treeBuilder.ResolveType(op.Target);
+            Target = treeBuilder.GetNode(op.Target);
             Decoration = op.Decoration;
+            SetUpDecorations(op, treeBuilder);
         }
-        
-        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

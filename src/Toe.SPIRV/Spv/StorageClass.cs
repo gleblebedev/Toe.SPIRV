@@ -71,272 +71,245 @@ namespace Toe.SPIRV.Spv
 
         public class UniformConstant: StorageClass
         {
+            public static readonly UniformConstant Instance = new UniformConstant();
             public override Enumerant Value => StorageClass.Enumerant.UniformConstant;
             public new static UniformConstant Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new UniformConstant();
-                return res;
+                return Instance;
             }
         }
         public class Input: StorageClass
         {
+            public static readonly Input Instance = new Input();
             public override Enumerant Value => StorageClass.Enumerant.Input;
             public new static Input Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Input();
-                return res;
+                return Instance;
             }
         }
         public class Uniform: StorageClass
         {
+            public static readonly Uniform Instance = new Uniform();
             public override Enumerant Value => StorageClass.Enumerant.Uniform;
             public new static Uniform Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Uniform();
-                return res;
+                return Instance;
             }
         }
         public class Output: StorageClass
         {
+            public static readonly Output Instance = new Output();
             public override Enumerant Value => StorageClass.Enumerant.Output;
             public new static Output Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Output();
-                return res;
+                return Instance;
             }
         }
         public class Workgroup: StorageClass
         {
+            public static readonly Workgroup Instance = new Workgroup();
             public override Enumerant Value => StorageClass.Enumerant.Workgroup;
             public new static Workgroup Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Workgroup();
-                return res;
+                return Instance;
             }
         }
         public class CrossWorkgroup: StorageClass
         {
+            public static readonly CrossWorkgroup Instance = new CrossWorkgroup();
             public override Enumerant Value => StorageClass.Enumerant.CrossWorkgroup;
             public new static CrossWorkgroup Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CrossWorkgroup();
-                return res;
+                return Instance;
             }
         }
         public class Private: StorageClass
         {
+            public static readonly Private Instance = new Private();
             public override Enumerant Value => StorageClass.Enumerant.Private;
             public new static Private Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Private();
-                return res;
+                return Instance;
             }
         }
         public class Function: StorageClass
         {
+            public static readonly Function Instance = new Function();
             public override Enumerant Value => StorageClass.Enumerant.Function;
             public new static Function Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Function();
-                return res;
+                return Instance;
             }
         }
         public class Generic: StorageClass
         {
+            public static readonly Generic Instance = new Generic();
             public override Enumerant Value => StorageClass.Enumerant.Generic;
             public new static Generic Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Generic();
-                return res;
+                return Instance;
             }
         }
         public class PushConstant: StorageClass
         {
+            public static readonly PushConstant Instance = new PushConstant();
             public override Enumerant Value => StorageClass.Enumerant.PushConstant;
             public new static PushConstant Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PushConstant();
-                return res;
+                return Instance;
             }
         }
         public class AtomicCounter: StorageClass
         {
+            public static readonly AtomicCounter Instance = new AtomicCounter();
             public override Enumerant Value => StorageClass.Enumerant.AtomicCounter;
             public new static AtomicCounter Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new AtomicCounter();
-                return res;
+                return Instance;
             }
         }
         public class Image: StorageClass
         {
+            public static readonly Image Instance = new Image();
             public override Enumerant Value => StorageClass.Enumerant.Image;
             public new static Image Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Image();
-                return res;
+                return Instance;
             }
         }
         public class StorageBuffer: StorageClass
         {
+            public static readonly StorageBuffer Instance = new StorageBuffer();
             public override Enumerant Value => StorageClass.Enumerant.StorageBuffer;
             public new static StorageBuffer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new StorageBuffer();
-                return res;
+                return Instance;
             }
         }
         public class CallableDataNV: StorageClass
         {
+            public static readonly CallableDataNV Instance = new CallableDataNV();
             public override Enumerant Value => StorageClass.Enumerant.CallableDataNV;
             public new static CallableDataNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CallableDataNV();
-                return res;
+                return Instance;
             }
         }
         public class CallableDataKHR: StorageClass
         {
+            public static readonly CallableDataKHR Instance = new CallableDataKHR();
             public override Enumerant Value => StorageClass.Enumerant.CallableDataKHR;
             public new static CallableDataKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new CallableDataKHR();
-                return res;
+                return Instance;
             }
         }
         public class IncomingCallableDataNV: StorageClass
         {
+            public static readonly IncomingCallableDataNV Instance = new IncomingCallableDataNV();
             public override Enumerant Value => StorageClass.Enumerant.IncomingCallableDataNV;
             public new static IncomingCallableDataNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IncomingCallableDataNV();
-                return res;
+                return Instance;
             }
         }
         public class IncomingCallableDataKHR: StorageClass
         {
+            public static readonly IncomingCallableDataKHR Instance = new IncomingCallableDataKHR();
             public override Enumerant Value => StorageClass.Enumerant.IncomingCallableDataKHR;
             public new static IncomingCallableDataKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IncomingCallableDataKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayPayloadNV: StorageClass
         {
+            public static readonly RayPayloadNV Instance = new RayPayloadNV();
             public override Enumerant Value => StorageClass.Enumerant.RayPayloadNV;
             public new static RayPayloadNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayPayloadNV();
-                return res;
+                return Instance;
             }
         }
         public class RayPayloadKHR: StorageClass
         {
+            public static readonly RayPayloadKHR Instance = new RayPayloadKHR();
             public override Enumerant Value => StorageClass.Enumerant.RayPayloadKHR;
             public new static RayPayloadKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayPayloadKHR();
-                return res;
+                return Instance;
             }
         }
         public class HitAttributeNV: StorageClass
         {
+            public static readonly HitAttributeNV Instance = new HitAttributeNV();
             public override Enumerant Value => StorageClass.Enumerant.HitAttributeNV;
             public new static HitAttributeNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HitAttributeNV();
-                return res;
+                return Instance;
             }
         }
         public class HitAttributeKHR: StorageClass
         {
+            public static readonly HitAttributeKHR Instance = new HitAttributeKHR();
             public override Enumerant Value => StorageClass.Enumerant.HitAttributeKHR;
             public new static HitAttributeKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HitAttributeKHR();
-                return res;
+                return Instance;
             }
         }
         public class IncomingRayPayloadNV: StorageClass
         {
+            public static readonly IncomingRayPayloadNV Instance = new IncomingRayPayloadNV();
             public override Enumerant Value => StorageClass.Enumerant.IncomingRayPayloadNV;
             public new static IncomingRayPayloadNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IncomingRayPayloadNV();
-                return res;
+                return Instance;
             }
         }
         public class IncomingRayPayloadKHR: StorageClass
         {
+            public static readonly IncomingRayPayloadKHR Instance = new IncomingRayPayloadKHR();
             public override Enumerant Value => StorageClass.Enumerant.IncomingRayPayloadKHR;
             public new static IncomingRayPayloadKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new IncomingRayPayloadKHR();
-                return res;
+                return Instance;
             }
         }
         public class ShaderRecordBufferNV: StorageClass
         {
+            public static readonly ShaderRecordBufferNV Instance = new ShaderRecordBufferNV();
             public override Enumerant Value => StorageClass.Enumerant.ShaderRecordBufferNV;
             public new static ShaderRecordBufferNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ShaderRecordBufferNV();
-                return res;
+                return Instance;
             }
         }
         public class ShaderRecordBufferKHR: StorageClass
         {
+            public static readonly ShaderRecordBufferKHR Instance = new ShaderRecordBufferKHR();
             public override Enumerant Value => StorageClass.Enumerant.ShaderRecordBufferKHR;
             public new static ShaderRecordBufferKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ShaderRecordBufferKHR();
-                return res;
+                return Instance;
             }
         }
         public class PhysicalStorageBuffer: StorageClass
         {
+            public static readonly PhysicalStorageBuffer Instance = new PhysicalStorageBuffer();
             public override Enumerant Value => StorageClass.Enumerant.PhysicalStorageBuffer;
             public new static PhysicalStorageBuffer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PhysicalStorageBuffer();
-                return res;
+                return Instance;
             }
         }
         public class PhysicalStorageBufferEXT: StorageClass
         {
+            public static readonly PhysicalStorageBufferEXT Instance = new PhysicalStorageBufferEXT();
             public override Enumerant Value => StorageClass.Enumerant.PhysicalStorageBufferEXT;
             public new static PhysicalStorageBufferEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PhysicalStorageBufferEXT();
-                return res;
+                return Instance;
             }
         }
 

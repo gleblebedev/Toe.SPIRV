@@ -26,9 +26,9 @@ namespace Toe.SPIRV.CodeGenerator
             Console.WriteLine($"_factories = new Func<Instruction>[{_grammar.Instructions.Keys.Max()+1}];");
             foreach (var instruction in _grammar.Instructions)
             {
-                Console.WriteLine($"_factories[(int)Op.{instruction.Value.Name}] = () => new {instruction.Value.Name}();");
-                
-
+                if (instruction.Value.Name.StartsWith("OpType"))
+                    Console.WriteLine($"{instruction.Value.Name},");
+                //Console.WriteLine($"_factories[(int)Op.{instruction.Value.Name}] = () => new {instruction.Value.Name}();");
             }
         }
     }

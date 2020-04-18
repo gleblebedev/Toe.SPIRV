@@ -149,152 +149,137 @@ namespace Toe.SPIRV.Spv
         }
         public class SpacingEqual: ExecutionMode
         {
+            public static readonly SpacingEqual Instance = new SpacingEqual();
             public override Enumerant Value => ExecutionMode.Enumerant.SpacingEqual;
             public new static SpacingEqual Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SpacingEqual();
-                return res;
+                return Instance;
             }
         }
         public class SpacingFractionalEven: ExecutionMode
         {
+            public static readonly SpacingFractionalEven Instance = new SpacingFractionalEven();
             public override Enumerant Value => ExecutionMode.Enumerant.SpacingFractionalEven;
             public new static SpacingFractionalEven Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SpacingFractionalEven();
-                return res;
+                return Instance;
             }
         }
         public class SpacingFractionalOdd: ExecutionMode
         {
+            public static readonly SpacingFractionalOdd Instance = new SpacingFractionalOdd();
             public override Enumerant Value => ExecutionMode.Enumerant.SpacingFractionalOdd;
             public new static SpacingFractionalOdd Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SpacingFractionalOdd();
-                return res;
+                return Instance;
             }
         }
         public class VertexOrderCw: ExecutionMode
         {
+            public static readonly VertexOrderCw Instance = new VertexOrderCw();
             public override Enumerant Value => ExecutionMode.Enumerant.VertexOrderCw;
             public new static VertexOrderCw Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new VertexOrderCw();
-                return res;
+                return Instance;
             }
         }
         public class VertexOrderCcw: ExecutionMode
         {
+            public static readonly VertexOrderCcw Instance = new VertexOrderCcw();
             public override Enumerant Value => ExecutionMode.Enumerant.VertexOrderCcw;
             public new static VertexOrderCcw Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new VertexOrderCcw();
-                return res;
+                return Instance;
             }
         }
         public class PixelCenterInteger: ExecutionMode
         {
+            public static readonly PixelCenterInteger Instance = new PixelCenterInteger();
             public override Enumerant Value => ExecutionMode.Enumerant.PixelCenterInteger;
             public new static PixelCenterInteger Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PixelCenterInteger();
-                return res;
+                return Instance;
             }
         }
         public class OriginUpperLeft: ExecutionMode
         {
+            public static readonly OriginUpperLeft Instance = new OriginUpperLeft();
             public override Enumerant Value => ExecutionMode.Enumerant.OriginUpperLeft;
             public new static OriginUpperLeft Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OriginUpperLeft();
-                return res;
+                return Instance;
             }
         }
         public class OriginLowerLeft: ExecutionMode
         {
+            public static readonly OriginLowerLeft Instance = new OriginLowerLeft();
             public override Enumerant Value => ExecutionMode.Enumerant.OriginLowerLeft;
             public new static OriginLowerLeft Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OriginLowerLeft();
-                return res;
+                return Instance;
             }
         }
         public class EarlyFragmentTests: ExecutionMode
         {
+            public static readonly EarlyFragmentTests Instance = new EarlyFragmentTests();
             public override Enumerant Value => ExecutionMode.Enumerant.EarlyFragmentTests;
             public new static EarlyFragmentTests Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new EarlyFragmentTests();
-                return res;
+                return Instance;
             }
         }
         public class PointMode: ExecutionMode
         {
+            public static readonly PointMode Instance = new PointMode();
             public override Enumerant Value => ExecutionMode.Enumerant.PointMode;
             public new static PointMode Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PointMode();
-                return res;
+                return Instance;
             }
         }
         public class Xfb: ExecutionMode
         {
+            public static readonly Xfb Instance = new Xfb();
             public override Enumerant Value => ExecutionMode.Enumerant.Xfb;
             public new static Xfb Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Xfb();
-                return res;
+                return Instance;
             }
         }
         public class DepthReplacing: ExecutionMode
         {
+            public static readonly DepthReplacing Instance = new DepthReplacing();
             public override Enumerant Value => ExecutionMode.Enumerant.DepthReplacing;
             public new static DepthReplacing Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DepthReplacing();
-                return res;
+                return Instance;
             }
         }
         public class DepthGreater: ExecutionMode
         {
+            public static readonly DepthGreater Instance = new DepthGreater();
             public override Enumerant Value => ExecutionMode.Enumerant.DepthGreater;
             public new static DepthGreater Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DepthGreater();
-                return res;
+                return Instance;
             }
         }
         public class DepthLess: ExecutionMode
         {
+            public static readonly DepthLess Instance = new DepthLess();
             public override Enumerant Value => ExecutionMode.Enumerant.DepthLess;
             public new static DepthLess Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DepthLess();
-                return res;
+                return Instance;
             }
         }
         public class DepthUnchanged: ExecutionMode
         {
+            public static readonly DepthUnchanged Instance = new DepthUnchanged();
             public override Enumerant Value => ExecutionMode.Enumerant.DepthUnchanged;
             public new static DepthUnchanged Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DepthUnchanged();
-                return res;
+                return Instance;
             }
         }
         public class LocalSize: ExecutionMode
@@ -363,72 +348,65 @@ namespace Toe.SPIRV.Spv
         }
         public class InputPoints: ExecutionMode
         {
+            public static readonly InputPoints Instance = new InputPoints();
             public override Enumerant Value => ExecutionMode.Enumerant.InputPoints;
             public new static InputPoints Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InputPoints();
-                return res;
+                return Instance;
             }
         }
         public class InputLines: ExecutionMode
         {
+            public static readonly InputLines Instance = new InputLines();
             public override Enumerant Value => ExecutionMode.Enumerant.InputLines;
             public new static InputLines Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InputLines();
-                return res;
+                return Instance;
             }
         }
         public class InputLinesAdjacency: ExecutionMode
         {
+            public static readonly InputLinesAdjacency Instance = new InputLinesAdjacency();
             public override Enumerant Value => ExecutionMode.Enumerant.InputLinesAdjacency;
             public new static InputLinesAdjacency Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InputLinesAdjacency();
-                return res;
+                return Instance;
             }
         }
         public class Triangles: ExecutionMode
         {
+            public static readonly Triangles Instance = new Triangles();
             public override Enumerant Value => ExecutionMode.Enumerant.Triangles;
             public new static Triangles Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Triangles();
-                return res;
+                return Instance;
             }
         }
         public class InputTrianglesAdjacency: ExecutionMode
         {
+            public static readonly InputTrianglesAdjacency Instance = new InputTrianglesAdjacency();
             public override Enumerant Value => ExecutionMode.Enumerant.InputTrianglesAdjacency;
             public new static InputTrianglesAdjacency Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new InputTrianglesAdjacency();
-                return res;
+                return Instance;
             }
         }
         public class Quads: ExecutionMode
         {
+            public static readonly Quads Instance = new Quads();
             public override Enumerant Value => ExecutionMode.Enumerant.Quads;
             public new static Quads Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Quads();
-                return res;
+                return Instance;
             }
         }
         public class Isolines: ExecutionMode
         {
+            public static readonly Isolines Instance = new Isolines();
             public override Enumerant Value => ExecutionMode.Enumerant.Isolines;
             public new static Isolines Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Isolines();
-                return res;
+                return Instance;
             }
         }
         public class OutputVertices: ExecutionMode
@@ -457,32 +435,29 @@ namespace Toe.SPIRV.Spv
         }
         public class OutputPoints: ExecutionMode
         {
+            public static readonly OutputPoints Instance = new OutputPoints();
             public override Enumerant Value => ExecutionMode.Enumerant.OutputPoints;
             public new static OutputPoints Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OutputPoints();
-                return res;
+                return Instance;
             }
         }
         public class OutputLineStrip: ExecutionMode
         {
+            public static readonly OutputLineStrip Instance = new OutputLineStrip();
             public override Enumerant Value => ExecutionMode.Enumerant.OutputLineStrip;
             public new static OutputLineStrip Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OutputLineStrip();
-                return res;
+                return Instance;
             }
         }
         public class OutputTriangleStrip: ExecutionMode
         {
+            public static readonly OutputTriangleStrip Instance = new OutputTriangleStrip();
             public override Enumerant Value => ExecutionMode.Enumerant.OutputTriangleStrip;
             public new static OutputTriangleStrip Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OutputTriangleStrip();
-                return res;
+                return Instance;
             }
         }
         public class VecTypeHint: ExecutionMode
@@ -511,32 +486,29 @@ namespace Toe.SPIRV.Spv
         }
         public class ContractionOff: ExecutionMode
         {
+            public static readonly ContractionOff Instance = new ContractionOff();
             public override Enumerant Value => ExecutionMode.Enumerant.ContractionOff;
             public new static ContractionOff Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ContractionOff();
-                return res;
+                return Instance;
             }
         }
         public class Initializer: ExecutionMode
         {
+            public static readonly Initializer Instance = new Initializer();
             public override Enumerant Value => ExecutionMode.Enumerant.Initializer;
             public new static Initializer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Initializer();
-                return res;
+                return Instance;
             }
         }
         public class Finalizer: ExecutionMode
         {
+            public static readonly Finalizer Instance = new Finalizer();
             public override Enumerant Value => ExecutionMode.Enumerant.Finalizer;
             public new static Finalizer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Finalizer();
-                return res;
+                return Instance;
             }
         }
         public class SubgroupSize: ExecutionMode
@@ -669,12 +641,11 @@ namespace Toe.SPIRV.Spv
         }
         public class PostDepthCoverage: ExecutionMode
         {
+            public static readonly PostDepthCoverage Instance = new PostDepthCoverage();
             public override Enumerant Value => ExecutionMode.Enumerant.PostDepthCoverage;
             public new static PostDepthCoverage Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PostDepthCoverage();
-                return res;
+                return Instance;
             }
         }
         public class DenormPreserve: ExecutionMode
@@ -799,22 +770,20 @@ namespace Toe.SPIRV.Spv
         }
         public class StencilRefReplacingEXT: ExecutionMode
         {
+            public static readonly StencilRefReplacingEXT Instance = new StencilRefReplacingEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.StencilRefReplacingEXT;
             public new static StencilRefReplacingEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new StencilRefReplacingEXT();
-                return res;
+                return Instance;
             }
         }
         public class OutputLinesNV: ExecutionMode
         {
+            public static readonly OutputLinesNV Instance = new OutputLinesNV();
             public override Enumerant Value => ExecutionMode.Enumerant.OutputLinesNV;
             public new static OutputLinesNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OutputLinesNV();
-                return res;
+                return Instance;
             }
         }
         public class OutputPrimitivesNV: ExecutionMode
@@ -843,92 +812,83 @@ namespace Toe.SPIRV.Spv
         }
         public class DerivativeGroupQuadsNV: ExecutionMode
         {
+            public static readonly DerivativeGroupQuadsNV Instance = new DerivativeGroupQuadsNV();
             public override Enumerant Value => ExecutionMode.Enumerant.DerivativeGroupQuadsNV;
             public new static DerivativeGroupQuadsNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DerivativeGroupQuadsNV();
-                return res;
+                return Instance;
             }
         }
         public class DerivativeGroupLinearNV: ExecutionMode
         {
+            public static readonly DerivativeGroupLinearNV Instance = new DerivativeGroupLinearNV();
             public override Enumerant Value => ExecutionMode.Enumerant.DerivativeGroupLinearNV;
             public new static DerivativeGroupLinearNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new DerivativeGroupLinearNV();
-                return res;
+                return Instance;
             }
         }
         public class OutputTrianglesNV: ExecutionMode
         {
+            public static readonly OutputTrianglesNV Instance = new OutputTrianglesNV();
             public override Enumerant Value => ExecutionMode.Enumerant.OutputTrianglesNV;
             public new static OutputTrianglesNV Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OutputTrianglesNV();
-                return res;
+                return Instance;
             }
         }
         public class PixelInterlockOrderedEXT: ExecutionMode
         {
+            public static readonly PixelInterlockOrderedEXT Instance = new PixelInterlockOrderedEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.PixelInterlockOrderedEXT;
             public new static PixelInterlockOrderedEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PixelInterlockOrderedEXT();
-                return res;
+                return Instance;
             }
         }
         public class PixelInterlockUnorderedEXT: ExecutionMode
         {
+            public static readonly PixelInterlockUnorderedEXT Instance = new PixelInterlockUnorderedEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.PixelInterlockUnorderedEXT;
             public new static PixelInterlockUnorderedEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new PixelInterlockUnorderedEXT();
-                return res;
+                return Instance;
             }
         }
         public class SampleInterlockOrderedEXT: ExecutionMode
         {
+            public static readonly SampleInterlockOrderedEXT Instance = new SampleInterlockOrderedEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.SampleInterlockOrderedEXT;
             public new static SampleInterlockOrderedEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SampleInterlockOrderedEXT();
-                return res;
+                return Instance;
             }
         }
         public class SampleInterlockUnorderedEXT: ExecutionMode
         {
+            public static readonly SampleInterlockUnorderedEXT Instance = new SampleInterlockUnorderedEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.SampleInterlockUnorderedEXT;
             public new static SampleInterlockUnorderedEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SampleInterlockUnorderedEXT();
-                return res;
+                return Instance;
             }
         }
         public class ShadingRateInterlockOrderedEXT: ExecutionMode
         {
+            public static readonly ShadingRateInterlockOrderedEXT Instance = new ShadingRateInterlockOrderedEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.ShadingRateInterlockOrderedEXT;
             public new static ShadingRateInterlockOrderedEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ShadingRateInterlockOrderedEXT();
-                return res;
+                return Instance;
             }
         }
         public class ShadingRateInterlockUnorderedEXT: ExecutionMode
         {
+            public static readonly ShadingRateInterlockUnorderedEXT Instance = new ShadingRateInterlockUnorderedEXT();
             public override Enumerant Value => ExecutionMode.Enumerant.ShadingRateInterlockUnorderedEXT;
             public new static ShadingRateInterlockUnorderedEXT Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ShadingRateInterlockUnorderedEXT();
-                return res;
+                return Instance;
             }
         }
 

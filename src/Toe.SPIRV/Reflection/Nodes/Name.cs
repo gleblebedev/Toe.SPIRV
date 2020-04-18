@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
@@ -14,12 +16,13 @@ namespace Toe.SPIRV.Reflection.Nodes
         public override Op OpCode => Op.OpName;
 
 
-        public ReflectedInstruction Target { get; set; }
+        public Node Target { get; set; }
         public string Value { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
             {
+                yield return CreateInputPin(nameof(Target), Target);
                 yield break;
             }
         }
@@ -42,6 +45,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         }
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            base.SetUp(op, treeBuilder);
             SetUp((OpName)op, treeBuilder);
         }
 
@@ -49,8 +53,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             Target = treeBuilder.GetNode(op.Target);
             Value = op.Value;
+            SetUpDecorations(op, treeBuilder);
         }
-        
-        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

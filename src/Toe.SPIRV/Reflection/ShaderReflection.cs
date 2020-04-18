@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Capability = Toe.SPIRV.Reflection.Nodes.Capability;
 using ExecutionMode = Toe.SPIRV.Reflection.Nodes.ExecutionMode;
@@ -17,7 +18,7 @@ namespace Toe.SPIRV.Reflection
             var context = new SpirvInstructionTreeBuilder();
             context.BuildTree(shader);
             
-            Structures = context.TypeInstructions.Where(_=>_.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(SpirvStruct)_).ToList();
+            Structures = context.TypeInstructions.Where(_=>_.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(TypeStruct)_).ToList();
             AddInstruction(context.CapabilityInstructions, CapabilityInstructions);
             AddInstruction(context.ExtensionInstructions, ExtensionInstructions);
             AddInstruction(context.ExtInstImportInstructions, ExtInstImportInstructions);
@@ -34,7 +35,7 @@ namespace Toe.SPIRV.Reflection
             }
         }
 
-        public IReadOnlyList<SpirvStruct> Structures { get; private set; }
+        public IReadOnlyList<TypeStruct> Structures { get; private set; }
 
         /// <summary>
         /// All OpCapability instructions. 

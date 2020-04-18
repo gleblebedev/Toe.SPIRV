@@ -15,22 +15,20 @@ namespace Toe.SPIRV.Spv
 
         public class RayQueryCandidateIntersectionKHR: RayQueryIntersection
         {
+            public static readonly RayQueryCandidateIntersectionKHR Instance = new RayQueryCandidateIntersectionKHR();
             public override Enumerant Value => RayQueryIntersection.Enumerant.RayQueryCandidateIntersectionKHR;
             public new static RayQueryCandidateIntersectionKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayQueryCandidateIntersectionKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayQueryCommittedIntersectionKHR: RayQueryIntersection
         {
+            public static readonly RayQueryCommittedIntersectionKHR Instance = new RayQueryCommittedIntersectionKHR();
             public override Enumerant Value => RayQueryIntersection.Enumerant.RayQueryCommittedIntersectionKHR;
             public new static RayQueryCommittedIntersectionKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayQueryCommittedIntersectionKHR();
-                return res;
+                return Instance;
             }
         }
 

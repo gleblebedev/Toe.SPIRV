@@ -3,10 +3,20 @@ using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvAccelerationStructureNV : SpirvTypeBase
+    public partial class TypeAccelerationStructureNV : SpirvTypeBase
     {
         public override Op OpCode => Op.OpTypeAccelerationStructureNV;
+
+        public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.AccelerationStructureNV;
+
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            base.SetUp(op, treeBuilder);
+            SetUp((OpTypeAccelerationStructureNV)op, treeBuilder);
+        }
+
+        partial void SetUp(OpTypeAccelerationStructureNV instruction, SpirvInstructionTreeBuilder treeBuilder);
     }
 }

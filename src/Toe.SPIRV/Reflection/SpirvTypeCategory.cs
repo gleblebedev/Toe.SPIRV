@@ -3,37 +3,43 @@
     public enum SpirvTypeCategory
     {
         Void,
-
         Bool,
-
-        Float,
-
         Int,
-
+        Float,
         Vector,
-
         Matrix,
-
-        Array,
-
-        Struct,
-
-        Function,
-
-        Pointer,
-
         Image,
-
         Sampler,
-
         SampledImage,
+        Array,
+        RuntimeArray,
+        Struct,
+        Opaque,
+        Pointer,
+        Function,
         Event,
         DeviceEvent,
         ReserveId,
         Queue,
         Pipe,
         ForwardPointer,
-        Opaque,
-        Unknown
+        PipeStorage,
+        NamedBarrier,
+        AccelerationStructureNV,
+        RayQueryProvisionalKHR,
+        CooperativeMatrixNV,
+        VmeImageINTEL,
+        AvcImePayloadINTEL,
+        AvcRefPayloadINTEL,
+        AvcSicPayloadINTEL,
+        AvcMcePayloadINTEL,
+        AvcMceResultINTEL,
+        AvcImeResultINTEL,
+        AvcImeResultSingleReferenceStreamoutINTEL,
+        AvcImeResultDualReferenceStreamoutINTEL,
+        AvcImeSingleReferenceStreaminINTEL,
+        AvcImeDualReferenceStreaminINTEL,
+        AvcRefResultINTEL,
+        AvcSicResultINTEL,
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection
@@ -11,10 +12,9 @@ namespace Toe.SPIRV.Reflection
     {
         protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
 
-        protected readonly Dictionary<ReflectedInstruction, Instruction> _instructionMap =
-            new Dictionary<ReflectedInstruction, Instruction>();
+        protected readonly Dictionary<Node, Instruction> _instructionMap = new Dictionary<Node, Instruction>();
 
-        protected virtual Instruction Visit(ReflectedInstruction node)
+        protected virtual Instruction Visit(Node node)
         {
             if (node == null) return null;
             if (_instructionMap.TryGetValue(node, out var instruction)) return instruction;
@@ -36,27 +36,27 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpEntryPoint: return VisitEntryPoint((Nodes.EntryPoint) node);
                 case Op.OpExecutionMode: return VisitExecutionMode((Nodes.ExecutionMode) node);
                 case Op.OpCapability: return VisitCapability((Nodes.Capability) node);
-                case Op.OpTypeVoid: return VisitTypeVoid((SpirvVoid)node);
-                case Op.OpTypeBool: return VisitTypeBool((SpirvBool)node);
-                case Op.OpTypeInt: return VisitTypeInt((SpirvInt)node);
-                case Op.OpTypeFloat: return VisitTypeFloat((SpirvFloat)node);
-                case Op.OpTypeVector: return VisitTypeVector((SpirvVector)node);
-                case Op.OpTypeMatrix: return VisitTypeMatrix((SpirvMatrix)node);
-                case Op.OpTypeImage: return VisitTypeImage((SpirvImage)node);
-                case Op.OpTypeSampler: return VisitTypeSampler((SpirvSampler)node);
-                case Op.OpTypeSampledImage: return VisitTypeSampledImage((SpirvSampledImage)node);
-                case Op.OpTypeArray: return VisitTypeArray((SpirvArray)node);
-                case Op.OpTypeRuntimeArray: return VisitTypeRuntimeArray((SpirvRuntimeArray)node);
-                case Op.OpTypeStruct: return VisitTypeStruct((SpirvStruct)node);
-                case Op.OpTypeOpaque: return VisitTypeOpaque((SpirvOpaque)node);
-                case Op.OpTypePointer: return VisitTypePointer((SpirvPointer)node);
-                case Op.OpTypeFunction: return VisitTypeFunction((SpirvFunction)node);
-                case Op.OpTypeEvent: return VisitTypeEvent((SpirvEvent)node);
-                case Op.OpTypeDeviceEvent: return VisitTypeDeviceEvent((SpirvDeviceEvent)node);
-                case Op.OpTypeReserveId: return VisitTypeReserveId((SpirvReserveId)node);
-                case Op.OpTypeQueue: return VisitTypeQueue((SpirvQueue)node);
-                case Op.OpTypePipe: return VisitTypePipe((SpirvPipe)node);
-                case Op.OpTypeForwardPointer: return VisitTypeForwardPointer((SpirvForwardPointer)node);
+                case Op.OpTypeVoid: return VisitTypeVoid((Types.TypeVoid)node);
+                case Op.OpTypeBool: return VisitTypeBool((Types.TypeBool)node);
+                case Op.OpTypeInt: return VisitTypeInt((Types.TypeInt)node);
+                case Op.OpTypeFloat: return VisitTypeFloat((Types.TypeFloat)node);
+                case Op.OpTypeVector: return VisitTypeVector((Types.TypeVector)node);
+                case Op.OpTypeMatrix: return VisitTypeMatrix((Types.TypeMatrix)node);
+                case Op.OpTypeImage: return VisitTypeImage((Types.TypeImage)node);
+                case Op.OpTypeSampler: return VisitTypeSampler((Types.TypeSampler)node);
+                case Op.OpTypeSampledImage: return VisitTypeSampledImage((Types.TypeSampledImage)node);
+                case Op.OpTypeArray: return VisitTypeArray((Types.TypeArray)node);
+                case Op.OpTypeRuntimeArray: return VisitTypeRuntimeArray((Types.TypeRuntimeArray)node);
+                case Op.OpTypeStruct: return VisitTypeStruct((Types.TypeStruct)node);
+                case Op.OpTypeOpaque: return VisitTypeOpaque((Types.TypeOpaque)node);
+                case Op.OpTypePointer: return VisitTypePointer((Types.TypePointer)node);
+                case Op.OpTypeFunction: return VisitTypeFunction((Types.TypeFunction)node);
+                case Op.OpTypeEvent: return VisitTypeEvent((Types.TypeEvent)node);
+                case Op.OpTypeDeviceEvent: return VisitTypeDeviceEvent((Types.TypeDeviceEvent)node);
+                case Op.OpTypeReserveId: return VisitTypeReserveId((Types.TypeReserveId)node);
+                case Op.OpTypeQueue: return VisitTypeQueue((Types.TypeQueue)node);
+                case Op.OpTypePipe: return VisitTypePipe((Types.TypePipe)node);
+                case Op.OpTypeForwardPointer: return VisitTypeForwardPointer((Types.TypeForwardPointer)node);
                 case Op.OpConstantTrue: return VisitConstantTrue((ConstantTrue) node);
                 case Op.OpConstantFalse: return VisitConstantFalse((ConstantFalse) node);
                 case Op.OpConstant: return VisitConstant((Constant) node);
@@ -315,12 +315,12 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpAtomicFlagClear: return VisitAtomicFlagClear((AtomicFlagClear) node);
                 case Op.OpImageSparseRead: return VisitImageSparseRead((ImageSparseRead) node);
                 case Op.OpSizeOf: return VisitSizeOf((SizeOf) node);
-                case Op.OpTypePipeStorage: return VisitTypePipeStorage((SpirvPipeStorage)node);
+                case Op.OpTypePipeStorage: return VisitTypePipeStorage((Types.TypePipeStorage)node);
                 case Op.OpConstantPipeStorage: return VisitConstantPipeStorage((ConstantPipeStorage) node);
                 case Op.OpCreatePipeFromPipeStorage: return VisitCreatePipeFromPipeStorage((CreatePipeFromPipeStorage) node);
                 case Op.OpGetKernelLocalSizeForSubgroupCount: return VisitGetKernelLocalSizeForSubgroupCount((GetKernelLocalSizeForSubgroupCount) node);
                 case Op.OpGetKernelMaxNumSubgroups: return VisitGetKernelMaxNumSubgroups((GetKernelMaxNumSubgroups) node);
-                case Op.OpTypeNamedBarrier: return VisitTypeNamedBarrier((SpirvNamedBarrier)node);
+                case Op.OpTypeNamedBarrier: return VisitTypeNamedBarrier((Types.TypeNamedBarrier)node);
                 case Op.OpNamedBarrierInitialize: return VisitNamedBarrierInitialize((NamedBarrierInitialize) node);
                 case Op.OpMemoryNamedBarrier: return VisitMemoryNamedBarrier((MemoryNamedBarrier) node);
                 case Op.OpModuleProcessed: return VisitModuleProcessed((ModuleProcessed) node);
@@ -388,8 +388,8 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpIgnoreIntersectionNV: return VisitIgnoreIntersectionNV((IgnoreIntersectionNV) node);
                 case Op.OpTerminateRayNV: return VisitTerminateRayNV((TerminateRayNV) node);
                 case Op.OpTraceNV: return VisitTraceNV((TraceNV) node);
-                case Op.OpTypeAccelerationStructureNV: return VisitTypeAccelerationStructureNV((SpirvAccelerationStructureNV)node);
-                case Op.OpTypeRayQueryProvisionalKHR: return VisitTypeRayQueryProvisionalKHR((SpirvRayQueryProvisionalKHR)node);
+                case Op.OpTypeAccelerationStructureNV: return VisitTypeAccelerationStructureNV((Types.TypeAccelerationStructureNV)node);
+                case Op.OpTypeRayQueryProvisionalKHR: return VisitTypeRayQueryProvisionalKHR((Types.TypeRayQueryProvisionalKHR)node);
                 case Op.OpRayQueryInitializeKHR: return VisitRayQueryInitializeKHR((RayQueryInitializeKHR) node);
                 case Op.OpRayQueryTerminateKHR: return VisitRayQueryTerminateKHR((RayQueryTerminateKHR) node);
                 case Op.OpRayQueryGenerateIntersectionKHR: return VisitRayQueryGenerateIntersectionKHR((RayQueryGenerateIntersectionKHR) node);
@@ -414,7 +414,7 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpRayQueryGetIntersectionObjectToWorldKHR: return VisitRayQueryGetIntersectionObjectToWorldKHR((RayQueryGetIntersectionObjectToWorldKHR) node);
                 case Op.OpRayQueryGetIntersectionWorldToObjectKHR: return VisitRayQueryGetIntersectionWorldToObjectKHR((RayQueryGetIntersectionWorldToObjectKHR) node);
                 case Op.OpExecuteCallableNV: return VisitExecuteCallableNV((ExecuteCallableNV) node);
-                case Op.OpTypeCooperativeMatrixNV: return VisitTypeCooperativeMatrixNV((SpirvCooperativeMatrixNV)node);
+                case Op.OpTypeCooperativeMatrixNV: return VisitTypeCooperativeMatrixNV((Types.TypeCooperativeMatrixNV)node);
                 case Op.OpCooperativeMatrixLoadNV: return VisitCooperativeMatrixLoadNV((CooperativeMatrixLoadNV) node);
                 case Op.OpCooperativeMatrixStoreNV: return VisitCooperativeMatrixStoreNV((CooperativeMatrixStoreNV) node);
                 case Op.OpCooperativeMatrixMulAddNV: return VisitCooperativeMatrixMulAddNV((CooperativeMatrixMulAddNV) node);
@@ -450,19 +450,19 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpDecorateString: return VisitDecorateString((DecorateString) node);
                 case Op.OpMemberDecorateString: return VisitMemberDecorateString((MemberDecorateString) node);
                 case Op.OpVmeImageINTEL: return VisitVmeImageINTEL((VmeImageINTEL) node);
-                case Op.OpTypeVmeImageINTEL: return VisitTypeVmeImageINTEL((SpirvVmeImageINTEL)node);
-                case Op.OpTypeAvcImePayloadINTEL: return VisitTypeAvcImePayloadINTEL((SpirvAvcImePayloadINTEL)node);
-                case Op.OpTypeAvcRefPayloadINTEL: return VisitTypeAvcRefPayloadINTEL((SpirvAvcRefPayloadINTEL)node);
-                case Op.OpTypeAvcSicPayloadINTEL: return VisitTypeAvcSicPayloadINTEL((SpirvAvcSicPayloadINTEL)node);
-                case Op.OpTypeAvcMcePayloadINTEL: return VisitTypeAvcMcePayloadINTEL((SpirvAvcMcePayloadINTEL)node);
-                case Op.OpTypeAvcMceResultINTEL: return VisitTypeAvcMceResultINTEL((SpirvAvcMceResultINTEL)node);
-                case Op.OpTypeAvcImeResultINTEL: return VisitTypeAvcImeResultINTEL((SpirvAvcImeResultINTEL)node);
-                case Op.OpTypeAvcImeResultSingleReferenceStreamoutINTEL: return VisitTypeAvcImeResultSingleReferenceStreamoutINTEL((SpirvAvcImeResultSingleReferenceStreamoutINTEL)node);
-                case Op.OpTypeAvcImeResultDualReferenceStreamoutINTEL: return VisitTypeAvcImeResultDualReferenceStreamoutINTEL((SpirvAvcImeResultDualReferenceStreamoutINTEL)node);
-                case Op.OpTypeAvcImeSingleReferenceStreaminINTEL: return VisitTypeAvcImeSingleReferenceStreaminINTEL((SpirvAvcImeSingleReferenceStreaminINTEL)node);
-                case Op.OpTypeAvcImeDualReferenceStreaminINTEL: return VisitTypeAvcImeDualReferenceStreaminINTEL((SpirvAvcImeDualReferenceStreaminINTEL)node);
-                case Op.OpTypeAvcRefResultINTEL: return VisitTypeAvcRefResultINTEL((SpirvAvcRefResultINTEL)node);
-                case Op.OpTypeAvcSicResultINTEL: return VisitTypeAvcSicResultINTEL((SpirvAvcSicResultINTEL)node);
+                case Op.OpTypeVmeImageINTEL: return VisitTypeVmeImageINTEL((Types.TypeVmeImageINTEL)node);
+                case Op.OpTypeAvcImePayloadINTEL: return VisitTypeAvcImePayloadINTEL((Types.TypeAvcImePayloadINTEL)node);
+                case Op.OpTypeAvcRefPayloadINTEL: return VisitTypeAvcRefPayloadINTEL((Types.TypeAvcRefPayloadINTEL)node);
+                case Op.OpTypeAvcSicPayloadINTEL: return VisitTypeAvcSicPayloadINTEL((Types.TypeAvcSicPayloadINTEL)node);
+                case Op.OpTypeAvcMcePayloadINTEL: return VisitTypeAvcMcePayloadINTEL((Types.TypeAvcMcePayloadINTEL)node);
+                case Op.OpTypeAvcMceResultINTEL: return VisitTypeAvcMceResultINTEL((Types.TypeAvcMceResultINTEL)node);
+                case Op.OpTypeAvcImeResultINTEL: return VisitTypeAvcImeResultINTEL((Types.TypeAvcImeResultINTEL)node);
+                case Op.OpTypeAvcImeResultSingleReferenceStreamoutINTEL: return VisitTypeAvcImeResultSingleReferenceStreamoutINTEL((Types.TypeAvcImeResultSingleReferenceStreamoutINTEL)node);
+                case Op.OpTypeAvcImeResultDualReferenceStreamoutINTEL: return VisitTypeAvcImeResultDualReferenceStreamoutINTEL((Types.TypeAvcImeResultDualReferenceStreamoutINTEL)node);
+                case Op.OpTypeAvcImeSingleReferenceStreaminINTEL: return VisitTypeAvcImeSingleReferenceStreaminINTEL((Types.TypeAvcImeSingleReferenceStreaminINTEL)node);
+                case Op.OpTypeAvcImeDualReferenceStreaminINTEL: return VisitTypeAvcImeDualReferenceStreaminINTEL((Types.TypeAvcImeDualReferenceStreaminINTEL)node);
+                case Op.OpTypeAvcRefResultINTEL: return VisitTypeAvcRefResultINTEL((Types.TypeAvcRefResultINTEL)node);
+                case Op.OpTypeAvcSicResultINTEL: return VisitTypeAvcSicResultINTEL((Types.TypeAvcSicResultINTEL)node);
                 case Op.OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL((SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL) node);
                 case Op.OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL: return VisitSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL((SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL) node);
                 case Op.OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL: return VisitSubgroupAvcMceGetDefaultInterShapePenaltyINTEL((SubgroupAvcMceGetDefaultInterShapePenaltyINTEL) node);
@@ -574,9 +574,9 @@ namespace Toe.SPIRV.Reflection
         
         protected void VisitDecorations(Node node)
         {
-            foreach (var decoration in node.GetDecorations())
+            foreach (var decoration in node.BuildDecorations())
             {
-                Visit(new Decorate() {Decoration = decoration, Target = node});
+                Visit(decoration);
             }
         }
 
@@ -769,10 +769,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -831,10 +827,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.Value = Visit(node.Value);
             return instruction;
@@ -864,10 +856,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.Name = Visit(node.Name);
             return instruction;
@@ -879,10 +867,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -928,247 +912,187 @@ namespace Toe.SPIRV.Reflection
             instruction.Value = Visit(node.Value);
             return instruction;
         }
-        protected virtual OpTypeVoid VisitTypeVoid(SpirvVoid node)
+        protected virtual OpTypeVoid VisitTypeVoid(Types.TypeVoid node)
         {
             var instruction = new OpTypeVoid();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeBool VisitTypeBool(SpirvBool node)
+        protected virtual OpTypeBool VisitTypeBool(Types.TypeBool node)
         {
             var instruction = new OpTypeBool();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeInt VisitTypeInt(SpirvInt node)
+        protected virtual OpTypeInt VisitTypeInt(Types.TypeInt node)
         {
             var instruction = new OpTypeInt();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeFloat VisitTypeFloat(SpirvFloat node)
+        protected virtual OpTypeFloat VisitTypeFloat(Types.TypeFloat node)
         {
             var instruction = new OpTypeFloat();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeVector VisitTypeVector(SpirvVector node)
+        protected virtual OpTypeVector VisitTypeVector(Types.TypeVector node)
         {
             var instruction = new OpTypeVector();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeMatrix VisitTypeMatrix(SpirvMatrix node)
+        protected virtual OpTypeMatrix VisitTypeMatrix(Types.TypeMatrix node)
         {
             var instruction = new OpTypeMatrix();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeImage VisitTypeImage(SpirvImage node)
+        protected virtual OpTypeImage VisitTypeImage(Types.TypeImage node)
         {
             var instruction = new OpTypeImage();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeSampler VisitTypeSampler(SpirvSampler node)
+        protected virtual OpTypeSampler VisitTypeSampler(Types.TypeSampler node)
         {
             var instruction = new OpTypeSampler();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeSampledImage VisitTypeSampledImage(SpirvSampledImage node)
+        protected virtual OpTypeSampledImage VisitTypeSampledImage(Types.TypeSampledImage node)
         {
             var instruction = new OpTypeSampledImage();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeArray VisitTypeArray(SpirvArray node)
+        protected virtual OpTypeArray VisitTypeArray(Types.TypeArray node)
         {
             var instruction = new OpTypeArray();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeRuntimeArray VisitTypeRuntimeArray(SpirvRuntimeArray node)
+        protected virtual OpTypeRuntimeArray VisitTypeRuntimeArray(Types.TypeRuntimeArray node)
         {
             var instruction = new OpTypeRuntimeArray();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeStruct VisitTypeStruct(SpirvStruct node)
+        protected virtual OpTypeStruct VisitTypeStruct(Types.TypeStruct node)
         {
             var instruction = new OpTypeStruct();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeOpaque VisitTypeOpaque(SpirvOpaque node)
+        protected virtual OpTypeOpaque VisitTypeOpaque(Types.TypeOpaque node)
         {
             var instruction = new OpTypeOpaque();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypePointer VisitTypePointer(SpirvPointer node)
+        protected virtual OpTypePointer VisitTypePointer(Types.TypePointer node)
         {
             var instruction = new OpTypePointer();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeFunction VisitTypeFunction(SpirvFunction node)
+        protected virtual OpTypeFunction VisitTypeFunction(Types.TypeFunction node)
         {
             var instruction = new OpTypeFunction();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeEvent VisitTypeEvent(SpirvEvent node)
+        protected virtual OpTypeEvent VisitTypeEvent(Types.TypeEvent node)
         {
             var instruction = new OpTypeEvent();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeDeviceEvent VisitTypeDeviceEvent(SpirvDeviceEvent node)
+        protected virtual OpTypeDeviceEvent VisitTypeDeviceEvent(Types.TypeDeviceEvent node)
         {
             var instruction = new OpTypeDeviceEvent();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeReserveId VisitTypeReserveId(SpirvReserveId node)
+        protected virtual OpTypeReserveId VisitTypeReserveId(Types.TypeReserveId node)
         {
             var instruction = new OpTypeReserveId();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeQueue VisitTypeQueue(SpirvQueue node)
+        protected virtual OpTypeQueue VisitTypeQueue(Types.TypeQueue node)
         {
             var instruction = new OpTypeQueue();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypePipe VisitTypePipe(SpirvPipe node)
+        protected virtual OpTypePipe VisitTypePipe(Types.TypePipe node)
         {
             var instruction = new OpTypePipe();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeForwardPointer VisitTypeForwardPointer(SpirvForwardPointer node)
+        protected virtual OpTypeForwardPointer VisitTypeForwardPointer(Types.TypeForwardPointer node)
         {
             var instruction = new OpTypeForwardPointer();
             _instructionMap.Add(node, instruction);
@@ -1181,10 +1105,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1197,10 +1117,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1213,10 +1129,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1230,10 +1142,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1247,10 +1155,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1266,10 +1170,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1282,10 +1182,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1298,10 +1194,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1314,10 +1206,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1331,10 +1219,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1348,10 +1232,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1365,10 +1245,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1385,10 +1261,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1410,10 +1282,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1430,10 +1298,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1448,10 +1312,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1467,10 +1327,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1522,10 +1378,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1540,10 +1392,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1558,10 +1406,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1577,10 +1421,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1595,10 +1435,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1612,10 +1448,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1654,10 +1486,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             Visit(node.Next);
 
@@ -1692,10 +1520,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1710,10 +1534,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1729,10 +1549,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1748,10 +1564,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1765,10 +1577,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1783,10 +1591,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1802,10 +1606,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1819,10 +1619,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1836,10 +1632,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1854,10 +1646,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1873,10 +1661,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1892,10 +1676,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1912,10 +1692,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1932,10 +1708,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1951,10 +1723,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1970,10 +1738,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -1990,10 +1754,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2010,10 +1770,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2029,10 +1785,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2049,10 +1801,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2069,10 +1817,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2101,10 +1845,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2118,10 +1858,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2135,10 +1871,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2152,10 +1884,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2170,10 +1898,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2187,10 +1911,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2205,10 +1925,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2222,10 +1938,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2239,10 +1951,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2256,10 +1964,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2273,10 +1977,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2290,10 +1990,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2307,10 +2003,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2324,10 +2016,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2341,10 +2029,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2358,10 +2042,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2375,10 +2055,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2392,10 +2068,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2409,10 +2081,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2426,10 +2094,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2443,10 +2107,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2460,10 +2120,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2477,10 +2133,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2495,10 +2147,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2512,10 +2160,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2529,10 +2173,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2546,10 +2186,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2564,10 +2200,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2582,10 +2214,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2600,10 +2228,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2618,10 +2242,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2636,10 +2256,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2654,10 +2270,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2672,10 +2284,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2690,10 +2298,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2708,10 +2312,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2726,10 +2326,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2744,10 +2340,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2762,10 +2354,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2780,10 +2368,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2798,10 +2382,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2816,10 +2396,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2834,10 +2410,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2852,10 +2424,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2870,10 +2438,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2888,10 +2452,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2906,10 +2466,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2924,10 +2480,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2942,10 +2494,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2960,10 +2508,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2978,10 +2522,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -2996,10 +2536,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3013,10 +2549,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3030,10 +2562,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3047,10 +2575,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3064,10 +2588,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3081,10 +2601,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3098,10 +2614,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3115,10 +2627,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3133,10 +2641,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3151,10 +2655,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3169,10 +2669,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3187,10 +2683,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3205,10 +2697,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3223,10 +2711,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3241,10 +2725,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3258,10 +2738,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3277,10 +2753,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3295,10 +2767,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3313,10 +2781,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3331,10 +2795,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3349,10 +2809,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3367,10 +2823,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3385,10 +2837,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3403,10 +2851,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3421,10 +2865,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3439,10 +2879,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3457,10 +2893,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3475,10 +2907,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3493,10 +2921,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3511,10 +2935,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3529,10 +2949,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3547,10 +2963,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3565,10 +2977,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3583,10 +2991,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3601,10 +3005,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3619,10 +3019,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3637,10 +3033,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3655,10 +3047,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3673,10 +3061,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3691,10 +3075,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3709,10 +3089,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3727,10 +3103,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3745,10 +3117,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3763,10 +3131,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3781,10 +3145,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3798,10 +3158,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3818,10 +3174,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3837,10 +3189,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3856,10 +3204,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3873,10 +3217,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3890,10 +3230,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3907,10 +3243,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3924,10 +3256,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3941,10 +3269,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3958,10 +3282,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3975,10 +3295,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -3992,10 +3308,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4009,10 +3321,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4026,10 +3334,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4104,10 +3408,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4136,10 +3436,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4156,10 +3452,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4178,10 +3470,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4200,10 +3488,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4219,10 +3503,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4238,10 +3518,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4258,10 +3534,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4278,10 +3550,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4298,10 +3566,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4318,10 +3582,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4338,10 +3598,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4358,10 +3614,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4378,10 +3630,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4398,10 +3646,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4418,10 +3662,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4458,10 +3698,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             Visit(node.Next);
 
@@ -4554,10 +3790,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4588,10 +3820,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4606,10 +3834,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4624,10 +3848,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4643,10 +3863,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4662,10 +3878,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4681,10 +3893,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4700,10 +3908,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4719,10 +3923,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4738,10 +3938,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4757,10 +3953,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4776,10 +3968,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4795,10 +3983,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4815,10 +3999,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4835,10 +4015,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4857,10 +4033,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4879,10 +4051,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4899,10 +4067,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4945,10 +4109,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4962,10 +4122,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -4981,10 +4137,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5000,10 +4152,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5021,10 +4169,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5070,10 +4214,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5090,10 +4230,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5117,10 +4253,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5138,10 +4270,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5159,10 +4287,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5179,10 +4303,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5219,10 +4339,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5235,10 +4351,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5275,10 +4387,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5291,10 +4399,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5310,10 +4414,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5329,10 +4429,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5348,10 +4444,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5368,10 +4460,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5388,10 +4476,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5407,10 +4491,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5426,10 +4506,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5446,10 +4522,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5466,10 +4538,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5485,10 +4553,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5505,10 +4569,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5525,10 +4585,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5551,10 +4607,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5582,10 +4634,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5601,26 +4649,19 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
             instruction.Pointer = Visit(node.Pointer);
             return instruction;
         }
-        protected virtual OpTypePipeStorage VisitTypePipeStorage(SpirvPipeStorage node)
+        protected virtual OpTypePipeStorage VisitTypePipeStorage(Types.TypePipeStorage node)
         {
             var instruction = new OpTypePipeStorage();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
         protected virtual OpConstantPipeStorage VisitConstantPipeStorage(Nodes.ConstantPipeStorage node)
@@ -5630,10 +4671,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5649,10 +4686,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5666,10 +4699,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5687,10 +4716,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5700,16 +4725,13 @@ namespace Toe.SPIRV.Reflection
             instruction.ParamAlign = Visit(node.ParamAlign);
             return instruction;
         }
-        protected virtual OpTypeNamedBarrier VisitTypeNamedBarrier(SpirvNamedBarrier node)
+        protected virtual OpTypeNamedBarrier VisitTypeNamedBarrier(Types.TypeNamedBarrier node)
         {
             var instruction = new OpTypeNamedBarrier();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
         protected virtual OpNamedBarrierInitialize VisitNamedBarrierInitialize(Nodes.NamedBarrierInitialize node)
@@ -5719,10 +4741,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5780,10 +4798,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5797,10 +4811,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5815,10 +4825,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5833,10 +4839,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5851,10 +4853,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5870,10 +4868,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5888,10 +4882,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5906,10 +4896,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5924,10 +4910,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5943,10 +4925,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5962,10 +4940,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5980,10 +4954,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -5998,10 +4968,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6017,10 +4983,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6036,10 +4998,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6055,10 +5013,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6074,10 +5028,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6094,10 +5044,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6114,10 +5060,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6134,10 +5076,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6154,10 +5092,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6174,10 +5108,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6194,10 +5124,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6214,10 +5140,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6234,10 +5156,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6254,10 +5172,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6274,10 +5188,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6294,10 +5204,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6314,10 +5220,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6334,10 +5236,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6354,10 +5252,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6374,10 +5268,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6394,10 +5284,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6413,10 +5299,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6432,10 +5314,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6449,10 +5327,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6467,10 +5341,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6485,10 +5355,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6503,10 +5369,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6520,10 +5382,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6537,10 +5395,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6554,10 +5408,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6571,10 +5421,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6588,10 +5434,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6606,10 +5448,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6625,10 +5463,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6644,10 +5478,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6663,10 +5493,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6682,10 +5508,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6701,10 +5523,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6720,10 +5538,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6739,10 +5553,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6758,10 +5568,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6776,10 +5582,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6795,10 +5597,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6812,10 +5610,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6833,10 +5627,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6861,10 +5651,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -6910,28 +5696,22 @@ namespace Toe.SPIRV.Reflection
 
             return instruction;
         }
-        protected virtual OpTypeAccelerationStructureNV VisitTypeAccelerationStructureNV(SpirvAccelerationStructureNV node)
+        protected virtual OpTypeAccelerationStructureNV VisitTypeAccelerationStructureNV(Types.TypeAccelerationStructureNV node)
         {
             var instruction = new OpTypeAccelerationStructureNV();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeRayQueryProvisionalKHR VisitTypeRayQueryProvisionalKHR(SpirvRayQueryProvisionalKHR node)
+        protected virtual OpTypeRayQueryProvisionalKHR VisitTypeRayQueryProvisionalKHR(Types.TypeRayQueryProvisionalKHR node)
         {
             var instruction = new OpTypeRayQueryProvisionalKHR();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
         protected virtual OpRayQueryInitializeKHR VisitRayQueryInitializeKHR(Nodes.RayQueryInitializeKHR node)
@@ -6989,10 +5769,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7006,10 +5782,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7024,10 +5796,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7041,10 +5809,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7058,10 +5822,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7076,10 +5836,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7094,10 +5850,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7112,10 +5864,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7130,10 +5878,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7148,10 +5892,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7166,10 +5906,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7184,10 +5920,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7202,10 +5934,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7219,10 +5947,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7237,10 +5961,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7255,10 +5975,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7272,10 +5988,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7289,10 +6001,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7307,10 +6015,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7329,16 +6033,13 @@ namespace Toe.SPIRV.Reflection
 
             return instruction;
         }
-        protected virtual OpTypeCooperativeMatrixNV VisitTypeCooperativeMatrixNV(SpirvCooperativeMatrixNV node)
+        protected virtual OpTypeCooperativeMatrixNV VisitTypeCooperativeMatrixNV(Types.TypeCooperativeMatrixNV node)
         {
             var instruction = new OpTypeCooperativeMatrixNV();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
         protected virtual OpCooperativeMatrixLoadNV VisitCooperativeMatrixLoadNV(Nodes.CooperativeMatrixLoadNV node)
@@ -7348,10 +6049,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7382,10 +6079,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7401,10 +6094,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7445,10 +6134,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7461,10 +6146,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7479,10 +6160,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7498,10 +6175,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7517,10 +6190,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7535,10 +6204,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7563,10 +6228,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7593,10 +6254,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7627,10 +6284,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7644,10 +6297,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7661,10 +6310,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7679,10 +6324,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7697,10 +6338,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7715,10 +6352,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7733,10 +6366,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7751,10 +6380,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7769,10 +6394,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7787,10 +6408,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7805,10 +6422,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7823,10 +6436,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7841,10 +6450,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7859,10 +6464,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7900,10 +6501,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -7911,160 +6508,121 @@ namespace Toe.SPIRV.Reflection
             instruction.Sampler = Visit(node.Sampler);
             return instruction;
         }
-        protected virtual OpTypeVmeImageINTEL VisitTypeVmeImageINTEL(SpirvVmeImageINTEL node)
+        protected virtual OpTypeVmeImageINTEL VisitTypeVmeImageINTEL(Types.TypeVmeImageINTEL node)
         {
             var instruction = new OpTypeVmeImageINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcImePayloadINTEL VisitTypeAvcImePayloadINTEL(SpirvAvcImePayloadINTEL node)
+        protected virtual OpTypeAvcImePayloadINTEL VisitTypeAvcImePayloadINTEL(Types.TypeAvcImePayloadINTEL node)
         {
             var instruction = new OpTypeAvcImePayloadINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcRefPayloadINTEL VisitTypeAvcRefPayloadINTEL(SpirvAvcRefPayloadINTEL node)
+        protected virtual OpTypeAvcRefPayloadINTEL VisitTypeAvcRefPayloadINTEL(Types.TypeAvcRefPayloadINTEL node)
         {
             var instruction = new OpTypeAvcRefPayloadINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcSicPayloadINTEL VisitTypeAvcSicPayloadINTEL(SpirvAvcSicPayloadINTEL node)
+        protected virtual OpTypeAvcSicPayloadINTEL VisitTypeAvcSicPayloadINTEL(Types.TypeAvcSicPayloadINTEL node)
         {
             var instruction = new OpTypeAvcSicPayloadINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcMcePayloadINTEL VisitTypeAvcMcePayloadINTEL(SpirvAvcMcePayloadINTEL node)
+        protected virtual OpTypeAvcMcePayloadINTEL VisitTypeAvcMcePayloadINTEL(Types.TypeAvcMcePayloadINTEL node)
         {
             var instruction = new OpTypeAvcMcePayloadINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcMceResultINTEL VisitTypeAvcMceResultINTEL(SpirvAvcMceResultINTEL node)
+        protected virtual OpTypeAvcMceResultINTEL VisitTypeAvcMceResultINTEL(Types.TypeAvcMceResultINTEL node)
         {
             var instruction = new OpTypeAvcMceResultINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcImeResultINTEL VisitTypeAvcImeResultINTEL(SpirvAvcImeResultINTEL node)
+        protected virtual OpTypeAvcImeResultINTEL VisitTypeAvcImeResultINTEL(Types.TypeAvcImeResultINTEL node)
         {
             var instruction = new OpTypeAvcImeResultINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcImeResultSingleReferenceStreamoutINTEL VisitTypeAvcImeResultSingleReferenceStreamoutINTEL(SpirvAvcImeResultSingleReferenceStreamoutINTEL node)
+        protected virtual OpTypeAvcImeResultSingleReferenceStreamoutINTEL VisitTypeAvcImeResultSingleReferenceStreamoutINTEL(Types.TypeAvcImeResultSingleReferenceStreamoutINTEL node)
         {
             var instruction = new OpTypeAvcImeResultSingleReferenceStreamoutINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcImeResultDualReferenceStreamoutINTEL VisitTypeAvcImeResultDualReferenceStreamoutINTEL(SpirvAvcImeResultDualReferenceStreamoutINTEL node)
+        protected virtual OpTypeAvcImeResultDualReferenceStreamoutINTEL VisitTypeAvcImeResultDualReferenceStreamoutINTEL(Types.TypeAvcImeResultDualReferenceStreamoutINTEL node)
         {
             var instruction = new OpTypeAvcImeResultDualReferenceStreamoutINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcImeSingleReferenceStreaminINTEL VisitTypeAvcImeSingleReferenceStreaminINTEL(SpirvAvcImeSingleReferenceStreaminINTEL node)
+        protected virtual OpTypeAvcImeSingleReferenceStreaminINTEL VisitTypeAvcImeSingleReferenceStreaminINTEL(Types.TypeAvcImeSingleReferenceStreaminINTEL node)
         {
             var instruction = new OpTypeAvcImeSingleReferenceStreaminINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcImeDualReferenceStreaminINTEL VisitTypeAvcImeDualReferenceStreaminINTEL(SpirvAvcImeDualReferenceStreaminINTEL node)
+        protected virtual OpTypeAvcImeDualReferenceStreaminINTEL VisitTypeAvcImeDualReferenceStreaminINTEL(Types.TypeAvcImeDualReferenceStreaminINTEL node)
         {
             var instruction = new OpTypeAvcImeDualReferenceStreaminINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcRefResultINTEL VisitTypeAvcRefResultINTEL(SpirvAvcRefResultINTEL node)
+        protected virtual OpTypeAvcRefResultINTEL VisitTypeAvcRefResultINTEL(Types.TypeAvcRefResultINTEL node)
         {
             var instruction = new OpTypeAvcRefResultINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
-        protected virtual OpTypeAvcSicResultINTEL VisitTypeAvcSicResultINTEL(SpirvAvcSicResultINTEL node)
+        protected virtual OpTypeAvcSicResultINTEL VisitTypeAvcSicResultINTEL(Types.TypeAvcSicResultINTEL node)
         {
             var instruction = new OpTypeAvcSicResultINTEL();
             _instructionMap.Add(node, instruction);
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
+            VisitDecorations(node);
             return instruction;
         }
         protected virtual OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL VisitSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL node)
@@ -8074,10 +6632,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8092,10 +6646,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8110,10 +6660,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8128,10 +6674,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8146,10 +6688,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8164,10 +6702,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8182,10 +6716,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8200,10 +6730,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8218,10 +6744,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8234,10 +6756,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8250,10 +6768,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8266,10 +6780,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8286,10 +6796,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8304,10 +6810,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8320,10 +6822,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8336,10 +6834,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8353,10 +6847,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8371,10 +6861,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8389,10 +6875,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8408,10 +6890,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8425,10 +6903,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8442,10 +6916,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8459,10 +6929,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8476,10 +6942,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8493,10 +6955,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8510,10 +6968,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8527,10 +6981,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8544,10 +6994,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8561,10 +7007,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8578,10 +7020,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8595,10 +7033,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8612,10 +7046,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8629,10 +7059,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8646,10 +7072,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8665,10 +7087,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8684,10 +7102,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8703,10 +7117,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8723,10 +7133,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8741,10 +7147,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8761,10 +7163,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8778,10 +7176,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8796,10 +7190,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8813,10 +7203,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8831,10 +7217,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8849,10 +7231,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8868,10 +7246,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8888,10 +7262,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8908,10 +7278,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8929,10 +7295,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8948,10 +7310,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8968,10 +7326,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -8988,10 +7342,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9009,10 +7359,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9026,10 +7372,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9043,10 +7385,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9060,10 +7398,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9077,10 +7411,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9094,10 +7424,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9112,10 +7438,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9130,10 +7452,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9148,10 +7466,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9167,10 +7481,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9186,10 +7496,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9205,10 +7511,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9223,10 +7525,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9240,10 +7538,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9257,10 +7551,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9274,10 +7564,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9291,10 +7577,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9314,10 +7596,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9338,10 +7616,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9355,10 +7629,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9372,10 +7642,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9389,10 +7655,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9408,10 +7670,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9428,10 +7686,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9447,10 +7701,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9467,10 +7717,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9484,10 +7730,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9501,10 +7743,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9523,10 +7761,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9547,10 +7781,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9574,10 +7804,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9592,10 +7818,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9609,10 +7831,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9627,10 +7845,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9647,10 +7861,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9665,10 +7875,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9682,10 +7888,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9700,10 +7902,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9718,10 +7916,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9736,10 +7930,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9755,10 +7945,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9775,10 +7961,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9794,10 +7976,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9814,10 +7992,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9831,10 +8005,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9848,10 +8018,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9865,10 +8031,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9882,10 +8044,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9899,10 +8057,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9916,10 +8070,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9933,10 +8083,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 
@@ -9950,10 +8096,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
-            if (node.DebugName != null)
-            {
-                Visit(new Name() {Target = node, Value = node.DebugName});
-            }
             VisitDecorations(node);
             instruction.IdResultType = Visit(node.ResultType);
 

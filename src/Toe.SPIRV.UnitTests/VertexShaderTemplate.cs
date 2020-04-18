@@ -7,614 +7,666 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using Toe.SPIRV.Reflection;
-
 namespace Toe.SPIRV.UnitTests
 {
+    using System.Linq;
+    using System.Text;
+    using System.Collections.Generic;
+    using Toe.SPIRV.Reflection;
+    using Toe.SPIRV.Reflection.Types;
+    using System;
+    
     /// <summary>
-    ///     Class to produce the template output
+    /// Class to produce the template output
     /// </summary>
-#line 1 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-    [GeneratedCode("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
+    
+    #line 1 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class VertexShaderTemplate : VertexShaderTemplateBase
     {
+#line hidden
         /// <summary>
-        ///     Create the template output
+        /// Create the template output
         /// </summary>
         public virtual string TransformText()
         {
-            Write("#version 450\r\n\r\n");
+            this.Write("#version 450\r\n\r\n");
+            
+            #line 10 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
-#line 9 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(TypeStruct)_.Type).Distinct())
+{
 
-            foreach (var structDef in _fields.Fields.Where(_ => _.Type.TypeCategory == SpirvTypeCategory.Struct)
-                .Select(_ => (SpirvStruct) _.Type).Distinct())
+            
+            #line default
+            #line hidden
+            this.Write("struct ");
+            
+            #line 14 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.DebugName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n");
+            
+            #line 16 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+    foreach (var field in structDef.Fields)
+    {
+        if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+        {
+            var arrayType = (TypeArray)field.Type;
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.ElementType));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" [");
+            
+            #line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.Length));
+            
+            #line default
+            #line hidden
+            this.Write("];\r\n");
+            
+            #line 24 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 29 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Type));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 29 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 30 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+        }
+    };
+
+            
+            #line default
+            #line hidden
+            this.Write("}; // end of ");
+            
+            #line 34 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.DebugName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 35 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+};
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\nlayout(set = 0, binding = 0) uniform ");
+            
+            #line 39 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_fields.DebugName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n");
+            
+            #line 41 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+foreach (var field in _fields.Fields)
+{
+if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+{
+var arrayType = (TypeArray)field.Type;
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.ElementType));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" [");
+            
+            #line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(arrayType.Length));
+            
+            #line default
+            #line hidden
+            this.Write("];\r\n");
+            
+            #line 49 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+}
+else
+{
+
+            
+            #line default
+            #line hidden
+            this.Write("    ");
+            
+            #line 54 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Type));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 54 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 55 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+}
+}
+
+            
+            #line default
+            #line hidden
+            this.Write("};\r\n\r\nlayout(location = 0) out vec4 fsin_color;\r\n\r\nint AppendHash(int hash, int f" +
+                    ")\r\n{\r\n    return (hash*397) ^ f;\r\n}\r\nint AppendHash(int hash, float f)\r\n{\r\n    r" +
+                    "eturn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, double f)\r\n{\r\n    r" +
+                    "eturn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, vec2 m)\r\n{\r\n    has" +
+                    "h = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    return hash;\r" +
+                    "\n}\r\nint AppendHash(int hash, vec3 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    " +
+                    "hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    return has" +
+                    "h;\r\n}\r\nint AppendHash(int hash, vec4 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n " +
+                    "   hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    hash = " +
+                    "AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, dvec2 m)\r\n" +
+                    "{\r\n    hash = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    ret" +
+                    "urn hash;\r\n}\r\nint AppendHash(int hash, dvec3 m)\r\n{\r\n    hash = AppendHash(hash, " +
+                    "m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n   " +
+                    " return hash;\r\n}\r\nint AppendHash(int hash, dvec4 m)\r\n{\r\n    hash = AppendHash(ha" +
+                    "sh, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r" +
+                    "\n    hash = AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash" +
+                    ", mat2 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash," +
+                    " m[0][1]);\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m" +
+                    "[1][1]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat3 m)\r\n{\r\n    hash = A" +
+                    "ppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = App" +
+                    "endHash(hash, m[0][2]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = App" +
+                    "endHash(hash, m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n\r\n    hash = App" +
+                    "endHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = Appen" +
+                    "dHash(hash, m[2][2]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r" +
+                    "\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n " +
+                    "   hash = AppendHash(hash, m[0][2]);\r\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n " +
+                    "   hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n   " +
+                    " hash = AppendHash(hash, m[1][2]);\r\n    hash = AppendHash(hash, m[1][3]);\r\n\r\n   " +
+                    " hash = AppendHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    h" +
+                    "ash = AppendHash(hash, m[2][2]);\r\n    hash = AppendHash(hash, m[2][3]);\r\n\r\n    h" +
+                    "ash = AppendHash(hash, m[3][0]);\r\n    hash = AppendHash(hash, m[3][1]);\r\n    has" +
+                    "h = AppendHash(hash, m[3][2]);\r\n    hash = AppendHash(hash, m[3][3]);\r\n    retur" +
+                    "n hash;\r\n}\r\n");
+            
+            #line 163 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+foreach (var structDef in _fields.Fields.Where(_=>_.Type.TypeCategory == SpirvTypeCategory.Struct).Select(_=>(TypeStruct)_.Type).Distinct())
+{
+
+            
+            #line default
+            #line hidden
+            this.Write("int AppendHash(int hash, ");
+            
+            #line 167 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.DebugName));
+            
+            #line default
+            #line hidden
+            this.Write(" m)\r\n{\r\n");
+            
+            #line 169 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+
+    foreach (var field in structDef.Fields)
+    {
+        if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+        {
+            var arrayType = (TypeArray)field.Type;
+            for (int i=0; i<arrayType.Length; ++i)
             {
-#line default
-#line hidden
-                Write("struct ");
 
-#line 13 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, m.");
+            
+            #line 178 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write("[");
+            
+            #line 178 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            this.Write("]);\r\n");
+            
+            #line 179 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
-#line default
-#line hidden
-                Write("\r\n{\r\n");
-
-#line 15 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-
-                foreach (var field in structDef.Fields)
-                    if (field.Type.TypeCategory == SpirvTypeCategory.Array)
-                    {
-                        var arrayType = (SpirvArray) field.Type;
-
-
-#line default
-#line hidden
-                        Write("    ");
-
-#line 22 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(arrayType.ElementType));
-
-#line default
-#line hidden
-                        Write(" ");
-
-#line 22 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                        Write(" [");
-
-#line 22 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(arrayType.Length));
-
-#line default
-#line hidden
-                        Write("];\r\n");
-
-#line 23 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    }
-                    else
-                    {
-#line default
-#line hidden
-                        Write("    ");
-
-#line 28 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(field.Type));
-
-#line default
-#line hidden
-                        Write(" ");
-
-#line 28 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                        Write(";\r\n");
-
-#line 29 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    }
-
-                ;
-
-
-#line default
-#line hidden
-                Write("}; // end of ");
-
-#line 33 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
-
-#line default
-#line hidden
-                Write("\r\n");
-
-#line 34 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
             }
+        }
+        else
+        {
 
-            ;
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, m.");
+            
+            #line 185 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 186 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
+        }
+    };
 
-#line default
-#line hidden
-            Write("\r\nlayout(set = 0, binding = 0) uniform ");
+            
+            #line default
+            #line hidden
+            this.Write("    return hash;\r\n} // end of ");
+            
+            #line 191 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(structDef.DebugName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 192 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
-#line 38 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-            Write(ToStringHelper.ToStringWithCulture(_fields.DebugName));
+};
 
-#line default
-#line hidden
-            Write("\r\n{\r\n");
+            
+            #line default
+            #line hidden
+            this.Write("\r\nvoid main()\r\n{\r\n    int hash = 0;\r\n");
+            
+            #line 199 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
-#line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+foreach (var field in _fields.Fields)
+{
+if (field.Type.TypeCategory == SpirvTypeCategory.Array)
+{
+var arrayType = (TypeArray)field.Type;
+for (int i=0; i<arrayType.Length; ++i)
+{
 
-            foreach (var field in _fields.Fields)
-                if (field.Type.TypeCategory == SpirvTypeCategory.Array)
-                {
-                    var arrayType = (SpirvArray) field.Type;
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, ");
+            
+            #line 208 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write("[");
+            
+            #line 208 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(i));
+            
+            #line default
+            #line hidden
+            this.Write("]);\r\n");
+            
+            #line 209 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
+}
+}
+else
+{
 
-#line default
-#line hidden
-                    Write("    ");
+            
+            #line default
+            #line hidden
+            this.Write("    hash = AppendHash(hash, ");
+            
+            #line 215 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(field.Name));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n");
+            
+            #line 216 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
 
-#line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    Write(ToStringHelper.ToStringWithCulture(arrayType.ElementType));
+}
+}
 
-#line default
-#line hidden
-                    Write(" ");
-
-#line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                    Write(" [");
-
-#line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    Write(ToStringHelper.ToStringWithCulture(arrayType.Length));
-
-#line default
-#line hidden
-                    Write("];\r\n");
-
-#line 48 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                }
-                else
-                {
-#line default
-#line hidden
-                    Write("    ");
-
-#line 53 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    Write(ToStringHelper.ToStringWithCulture(field.Type));
-
-#line default
-#line hidden
-                    Write(" ");
-
-#line 53 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                    Write(";\r\n");
-
-#line 54 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                }
-
-
-#line default
-#line hidden
-            Write("};\r\n\r\nlayout(location = 0) out vec4 fsin_color;\r\n\r\nint AppendHash(int hash, int f" +
-                  ")\r\n{\r\n    return (hash*397) ^ f;\r\n}\r\nint AppendHash(int hash, float f)\r\n{\r\n    r" +
-                  "eturn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, double f)\r\n{\r\n    r" +
-                  "eturn AppendHash(hash, int(f));\r\n}\r\nint AppendHash(int hash, vec2 m)\r\n{\r\n    has" +
-                  "h = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    return hash;\r" +
-                  "\n}\r\nint AppendHash(int hash, vec3 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n    " +
-                  "hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    return has" +
-                  "h;\r\n}\r\nint AppendHash(int hash, vec4 m)\r\n{\r\n    hash = AppendHash(hash, m.x);\r\n " +
-                  "   hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n    hash = " +
-                  "AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, dvec2 m)\r\n" +
-                  "{\r\n    hash = AppendHash(hash, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    ret" +
-                  "urn hash;\r\n}\r\nint AppendHash(int hash, dvec3 m)\r\n{\r\n    hash = AppendHash(hash, " +
-                  "m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r\n   " +
-                  " return hash;\r\n}\r\nint AppendHash(int hash, dvec4 m)\r\n{\r\n    hash = AppendHash(ha" +
-                  "sh, m.x);\r\n    hash = AppendHash(hash, m.y);\r\n    hash = AppendHash(hash, m.z);\r" +
-                  "\n    hash = AppendHash(hash, m.w);\r\n    return hash;\r\n}\r\nint AppendHash(int hash" +
-                  ", mat2 m)\r\n{\r\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash," +
-                  " m[0][1]);\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m" +
-                  "[1][1]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat3 m)\r\n{\r\n    hash = A" +
-                  "ppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n    hash = App" +
-                  "endHash(hash, m[0][2]);\r\n\r\n    hash = AppendHash(hash, m[1][0]);\r\n    hash = App" +
-                  "endHash(hash, m[1][1]);\r\n    hash = AppendHash(hash, m[1][2]);\r\n\r\n    hash = App" +
-                  "endHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    hash = Appen" +
-                  "dHash(hash, m[2][2]);\r\n    return hash;\r\n}\r\nint AppendHash(int hash, mat4 m)\r\n{\r" +
-                  "\n    hash = AppendHash(hash, m[0][0]);\r\n    hash = AppendHash(hash, m[0][1]);\r\n " +
-                  "   hash = AppendHash(hash, m[0][2]);\r\n    hash = AppendHash(hash, m[0][3]);\r\n\r\n " +
-                  "   hash = AppendHash(hash, m[1][0]);\r\n    hash = AppendHash(hash, m[1][1]);\r\n   " +
-                  " hash = AppendHash(hash, m[1][2]);\r\n    hash = AppendHash(hash, m[1][3]);\r\n\r\n   " +
-                  " hash = AppendHash(hash, m[2][0]);\r\n    hash = AppendHash(hash, m[2][1]);\r\n    h" +
-                  "ash = AppendHash(hash, m[2][2]);\r\n    hash = AppendHash(hash, m[2][3]);\r\n\r\n    h" +
-                  "ash = AppendHash(hash, m[3][0]);\r\n    hash = AppendHash(hash, m[3][1]);\r\n    has" +
-                  "h = AppendHash(hash, m[3][2]);\r\n    hash = AppendHash(hash, m[3][3]);\r\n    retur" +
-                  "n hash;\r\n}\r\n");
-
-#line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-
-            foreach (var structDef in _fields.Fields.Where(_ => _.Type.TypeCategory == SpirvTypeCategory.Struct)
-                .Select(_ => (SpirvStruct) _.Type).Distinct())
-            {
-#line default
-#line hidden
-                Write("int AppendHash(int hash, ");
-
-#line 166 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
-
-#line default
-#line hidden
-                Write(" m)\r\n{\r\n");
-
-#line 168 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-
-                foreach (var field in structDef.Fields)
-                    if (field.Type.TypeCategory == SpirvTypeCategory.Array)
-                    {
-                        var arrayType = (SpirvArray) field.Type;
-                        for (var i = 0; i < arrayType.Length; ++i)
-                        {
-#line default
-#line hidden
-                            Write("    hash = AppendHash(hash, m.");
-
-#line 177 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                            Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                            Write("[");
-
-#line 177 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                            Write(ToStringHelper.ToStringWithCulture(i));
-
-#line default
-#line hidden
-                            Write("]);\r\n");
-
-#line 178 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        }
-                    }
-                    else
-                    {
-#line default
-#line hidden
-                        Write("    hash = AppendHash(hash, m.");
-
-#line 184 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                        Write(");\r\n");
-
-#line 185 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    }
-
-                ;
-
-
-#line default
-#line hidden
-                Write("    return hash;\r\n} // end of ");
-
-#line 190 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                Write(ToStringHelper.ToStringWithCulture(structDef.DebugName));
-
-#line default
-#line hidden
-                Write("\r\n");
-
-#line 191 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-            }
-
-            ;
-
-
-#line default
-#line hidden
-            Write("\r\nvoid main()\r\n{\r\n    int hash = 0;\r\n");
-
-#line 198 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-
-            foreach (var field in _fields.Fields)
-                if (field.Type.TypeCategory == SpirvTypeCategory.Array)
-                {
-                    var arrayType = (SpirvArray) field.Type;
-                    for (var i = 0; i < arrayType.Length; ++i)
-                    {
-#line default
-#line hidden
-                        Write("    hash = AppendHash(hash, ");
-
-#line 207 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                        Write("[");
-
-#line 207 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                        Write(ToStringHelper.ToStringWithCulture(i));
-
-#line default
-#line hidden
-                        Write("]);\r\n");
-
-#line 208 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    }
-                }
-                else
-                {
-#line default
-#line hidden
-                    Write("    hash = AppendHash(hash, ");
-
-#line 214 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                    Write(ToStringHelper.ToStringWithCulture(field.Name));
-
-#line default
-#line hidden
-                    Write(");\r\n");
-
-#line 215 "C:\github\Toe.SPIRV\src\Toe.SPIRV.UnitTests\VertexShaderTemplate.tt"
-                }
-
-
-#line default
-#line hidden
-            Write("    fsin_color = vec4((hash%256),((hash/256)%256),((hash/65536)%256),((hash/16777" +
-                  "216)%256))*(1/255.0);\r\n    gl_Position = vec4(0,0,0.5,1);\r\n}");
-            return GenerationEnvironment.ToString();
+            
+            #line default
+            #line hidden
+            this.Write("    fsin_color = vec4((hash%256),((hash/256)%256),((hash/65536)%256),((hash/16777" +
+                    "216)%256))*(1/255.0);\r\n    gl_Position = vec4(0,0,0.5,1);\r\n}");
+            return this.GenerationEnvironment.ToString();
         }
     }
-
-#line default
-#line hidden
-
+    
+    #line default
+    #line hidden
     #region Base class
-
     /// <summary>
-    ///     Base class for this transformation
+    /// Base class for this transformation
     /// </summary>
-    [GeneratedCode("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public class VertexShaderTemplateBase
     {
         #region Fields
-
-        private StringBuilder generationEnvironmentField;
-        private CompilerErrorCollection errorsField;
-        private List<int> indentLengthsField;
+        private global::System.Text.StringBuilder generationEnvironmentField;
+        private global::System.CodeDom.Compiler.CompilerErrorCollection errorsField;
+        private global::System.Collections.Generic.List<int> indentLengthsField;
+        private string currentIndentField = "";
         private bool endsWithNewline;
-
+        private global::System.Collections.Generic.IDictionary<string, object> sessionField;
         #endregion
-
         #region Properties
-
         /// <summary>
-        ///     The string builder that generation-time code is using to assemble generated output
+        /// The string builder that generation-time code is using to assemble generated output
         /// </summary>
-        protected StringBuilder GenerationEnvironment
+        protected System.Text.StringBuilder GenerationEnvironment
         {
             get
             {
-                if (generationEnvironmentField == null) generationEnvironmentField = new StringBuilder();
-                return generationEnvironmentField;
+                if ((this.generationEnvironmentField == null))
+                {
+                    this.generationEnvironmentField = new global::System.Text.StringBuilder();
+                }
+                return this.generationEnvironmentField;
             }
-            set => generationEnvironmentField = value;
+            set
+            {
+                this.generationEnvironmentField = value;
+            }
         }
-
         /// <summary>
-        ///     The error collection for the generation process
+        /// The error collection for the generation process
         /// </summary>
-        public CompilerErrorCollection Errors
+        public System.CodeDom.Compiler.CompilerErrorCollection Errors
         {
             get
             {
-                if (errorsField == null) errorsField = new CompilerErrorCollection();
-                return errorsField;
+                if ((this.errorsField == null))
+                {
+                    this.errorsField = new global::System.CodeDom.Compiler.CompilerErrorCollection();
+                }
+                return this.errorsField;
             }
         }
-
         /// <summary>
-        ///     A list of the lengths of each indent that was added with PushIndent
+        /// A list of the lengths of each indent that was added with PushIndent
         /// </summary>
-        private List<int> indentLengths
+        private System.Collections.Generic.List<int> indentLengths
         {
             get
             {
-                if (indentLengthsField == null) indentLengthsField = new List<int>();
-                return indentLengthsField;
+                if ((this.indentLengthsField == null))
+                {
+                    this.indentLengthsField = new global::System.Collections.Generic.List<int>();
+                }
+                return this.indentLengthsField;
             }
         }
-
         /// <summary>
-        ///     Gets the current indent we use when adding lines to the output
+        /// Gets the current indent we use when adding lines to the output
         /// </summary>
-        public string CurrentIndent { get; private set; } = "";
-
+        public string CurrentIndent
+        {
+            get
+            {
+                return this.currentIndentField;
+            }
+        }
         /// <summary>
-        ///     Current transformation session
+        /// Current transformation session
         /// </summary>
-        public virtual IDictionary<string, object> Session { get; set; }
-
+        public virtual global::System.Collections.Generic.IDictionary<string, object> Session
+        {
+            get
+            {
+                return this.sessionField;
+            }
+            set
+            {
+                this.sessionField = value;
+            }
+        }
         #endregion
-
         #region Transform-time helpers
-
         /// <summary>
-        ///     Write text directly into the generated output
+        /// Write text directly into the generated output
         /// </summary>
         public void Write(string textToAppend)
         {
-            if (string.IsNullOrEmpty(textToAppend)) return;
-            // If we're starting off, or if the previous text ended with a newline,
-            // we have to append the current indent first.
-            if (GenerationEnvironment.Length == 0
-                || endsWithNewline)
+            if (string.IsNullOrEmpty(textToAppend))
             {
-                GenerationEnvironment.Append(CurrentIndent);
-                endsWithNewline = false;
-            }
-
-            // Check if the current text ends with a newline
-            if (textToAppend.EndsWith(Environment.NewLine, StringComparison.CurrentCulture)) endsWithNewline = true;
-            // This is an optimization. If the current indent is "", then we don't have to do any
-            // of the more complex stuff further down.
-            if (CurrentIndent.Length == 0)
-            {
-                GenerationEnvironment.Append(textToAppend);
                 return;
             }
-
+            // If we're starting off, or if the previous text ended with a newline,
+            // we have to append the current indent first.
+            if (((this.GenerationEnvironment.Length == 0) 
+                        || this.endsWithNewline))
+            {
+                this.GenerationEnvironment.Append(this.currentIndentField);
+                this.endsWithNewline = false;
+            }
+            // Check if the current text ends with a newline
+            if (textToAppend.EndsWith(global::System.Environment.NewLine, global::System.StringComparison.CurrentCulture))
+            {
+                this.endsWithNewline = true;
+            }
+            // This is an optimization. If the current indent is "", then we don't have to do any
+            // of the more complex stuff further down.
+            if ((this.currentIndentField.Length == 0))
+            {
+                this.GenerationEnvironment.Append(textToAppend);
+                return;
+            }
             // Everywhere there is a newline in the text, add an indent after it
-            textToAppend = textToAppend.Replace(Environment.NewLine, Environment.NewLine + CurrentIndent);
+            textToAppend = textToAppend.Replace(global::System.Environment.NewLine, (global::System.Environment.NewLine + this.currentIndentField));
             // If the text ends with a newline, then we should strip off the indent added at the very end
             // because the appropriate indent will be added when the next time Write() is called
-            if (endsWithNewline)
-                GenerationEnvironment.Append(textToAppend, 0, textToAppend.Length - CurrentIndent.Length);
+            if (this.endsWithNewline)
+            {
+                this.GenerationEnvironment.Append(textToAppend, 0, (textToAppend.Length - this.currentIndentField.Length));
+            }
             else
-                GenerationEnvironment.Append(textToAppend);
+            {
+                this.GenerationEnvironment.Append(textToAppend);
+            }
         }
-
         /// <summary>
-        ///     Write text directly into the generated output
+        /// Write text directly into the generated output
         /// </summary>
         public void WriteLine(string textToAppend)
         {
-            Write(textToAppend);
-            GenerationEnvironment.AppendLine();
-            endsWithNewline = true;
+            this.Write(textToAppend);
+            this.GenerationEnvironment.AppendLine();
+            this.endsWithNewline = true;
         }
-
         /// <summary>
-        ///     Write formatted text directly into the generated output
+        /// Write formatted text directly into the generated output
         /// </summary>
         public void Write(string format, params object[] args)
         {
-            Write(string.Format(CultureInfo.CurrentCulture, format, args));
+            this.Write(string.Format(global::System.Globalization.CultureInfo.CurrentCulture, format, args));
         }
-
         /// <summary>
-        ///     Write formatted text directly into the generated output
+        /// Write formatted text directly into the generated output
         /// </summary>
         public void WriteLine(string format, params object[] args)
         {
-            WriteLine(string.Format(CultureInfo.CurrentCulture, format, args));
+            this.WriteLine(string.Format(global::System.Globalization.CultureInfo.CurrentCulture, format, args));
         }
-
         /// <summary>
-        ///     Raise an error
+        /// Raise an error
         /// </summary>
         public void Error(string message)
         {
-            var error = new CompilerError();
+            System.CodeDom.Compiler.CompilerError error = new global::System.CodeDom.Compiler.CompilerError();
             error.ErrorText = message;
-            Errors.Add(error);
+            this.Errors.Add(error);
         }
-
         /// <summary>
-        ///     Raise a warning
+        /// Raise a warning
         /// </summary>
         public void Warning(string message)
         {
-            var error = new CompilerError();
+            System.CodeDom.Compiler.CompilerError error = new global::System.CodeDom.Compiler.CompilerError();
             error.ErrorText = message;
             error.IsWarning = true;
-            Errors.Add(error);
+            this.Errors.Add(error);
         }
-
         /// <summary>
-        ///     Increase the indent
+        /// Increase the indent
         /// </summary>
         public void PushIndent(string indent)
         {
-            if (indent == null) throw new ArgumentNullException("indent");
-            CurrentIndent = CurrentIndent + indent;
-            indentLengths.Add(indent.Length);
+            if ((indent == null))
+            {
+                throw new global::System.ArgumentNullException("indent");
+            }
+            this.currentIndentField = (this.currentIndentField + indent);
+            this.indentLengths.Add(indent.Length);
         }
-
         /// <summary>
-        ///     Remove the last indent that was added with PushIndent
+        /// Remove the last indent that was added with PushIndent
         /// </summary>
         public string PopIndent()
         {
-            var returnValue = "";
-            if (indentLengths.Count > 0)
+            string returnValue = "";
+            if ((this.indentLengths.Count > 0))
             {
-                var indentLength = indentLengths[indentLengths.Count - 1];
-                indentLengths.RemoveAt(indentLengths.Count - 1);
-                if (indentLength > 0)
+                int indentLength = this.indentLengths[(this.indentLengths.Count - 1)];
+                this.indentLengths.RemoveAt((this.indentLengths.Count - 1));
+                if ((indentLength > 0))
                 {
-                    returnValue = CurrentIndent.Substring(CurrentIndent.Length - indentLength);
-                    CurrentIndent = CurrentIndent.Remove(CurrentIndent.Length - indentLength);
+                    returnValue = this.currentIndentField.Substring((this.currentIndentField.Length - indentLength));
+                    this.currentIndentField = this.currentIndentField.Remove((this.currentIndentField.Length - indentLength));
                 }
             }
-
             return returnValue;
         }
-
         /// <summary>
-        ///     Remove any indentation
+        /// Remove any indentation
         /// </summary>
         public void ClearIndent()
         {
-            indentLengths.Clear();
-            CurrentIndent = "";
+            this.indentLengths.Clear();
+            this.currentIndentField = "";
         }
-
         #endregion
-
         #region ToString Helpers
-
         /// <summary>
-        ///     Utility class to produce culture-oriented representation of an object as a string.
+        /// Utility class to produce culture-oriented representation of an object as a string.
         /// </summary>
         public class ToStringInstanceHelper
         {
-            private IFormatProvider formatProviderField = CultureInfo.InvariantCulture;
-
+            private System.IFormatProvider formatProviderField  = global::System.Globalization.CultureInfo.InvariantCulture;
             /// <summary>
-            ///     Gets or sets format provider to be used by ToStringWithCulture method.
+            /// Gets or sets format provider to be used by ToStringWithCulture method.
             /// </summary>
-            public IFormatProvider FormatProvider
+            public System.IFormatProvider FormatProvider
             {
-                get => formatProviderField;
+                get
+                {
+                    return this.formatProviderField ;
+                }
                 set
                 {
-                    if (value != null) formatProviderField = value;
+                    if ((value != null))
+                    {
+                        this.formatProviderField  = value;
+                    }
                 }
             }
-
             /// <summary>
-            ///     This is called from the compile/run appdomain to convert objects within an expression block to a string
+            /// This is called from the compile/run appdomain to convert objects within an expression block to a string
             /// </summary>
             public string ToStringWithCulture(object objectToConvert)
             {
-                if (objectToConvert == null) throw new ArgumentNullException("objectToConvert");
-                var t = objectToConvert.GetType();
-                var method = t.GetMethod("ToString", new[]
+                if ((objectToConvert == null))
                 {
-                    typeof(IFormatProvider)
-                });
-                if (method == null)
+                    throw new global::System.ArgumentNullException("objectToConvert");
+                }
+                System.Type t = objectToConvert.GetType();
+                System.Reflection.MethodInfo method = t.GetMethod("ToString", new System.Type[] {
+                            typeof(System.IFormatProvider)});
+                if ((method == null))
+                {
                     return objectToConvert.ToString();
-                return (string) method.Invoke(objectToConvert, new object[]
+                }
+                else
                 {
-                    formatProviderField
-                });
+                    return ((string)(method.Invoke(objectToConvert, new object[] {
+                                this.formatProviderField })));
+                }
             }
         }
-
+        private ToStringInstanceHelper toStringHelperField = new ToStringInstanceHelper();
         /// <summary>
-        ///     Helper to produce culture-oriented representation of an object as a string
+        /// Helper to produce culture-oriented representation of an object as a string
         /// </summary>
-        public ToStringInstanceHelper ToStringHelper { get; } = new ToStringInstanceHelper();
-
+        public ToStringInstanceHelper ToStringHelper
+        {
+            get
+            {
+                return this.toStringHelperField;
+            }
+        }
         #endregion
     }
-
     #endregion
 }

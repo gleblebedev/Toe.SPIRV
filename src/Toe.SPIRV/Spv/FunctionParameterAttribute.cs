@@ -27,82 +27,74 @@ namespace Toe.SPIRV.Spv
 
         public class Zext: FunctionParameterAttribute
         {
+            public static readonly Zext Instance = new Zext();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.Zext;
             public new static Zext Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Zext();
-                return res;
+                return Instance;
             }
         }
         public class Sext: FunctionParameterAttribute
         {
+            public static readonly Sext Instance = new Sext();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.Sext;
             public new static Sext Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Sext();
-                return res;
+                return Instance;
             }
         }
         public class ByVal: FunctionParameterAttribute
         {
+            public static readonly ByVal Instance = new ByVal();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.ByVal;
             public new static ByVal Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ByVal();
-                return res;
+                return Instance;
             }
         }
         public class Sret: FunctionParameterAttribute
         {
+            public static readonly Sret Instance = new Sret();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.Sret;
             public new static Sret Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Sret();
-                return res;
+                return Instance;
             }
         }
         public class NoAlias: FunctionParameterAttribute
         {
+            public static readonly NoAlias Instance = new NoAlias();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoAlias;
             public new static NoAlias Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoAlias();
-                return res;
+                return Instance;
             }
         }
         public class NoCapture: FunctionParameterAttribute
         {
+            public static readonly NoCapture Instance = new NoCapture();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoCapture;
             public new static NoCapture Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoCapture();
-                return res;
+                return Instance;
             }
         }
         public class NoWrite: FunctionParameterAttribute
         {
+            public static readonly NoWrite Instance = new NoWrite();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoWrite;
             public new static NoWrite Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoWrite();
-                return res;
+                return Instance;
             }
         }
         public class NoReadWrite: FunctionParameterAttribute
         {
+            public static readonly NoReadWrite Instance = new NoReadWrite();
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoReadWrite;
             public new static NoReadWrite Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoReadWrite();
-                return res;
+                return Instance;
             }
         }
 

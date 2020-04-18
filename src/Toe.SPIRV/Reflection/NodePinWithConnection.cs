@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection
+﻿using Toe.SPIRV.Reflection.Types;
+
+namespace Toe.SPIRV.Reflection
 {
     public struct NodePinWithConnection
     {

@@ -3,10 +3,20 @@ using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvNamedBarrier : SpirvTypeBase
+    public partial class TypeNamedBarrier : SpirvTypeBase
     {
         public override Op OpCode => Op.OpTypeNamedBarrier;
+
+        public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.NamedBarrier;
+
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            base.SetUp(op, treeBuilder);
+            SetUp((OpTypeNamedBarrier)op, treeBuilder);
+        }
+
+        partial void SetUp(OpTypeNamedBarrier instruction, SpirvInstructionTreeBuilder treeBuilder);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvBool : SpirvTypeBase
+    public partial class TypeBool : SpirvTypeBase
     {
-        internal SpirvBool() : base(SpirvTypeCategory.Bool)
+        internal TypeBool()
         {
         }
 

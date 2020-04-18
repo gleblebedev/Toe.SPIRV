@@ -1,13 +1,13 @@
 ﻿using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvInt : SpirvTypeBase
+    public partial class TypeInt : SpirvTypeBase
     {
         private readonly uint _width;
         private readonly bool _signed;
 
-        internal SpirvInt(uint width, bool signed) : base(SpirvTypeCategory.Int)
+        internal TypeInt(uint width, bool signed)
         {
             _width = width;
             _signed = signed;

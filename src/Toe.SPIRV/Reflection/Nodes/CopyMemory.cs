@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
@@ -62,6 +64,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         }
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
+            base.SetUp(op, treeBuilder);
             SetUp((OpCopyMemory)op, treeBuilder);
         }
 
@@ -70,8 +73,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Target = treeBuilder.GetNode(op.Target);
             Source = treeBuilder.GetNode(op.Source);
             MemoryAccess = op.MemoryAccess;
+            SetUpDecorations(op, treeBuilder);
         }
-        
-        partial void SetUpDecorations(IList<OpDecorate> decorations);
     }
 }

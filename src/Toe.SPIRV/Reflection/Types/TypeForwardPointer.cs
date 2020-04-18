@@ -1,11 +1,11 @@
 ﻿using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvForwardPointer : SpirvTypeBase
+    public partial class TypeForwardPointer : SpirvTypeBase
     {
-        public SpirvForwardPointer() : base(SpirvTypeCategory.ForwardPointer)
+        public TypeForwardPointer()
         {
         }
 
@@ -15,7 +15,7 @@ namespace Toe.SPIRV.Reflection
         public Spv.StorageClass StorageClass { get; set; }
    
 
-        public void SetUp(OpTypeForwardPointer op, SpirvInstructionTreeBuilder treeBuilder)
+        partial void SetUp(OpTypeForwardPointer op, SpirvInstructionTreeBuilder treeBuilder)
         {
             PointerType = treeBuilder.ResolveType(op.PointerType);
             StorageClass = op.StorageClass;

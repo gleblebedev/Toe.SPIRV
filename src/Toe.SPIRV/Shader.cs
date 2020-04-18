@@ -66,39 +66,6 @@ namespace Toe.SPIRV
                 shader.Instructions.Add(instruction);
             }
 
-            foreach (var instruction in shader.Instructions)
-                switch (instruction.OpCode)
-                {
-                    case Op.OpName:
-                    {
-                        var op = (OpName) instruction;
-                        op.Target.Instruction.OpName = op;
-                        break;
-                    }
-
-                    case Op.OpDecorate:
-                    {
-                        var op = (OpDecorate) instruction;
-                        op.Target.Instruction.Decorations.Add(op);
-                        break;
-                    }
-
-                    case Op.OpMemberName:
-                    {
-                        var op = (OpMemberName) instruction;
-                        if (op.Type.Instruction is OpTypeStruct structType) structType.MemberNames.Add(op);
-                        break;
-                    }
-
-                    case Op.OpMemberDecorate:
-                    {
-                        var op = (OpMemberDecorate) instruction;
-                        if (op.StructureType.Instruction is OpTypeStruct structType)
-                            structType.MemberDecorations.Add(op);
-                        break;
-                    }
-                }
-
 #if DEBUG
             Debug.WriteLine(shader);
 #endif

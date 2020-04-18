@@ -1,10 +1,10 @@
 ﻿using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvVector : SpirvTypeBase
+    public partial class TypeVector : SpirvTypeBase
     {
-        internal SpirvVector(SpirvTypeBase componentType, uint componentCount) : base(SpirvTypeCategory.Vector)
+        internal TypeVector(SpirvTypeBase componentType, uint componentCount)
         {
             ComponentCount = componentCount;
             ComponentType = componentType;
@@ -41,7 +41,7 @@ namespace Toe.SPIRV.Reflection
             {
                 case SpirvTypeCategory.Float:
                 {
-                    var floatType = (SpirvFloat)componentType;
+                    var floatType = (TypeFloat)componentType;
                     switch (floatType.FloatType)
                     {
                         case FloatType.Float:
@@ -71,7 +71,7 @@ namespace Toe.SPIRV.Reflection
                 }
                 case SpirvTypeCategory.Int:
                 {
-                    var intType = (SpirvInt)componentType;
+                    var intType = (TypeInt)componentType;
                     switch (intType.IntType)
                     {
                         case IntType.Int:

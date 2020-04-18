@@ -3,10 +3,20 @@ using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvReserveId : SpirvTypeBase
+    public partial class TypeReserveId : SpirvTypeBase
     {
         public override Op OpCode => Op.OpTypeReserveId;
+
+        public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.ReserveId;
+
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            base.SetUp(op, treeBuilder);
+            SetUp((OpTypeReserveId)op, treeBuilder);
+        }
+
+        partial void SetUp(OpTypeReserveId instruction, SpirvInstructionTreeBuilder treeBuilder);
     }
 }

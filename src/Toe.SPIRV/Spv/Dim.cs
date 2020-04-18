@@ -30,72 +30,65 @@ namespace Toe.SPIRV.Spv
 
         public class Dim1D: Dim
         {
+            public static readonly Dim1D Instance = new Dim1D();
             public override Enumerant Value => Dim.Enumerant.Dim1D;
             public new static Dim1D Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Dim1D();
-                return res;
+                return Instance;
             }
         }
         public class Dim2D: Dim
         {
+            public static readonly Dim2D Instance = new Dim2D();
             public override Enumerant Value => Dim.Enumerant.Dim2D;
             public new static Dim2D Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Dim2D();
-                return res;
+                return Instance;
             }
         }
         public class Dim3D: Dim
         {
+            public static readonly Dim3D Instance = new Dim3D();
             public override Enumerant Value => Dim.Enumerant.Dim3D;
             public new static Dim3D Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Dim3D();
-                return res;
+                return Instance;
             }
         }
         public class Cube: Dim
         {
+            public static readonly Cube Instance = new Cube();
             public override Enumerant Value => Dim.Enumerant.Cube;
             public new static Cube Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Cube();
-                return res;
+                return Instance;
             }
         }
         public class Rect: Dim
         {
+            public static readonly Rect Instance = new Rect();
             public override Enumerant Value => Dim.Enumerant.Rect;
             public new static Rect Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Rect();
-                return res;
+                return Instance;
             }
         }
         public class Buffer: Dim
         {
+            public static readonly Buffer Instance = new Buffer();
             public override Enumerant Value => Dim.Enumerant.Buffer;
             public new static Buffer Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Buffer();
-                return res;
+                return Instance;
             }
         }
         public class SubpassData: Dim
         {
+            public static readonly SubpassData Instance = new SubpassData();
             public override Enumerant Value => Dim.Enumerant.SubpassData;
             public new static SubpassData Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new SubpassData();
-                return res;
+                return Instance;
             }
         }
 

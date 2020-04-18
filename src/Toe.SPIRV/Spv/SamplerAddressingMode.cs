@@ -21,52 +21,47 @@ namespace Toe.SPIRV.Spv
 
         public class None: SamplerAddressingMode
         {
+            public static readonly None Instance = new None();
             public override Enumerant Value => SamplerAddressingMode.Enumerant.None;
             public new static None Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new None();
-                return res;
+                return Instance;
             }
         }
         public class ClampToEdge: SamplerAddressingMode
         {
+            public static readonly ClampToEdge Instance = new ClampToEdge();
             public override Enumerant Value => SamplerAddressingMode.Enumerant.ClampToEdge;
             public new static ClampToEdge Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ClampToEdge();
-                return res;
+                return Instance;
             }
         }
         public class Clamp: SamplerAddressingMode
         {
+            public static readonly Clamp Instance = new Clamp();
             public override Enumerant Value => SamplerAddressingMode.Enumerant.Clamp;
             public new static Clamp Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Clamp();
-                return res;
+                return Instance;
             }
         }
         public class Repeat: SamplerAddressingMode
         {
+            public static readonly Repeat Instance = new Repeat();
             public override Enumerant Value => SamplerAddressingMode.Enumerant.Repeat;
             public new static Repeat Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Repeat();
-                return res;
+                return Instance;
             }
         }
         public class RepeatMirrored: SamplerAddressingMode
         {
+            public static readonly RepeatMirrored Instance = new RepeatMirrored();
             public override Enumerant Value => SamplerAddressingMode.Enumerant.RepeatMirrored;
             public new static RepeatMirrored Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RepeatMirrored();
-                return res;
+                return Instance;
             }
         }
 

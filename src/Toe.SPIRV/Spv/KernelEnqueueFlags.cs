@@ -17,32 +17,29 @@ namespace Toe.SPIRV.Spv
 
         public class NoWait: KernelEnqueueFlags
         {
+            public static readonly NoWait Instance = new NoWait();
             public override Enumerant Value => KernelEnqueueFlags.Enumerant.NoWait;
             public new static NoWait Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new NoWait();
-                return res;
+                return Instance;
             }
         }
         public class WaitKernel: KernelEnqueueFlags
         {
+            public static readonly WaitKernel Instance = new WaitKernel();
             public override Enumerant Value => KernelEnqueueFlags.Enumerant.WaitKernel;
             public new static WaitKernel Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WaitKernel();
-                return res;
+                return Instance;
             }
         }
         public class WaitWorkGroup: KernelEnqueueFlags
         {
+            public static readonly WaitWorkGroup Instance = new WaitWorkGroup();
             public override Enumerant Value => KernelEnqueueFlags.Enumerant.WaitWorkGroup;
             public new static WaitWorkGroup Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new WaitWorkGroup();
-                return res;
+                return Instance;
             }
         }
 

@@ -17,32 +17,29 @@ namespace Toe.SPIRV.Spv
 
         public class RayQueryCommittedIntersectionNoneKHR: RayQueryCommittedIntersectionType
         {
+            public static readonly RayQueryCommittedIntersectionNoneKHR Instance = new RayQueryCommittedIntersectionNoneKHR();
             public override Enumerant Value => RayQueryCommittedIntersectionType.Enumerant.RayQueryCommittedIntersectionNoneKHR;
             public new static RayQueryCommittedIntersectionNoneKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayQueryCommittedIntersectionNoneKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayQueryCommittedIntersectionTriangleKHR: RayQueryCommittedIntersectionType
         {
+            public static readonly RayQueryCommittedIntersectionTriangleKHR Instance = new RayQueryCommittedIntersectionTriangleKHR();
             public override Enumerant Value => RayQueryCommittedIntersectionType.Enumerant.RayQueryCommittedIntersectionTriangleKHR;
             public new static RayQueryCommittedIntersectionTriangleKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayQueryCommittedIntersectionTriangleKHR();
-                return res;
+                return Instance;
             }
         }
         public class RayQueryCommittedIntersectionGeneratedKHR: RayQueryCommittedIntersectionType
         {
+            public static readonly RayQueryCommittedIntersectionGeneratedKHR Instance = new RayQueryCommittedIntersectionGeneratedKHR();
             public override Enumerant Value => RayQueryCommittedIntersectionType.Enumerant.RayQueryCommittedIntersectionGeneratedKHR;
             public new static RayQueryCommittedIntersectionGeneratedKHR Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new RayQueryCommittedIntersectionGeneratedKHR();
-                return res;
+                return Instance;
             }
         }
 

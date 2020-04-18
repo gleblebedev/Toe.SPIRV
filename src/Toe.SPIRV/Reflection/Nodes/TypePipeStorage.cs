@@ -3,10 +3,20 @@ using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvPipeStorage : SpirvTypeBase
+    public partial class TypePipeStorage : SpirvTypeBase
     {
         public override Op OpCode => Op.OpTypePipeStorage;
+
+        public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.PipeStorage;
+
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            base.SetUp(op, treeBuilder);
+            SetUp((OpTypePipeStorage)op, treeBuilder);
+        }
+
+        partial void SetUp(OpTypePipeStorage instruction, SpirvInstructionTreeBuilder treeBuilder);
     }
 }

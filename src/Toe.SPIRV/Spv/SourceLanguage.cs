@@ -17,62 +17,56 @@ namespace Toe.SPIRV.Spv
 
         public class Unknown: SourceLanguage
         {
+            public static readonly Unknown Instance = new Unknown();
             public override Enumerant Value => SourceLanguage.Enumerant.Unknown;
             public new static Unknown Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new Unknown();
-                return res;
+                return Instance;
             }
         }
         public class ESSL: SourceLanguage
         {
+            public static readonly ESSL Instance = new ESSL();
             public override Enumerant Value => SourceLanguage.Enumerant.ESSL;
             public new static ESSL Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new ESSL();
-                return res;
+                return Instance;
             }
         }
         public class GLSL: SourceLanguage
         {
+            public static readonly GLSL Instance = new GLSL();
             public override Enumerant Value => SourceLanguage.Enumerant.GLSL;
             public new static GLSL Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new GLSL();
-                return res;
+                return Instance;
             }
         }
         public class OpenCL_C: SourceLanguage
         {
+            public static readonly OpenCL_C Instance = new OpenCL_C();
             public override Enumerant Value => SourceLanguage.Enumerant.OpenCL_C;
             public new static OpenCL_C Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OpenCL_C();
-                return res;
+                return Instance;
             }
         }
         public class OpenCL_CPP: SourceLanguage
         {
+            public static readonly OpenCL_CPP Instance = new OpenCL_CPP();
             public override Enumerant Value => SourceLanguage.Enumerant.OpenCL_CPP;
             public new static OpenCL_CPP Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new OpenCL_CPP();
-                return res;
+                return Instance;
             }
         }
         public class HLSL: SourceLanguage
         {
+            public static readonly HLSL Instance = new HLSL();
             public override Enumerant Value => SourceLanguage.Enumerant.HLSL;
             public new static HLSL Parse(WordReader reader, uint wordCount)
             {
-                var end = reader.Position+wordCount;
-                var res = new HLSL();
-                return res;
+                return Instance;
             }
         }
 

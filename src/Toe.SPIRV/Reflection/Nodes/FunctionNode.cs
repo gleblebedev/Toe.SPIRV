@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Toe.SPIRV.Reflection.Types;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {

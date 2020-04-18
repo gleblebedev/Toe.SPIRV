@@ -1,17 +1,17 @@
 ﻿using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
-    public partial class SpirvOpaque : SpirvTypeBase
+    public partial class TypeOpaque : SpirvTypeBase
     {
-        public SpirvOpaque(): base(SpirvTypeCategory.Opaque)
+        public TypeOpaque()
         {
         }
 
         public string Thenameoftheopaquetype { get; set; }
 
-        public void SetUp(OpTypeOpaque op, SpirvInstructionTreeBuilder treeBuilder)
+        partial void SetUp(OpTypeOpaque op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Thenameoftheopaquetype = op.Thenameoftheopaquetype;
         }

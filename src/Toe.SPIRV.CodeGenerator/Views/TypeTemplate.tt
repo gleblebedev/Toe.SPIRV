@@ -9,10 +9,20 @@ using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.Reflection
+namespace Toe.SPIRV.Reflection.Types
 {
     public partial class <#= name #> : SpirvTypeBase
     {
         public override Op OpCode => Op.<#=_instruction.Name#>;
+
+        public override SpirvTypeCategory TypeCategory => SpirvTypeCategory.<#=_instruction.Name.Substring(6)#>;
+
+        public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
+        {
+            base.SetUp(op, treeBuilder);
+            SetUp((<#=_instruction.Name#>)op, treeBuilder);
+        }
+
+        partial void SetUp(<#=_instruction.Name#> instruction, SpirvInstructionTreeBuilder treeBuilder);
     }
 }

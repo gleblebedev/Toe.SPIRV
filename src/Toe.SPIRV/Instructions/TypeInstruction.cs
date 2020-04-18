@@ -11,12 +11,6 @@ namespace Toe.SPIRV.Instructions
 
         public virtual bool TryGetFriendlyName(out string name)
         {
-            if (OpName != null)
-            {
-                name = OpName.Value;
-                return true;
-            }
-
             if (OpCode == Op.OpTypeBool)
             {
                 name = "bool";
