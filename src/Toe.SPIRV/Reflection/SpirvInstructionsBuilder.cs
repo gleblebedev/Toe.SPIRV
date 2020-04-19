@@ -15,6 +15,25 @@ namespace Toe.SPIRV.Reflection
 {
     public class SpirvInstructionsBuilder: SpirvInstructionsBuilderBase
     {
+        private class FunctionPrepass:NodeVisitor
+        {
+            public List<Variable> Variables = new List<Variable>();
+
+            protected override void VisitVariable(Variable node)
+            {
+                if (node.StorageClass.Value == StorageClass.Enumerant.Function)
+                {
+                    Variables.Add(node);
+                }
+                base.VisitVariable(node);
+            }
+
+            protected override void VisitFunction(Function node)
+            {
+                return;
+            }
+        }
+
         /// <summary>
         /// All OpCapability instructions. 
         /// </summary>
@@ -138,9 +157,33 @@ namespace Toe.SPIRV.Reflection
         protected override OpFunction VisitFunction(Function node)
         {
             var visitFunction = base.VisitFunction(node);
+
+            var visitedNodes = new HashSet<Node>();
+            //Function and parameters
             var instructions = new List<Instruction>();
             instructions.Add(visitFunction);
-            AddBlock(instructions, node.Next, new HashSet<Node>());
+            foreach (var functionParameter in node.Parameters)
+            {
+                visitedNodes.Add(functionParameter);
+                instructions.Add(Visit(functionParameter));
+            }
+            //Add Label
+            var firstInstruction = node.Next;
+            if (firstInstruction.OpCode != Op.OpLabel)
+            {
+                firstInstruction = new Label() {Next = firstInstruction};
+            }
+            instructions.Add(Visit(firstInstruction));
+            //Add Variables
+            var prepass = new FunctionPrepass();
+            prepass.Visit(firstInstruction);
+            foreach (var variable in prepass.Variables)
+            {
+                visitedNodes.Add(variable);
+                instructions.Add(Visit(variable));
+            }
+            //Add Body
+            AddBlock(instructions, ((Label)firstInstruction).Next, visitedNodes);
             instructions.Add(new OpFunctionEnd());
             _functions.Add(instructions);
             return visitFunction;
@@ -208,6 +251,11 @@ namespace Toe.SPIRV.Reflection
                         AddBlock(instructions, node.GetNext(), visitedNodes);
                         node = selectionMerge.MergeBlock;
                         break;
+                    case Op.OpFunctionCall:
+                        visitedNodes.Add(node);
+                        AddInstructionToBlock(instructions, node, visitedNodes);
+                        node = node.GetNext();
+                        break;
                     default:
                         AddInstructionToBlock(instructions, node, visitedNodes);
                         node = node.GetNext();
@@ -236,18 +284,9 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpConstantSampler:
                 case Op.OpConstantTrue:
                 case Op.OpFunctionParameter:
-                    return null;
+                case Op.OpFunction:
                 case Op.OpVariable:
-                {
-                    if (((OpVariable)instruction).StorageClass.Value != StorageClass.Enumerant.Function)
-                        return null;
-                    if (!visitedNodes.Contains(node))
-                    {
-                        visitedNodes.Add(node);
-                        instructions.Insert(1, instruction);
-                    }
                     return null;
-                }
             }
             foreach (var input in node.InputPins)
             {

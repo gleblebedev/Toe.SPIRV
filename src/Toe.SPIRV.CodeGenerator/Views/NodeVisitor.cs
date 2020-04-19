@@ -30,30 +30,31 @@ namespace Toe.SPIRV.CodeGenerator.Views
         public virtual string TransformText()
         {
             this.Write("using System.Collections.Generic;\r\nusing Toe.SPIRV.Reflection.Nodes;\r\nusing Toe.S" +
-                    "PIRV.Reflection.Types;\r\n\r\nnamespace Toe.SPIRV.Reflection\r\n{\r\n    public abstract" +
-                    " class NodeVisitor\r\n    {\r\n        Queue<Node> _nodesToVisit = new Queue<Node>()" +
-                    ";\r\n        HashSet<Node> _visitedNodes = new HashSet<Node>();\r\n\r\n        public " +
-                    "virtual void Visit(Node node)\r\n        {\r\n            ScheduleVisit(node);\r\n    " +
-                    "        while (_nodesToVisit.Count > 0)\r\n            {\r\n                VisitNod" +
-                    "e(_nodesToVisit.Dequeue());\r\n            }\r\n        }\r\n\r\n        protected virtu" +
-                    "al void ScheduleVisit(Node node)\r\n        {\r\n            if (node != null && _vi" +
-                    "sitedNodes.Add(node))\r\n                _nodesToVisit.Enqueue(node);\r\n        }\r\n" +
-                    "\r\n        protected virtual void ScheduleVisit(IEnumerable<Node> nodes)\r\n       " +
-                    " {\r\n            foreach (var node in nodes)\r\n            {\r\n                Sche" +
-                    "duleVisit(node);\r\n            }\r\n        }\r\n\r\n        protected virtual void Sch" +
-                    "eduleVisit(IEnumerable<PairNodeNode> nodes)\r\n        {\r\n            foreach (var" +
-                    " node in nodes)\r\n            {\r\n                ScheduleVisit(node.Node);\r\n     " +
-                    "           ScheduleVisit(node.Node2);\r\n            }\r\n        }\r\n\r\n        prote" +
-                    "cted virtual void ScheduleVisit(IEnumerable<PairLiteralIntegerNode> nodes)\r\n    " +
-                    "    {\r\n            foreach (var node in nodes)\r\n            {\r\n                S" +
-                    "cheduleVisit(node.Node);\r\n            }\r\n        }\r\n\r\n        protected virtual " +
-                    "void ScheduleVisit(IEnumerable<PairNodeLiteralInteger> nodes)\r\n        {\r\n      " +
-                    "      foreach (var node in nodes)\r\n            {\r\n                ScheduleVisit(" +
-                    "node.Node);\r\n            }\r\n        }\r\n\r\n        protected virtual void VisitTyp" +
-                    "e(SpirvTypeBase node)\r\n        {\r\n        }\r\n\r\n        private void VisitNode(No" +
-                    "de node)\r\n        {\r\n            switch (node.OpCode)\r\n            {\r\n");
+                    "PIRV.Reflection.Operands;\r\nusing Toe.SPIRV.Reflection.Types;\r\n\r\nnamespace Toe.SP" +
+                    "IRV.Reflection\r\n{\r\n    public abstract class NodeVisitor\r\n    {\r\n        Queue<N" +
+                    "ode> _nodesToVisit = new Queue<Node>();\r\n        HashSet<Node> _visitedNodes = n" +
+                    "ew HashSet<Node>();\r\n\r\n        public virtual void Visit(Node node)\r\n        {\r\n" +
+                    "            ScheduleVisit(node);\r\n            while (_nodesToVisit.Count > 0)\r\n " +
+                    "           {\r\n                VisitNode(_nodesToVisit.Dequeue());\r\n            }" +
+                    "\r\n        }\r\n\r\n        protected virtual void ScheduleVisit(Node node)\r\n        " +
+                    "{\r\n            if (node != null && _visitedNodes.Add(node))\r\n                _no" +
+                    "desToVisit.Enqueue(node);\r\n        }\r\n\r\n        protected virtual void ScheduleV" +
+                    "isit(IEnumerable<Node> nodes)\r\n        {\r\n            foreach (var node in nodes" +
+                    ")\r\n            {\r\n                ScheduleVisit(node);\r\n            }\r\n        }" +
+                    "\r\n\r\n        protected virtual void ScheduleVisit(IEnumerable<PairNodeNode> nodes" +
+                    ")\r\n        {\r\n            foreach (var node in nodes)\r\n            {\r\n          " +
+                    "      ScheduleVisit(node.Node);\r\n                ScheduleVisit(node.Node2);\r\n   " +
+                    "         }\r\n        }\r\n\r\n        protected virtual void ScheduleVisit(IEnumerabl" +
+                    "e<PairLiteralIntegerNode> nodes)\r\n        {\r\n            foreach (var node in no" +
+                    "des)\r\n            {\r\n                ScheduleVisit(node.Node);\r\n            }\r\n " +
+                    "       }\r\n\r\n        protected virtual void ScheduleVisit(IEnumerable<PairNodeLit" +
+                    "eralInteger> nodes)\r\n        {\r\n            foreach (var node in nodes)\r\n       " +
+                    "     {\r\n                ScheduleVisit(node.Node);\r\n            }\r\n        }\r\n\r\n " +
+                    "       protected virtual void VisitType(SpirvTypeBase node)\r\n        {\r\n        " +
+                    "}\r\n\r\n        private void VisitNode(Node node)\r\n        {\r\n            switch (n" +
+                    "ode.OpCode)\r\n            {\r\n");
             
-            #line 74 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 75 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
 foreach (var instruction in _grammar.Instructions.Values)
 {
@@ -63,28 +64,28 @@ foreach (var instruction in _grammar.Instructions.Values)
             #line hidden
             this.Write("                case Spv.Op.");
             
-            #line 78 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 79 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
             
             #line default
             #line hidden
             this.Write(": Visit");
             
-            #line 78 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 79 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write("((");
             
-            #line 78 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 79 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write(")node); return;\r\n");
             
-            #line 79 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 80 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
 }
 
@@ -93,7 +94,7 @@ foreach (var instruction in _grammar.Instructions.Values)
             #line hidden
             this.Write("            }\r\n        }\r\n");
             
-            #line 84 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 85 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
 foreach (var instruction in _grammar.Instructions.Values)
 {
@@ -103,21 +104,21 @@ foreach (var instruction in _grammar.Instructions.Values)
             #line hidden
             this.Write("\r\n        protected virtual void Visit");
             
-            #line 89 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 90 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 89 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 90 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write(" node)\r\n        {\r\n");
             
-            #line 91 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 92 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
 if (instruction.Name.StartsWith("OpType"))
 {
@@ -127,7 +128,7 @@ if (instruction.Name.StartsWith("OpType"))
             #line hidden
             this.Write("            VisitType(node);\r\n");
             
-            #line 96 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 97 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
 }
 foreach (var operand in instruction.Operands)
@@ -145,18 +146,29 @@ foreach (var operand in instruction.Operands)
             #line hidden
             this.Write("            ScheduleVisit(node.");
             
-            #line 108 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 109 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(operand.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 109 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 110 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
             break;
         }
     }
+}
+if (instruction.HasDefaultExit)
+{
+
+            
+            #line default
+            #line hidden
+            this.Write("            ScheduleVisit(node.Next);\r\n");
+            
+            #line 119 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+
 }
 
             
@@ -164,7 +176,7 @@ foreach (var operand in instruction.Operands)
             #line hidden
             this.Write("        }\r\n");
             
-            #line 116 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
+            #line 123 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeVisitor.tt"
 
 }
 

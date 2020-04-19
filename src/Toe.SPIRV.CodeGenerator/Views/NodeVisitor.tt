@@ -6,6 +6,7 @@
 <#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
 using System.Collections.Generic;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Operands;
 using Toe.SPIRV.Reflection.Types;
 
 namespace Toe.SPIRV.Reflection
@@ -110,6 +111,12 @@ foreach (var operand in instruction.Operands)
             break;
         }
     }
+}
+if (instruction.HasDefaultExit)
+{
+#>
+            ScheduleVisit(node.Next);
+<#
 }
 #>
         }

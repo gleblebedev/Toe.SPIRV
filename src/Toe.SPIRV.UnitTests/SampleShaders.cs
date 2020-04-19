@@ -13,7 +13,7 @@ namespace Toe.SPIRV.UnitTests
             var assembly = typeof(SampleShaders).Assembly;
             foreach (var manifestResourceName in assembly.GetManifestResourceNames())
             {
-                if (manifestResourceName.IndexOf(".asm.") < 0 && manifestResourceName.IndexOf(".legacy.") < 0)
+                if (manifestResourceName.IndexOf(".asm.") < 0 && manifestResourceName.IndexOf(".legacy.") < 0 && manifestResourceName.IndexOf(".invalid.") < 0)
                 {
                     yield return manifestResourceName;
                 }

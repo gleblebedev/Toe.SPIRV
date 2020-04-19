@@ -32,6 +32,7 @@ namespace Toe.SPIRV.Reflection
                 ScheduleVisit(node);
             }
         }
+
         protected virtual void ScheduleVisit(IEnumerable<PairNodeNode> nodes)
         {
             foreach (var node in nodes)
@@ -55,6 +56,10 @@ namespace Toe.SPIRV.Reflection
             {
                 ScheduleVisit(node.Node);
             }
+        }
+
+        protected virtual void VisitType(SpirvTypeBase node)
+        {
         }
 
         private void VisitNode(Node node)
@@ -610,831 +615,1047 @@ namespace Toe.SPIRV.Reflection
                 case Spv.Op.OpSubgroupAvcSicGetInterRawSadsINTEL: VisitSubgroupAvcSicGetInterRawSadsINTEL((SubgroupAvcSicGetInterRawSadsINTEL)node); return;
             }
         }
+
         protected virtual void VisitNop(Nop node)
         {
         }
+
         protected virtual void VisitUndef(Undef node)
         {
         }
+
         protected virtual void VisitSourceContinued(SourceContinued node)
         {
         }
+
         protected virtual void VisitSource(Source node)
         {
             ScheduleVisit(node.File);
         }
+
         protected virtual void VisitSourceExtension(SourceExtension node)
         {
         }
+
         protected virtual void VisitName(Name node)
         {
             ScheduleVisit(node.Target);
         }
+
         protected virtual void VisitMemberName(MemberName node)
         {
             ScheduleVisit(node.Type);
         }
+
         protected virtual void VisitString(String node)
         {
         }
+
         protected virtual void VisitLine(Line node)
         {
             ScheduleVisit(node.File);
         }
+
         protected virtual void VisitExtension(Extension node)
         {
         }
+
         protected virtual void VisitExtInstImport(ExtInstImport node)
         {
         }
+
         protected virtual void VisitExtInst(ExtInst node)
         {
             ScheduleVisit(node.Set);
             ScheduleVisit(node.Operands);
         }
+
         protected virtual void VisitMemoryModel(MemoryModel node)
         {
         }
+
         protected virtual void VisitEntryPoint(EntryPoint node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Interface);
         }
+
         protected virtual void VisitExecutionMode(ExecutionMode node)
         {
             ScheduleVisit(node.EntryPoint);
         }
+
         protected virtual void VisitCapability(Capability node)
         {
         }
+
         protected virtual void VisitTypeVoid(TypeVoid node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeBool(TypeBool node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeInt(TypeInt node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeFloat(TypeFloat node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeVector(TypeVector node)
         {
+            VisitType(node);
             ScheduleVisit(node.ComponentType);
         }
+
         protected virtual void VisitTypeMatrix(TypeMatrix node)
         {
+            VisitType(node);
             ScheduleVisit(node.ColumnType);
         }
+
         protected virtual void VisitTypeImage(TypeImage node)
         {
+            VisitType(node);
             ScheduleVisit(node.SampledType);
         }
+
         protected virtual void VisitTypeSampler(TypeSampler node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeSampledImage(TypeSampledImage node)
         {
+            VisitType(node);
             ScheduleVisit(node.ImageType);
         }
+
         protected virtual void VisitTypeArray(TypeArray node)
         {
+            VisitType(node);
             ScheduleVisit(node.ElementType);
             ScheduleVisit(node.Length);
         }
+
         protected virtual void VisitTypeRuntimeArray(TypeRuntimeArray node)
         {
+            VisitType(node);
             ScheduleVisit(node.ElementType);
         }
+
         protected virtual void VisitTypeStruct(TypeStruct node)
         {
+            VisitType(node);
             ScheduleVisit(node.MemberTypes);
         }
+
         protected virtual void VisitTypeOpaque(TypeOpaque node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypePointer(TypePointer node)
         {
+            VisitType(node);
             ScheduleVisit(node.Type);
         }
+
         protected virtual void VisitTypeFunction(TypeFunction node)
         {
+            VisitType(node);
             ScheduleVisit(node.ReturnType);
             ScheduleVisit(node.ParameterTypes);
         }
+
         protected virtual void VisitTypeEvent(TypeEvent node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeDeviceEvent(TypeDeviceEvent node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeReserveId(TypeReserveId node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeQueue(TypeQueue node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypePipe(TypePipe node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeForwardPointer(TypeForwardPointer node)
         {
+            VisitType(node);
             ScheduleVisit(node.PointerType);
         }
+
         protected virtual void VisitConstantTrue(ConstantTrue node)
         {
         }
+
         protected virtual void VisitConstantFalse(ConstantFalse node)
         {
         }
+
         protected virtual void VisitConstant(Constant node)
         {
         }
+
         protected virtual void VisitConstantComposite(ConstantComposite node)
         {
             ScheduleVisit(node.Constituents);
         }
+
         protected virtual void VisitConstantSampler(ConstantSampler node)
         {
         }
+
         protected virtual void VisitConstantNull(ConstantNull node)
         {
         }
+
         protected virtual void VisitSpecConstantTrue(SpecConstantTrue node)
         {
         }
+
         protected virtual void VisitSpecConstantFalse(SpecConstantFalse node)
         {
         }
+
         protected virtual void VisitSpecConstant(SpecConstant node)
         {
         }
+
         protected virtual void VisitSpecConstantComposite(SpecConstantComposite node)
         {
             ScheduleVisit(node.Constituents);
         }
+
         protected virtual void VisitSpecConstantOp(SpecConstantOp node)
         {
         }
+
         protected virtual void VisitFunction(Function node)
         {
             ScheduleVisit(node.FunctionType);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitFunctionParameter(FunctionParameter node)
         {
         }
+
         protected virtual void VisitFunctionEnd(FunctionEnd node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitFunctionCall(FunctionCall node)
         {
             ScheduleVisit(node.Function);
             ScheduleVisit(node.Arguments);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitVariable(Variable node)
         {
             ScheduleVisit(node.Initializer);
         }
+
         protected virtual void VisitImageTexelPointer(ImageTexelPointer node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.Sample);
         }
+
         protected virtual void VisitLoad(Load node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitStore(Store node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Object);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitCopyMemory(CopyMemory node)
         {
             ScheduleVisit(node.Target);
             ScheduleVisit(node.Source);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitCopyMemorySized(CopyMemorySized node)
         {
             ScheduleVisit(node.Target);
             ScheduleVisit(node.Source);
             ScheduleVisit(node.Size);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitAccessChain(AccessChain node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Indexes);
         }
+
         protected virtual void VisitInBoundsAccessChain(InBoundsAccessChain node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Indexes);
         }
+
         protected virtual void VisitPtrAccessChain(PtrAccessChain node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Element);
             ScheduleVisit(node.Indexes);
         }
+
         protected virtual void VisitArrayLength(ArrayLength node)
         {
             ScheduleVisit(node.Structure);
         }
+
         protected virtual void VisitGenericPtrMemSemantics(GenericPtrMemSemantics node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitInBoundsPtrAccessChain(InBoundsPtrAccessChain node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Element);
             ScheduleVisit(node.Indexes);
         }
+
         protected virtual void VisitDecorate(Decorate node)
         {
             ScheduleVisit(node.Target);
         }
+
         protected virtual void VisitMemberDecorate(MemberDecorate node)
         {
             ScheduleVisit(node.StructureType);
         }
+
         protected virtual void VisitDecorationGroup(DecorationGroup node)
         {
         }
+
         protected virtual void VisitGroupDecorate(GroupDecorate node)
         {
             ScheduleVisit(node.DecorationGroup);
             ScheduleVisit(node.Targets);
         }
+
         protected virtual void VisitGroupMemberDecorate(GroupMemberDecorate node)
         {
             ScheduleVisit(node.DecorationGroup);
             ScheduleVisit(node.Targets);
         }
+
         protected virtual void VisitVectorExtractDynamic(VectorExtractDynamic node)
         {
             ScheduleVisit(node.Vector);
             ScheduleVisit(node.Index);
         }
+
         protected virtual void VisitVectorInsertDynamic(VectorInsertDynamic node)
         {
             ScheduleVisit(node.Vector);
             ScheduleVisit(node.Component);
             ScheduleVisit(node.Index);
         }
+
         protected virtual void VisitVectorShuffle(VectorShuffle node)
         {
             ScheduleVisit(node.Vector1);
             ScheduleVisit(node.Vector2);
         }
+
         protected virtual void VisitCompositeConstruct(CompositeConstruct node)
         {
             ScheduleVisit(node.Constituents);
         }
+
         protected virtual void VisitCompositeExtract(CompositeExtract node)
         {
             ScheduleVisit(node.Composite);
         }
+
         protected virtual void VisitCompositeInsert(CompositeInsert node)
         {
             ScheduleVisit(node.Object);
             ScheduleVisit(node.Composite);
         }
+
         protected virtual void VisitCopyObject(CopyObject node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitTranspose(Transpose node)
         {
             ScheduleVisit(node.Matrix);
         }
+
         protected virtual void VisitSampledImage(SampledImage node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Sampler);
         }
+
         protected virtual void VisitImageSampleImplicitLod(ImageSampleImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSampleExplicitLod(ImageSampleExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSampleDrefImplicitLod(ImageSampleDrefImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSampleDrefExplicitLod(ImageSampleDrefExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSampleProjImplicitLod(ImageSampleProjImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSampleProjExplicitLod(ImageSampleProjExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSampleProjDrefImplicitLod(ImageSampleProjDrefImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSampleProjDrefExplicitLod(ImageSampleProjDrefExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageFetch(ImageFetch node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageGather(ImageGather node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.Component);
         }
+
         protected virtual void VisitImageDrefGather(ImageDrefGather node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageRead(ImageRead node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageWrite(ImageWrite node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.Texel);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitImage(Image node)
         {
             ScheduleVisit(node.SampledImage);
         }
+
         protected virtual void VisitImageQueryFormat(ImageQueryFormat node)
         {
             ScheduleVisit(node.Image);
         }
+
         protected virtual void VisitImageQueryOrder(ImageQueryOrder node)
         {
             ScheduleVisit(node.Image);
         }
+
         protected virtual void VisitImageQuerySizeLod(ImageQuerySizeLod node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.LevelofDetail);
         }
+
         protected virtual void VisitImageQuerySize(ImageQuerySize node)
         {
             ScheduleVisit(node.Image);
         }
+
         protected virtual void VisitImageQueryLod(ImageQueryLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageQueryLevels(ImageQueryLevels node)
         {
             ScheduleVisit(node.Image);
         }
+
         protected virtual void VisitImageQuerySamples(ImageQuerySamples node)
         {
             ScheduleVisit(node.Image);
         }
+
         protected virtual void VisitConvertFToU(ConvertFToU node)
         {
             ScheduleVisit(node.FloatValue);
         }
+
         protected virtual void VisitConvertFToS(ConvertFToS node)
         {
             ScheduleVisit(node.FloatValue);
         }
+
         protected virtual void VisitConvertSToF(ConvertSToF node)
         {
             ScheduleVisit(node.SignedValue);
         }
+
         protected virtual void VisitConvertUToF(ConvertUToF node)
         {
             ScheduleVisit(node.UnsignedValue);
         }
+
         protected virtual void VisitUConvert(UConvert node)
         {
             ScheduleVisit(node.UnsignedValue);
         }
+
         protected virtual void VisitSConvert(SConvert node)
         {
             ScheduleVisit(node.SignedValue);
         }
+
         protected virtual void VisitFConvert(FConvert node)
         {
             ScheduleVisit(node.FloatValue);
         }
+
         protected virtual void VisitQuantizeToF16(QuantizeToF16 node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitConvertPtrToU(ConvertPtrToU node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitSatConvertSToU(SatConvertSToU node)
         {
             ScheduleVisit(node.SignedValue);
         }
+
         protected virtual void VisitSatConvertUToS(SatConvertUToS node)
         {
             ScheduleVisit(node.UnsignedValue);
         }
+
         protected virtual void VisitConvertUToPtr(ConvertUToPtr node)
         {
             ScheduleVisit(node.IntegerValue);
         }
+
         protected virtual void VisitPtrCastToGeneric(PtrCastToGeneric node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitGenericCastToPtr(GenericCastToPtr node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitGenericCastToPtrExplicit(GenericCastToPtrExplicit node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitBitcast(Bitcast node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitSNegate(SNegate node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitFNegate(FNegate node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitIAdd(IAdd node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFAdd(FAdd node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitISub(ISub node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFSub(FSub node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitIMul(IMul node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFMul(FMul node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUDiv(UDiv node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSDiv(SDiv node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFDiv(FDiv node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUMod(UMod node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSRem(SRem node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSMod(SMod node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFRem(FRem node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFMod(FMod node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitVectorTimesScalar(VectorTimesScalar node)
         {
             ScheduleVisit(node.Vector);
             ScheduleVisit(node.Scalar);
         }
+
         protected virtual void VisitMatrixTimesScalar(MatrixTimesScalar node)
         {
             ScheduleVisit(node.Matrix);
             ScheduleVisit(node.Scalar);
         }
+
         protected virtual void VisitVectorTimesMatrix(VectorTimesMatrix node)
         {
             ScheduleVisit(node.Vector);
             ScheduleVisit(node.Matrix);
         }
+
         protected virtual void VisitMatrixTimesVector(MatrixTimesVector node)
         {
             ScheduleVisit(node.Matrix);
             ScheduleVisit(node.Vector);
         }
+
         protected virtual void VisitMatrixTimesMatrix(MatrixTimesMatrix node)
         {
             ScheduleVisit(node.LeftMatrix);
             ScheduleVisit(node.RightMatrix);
         }
+
         protected virtual void VisitOuterProduct(OuterProduct node)
         {
             ScheduleVisit(node.Vector1);
             ScheduleVisit(node.Vector2);
         }
+
         protected virtual void VisitDot(Dot node)
         {
             ScheduleVisit(node.Vector1);
             ScheduleVisit(node.Vector2);
         }
+
         protected virtual void VisitIAddCarry(IAddCarry node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitISubBorrow(ISubBorrow node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUMulExtended(UMulExtended node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSMulExtended(SMulExtended node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitAny(Any node)
         {
             ScheduleVisit(node.Vector);
         }
+
         protected virtual void VisitAll(All node)
         {
             ScheduleVisit(node.Vector);
         }
+
         protected virtual void VisitIsNan(IsNan node)
         {
             ScheduleVisit(node.x);
         }
+
         protected virtual void VisitIsInf(IsInf node)
         {
             ScheduleVisit(node.x);
         }
+
         protected virtual void VisitIsFinite(IsFinite node)
         {
             ScheduleVisit(node.x);
         }
+
         protected virtual void VisitIsNormal(IsNormal node)
         {
             ScheduleVisit(node.x);
         }
+
         protected virtual void VisitSignBitSet(SignBitSet node)
         {
             ScheduleVisit(node.x);
         }
+
         protected virtual void VisitLessOrGreater(LessOrGreater node)
         {
             ScheduleVisit(node.x);
             ScheduleVisit(node.y);
         }
+
         protected virtual void VisitOrdered(Ordered node)
         {
             ScheduleVisit(node.x);
             ScheduleVisit(node.y);
         }
+
         protected virtual void VisitUnordered(Unordered node)
         {
             ScheduleVisit(node.x);
             ScheduleVisit(node.y);
         }
+
         protected virtual void VisitLogicalEqual(LogicalEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitLogicalNotEqual(LogicalNotEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitLogicalOr(LogicalOr node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitLogicalAnd(LogicalAnd node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitLogicalNot(LogicalNot node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitSelect(Select node)
         {
             ScheduleVisit(node.Condition);
             ScheduleVisit(node.Object1);
             ScheduleVisit(node.Object2);
         }
+
         protected virtual void VisitIEqual(IEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitINotEqual(INotEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUGreaterThan(UGreaterThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSGreaterThan(SGreaterThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUGreaterThanEqual(UGreaterThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSGreaterThanEqual(SGreaterThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitULessThan(ULessThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSLessThan(SLessThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitULessThanEqual(ULessThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSLessThanEqual(SLessThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFOrdEqual(FOrdEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFUnordEqual(FUnordEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFOrdNotEqual(FOrdNotEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFUnordNotEqual(FUnordNotEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFOrdLessThan(FOrdLessThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFUnordLessThan(FUnordLessThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFOrdGreaterThan(FOrdGreaterThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFUnordGreaterThan(FUnordGreaterThan node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFOrdLessThanEqual(FOrdLessThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFUnordLessThanEqual(FUnordLessThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFOrdGreaterThanEqual(FOrdGreaterThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitFUnordGreaterThanEqual(FUnordGreaterThanEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitShiftRightLogical(ShiftRightLogical node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Shift);
         }
+
         protected virtual void VisitShiftRightArithmetic(ShiftRightArithmetic node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Shift);
         }
+
         protected virtual void VisitShiftLeftLogical(ShiftLeftLogical node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Shift);
         }
+
         protected virtual void VisitBitwiseOr(BitwiseOr node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitBitwiseXor(BitwiseXor node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitBitwiseAnd(BitwiseAnd node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitNot(Not node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitBitFieldInsert(BitFieldInsert node)
         {
             ScheduleVisit(node.Base);
@@ -1442,214 +1663,275 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Offset);
             ScheduleVisit(node.Count);
         }
+
         protected virtual void VisitBitFieldSExtract(BitFieldSExtract node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Offset);
             ScheduleVisit(node.Count);
         }
+
         protected virtual void VisitBitFieldUExtract(BitFieldUExtract node)
         {
             ScheduleVisit(node.Base);
             ScheduleVisit(node.Offset);
             ScheduleVisit(node.Count);
         }
+
         protected virtual void VisitBitReverse(BitReverse node)
         {
             ScheduleVisit(node.Base);
         }
+
         protected virtual void VisitBitCount(BitCount node)
         {
             ScheduleVisit(node.Base);
         }
+
         protected virtual void VisitDPdx(DPdx node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitDPdy(DPdy node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitFwidth(Fwidth node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitDPdxFine(DPdxFine node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitDPdyFine(DPdyFine node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitFwidthFine(FwidthFine node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitDPdxCoarse(DPdxCoarse node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitDPdyCoarse(DPdyCoarse node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitFwidthCoarse(FwidthCoarse node)
         {
             ScheduleVisit(node.P);
         }
+
         protected virtual void VisitEmitVertex(EmitVertex node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitEndPrimitive(EndPrimitive node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitEmitStreamVertex(EmitStreamVertex node)
         {
             ScheduleVisit(node.Stream);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitEndStreamPrimitive(EndStreamPrimitive node)
         {
             ScheduleVisit(node.Stream);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitControlBarrier(ControlBarrier node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitMemoryBarrier(MemoryBarrier node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitAtomicLoad(AtomicLoad node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitAtomicStore(AtomicStore node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitAtomicExchange(AtomicExchange node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicCompareExchange(AtomicCompareExchange node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Comparator);
         }
+
         protected virtual void VisitAtomicCompareExchangeWeak(AtomicCompareExchangeWeak node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Comparator);
         }
+
         protected virtual void VisitAtomicIIncrement(AtomicIIncrement node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitAtomicIDecrement(AtomicIDecrement node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitAtomicIAdd(AtomicIAdd node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicISub(AtomicISub node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicSMin(AtomicSMin node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicUMin(AtomicUMin node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicSMax(AtomicSMax node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicUMax(AtomicUMax node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicAnd(AtomicAnd node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicOr(AtomicOr node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitAtomicXor(AtomicXor node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitPhi(Phi node)
         {
             ScheduleVisit(node.VariableParent);
         }
+
         protected virtual void VisitLoopMerge(LoopMerge node)
         {
             ScheduleVisit(node.MergeBlock);
             ScheduleVisit(node.ContinueTarget);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitSelectionMerge(SelectionMerge node)
         {
             ScheduleVisit(node.MergeBlock);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitLabel(Label node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitBranch(Branch node)
         {
             ScheduleVisit(node.TargetLabel);
         }
+
         protected virtual void VisitBranchConditional(BranchConditional node)
         {
             ScheduleVisit(node.Condition);
             ScheduleVisit(node.TrueLabel);
             ScheduleVisit(node.FalseLabel);
         }
+
         protected virtual void VisitSwitch(Switch node)
         {
             ScheduleVisit(node.Selector);
             ScheduleVisit(node.Default);
             ScheduleVisit(node.Target);
         }
+
         protected virtual void VisitKill(Kill node)
         {
         }
+
         protected virtual void VisitReturn(Return node)
         {
         }
+
         protected virtual void VisitReturnValue(ReturnValue node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitUnreachable(Unreachable node)
         {
         }
+
         protected virtual void VisitLifetimeStart(LifetimeStart node)
         {
             ScheduleVisit(node.Pointer);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitLifetimeStop(LifetimeStop node)
         {
             ScheduleVisit(node.Pointer);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitGroupAsyncCopy(GroupAsyncCopy node)
         {
             ScheduleVisit(node.Destination);
@@ -1658,56 +1940,70 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Stride);
             ScheduleVisit(node.Event);
         }
+
         protected virtual void VisitGroupWaitEvents(GroupWaitEvents node)
         {
             ScheduleVisit(node.NumEvents);
             ScheduleVisit(node.EventsList);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitGroupAll(GroupAll node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitGroupAny(GroupAny node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitGroupBroadcast(GroupBroadcast node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.LocalId);
         }
+
         protected virtual void VisitGroupIAdd(GroupIAdd node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupFAdd(GroupFAdd node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupFMin(GroupFMin node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupUMin(GroupUMin node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupSMin(GroupSMin node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupFMax(GroupFMax node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupUMax(GroupUMax node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupSMax(GroupSMax node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitReadPipe(ReadPipe node)
         {
             ScheduleVisit(node.Pipe);
@@ -1715,6 +2011,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitWritePipe(WritePipe node)
         {
             ScheduleVisit(node.Pipe);
@@ -1722,6 +2019,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitReservedReadPipe(ReservedReadPipe node)
         {
             ScheduleVisit(node.Pipe);
@@ -1731,6 +2029,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitReservedWritePipe(ReservedWritePipe node)
         {
             ScheduleVisit(node.Pipe);
@@ -1740,6 +2039,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitReserveReadPipePackets(ReserveReadPipePackets node)
         {
             ScheduleVisit(node.Pipe);
@@ -1747,6 +2047,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitReserveWritePipePackets(ReserveWritePipePackets node)
         {
             ScheduleVisit(node.Pipe);
@@ -1754,36 +2055,44 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitCommitReadPipe(CommitReadPipe node)
         {
             ScheduleVisit(node.Pipe);
             ScheduleVisit(node.ReserveId);
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitCommitWritePipe(CommitWritePipe node)
         {
             ScheduleVisit(node.Pipe);
             ScheduleVisit(node.ReserveId);
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitIsValidReserveId(IsValidReserveId node)
         {
             ScheduleVisit(node.ReserveId);
         }
+
         protected virtual void VisitGetNumPipePackets(GetNumPipePackets node)
         {
             ScheduleVisit(node.Pipe);
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitGetMaxPipePackets(GetMaxPipePackets node)
         {
             ScheduleVisit(node.Pipe);
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitGroupReserveReadPipePackets(GroupReserveReadPipePackets node)
         {
             ScheduleVisit(node.Pipe);
@@ -1791,6 +2100,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitGroupReserveWritePipePackets(GroupReserveWritePipePackets node)
         {
             ScheduleVisit(node.Pipe);
@@ -1798,20 +2108,25 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
         }
+
         protected virtual void VisitGroupCommitReadPipe(GroupCommitReadPipe node)
         {
             ScheduleVisit(node.Pipe);
             ScheduleVisit(node.ReserveId);
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitGroupCommitWritePipe(GroupCommitWritePipe node)
         {
             ScheduleVisit(node.Pipe);
             ScheduleVisit(node.ReserveId);
             ScheduleVisit(node.PacketSize);
             ScheduleVisit(node.PacketAlignment);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitEnqueueMarker(EnqueueMarker node)
         {
             ScheduleVisit(node.Queue);
@@ -1819,6 +2134,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.WaitEvents);
             ScheduleVisit(node.RetEvent);
         }
+
         protected virtual void VisitEnqueueKernel(EnqueueKernel node)
         {
             ScheduleVisit(node.Queue);
@@ -1833,6 +2149,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamAlign);
             ScheduleVisit(node.LocalSize);
         }
+
         protected virtual void VisitGetKernelNDrangeSubGroupCount(GetKernelNDrangeSubGroupCount node)
         {
             ScheduleVisit(node.NDRange);
@@ -1841,6 +2158,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamSize);
             ScheduleVisit(node.ParamAlign);
         }
+
         protected virtual void VisitGetKernelNDrangeMaxSubGroupSize(GetKernelNDrangeMaxSubGroupSize node)
         {
             ScheduleVisit(node.NDRange);
@@ -1849,6 +2167,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamSize);
             ScheduleVisit(node.ParamAlign);
         }
+
         protected virtual void VisitGetKernelWorkGroupSize(GetKernelWorkGroupSize node)
         {
             ScheduleVisit(node.Invoke);
@@ -1856,6 +2175,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamSize);
             ScheduleVisit(node.ParamAlign);
         }
+
         protected virtual void VisitGetKernelPreferredWorkGroupSizeMultiple(GetKernelPreferredWorkGroupSizeMultiple node)
         {
             ScheduleVisit(node.Invoke);
@@ -1863,136 +2183,172 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamSize);
             ScheduleVisit(node.ParamAlign);
         }
+
         protected virtual void VisitRetainEvent(RetainEvent node)
         {
             ScheduleVisit(node.Event);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitReleaseEvent(ReleaseEvent node)
         {
             ScheduleVisit(node.Event);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitCreateUserEvent(CreateUserEvent node)
         {
         }
+
         protected virtual void VisitIsValidEvent(IsValidEvent node)
         {
             ScheduleVisit(node.Event);
         }
+
         protected virtual void VisitSetUserEventStatus(SetUserEventStatus node)
         {
             ScheduleVisit(node.Event);
             ScheduleVisit(node.Status);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitCaptureEventProfilingInfo(CaptureEventProfilingInfo node)
         {
             ScheduleVisit(node.Event);
             ScheduleVisit(node.ProfilingInfo);
             ScheduleVisit(node.Value);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitGetDefaultQueue(GetDefaultQueue node)
         {
         }
+
         protected virtual void VisitBuildNDRange(BuildNDRange node)
         {
             ScheduleVisit(node.GlobalWorkSize);
             ScheduleVisit(node.LocalWorkSize);
             ScheduleVisit(node.GlobalWorkOffset);
         }
+
         protected virtual void VisitImageSparseSampleImplicitLod(ImageSparseSampleImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSparseSampleExplicitLod(ImageSparseSampleExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSparseSampleDrefImplicitLod(ImageSparseSampleDrefImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSparseSampleDrefExplicitLod(ImageSparseSampleDrefExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSparseSampleProjImplicitLod(ImageSparseSampleProjImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSparseSampleProjExplicitLod(ImageSparseSampleProjExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSparseSampleProjDrefImplicitLod(ImageSparseSampleProjDrefImplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSparseSampleProjDrefExplicitLod(ImageSparseSampleProjDrefExplicitLod node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSparseFetch(ImageSparseFetch node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitImageSparseGather(ImageSparseGather node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.Component);
         }
+
         protected virtual void VisitImageSparseDrefGather(ImageSparseDrefGather node)
         {
             ScheduleVisit(node.SampledImage);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.D_ref);
         }
+
         protected virtual void VisitImageSparseTexelsResident(ImageSparseTexelsResident node)
         {
             ScheduleVisit(node.ResidentCode);
         }
+
         protected virtual void VisitNoLine(NoLine node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitAtomicFlagTestAndSet(AtomicFlagTestAndSet node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitAtomicFlagClear(AtomicFlagClear node)
         {
             ScheduleVisit(node.Pointer);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitImageSparseRead(ImageSparseRead node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitSizeOf(SizeOf node)
         {
             ScheduleVisit(node.Pointer);
         }
+
         protected virtual void VisitTypePipeStorage(TypePipeStorage node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitConstantPipeStorage(ConstantPipeStorage node)
         {
         }
+
         protected virtual void VisitCreatePipeFromPipeStorage(CreatePipeFromPipeStorage node)
         {
             ScheduleVisit(node.PipeStorage);
         }
+
         protected virtual void VisitGetKernelLocalSizeForSubgroupCount(GetKernelLocalSizeForSubgroupCount node)
         {
             ScheduleVisit(node.SubgroupCount);
@@ -2001,6 +2357,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamSize);
             ScheduleVisit(node.ParamAlign);
         }
+
         protected virtual void VisitGetKernelMaxNumSubgroups(GetKernelMaxNumSubgroups node)
         {
             ScheduleVisit(node.Invoke);
@@ -2008,277 +2365,343 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.ParamSize);
             ScheduleVisit(node.ParamAlign);
         }
+
         protected virtual void VisitTypeNamedBarrier(TypeNamedBarrier node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitNamedBarrierInitialize(NamedBarrierInitialize node)
         {
             ScheduleVisit(node.SubgroupCount);
         }
+
         protected virtual void VisitMemoryNamedBarrier(MemoryNamedBarrier node)
         {
             ScheduleVisit(node.NamedBarrier);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitModuleProcessed(ModuleProcessed node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitExecutionModeId(ExecutionModeId node)
         {
             ScheduleVisit(node.EntryPoint);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitDecorateId(DecorateId node)
         {
             ScheduleVisit(node.Target);
         }
+
         protected virtual void VisitGroupNonUniformElect(GroupNonUniformElect node)
         {
         }
+
         protected virtual void VisitGroupNonUniformAll(GroupNonUniformAll node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitGroupNonUniformAny(GroupNonUniformAny node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitGroupNonUniformAllEqual(GroupNonUniformAllEqual node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitGroupNonUniformBroadcast(GroupNonUniformBroadcast node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Id);
         }
+
         protected virtual void VisitGroupNonUniformBroadcastFirst(GroupNonUniformBroadcastFirst node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitGroupNonUniformBallot(GroupNonUniformBallot node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitGroupNonUniformInverseBallot(GroupNonUniformInverseBallot node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitGroupNonUniformBallotBitExtract(GroupNonUniformBallotBitExtract node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Index);
         }
+
         protected virtual void VisitGroupNonUniformBallotBitCount(GroupNonUniformBallotBitCount node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitGroupNonUniformBallotFindLSB(GroupNonUniformBallotFindLSB node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitGroupNonUniformBallotFindMSB(GroupNonUniformBallotFindMSB node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitGroupNonUniformShuffle(GroupNonUniformShuffle node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Id);
         }
+
         protected virtual void VisitGroupNonUniformShuffleXor(GroupNonUniformShuffleXor node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Mask);
         }
+
         protected virtual void VisitGroupNonUniformShuffleUp(GroupNonUniformShuffleUp node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Delta);
         }
+
         protected virtual void VisitGroupNonUniformShuffleDown(GroupNonUniformShuffleDown node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Delta);
         }
+
         protected virtual void VisitGroupNonUniformIAdd(GroupNonUniformIAdd node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformFAdd(GroupNonUniformFAdd node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformIMul(GroupNonUniformIMul node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformFMul(GroupNonUniformFMul node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformSMin(GroupNonUniformSMin node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformUMin(GroupNonUniformUMin node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformFMin(GroupNonUniformFMin node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformSMax(GroupNonUniformSMax node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformUMax(GroupNonUniformUMax node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformFMax(GroupNonUniformFMax node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformBitwiseAnd(GroupNonUniformBitwiseAnd node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformBitwiseOr(GroupNonUniformBitwiseOr node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformBitwiseXor(GroupNonUniformBitwiseXor node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformLogicalAnd(GroupNonUniformLogicalAnd node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformLogicalOr(GroupNonUniformLogicalOr node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformLogicalXor(GroupNonUniformLogicalXor node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.ClusterSize);
         }
+
         protected virtual void VisitGroupNonUniformQuadBroadcast(GroupNonUniformQuadBroadcast node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Index);
         }
+
         protected virtual void VisitGroupNonUniformQuadSwap(GroupNonUniformQuadSwap node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Direction);
         }
+
         protected virtual void VisitCopyLogical(CopyLogical node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitPtrEqual(PtrEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitPtrNotEqual(PtrNotEqual node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitPtrDiff(PtrDiff node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitSubgroupBallotKHR(SubgroupBallotKHR node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitSubgroupFirstInvocationKHR(SubgroupFirstInvocationKHR node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitSubgroupAllKHR(SubgroupAllKHR node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitSubgroupAnyKHR(SubgroupAnyKHR node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitSubgroupAllEqualKHR(SubgroupAllEqualKHR node)
         {
             ScheduleVisit(node.Predicate);
         }
+
         protected virtual void VisitSubgroupReadInvocationKHR(SubgroupReadInvocationKHR node)
         {
             ScheduleVisit(node.Value);
             ScheduleVisit(node.Index);
         }
+
         protected virtual void VisitGroupIAddNonUniformAMD(GroupIAddNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupFAddNonUniformAMD(GroupFAddNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupFMinNonUniformAMD(GroupFMinNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupUMinNonUniformAMD(GroupUMinNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupSMinNonUniformAMD(GroupSMinNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupFMaxNonUniformAMD(GroupFMaxNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupUMaxNonUniformAMD(GroupUMaxNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitGroupSMaxNonUniformAMD(GroupSMaxNonUniformAMD node)
         {
             ScheduleVisit(node.X);
         }
+
         protected virtual void VisitFragmentMaskFetchAMD(FragmentMaskFetchAMD node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitFragmentFetchAMD(FragmentFetchAMD node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.FragmentIndex);
         }
+
         protected virtual void VisitReadClockKHR(ReadClockKHR node)
         {
         }
+
         protected virtual void VisitImageSampleFootprintNV(ImageSampleFootprintNV node)
         {
             ScheduleVisit(node.SampledImage);
@@ -2286,26 +2709,35 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Granularity);
             ScheduleVisit(node.Coarse);
         }
+
         protected virtual void VisitGroupNonUniformPartitionNV(GroupNonUniformPartitionNV node)
         {
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitWritePackedPrimitiveIndices4x8NV(WritePackedPrimitiveIndices4x8NV node)
         {
             ScheduleVisit(node.IndexOffset);
             ScheduleVisit(node.PackedIndices);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitReportIntersectionNV(ReportIntersectionNV node)
         {
             ScheduleVisit(node.Hit);
             ScheduleVisit(node.HitKind);
         }
+
         protected virtual void VisitIgnoreIntersectionNV(IgnoreIntersectionNV node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitTerminateRayNV(TerminateRayNV node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitTraceNV(TraceNV node)
         {
             ScheduleVisit(node.Accel);
@@ -2319,13 +2751,19 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.RayDirection);
             ScheduleVisit(node.RayTmax);
             ScheduleVisit(node.PayloadId);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitTypeAccelerationStructureNV(TypeAccelerationStructureNV node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeRayQueryProvisionalKHR(TypeRayQueryProvisionalKHR node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitRayQueryInitializeKHR(RayQueryInitializeKHR node)
         {
             ScheduleVisit(node.RayQuery);
@@ -2336,197 +2774,250 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.RayTMin);
             ScheduleVisit(node.RayDirection);
             ScheduleVisit(node.RayTMax);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitRayQueryTerminateKHR(RayQueryTerminateKHR node)
         {
             ScheduleVisit(node.RayQuery);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitRayQueryGenerateIntersectionKHR(RayQueryGenerateIntersectionKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.HitT);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitRayQueryConfirmIntersectionKHR(RayQueryConfirmIntersectionKHR node)
         {
             ScheduleVisit(node.RayQuery);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitRayQueryProceedKHR(RayQueryProceedKHR node)
         {
             ScheduleVisit(node.RayQuery);
         }
+
         protected virtual void VisitRayQueryGetIntersectionTypeKHR(RayQueryGetIntersectionTypeKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetRayTMinKHR(RayQueryGetRayTMinKHR node)
         {
             ScheduleVisit(node.RayQuery);
         }
+
         protected virtual void VisitRayQueryGetRayFlagsKHR(RayQueryGetRayFlagsKHR node)
         {
             ScheduleVisit(node.RayQuery);
         }
+
         protected virtual void VisitRayQueryGetIntersectionTKHR(RayQueryGetIntersectionTKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionInstanceCustomIndexKHR(RayQueryGetIntersectionInstanceCustomIndexKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionInstanceIdKHR(RayQueryGetIntersectionInstanceIdKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionGeometryIndexKHR(RayQueryGetIntersectionGeometryIndexKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionPrimitiveIndexKHR(RayQueryGetIntersectionPrimitiveIndexKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionBarycentricsKHR(RayQueryGetIntersectionBarycentricsKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionFrontFaceKHR(RayQueryGetIntersectionFrontFaceKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionCandidateAABBOpaqueKHR(RayQueryGetIntersectionCandidateAABBOpaqueKHR node)
         {
             ScheduleVisit(node.RayQuery);
         }
+
         protected virtual void VisitRayQueryGetIntersectionObjectRayDirectionKHR(RayQueryGetIntersectionObjectRayDirectionKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionObjectRayOriginKHR(RayQueryGetIntersectionObjectRayOriginKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetWorldRayDirectionKHR(RayQueryGetWorldRayDirectionKHR node)
         {
             ScheduleVisit(node.RayQuery);
         }
+
         protected virtual void VisitRayQueryGetWorldRayOriginKHR(RayQueryGetWorldRayOriginKHR node)
         {
             ScheduleVisit(node.RayQuery);
         }
+
         protected virtual void VisitRayQueryGetIntersectionObjectToWorldKHR(RayQueryGetIntersectionObjectToWorldKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitRayQueryGetIntersectionWorldToObjectKHR(RayQueryGetIntersectionWorldToObjectKHR node)
         {
             ScheduleVisit(node.RayQuery);
             ScheduleVisit(node.Intersection);
         }
+
         protected virtual void VisitExecuteCallableNV(ExecuteCallableNV node)
         {
             ScheduleVisit(node.SBTIndex);
             ScheduleVisit(node.CallableDataId);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitTypeCooperativeMatrixNV(TypeCooperativeMatrixNV node)
         {
+            VisitType(node);
             ScheduleVisit(node.ComponentType);
             ScheduleVisit(node.Rows);
             ScheduleVisit(node.Columns);
         }
+
         protected virtual void VisitCooperativeMatrixLoadNV(CooperativeMatrixLoadNV node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Stride);
             ScheduleVisit(node.ColumnMajor);
         }
+
         protected virtual void VisitCooperativeMatrixStoreNV(CooperativeMatrixStoreNV node)
         {
             ScheduleVisit(node.Pointer);
             ScheduleVisit(node.Object);
             ScheduleVisit(node.Stride);
             ScheduleVisit(node.ColumnMajor);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitCooperativeMatrixMulAddNV(CooperativeMatrixMulAddNV node)
         {
             ScheduleVisit(node.A);
             ScheduleVisit(node.B);
             ScheduleVisit(node.C);
         }
+
         protected virtual void VisitCooperativeMatrixLengthNV(CooperativeMatrixLengthNV node)
         {
             ScheduleVisit(node.Type);
         }
+
         protected virtual void VisitBeginInvocationInterlockEXT(BeginInvocationInterlockEXT node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitEndInvocationInterlockEXT(EndInvocationInterlockEXT node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitDemoteToHelperInvocationEXT(DemoteToHelperInvocationEXT node)
         {
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitIsHelperInvocationEXT(IsHelperInvocationEXT node)
         {
         }
+
         protected virtual void VisitSubgroupShuffleINTEL(SubgroupShuffleINTEL node)
         {
             ScheduleVisit(node.Data);
             ScheduleVisit(node.InvocationId);
         }
+
         protected virtual void VisitSubgroupShuffleDownINTEL(SubgroupShuffleDownINTEL node)
         {
             ScheduleVisit(node.Current);
             ScheduleVisit(node.Next);
             ScheduleVisit(node.Delta);
         }
+
         protected virtual void VisitSubgroupShuffleUpINTEL(SubgroupShuffleUpINTEL node)
         {
             ScheduleVisit(node.Previous);
             ScheduleVisit(node.Current);
             ScheduleVisit(node.Delta);
         }
+
         protected virtual void VisitSubgroupShuffleXorINTEL(SubgroupShuffleXorINTEL node)
         {
             ScheduleVisit(node.Data);
             ScheduleVisit(node.Value);
         }
+
         protected virtual void VisitSubgroupBlockReadINTEL(SubgroupBlockReadINTEL node)
         {
             ScheduleVisit(node.Ptr);
         }
+
         protected virtual void VisitSubgroupBlockWriteINTEL(SubgroupBlockWriteINTEL node)
         {
             ScheduleVisit(node.Ptr);
             ScheduleVisit(node.Data);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitSubgroupImageBlockReadINTEL(SubgroupImageBlockReadINTEL node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
         }
+
         protected virtual void VisitSubgroupImageBlockWriteINTEL(SubgroupImageBlockWriteINTEL node)
         {
             ScheduleVisit(node.Image);
             ScheduleVisit(node.Coordinate);
             ScheduleVisit(node.Data);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitSubgroupImageMediaBlockReadINTEL(SubgroupImageMediaBlockReadINTEL node)
         {
             ScheduleVisit(node.Image);
@@ -2534,6 +3025,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Width);
             ScheduleVisit(node.Height);
         }
+
         protected virtual void VisitSubgroupImageMediaBlockWriteINTEL(SubgroupImageMediaBlockWriteINTEL node)
         {
             ScheduleVisit(node.Image);
@@ -2541,177 +3033,233 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Width);
             ScheduleVisit(node.Height);
             ScheduleVisit(node.Data);
+            ScheduleVisit(node.Next);
         }
+
         protected virtual void VisitUCountLeadingZerosINTEL(UCountLeadingZerosINTEL node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitUCountTrailingZerosINTEL(UCountTrailingZerosINTEL node)
         {
             ScheduleVisit(node.Operand);
         }
+
         protected virtual void VisitAbsISubINTEL(AbsISubINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitAbsUSubINTEL(AbsUSubINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitIAddSatINTEL(IAddSatINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUAddSatINTEL(UAddSatINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitIAverageINTEL(IAverageINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUAverageINTEL(UAverageINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitIAverageRoundedINTEL(IAverageRoundedINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUAverageRoundedINTEL(UAverageRoundedINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitISubSatINTEL(ISubSatINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUSubSatINTEL(USubSatINTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitIMul32x16INTEL(IMul32x16INTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitUMul32x16INTEL(UMul32x16INTEL node)
         {
             ScheduleVisit(node.Operand1);
             ScheduleVisit(node.Operand2);
         }
+
         protected virtual void VisitDecorateString(DecorateString node)
         {
             ScheduleVisit(node.Target);
         }
+
         protected virtual void VisitMemberDecorateString(MemberDecorateString node)
         {
             ScheduleVisit(node.StructType);
         }
+
         protected virtual void VisitVmeImageINTEL(VmeImageINTEL node)
         {
             ScheduleVisit(node.ImageType);
             ScheduleVisit(node.Sampler);
         }
+
         protected virtual void VisitTypeVmeImageINTEL(TypeVmeImageINTEL node)
         {
+            VisitType(node);
             ScheduleVisit(node.ImageType);
         }
+
         protected virtual void VisitTypeAvcImePayloadINTEL(TypeAvcImePayloadINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcRefPayloadINTEL(TypeAvcRefPayloadINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcSicPayloadINTEL(TypeAvcSicPayloadINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcMcePayloadINTEL(TypeAvcMcePayloadINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcMceResultINTEL(TypeAvcMceResultINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcImeResultINTEL(TypeAvcImeResultINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcImeResultSingleReferenceStreamoutINTEL(TypeAvcImeResultSingleReferenceStreamoutINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcImeResultDualReferenceStreamoutINTEL(TypeAvcImeResultDualReferenceStreamoutINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcImeSingleReferenceStreaminINTEL(TypeAvcImeSingleReferenceStreaminINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcImeDualReferenceStreaminINTEL(TypeAvcImeDualReferenceStreaminINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcRefResultINTEL(TypeAvcRefResultINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitTypeAvcSicResultINTEL(TypeAvcSicResultINTEL node)
         {
+            VisitType(node);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL node)
         {
             ScheduleVisit(node.SliceType);
             ScheduleVisit(node.Qp);
         }
+
         protected virtual void VisitSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL node)
         {
             ScheduleVisit(node.ReferenceBasePenalty);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultInterShapePenaltyINTEL(SubgroupAvcMceGetDefaultInterShapePenaltyINTEL node)
         {
             ScheduleVisit(node.SliceType);
             ScheduleVisit(node.Qp);
         }
+
         protected virtual void VisitSubgroupAvcMceSetInterShapePenaltyINTEL(SubgroupAvcMceSetInterShapePenaltyINTEL node)
         {
             ScheduleVisit(node.PackedShapePenalty);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL node)
         {
             ScheduleVisit(node.SliceType);
             ScheduleVisit(node.Qp);
         }
+
         protected virtual void VisitSubgroupAvcMceSetInterDirectionPenaltyINTEL(SubgroupAvcMceSetInterDirectionPenaltyINTEL node)
         {
             ScheduleVisit(node.DirectionCost);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL node)
         {
             ScheduleVisit(node.SliceType);
             ScheduleVisit(node.Qp);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL node)
         {
             ScheduleVisit(node.SliceType);
             ScheduleVisit(node.Qp);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL node)
         {
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL node)
         {
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL node)
         {
         }
+
         protected virtual void VisitSubgroupAvcMceSetMotionVectorCostFunctionINTEL(SubgroupAvcMceSetMotionVectorCostFunctionINTEL node)
         {
             ScheduleVisit(node.PackedCostCenterDelta);
@@ -2719,111 +3267,136 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.CostPrecision);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL node)
         {
             ScheduleVisit(node.SliceType);
             ScheduleVisit(node.Qp);
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL node)
         {
         }
+
         protected virtual void VisitSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL node)
         {
         }
+
         protected virtual void VisitSubgroupAvcMceSetAcOnlyHaarINTEL(SubgroupAvcMceSetAcOnlyHaarINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL node)
         {
             ScheduleVisit(node.SourceFieldPolarity);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL node)
         {
             ScheduleVisit(node.ReferenceFieldPolarity);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL node)
         {
             ScheduleVisit(node.ForwardReferenceFieldPolarity);
             ScheduleVisit(node.BackwardReferenceFieldPolarity);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceConvertToImePayloadINTEL(SubgroupAvcMceConvertToImePayloadINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceConvertToImeResultINTEL(SubgroupAvcMceConvertToImeResultINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceConvertToRefPayloadINTEL(SubgroupAvcMceConvertToRefPayloadINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceConvertToRefResultINTEL(SubgroupAvcMceConvertToRefResultINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceConvertToSicPayloadINTEL(SubgroupAvcMceConvertToSicPayloadINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceConvertToSicResultINTEL(SubgroupAvcMceConvertToSicResultINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetMotionVectorsINTEL(SubgroupAvcMceGetMotionVectorsINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterDistortionsINTEL(SubgroupAvcMceGetInterDistortionsINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetBestInterDistortionsINTEL(SubgroupAvcMceGetBestInterDistortionsINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterMajorShapeINTEL(SubgroupAvcMceGetInterMajorShapeINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterMinorShapeINTEL(SubgroupAvcMceGetInterMinorShapeINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterDirectionsINTEL(SubgroupAvcMceGetInterDirectionsINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterMotionVectorCountINTEL(SubgroupAvcMceGetInterMotionVectorCountINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterReferenceIdsINTEL(SubgroupAvcMceGetInterReferenceIdsINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL node)
         {
             ScheduleVisit(node.PackedReferenceIds);
             ScheduleVisit(node.PackedReferenceParameterFieldPolarities);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeInitializeINTEL(SubgroupAvcImeInitializeINTEL node)
         {
             ScheduleVisit(node.SrcCoord);
             ScheduleVisit(node.PartitionMask);
             ScheduleVisit(node.SADAdjustment);
         }
+
         protected virtual void VisitSubgroupAvcImeSetSingleReferenceINTEL(SubgroupAvcImeSetSingleReferenceINTEL node)
         {
             ScheduleVisit(node.RefOffset);
             ScheduleVisit(node.SearchWindowConfig);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeSetDualReferenceINTEL(SubgroupAvcImeSetDualReferenceINTEL node)
         {
             ScheduleVisit(node.FwdRefOffset);
@@ -2831,11 +3404,13 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.SearchWindowConfig);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeRefWindowSizeINTEL(SubgroupAvcImeRefWindowSizeINTEL node)
         {
             ScheduleVisit(node.SearchWindowConfig);
             ScheduleVisit(node.DualRef);
         }
+
         protected virtual void VisitSubgroupAvcImeAdjustRefOffsetINTEL(SubgroupAvcImeAdjustRefOffsetINTEL node)
         {
             ScheduleVisit(node.RefOffset);
@@ -2843,35 +3418,42 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.RefWindowSize);
             ScheduleVisit(node.ImageSize);
         }
+
         protected virtual void VisitSubgroupAvcImeConvertToMcePayloadINTEL(SubgroupAvcImeConvertToMcePayloadINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeSetMaxMotionVectorCountINTEL(SubgroupAvcImeSetMaxMotionVectorCountINTEL node)
         {
             ScheduleVisit(node.MaxMotionVectorCount);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeSetUnidirectionalMixDisableINTEL(SubgroupAvcImeSetUnidirectionalMixDisableINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL node)
         {
             ScheduleVisit(node.Threshold);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeSetWeightedSadINTEL(SubgroupAvcImeSetWeightedSadINTEL node)
         {
             ScheduleVisit(node.PackedSadWeights);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithSingleReferenceINTEL(SubgroupAvcImeEvaluateWithSingleReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.RefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithDualReferenceINTEL(SubgroupAvcImeEvaluateWithDualReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -2879,6 +3461,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.BwdRefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -2886,6 +3469,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.StreaminComponents);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -2894,12 +3478,14 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.StreaminComponents);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.RefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -2907,6 +3493,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.BwdRefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -2914,6 +3501,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.StreaminComponents);
         }
+
         protected virtual void VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -2922,80 +3510,97 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.StreaminComponents);
         }
+
         protected virtual void VisitSubgroupAvcImeConvertToMceResultINTEL(SubgroupAvcImeConvertToMceResultINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetSingleReferenceStreaminINTEL(SubgroupAvcImeGetSingleReferenceStreaminINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetDualReferenceStreaminINTEL(SubgroupAvcImeGetDualReferenceStreaminINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeStripSingleReferenceStreamoutINTEL(SubgroupAvcImeStripSingleReferenceStreamoutINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeStripDualReferenceStreamoutINTEL(SubgroupAvcImeStripDualReferenceStreamoutINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL node)
         {
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.MajorShape);
         }
+
         protected virtual void VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL node)
         {
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.MajorShape);
         }
+
         protected virtual void VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL node)
         {
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.MajorShape);
         }
+
         protected virtual void VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL node)
         {
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.MajorShape);
             ScheduleVisit(node.Direction);
         }
+
         protected virtual void VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL node)
         {
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.MajorShape);
             ScheduleVisit(node.Direction);
         }
+
         protected virtual void VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL node)
         {
             ScheduleVisit(node.Payload);
             ScheduleVisit(node.MajorShape);
             ScheduleVisit(node.Direction);
         }
+
         protected virtual void VisitSubgroupAvcImeGetBorderReachedINTEL(SubgroupAvcImeGetBorderReachedINTEL node)
         {
             ScheduleVisit(node.ImageSelect);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetTruncatedSearchIndicationINTEL(SubgroupAvcImeGetTruncatedSearchIndicationINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcFmeInitializeINTEL(SubgroupAvcFmeInitializeINTEL node)
         {
             ScheduleVisit(node.SrcCoord);
@@ -3006,6 +3611,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PixelResolution);
             ScheduleVisit(node.SadAdjustment);
         }
+
         protected virtual void VisitSubgroupAvcBmeInitializeINTEL(SubgroupAvcBmeInitializeINTEL node)
         {
             ScheduleVisit(node.SrcCoord);
@@ -3017,24 +3623,29 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.BidirectionalWeight);
             ScheduleVisit(node.SadAdjustment);
         }
+
         protected virtual void VisitSubgroupAvcRefConvertToMcePayloadINTEL(SubgroupAvcRefConvertToMcePayloadINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefSetBidirectionalMixDisableINTEL(SubgroupAvcRefSetBidirectionalMixDisableINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefSetBilinearFilterEnableINTEL(SubgroupAvcRefSetBilinearFilterEnableINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefEvaluateWithSingleReferenceINTEL(SubgroupAvcRefEvaluateWithSingleReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.RefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefEvaluateWithDualReferenceINTEL(SubgroupAvcRefEvaluateWithDualReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -3042,12 +3653,14 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.BwdRefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefEvaluateWithMultiReferenceINTEL(SubgroupAvcRefEvaluateWithMultiReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.PackedReferenceIds);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -3055,14 +3668,17 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PackedReferenceFieldPolarities);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcRefConvertToMceResultINTEL(SubgroupAvcRefConvertToMceResultINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicInitializeINTEL(SubgroupAvcSicInitializeINTEL node)
         {
             ScheduleVisit(node.SrcCoord);
         }
+
         protected virtual void VisitSubgroupAvcSicConfigureSkcINTEL(SubgroupAvcSicConfigureSkcINTEL node)
         {
             ScheduleVisit(node.SkipBlockPartitionType);
@@ -3072,6 +3688,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.SadAdjustment);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicConfigureIpeLumaINTEL(SubgroupAvcSicConfigureIpeLumaINTEL node)
         {
             ScheduleVisit(node.LumaIntraPartitionMask);
@@ -3083,6 +3700,7 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.SadAdjustment);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicConfigureIpeLumaChromaINTEL(SubgroupAvcSicConfigureIpeLumaChromaINTEL node)
         {
             ScheduleVisit(node.LumaIntraPartitionMask);
@@ -3097,20 +3715,24 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.SadAdjustment);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetMotionVectorMaskINTEL(SubgroupAvcSicGetMotionVectorMaskINTEL node)
         {
             ScheduleVisit(node.SkipBlockPartitionType);
             ScheduleVisit(node.Direction);
         }
+
         protected virtual void VisitSubgroupAvcSicConvertToMcePayloadINTEL(SubgroupAvcSicConvertToMcePayloadINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicSetIntraLumaShapePenaltyINTEL(SubgroupAvcSicSetIntraLumaShapePenaltyINTEL node)
         {
             ScheduleVisit(node.PackedShapePenalty);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL node)
         {
             ScheduleVisit(node.LumaModePenalty);
@@ -3118,36 +3740,43 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.LumaPackedNonDcPenalty);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL node)
         {
             ScheduleVisit(node.ChromaModeBasePenalty);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicSetBilinearFilterEnableINTEL(SubgroupAvcSicSetBilinearFilterEnableINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicSetSkcForwardTransformEnableINTEL(SubgroupAvcSicSetSkcForwardTransformEnableINTEL node)
         {
             ScheduleVisit(node.PackedSadCoefficients);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicSetBlockBasedRawSkipSadINTEL(SubgroupAvcSicSetBlockBasedRawSkipSadINTEL node)
         {
             ScheduleVisit(node.BlockBasedSkipType);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicEvaluateIpeINTEL(SubgroupAvcSicEvaluateIpeINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicEvaluateWithSingleReferenceINTEL(SubgroupAvcSicEvaluateWithSingleReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.RefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicEvaluateWithDualReferenceINTEL(SubgroupAvcSicEvaluateWithDualReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -3155,12 +3784,14 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.BwdRefImage);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicEvaluateWithMultiReferenceINTEL(SubgroupAvcSicEvaluateWithMultiReferenceINTEL node)
         {
             ScheduleVisit(node.SrcImage);
             ScheduleVisit(node.PackedReferenceIds);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL node)
         {
             ScheduleVisit(node.SrcImage);
@@ -3168,38 +3799,47 @@ namespace Toe.SPIRV.Reflection
             ScheduleVisit(node.PackedReferenceFieldPolarities);
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicConvertToMceResultINTEL(SubgroupAvcSicConvertToMceResultINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetIpeLumaShapeINTEL(SubgroupAvcSicGetIpeLumaShapeINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetBestIpeLumaDistortionINTEL(SubgroupAvcSicGetBestIpeLumaDistortionINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetBestIpeChromaDistortionINTEL(SubgroupAvcSicGetBestIpeChromaDistortionINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetPackedIpeLumaModesINTEL(SubgroupAvcSicGetPackedIpeLumaModesINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetIpeChromaModeINTEL(SubgroupAvcSicGetIpeChromaModeINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL node)
         {
             ScheduleVisit(node.Payload);
         }
+
         protected virtual void VisitSubgroupAvcSicGetInterRawSadsINTEL(SubgroupAvcSicGetInterRawSadsINTEL node)
         {
             ScheduleVisit(node.Payload);

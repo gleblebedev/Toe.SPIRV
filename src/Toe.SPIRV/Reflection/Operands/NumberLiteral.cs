@@ -87,13 +87,13 @@ namespace Toe.SPIRV.Reflection.Operands
                 case ValueType.Zero:
                     return "0";
                 case ValueType.Float:
-                    return $"(float){_floatValue}";
+                    return $"{_floatValue:G17}";
                 case ValueType.Double:
-                    return $"(double){_doubleValue}";
+                    return $"{_doubleValue:G17}";
                 case ValueType.Int:
-                    return $"(int){_intValue}";
+                    return $"{_intValue}";
                 case ValueType.UInt:
-                    return $"(uint){_uintValue}";
+                    return $"{_uintValue}";
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -98,6 +98,21 @@ void main()
             };
 
             // ----------------------------------------
+            // Simple shader that calculates value twice
+            yield return new[]
+            {
+                @"
+#version 450
+layout(location = 0) in int Attr;
+void main()
+{
+    float x = Attr+0.1;
+    gl_Position = vec4(x, Attr+0.1,0,0);
+}",
+                emptyFragmentShader
+            };
+
+            // ----------------------------------------
             // Simple shader with loop that breakes on condition
             yield return new[]
             {
@@ -140,6 +155,24 @@ void main()
         default:
             break;
     }
+}",
+                emptyFragmentShader,
+            };
+
+            // ----------------------------------------
+            // Function call
+            yield return new[]
+            {
+                @"
+#version 450
+layout(location = 0) in int Attr;
+vec4 MakeVec4(int x)
+{
+    return vec4(x);
+}
+void main()
+{
+    gl_Position = MakeVec4(Attr);
 }",
                 emptyFragmentShader,
             };
