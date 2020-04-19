@@ -145,7 +145,7 @@ namespace Toe.SPIRV.Reflection
             return visitFunction;
         }
 
-        private void AddBlock(List<Instruction> instructions, ExecutableNode node, Label mergePoint = null)
+        private void AddBlock(List<Instruction> instructions, ExecutableNode node, Label mergeLabel = null, Label continueLabel = null)
         {
             //var block = new InstructionBlock()
             //{
@@ -160,18 +160,25 @@ namespace Toe.SPIRV.Reflection
                     case Op.OpBranch:
                         AddInstructionToBlock(instructions, node);
                         var branch = ((Branch)node);
-                        if (branch.TargetLabel == mergePoint)
+                        if (branch.TargetLabel == mergeLabel || branch.TargetLabel == continueLabel)
                             return;
                         node = branch.TargetLabel;
                         break;
                     case Op.OpBranchConditional:
                         var branchConditional = (BranchConditional) node;
                         instructions.Add(Visit(node));
-                        AddBlock(instructions, branchConditional.TrueLabel, mergePoint);
-                        AddBlock(instructions, branchConditional.FalseLabel, mergePoint);
+                        if (branchConditional.TrueLabel != mergeLabel && branchConditional.TrueLabel != continueLabel)
+                            AddBlock(instructions, branchConditional.TrueLabel, mergeLabel);
+                        if (branchConditional.FalseLabel != mergeLabel && branchConditional.FalseLabel != continueLabel)
+                            AddBlock(instructions, branchConditional.FalseLabel, mergeLabel);
                         return;
                     case Op.OpLoopMerge:
-                        throw new NotImplementedException();
+                        var loopMerge = (LoopMerge) node;
+                        AddInstructionToBlock(instructions, node);
+                        AddBlock(instructions, node.GetNext(), loopMerge.MergeBlock, (Label)loopMerge.ContinueTarget);
+                        AddBlock(instructions, (Label)loopMerge.ContinueTarget, loopMerge.MergeBlock, null);
+                        node = loopMerge.MergeBlock;
+                        break;
                     case Op.OpSwitch:
                         throw new NotImplementedException();
                     case Op.OpSelectionMerge:
