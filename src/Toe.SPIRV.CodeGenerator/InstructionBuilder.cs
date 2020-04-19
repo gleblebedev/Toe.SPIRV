@@ -6,9 +6,9 @@ using Toe.SPIRV.CodeGenerator.Views;
 
 namespace Toe.SPIRV.CodeGenerator
 {
-    public class ReflectionVisior
+    public class InstructionBuilder
     {
-        [Verb("genreflectionvisitor")]
+        [Verb("geninstructionbuilder")]
         public class Options
         {
             [Option('g', "grammar", Required = false, HelpText = "Path to toe.spirv.grammar.json file")]
@@ -25,7 +25,7 @@ namespace Toe.SPIRV.CodeGenerator
             _grammar = Utils.LoadGrammar(options.Grammar);
 
 
-            var text = new NodeVisitor(_grammar).TransformText();
+            var text = new SpirvInstructionsBuilderTemplate(_grammar).TransformText();
             if (!string.IsNullOrWhiteSpace(options.Output))
                 Utils.SaveText(options.Output, text);
             else

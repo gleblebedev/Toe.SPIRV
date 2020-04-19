@@ -25,6 +25,17 @@ namespace Toe.SPIRV.Reflection.Types
             EvaluateSizeAndAlignment();
         }
 
+        public IEnumerable<SpirvTypeBase> MemberTypes
+        {
+            get
+            {
+                foreach (var field in _fields)
+                {
+                    yield return field.Type;
+                }
+            }
+        }
+
         public override uint Alignment
         {
             get

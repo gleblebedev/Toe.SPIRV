@@ -159,7 +159,7 @@ namespace Toe.SPIRV.Reflection
                 switch (node.OpCode)
                 {
                     case Op.OpBranch:
-                        AddInstructionToBlock(instructions, node);
+                        AddInstructionToBlock(instructions, node, visitedNodes);
                         var branch = ((Branch)node);
                         if (visitedNodes.Contains(branch.TargetLabel))
                             return;
@@ -167,7 +167,7 @@ namespace Toe.SPIRV.Reflection
                         break;
                     case Op.OpBranchConditional:
                         var branchConditional = (BranchConditional) node;
-                        instructions.Add(Visit(node));
+                        AddInstructionToBlock(instructions, node, visitedNodes);
                         if (!visitedNodes.Contains(branchConditional.TrueLabel))
                             AddBlock(instructions, branchConditional.TrueLabel, visitedNodes);
                         if (!visitedNodes.Contains(branchConditional.FalseLabel))
@@ -175,12 +175,12 @@ namespace Toe.SPIRV.Reflection
                         return;
                     case Op.OpLabel:
                         visitedNodes.Add(node);
-                        AddInstructionToBlock(instructions, node);
+                        AddInstructionToBlock(instructions, node, visitedNodes);
                         node = node.GetNext();
                         break;
                     case Op.OpLoopMerge:
                         var loopMerge = (LoopMerge)node;
-                        AddInstructionToBlock(instructions, loopMerge);
+                        AddInstructionToBlock(instructions, loopMerge, visitedNodes);
                         visitedNodes.Add(loopMerge.GetNext());
                         visitedNodes.Add(loopMerge.ContinueTarget);
                         visitedNodes.Add(loopMerge.MergeBlock);
@@ -191,7 +191,7 @@ namespace Toe.SPIRV.Reflection
                         break;
                     case Op.OpSwitch:
                         var switchNode = (Switch)node;
-                        instructions.Add(Visit(node));
+                        AddInstructionToBlock(instructions, node, visitedNodes);
                         foreach (var target in switchNode.Target)
                         {
                             if (!visitedNodes.Contains(target.Node))
@@ -203,28 +203,28 @@ namespace Toe.SPIRV.Reflection
                     case Op.OpSelectionMerge:
                         var selectionMerge = (SelectionMerge)node;
                         visitedNodes.Add(selectionMerge.MergeBlock);
-                        EnsureInputs(instructions, node.GetNext());
-                        AddInstructionToBlock(instructions, node);
+                        EnsureInputs(instructions, node.GetNext(), visitedNodes);
+                        AddInstructionToBlock(instructions, node, visitedNodes);
                         AddBlock(instructions, node.GetNext(), visitedNodes);
                         node = selectionMerge.MergeBlock;
                         break;
                     default:
-                        AddInstructionToBlock(instructions, node);
+                        AddInstructionToBlock(instructions, node, visitedNodes);
                         node = node.GetNext();
                         break;
                 }
             }
         }
 
-        private void AddInstructionToBlock(List<Instruction> instructions, Node node)
+        private void AddInstructionToBlock(List<Instruction> instructions, Node node, HashSet<Node> visitedNodes)
         {
-            var instruction = EnsureInputs(instructions, node);
+            var instruction = EnsureInputs(instructions, node, visitedNodes);
             if (instruction == null)
                 return;
             instructions.Add(instruction);
         }
 
-        private Instruction EnsureInputs(List<Instruction> instructions, Node node)
+        private Instruction EnsureInputs(List<Instruction> instructions, Node node, HashSet<Node> visitedNodes)
         {
             var instruction = Visit(node);
             switch (node.OpCode)
@@ -241,7 +241,12 @@ namespace Toe.SPIRV.Reflection
                 {
                     if (((OpVariable)instruction).StorageClass.Value != StorageClass.Enumerant.Function)
                         return null;
-                    break;
+                    if (!visitedNodes.Contains(node))
+                    {
+                        visitedNodes.Add(node);
+                        instructions.Insert(1, instruction);
+                    }
+                    return null;
                 }
             }
             foreach (var input in node.InputPins)
@@ -249,7 +254,11 @@ namespace Toe.SPIRV.Reflection
                 var inputNode = input.ConnectedPin?.Node;
                 if (inputNode != null)
                 {
-                    AddInstructionToBlock(instructions, inputNode);
+                    if (!visitedNodes.Contains(inputNode))
+                    {
+                        AddInstructionToBlock(instructions, inputNode, visitedNodes);
+                        visitedNodes.Add(inputNode);
+                    }
                 }
             }
 

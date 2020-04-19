@@ -6,6 +6,13 @@ namespace Toe.SPIRV.UnitTests
     {
         public static IEnumerable<object[]> EnumerateShaders()
         {
+            var emptyFragmentShader = @"
+#version 450
+layout(location = 0) out vec4 fsout_color;
+
+void main()
+{
+}";
             // ----------------------------------------
             // Simple empty shader
             yield return new[]
@@ -15,13 +22,7 @@ namespace Toe.SPIRV.UnitTests
 void main()
 {
 }",
-                @"
-#version 450
-layout(location = 0) out vec4 fsout_color;
-
-void main()
-{
-}",
+                emptyFragmentShader
             };
             // ----------------------------------------
             // Simple shader
@@ -43,7 +44,7 @@ void main()
 }",
             };
             // ----------------------------------------
-            // Simple shader with if statement
+            // Simple shader with full if statement
             yield return new[]
             {
                 @"
@@ -57,15 +58,26 @@ void main()
     else
         gl_Position = position+vec4(1,1,1,1);
 }",
+                emptyFragmentShader,
+            };
+
+            // ----------------------------------------
+            // Simple shader with half if statement
+            yield return new[]
+            {
                 @"
 #version 450
-layout(location = 0) out vec4 fsout_color;
+layout(location = 0) in vec4 position;
 
 void main()
 {
-    fsout_color = vec4(0,0,0,0);
+    gl_Position = position;
+    if (position.x>0)
+        gl_Position = position+vec4(1,1,1,1);
 }",
+                emptyFragmentShader,
             };
+
             // ----------------------------------------
             // Simple shader with loop
             yield return new[]
@@ -82,15 +94,31 @@ void main()
     }
     gl_Position = vec4(x);
 }",
+                emptyFragmentShader
+            };
+
+            // ----------------------------------------
+            // Simple shader with loop that breakes on condition
+            yield return new[]
+            {
                 @"
 #version 450
-layout(location = 0) out vec4 fsout_color;
-
+layout(location = 0) in int Attr;
 void main()
 {
-    fsout_color = vec4(0,0,0,0);
+    float x = 1.1;
+    for (int i=0; i<Attr;++i)
+    {
+        if (x > 10)
+            break;
+        x *= x;
+        continue;
+    }
+    gl_Position = vec4(x);
 }",
+                emptyFragmentShader
             };
+
             // ----------------------------------------
             // Simple shader with switch
             yield return new[]
@@ -113,14 +141,7 @@ void main()
             break;
     }
 }",
-                @"
-#version 450
-layout(location = 0) out vec4 fsout_color;
-
-void main()
-{
-    fsout_color = vec4(0,0,0,0);
-}",
+                emptyFragmentShader,
             };
         }
     }

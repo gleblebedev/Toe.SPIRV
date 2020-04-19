@@ -57,6 +57,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NodeVisitor.cs</LastGenOutput>
     </None>
+    <None Update="Views\SpirvInstructionsBuilderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SpirvInstructionsBuilderTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Views\TypeTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>TypeTemplate.cs</LastGenOutput>
@@ -112,6 +116,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>NodeVisitor.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SpirvInstructionsBuilderTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SpirvInstructionsBuilderTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Views\TypeTemplate.cs">
       <DesignTime>True</DesignTime>

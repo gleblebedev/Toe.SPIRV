@@ -321,7 +321,7 @@ namespace Toe.SPIRV.Reflection
             {
                 if (op.TryGetResultId(out var id))
                 {
-                    var d = _decorations.GetRef(id);
+                    ref var d = ref _decorations.GetRef(id);
                     node.DebugName = d.Name?.Value;
                     _nodeMap.Add(id, node);
                 }

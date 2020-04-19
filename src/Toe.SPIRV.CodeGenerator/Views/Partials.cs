@@ -122,6 +122,16 @@ namespace Toe.SPIRV.CodeGenerator.Views
         }
     }
 
+    public partial class SpirvInstructionsBuilderTemplate
+    {
+        private readonly SpirvInstructions _grammar;
+
+        public SpirvInstructionsBuilderTemplate(SpirvInstructions grammar)
+        {
+            _grammar = grammar;
+        }
+    }
+
     public partial class NodeVisitor
     {
         private readonly SpirvInstructions _grammar;

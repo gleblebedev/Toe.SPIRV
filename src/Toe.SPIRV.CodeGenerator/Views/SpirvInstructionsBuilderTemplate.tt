@@ -1,0 +1,273 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
+using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection
+{
+    public abstract class SpirvInstructionsBuilderBase
+    {
+        protected readonly List<InstructionWithId> _results = new List<InstructionWithId>();
+
+        protected readonly Dictionary<Node, Instruction> _instructionMap = new Dictionary<Node, Instruction>();
+
+        protected virtual Instruction Visit(Node node)
+        {
+            if (node == null) return null;
+            if (_instructionMap.TryGetValue(node, out var instruction)) return instruction;
+            switch (node.OpCode)
+            {
+<#
+foreach (var codeAndInstruction in _grammar.Instructions)
+{
+    var instruction = codeAndInstruction.Value;
+    switch (instruction.Kind)
+    {
+        case InstructionKind.Other:
+        {
+#>
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((Nodes.<#=instruction.Name.Substring(2)#>) node);
+<#
+            break;
+        }
+        case InstructionKind.Type:
+        {
+#>
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((Types.<#=instruction.Name.Substring(2)#>)node);
+<#
+            break;
+        }
+        case InstructionKind.Function:
+        case InstructionKind.Executable:
+        {
+#>
+                case Op.<#=instruction.Name#>: return Visit<#=instruction.Name.Substring(2)#>((<#=instruction.Name.Substring(2)#>) node);
+<#
+            break;
+        }
+    }
+}
+#>
+            }
+
+            throw new NotImplementedException(node.OpCode + " not implemented yet.");
+        }
+        
+        protected void VisitDecorations(Node node)
+        {
+            foreach (var decoration in node.BuildDecorations())
+            {
+                Visit(decoration);
+            }
+        }
+
+        protected virtual string Visit(string instruction)
+        {
+            return instruction;
+        }
+
+        protected virtual uint Visit(uint instruction)
+        {
+            return instruction;
+        }
+
+        protected virtual IList<uint> Visit(IList<uint> instructions)
+        {
+            return instructions;
+        }
+
+        protected virtual LiteralContextDependentNumber Visit(Operands.NumberLiteral instruction)
+        {
+            return instruction.ToLiteral(Visit);
+        }
+
+        protected virtual PairIdRefIdRef Visit(Operands.PairNodeNode instruction)
+        {
+            return new PairIdRefIdRef(){ IdRef = Visit(instruction.Node), IdRef2 = Visit(instruction.Node2) };
+        }
+
+        protected virtual Spv.PairLiteralIntegerIdRef Visit(Operands.PairLiteralIntegerNode operand)
+        {
+            return new Spv.PairLiteralIntegerIdRef()
+                {IdRef = Visit(operand.Node), LiteralInteger = operand.LiteralInteger};
+        }
+        
+        protected virtual Spv.PairIdRefLiteralInteger Visit(Operands.PairNodeLiteralInteger operand)
+        {
+            return new Spv.PairIdRefLiteralInteger()
+                { IdRef = Visit(operand.Node), LiteralInteger = operand.LiteralInteger };
+        }
+
+        protected virtual LiteralContextDependentNumber Visit(LiteralContextDependentNumber instruction)
+        {
+            return instruction;
+        }
+
+        protected virtual IList<IdRef> Visit(IList<Node> instructions)
+        {
+            if (instructions == null)
+                return null;
+            return instructions.Select(_ => (IdRef)Visit(_)).ToList();
+        }
+
+<#
+foreach (var codeAndOperand in _grammar.OperandKinds)
+{
+    switch (codeAndOperand.Value.Category)
+    {
+        case SpirvOperandCategory.Id:
+        case SpirvOperandCategory.Literal:
+            break;
+        case SpirvOperandCategory.Composite:
+        {
+            string operandTypeName;
+            switch (codeAndOperand.Value.Kind)
+            {
+                case SpirvOperandKind.PairLiteralIntegerIdRef:
+                    operandTypeName = "Operands.PairLiteralIntegerNode";
+                    break;
+                case SpirvOperandKind.PairIdRefLiteralInteger:
+                    operandTypeName = "Operands.PairNodeLiteralInteger";
+                    break;
+                case SpirvOperandKind.PairIdRefIdRef:
+                    operandTypeName = "Operands.PairNodeNode";
+                    break;
+                default:
+                    operandTypeName = "Spv."+codeAndOperand.Value.Kind.ToString();
+                    break;
+            }
+#>
+        protected virtual IList<Spv.<#=codeAndOperand.Value.Kind#>> Visit(IList<<#=operandTypeName#>> operand)
+        {
+            var res = new Spv.<#=codeAndOperand.Value.Kind#>[operand.Count];
+            for (int i=0; i<operand.Count; ++i)
+            {
+                res[i] = Visit(operand[i]);
+            }
+            return res;
+        }
+<#
+            break;
+        }
+        default:
+        {
+#>
+        protected virtual Spv.<#=codeAndOperand.Value.Kind#> Visit(Spv.<#=codeAndOperand.Value.Kind#> operand)
+        {
+            return operand;
+        }
+<#
+            break;
+        }
+    }
+}
+foreach (var codeAndInstruction in _grammar.Instructions)
+{
+    var instruction = codeAndInstruction.Value;
+    switch (instruction.Kind)
+    {
+        case InstructionKind.Type:
+        {
+#>
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(Types.<#=instruction.Name.Substring(2)#> node)
+        {
+            var instruction = new <#=instruction.Name#>();
+            _instructionMap.Add(node, instruction);
+<#
+    if (instruction.IdResult != null)
+    {
+#>
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            VisitDecorations(node);
+<#
+    }
+    if (!ViewUtils.IsCustomType(instruction.Name))
+    {
+        foreach (var operand in instruction.Operands)
+        {
+            if (operand.Quantifier == SpirvOperandQuantifier.Repeated)
+            {
+#>
+            instruction.<#=operand.Name#> = node.<#=operand.Name#>.Select(_=>Visit(_)).ToList();
+<#
+            }
+            else
+            {
+#>
+            instruction.<#=operand.Name#> = Visit(node.<#=operand.Name#>);
+<#
+            }
+        }
+    }
+    else
+    {
+#>
+            //This type should be handled manually. See SpirvInstructionsBuilder.Visit<#=instruction.Name.Substring(2)#> for details.
+<#
+    }
+#>
+            return instruction;
+        }
+<#
+            break;
+        }
+        case InstructionKind.Function:
+        case InstructionKind.Executable:
+        case InstructionKind.Other:
+        {
+#>
+        protected virtual <#=instruction.Name#> Visit<#=instruction.Name.Substring(2)#>(Nodes.<#=instruction.Name.Substring(2)#> node)
+        {
+            var instruction = new <#=instruction.Name#>();
+            _instructionMap.Add(node, instruction);
+
+<#
+    if (instruction.IdResult != null)
+    {
+#>
+            instruction.IdResult = (uint)_results.Count;
+            _results.Add(instruction);
+            VisitDecorations(node);
+<#
+    }
+    if (instruction.IdResultType != null)
+    {
+#>
+            instruction.IdResultType = Visit(node.ResultType);
+
+<#
+    }
+    foreach (var operand in instruction.Operands)
+    {
+#>
+            instruction.<#=operand.Name#> = Visit(node.<#=operand.Name#>);
+<#
+    }
+    if (instruction.HasDefaultExit)
+    {
+#>
+            Visit(node.Next);
+
+<#
+    }
+#>
+            return instruction;
+        }
+<#
+            break;
+        }
+    }
+}
+#>
+    }
+}

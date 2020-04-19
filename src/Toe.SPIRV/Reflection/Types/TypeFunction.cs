@@ -15,6 +15,16 @@ namespace Toe.SPIRV.Reflection.Types
 
         public IList<TypeFunctionArgument> Arguments { get; } = new List<TypeFunctionArgument>();
 
+        public IEnumerable<SpirvTypeBase> ParameterTypes
+        {
+            get
+            {
+                foreach (var argument in Arguments)
+                {
+                    yield return argument.Type;
+                }
+            }
+        }
         public override string ToString()
         {
             return DebugName ?? base.ToString();
