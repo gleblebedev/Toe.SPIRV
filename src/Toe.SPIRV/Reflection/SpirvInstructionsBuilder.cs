@@ -140,13 +140,13 @@ namespace Toe.SPIRV.Reflection
             var visitFunction = base.VisitFunction(node);
             var instructions = new List<Instruction>();
             instructions.Add(visitFunction);
-            AddBlock(instructions, node.Next);
+            AddBlock(instructions, node.Next, new HashSet<Node>());
             instructions.Add(new OpFunctionEnd());
             _functions.Add(instructions);
             return visitFunction;
         }
 
-        private void AddBlock(List<Instruction> instructions, ExecutableNode node, Label mergeLabel = null, Label continueLabel = null)
+        private void AddBlock(List<Instruction> instructions, ExecutableNode node, HashSet<Node> visitedNodes)
         {
             //var block = new InstructionBlock()
             //{
@@ -161,53 +161,51 @@ namespace Toe.SPIRV.Reflection
                     case Op.OpBranch:
                         AddInstructionToBlock(instructions, node);
                         var branch = ((Branch)node);
-                        if (branch.TargetLabel == mergeLabel || branch.TargetLabel == continueLabel)
+                        if (visitedNodes.Contains(branch.TargetLabel))
                             return;
                         node = branch.TargetLabel;
                         break;
                     case Op.OpBranchConditional:
                         var branchConditional = (BranchConditional) node;
                         instructions.Add(Visit(node));
-                        if (branchConditional.TrueLabel != mergeLabel && branchConditional.TrueLabel != continueLabel)
-                            AddBlock(instructions, branchConditional.TrueLabel, mergeLabel, continueLabel);
-                        if (branchConditional.FalseLabel != mergeLabel && branchConditional.FalseLabel != continueLabel)
-                            AddBlock(instructions, branchConditional.FalseLabel, mergeLabel, continueLabel);
+                        if (!visitedNodes.Contains(branchConditional.TrueLabel))
+                            AddBlock(instructions, branchConditional.TrueLabel, visitedNodes);
+                        if (!visitedNodes.Contains(branchConditional.FalseLabel))
+                            AddBlock(instructions, branchConditional.FalseLabel, visitedNodes);
                         return;
                     case Op.OpLabel:
-                        var label = (Label) node;
-                        if (label.Next.OpCode == Op.OpLoopMerge)
-                        {
-                            AddInstructionToBlock(instructions, node);
-                            var loopMerge = (LoopMerge)label.Next;
-                            AddInstructionToBlock(instructions, loopMerge);
-                            AddBlock(instructions, loopMerge.GetNext(), loopMerge.MergeBlock, (Label)loopMerge.ContinueTarget);
-                            AddBlock(instructions, (Label)loopMerge.ContinueTarget, loopMerge.MergeBlock, label);
-                            node = loopMerge.MergeBlock;
-                        }
-                        else
-                        {
-                            AddInstructionToBlock(instructions, node);
-                            node = node.GetNext();
-                        }
+                        visitedNodes.Add(node);
+                        AddInstructionToBlock(instructions, node);
+                        node = node.GetNext();
                         break;
                     case Op.OpLoopMerge:
-                        throw new InvalidOperationException("OpLoopMerge should follow OpLabel");
+                        var loopMerge = (LoopMerge)node;
+                        AddInstructionToBlock(instructions, loopMerge);
+                        visitedNodes.Add(loopMerge.GetNext());
+                        visitedNodes.Add(loopMerge.ContinueTarget);
+                        visitedNodes.Add(loopMerge.MergeBlock);
+                        //Add body
+                        AddBlock(instructions, loopMerge.GetNext(), visitedNodes);
+                        AddBlock(instructions, (Label)loopMerge.ContinueTarget, visitedNodes);
+                        node = loopMerge.MergeBlock;
+                        break;
                     case Op.OpSwitch:
                         var switchNode = (Switch)node;
                         instructions.Add(Visit(node));
                         foreach (var target in switchNode.Target)
                         {
-                            if (target.Node != mergeLabel && target.Node != continueLabel)
-                                AddBlock(instructions, (ExecutableNode)target.Node, mergeLabel, continueLabel);
+                            if (!visitedNodes.Contains(target.Node))
+                                AddBlock(instructions, (ExecutableNode)target.Node, visitedNodes);
                         }
-                        if (switchNode.Default != mergeLabel && switchNode.Default != continueLabel)
-                            AddBlock(instructions, (ExecutableNode)switchNode.Default, mergeLabel, continueLabel);
+                        if (!visitedNodes.Contains(switchNode.Default))
+                            AddBlock(instructions, (ExecutableNode)switchNode.Default, visitedNodes);
                         return;
                     case Op.OpSelectionMerge:
+                        var selectionMerge = (SelectionMerge)node;
+                        visitedNodes.Add(selectionMerge.MergeBlock);
                         EnsureInputs(instructions, node.GetNext());
                         AddInstructionToBlock(instructions, node);
-                        var selectionMerge = (SelectionMerge)node;
-                        AddBlock(instructions, node.GetNext(), selectionMerge.MergeBlock);
+                        AddBlock(instructions, node.GetNext(), visitedNodes);
                         node = selectionMerge.MergeBlock;
                         break;
                     default:
