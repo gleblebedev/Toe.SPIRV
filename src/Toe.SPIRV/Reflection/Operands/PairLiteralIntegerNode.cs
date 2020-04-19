@@ -1,4 +1,6 @@
-﻿namespace Toe.SPIRV.Reflection.Operands
+﻿using Toe.SPIRV.Spv;
+
+namespace Toe.SPIRV.Reflection.Operands
 {
     public struct PairLiteralIntegerNode
     {
@@ -13,7 +15,7 @@
 
         public override string ToString()
         {
-            return $"case {LiteralInteger}: {Node}";
+            return $"{LiteralInteger}: {Node}";
         }
     }
 }

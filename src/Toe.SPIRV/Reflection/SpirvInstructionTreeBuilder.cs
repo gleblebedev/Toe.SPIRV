@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Operands;
 using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Capability = Toe.SPIRV.Reflection.Nodes.Capability;
@@ -63,6 +64,20 @@ namespace Toe.SPIRV.Reflection
         public SpirvTypeBase ResolveType(uint id)
         {
             return _nodeMap[id] as SpirvTypeBase;
+        }
+
+        public PairLiteralIntegerNode Parse(PairLiteralIntegerIdRef item)
+        {
+            return new PairLiteralIntegerNode(item.LiteralInteger, _nodeMap[item.IdRef]);
+        }
+        public PairNodeNode Parse(PairIdRefIdRef item)
+        {
+            return new PairNodeNode(_nodeMap[item.IdRef], _nodeMap[item.IdRef2]);
+        }
+
+        public uint Parse(uint item)
+        {
+            return item;
         }
 
         public void AddType(InstructionWithId instruction, SpirvTypeBase type)
@@ -128,14 +143,6 @@ namespace Toe.SPIRV.Reflection
             }
         }
 
-        public void ParseArray(OpTypeArray instruction)
-        {
-            var array = new TypeArray();
-            array.SetUp(instruction, this);
-            AddType(instruction, array);
-        }
-
-
         public void ParseMatrix(OpTypeMatrix instruction)
         {
             var columnType = ResolveType(instruction.ColumnType);
@@ -150,27 +157,6 @@ namespace Toe.SPIRV.Reflection
             var instructionComponentCount = instruction.ComponentCount;
             var vector = SpirvTypeBase.ResolveVector(componentType, instructionComponentCount);
             AddType(instruction, vector);
-        }
-
-        public void ParseStructure(OpTypeStruct instruction)
-        {
-            var structure = new TypeStruct();
-            structure.SetUp(instruction, this);
-            AddType(instruction, structure);
-        }
-
-        public void ParseFunction(OpTypeFunction instruction)
-        {
-            var function = new TypeFunction();
-            function.SetUp(instruction, this);
-            AddType(instruction, function);
-        }
-
-        public void ParsePointer(OpTypePointer instruction)
-        {
-            var function = new TypePointer();
-            function.SetUp(instruction, this);
-            AddType(instruction, function);
         }
 
         public Node GetNode(IdRef id)
@@ -354,6 +340,11 @@ namespace Toe.SPIRV.Reflection
             }
 
             return node;
+        }
+
+        public PairNodeLiteralInteger Parse(PairIdRefLiteralInteger item)
+        {
+            return new PairNodeLiteralInteger(_nodeMap[item.IdRef], item.LiteralInteger);
         }
     }
 }

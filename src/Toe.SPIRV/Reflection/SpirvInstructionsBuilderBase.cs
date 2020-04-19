@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Reflection.Types;
@@ -595,6 +596,28 @@ namespace Toe.SPIRV.Reflection
             return instructions;
         }
 
+        protected virtual LiteralContextDependentNumber Visit(Operands.NumberLiteral instruction)
+        {
+            return instruction.ToLiteral(Visit);
+        }
+
+        protected virtual PairIdRefIdRef Visit(Operands.PairNodeNode instruction)
+        {
+            return new PairIdRefIdRef(){ IdRef = Visit(instruction.Node), IdRef2 = Visit(instruction.Node2) };
+        }
+
+        protected virtual Spv.PairLiteralIntegerIdRef Visit(Operands.PairLiteralIntegerNode operand)
+        {
+            return new Spv.PairLiteralIntegerIdRef()
+                {IdRef = Visit(operand.Node), LiteralInteger = operand.LiteralInteger};
+        }
+        
+        protected virtual Spv.PairIdRefLiteralInteger Visit(Operands.PairNodeLiteralInteger operand)
+        {
+            return new Spv.PairIdRefLiteralInteger()
+                { IdRef = Visit(operand.Node), LiteralInteger = operand.LiteralInteger };
+        }
+
         protected virtual LiteralContextDependentNumber Visit(LiteralContextDependentNumber instruction)
         {
             return instruction;
@@ -743,17 +766,32 @@ namespace Toe.SPIRV.Reflection
         {
             return operand;
         }
-        protected virtual IList<Spv.PairLiteralIntegerIdRef> Visit(IList<Spv.PairLiteralIntegerIdRef> operand)
+        protected virtual IList<Spv.PairLiteralIntegerIdRef> Visit(IList<Operands.PairLiteralIntegerNode> operand)
         {
-            return operand;
+            var res = new Spv.PairLiteralIntegerIdRef[operand.Count];
+            for (int i=0; i<operand.Count; ++i)
+            {
+                res[i] = Visit(operand[i]);
+            }
+            return res;
         }
-        protected virtual IList<Spv.PairIdRefLiteralInteger> Visit(IList<Spv.PairIdRefLiteralInteger> operand)
+        protected virtual IList<Spv.PairIdRefLiteralInteger> Visit(IList<Operands.PairNodeLiteralInteger> operand)
         {
-            return operand;
+            var res = new Spv.PairIdRefLiteralInteger[operand.Count];
+            for (int i=0; i<operand.Count; ++i)
+            {
+                res[i] = Visit(operand[i]);
+            }
+            return res;
         }
-        protected virtual IList<Spv.PairIdRefIdRef> Visit(IList<Spv.PairIdRefIdRef> operand)
+        protected virtual IList<Spv.PairIdRefIdRef> Visit(IList<Operands.PairNodeNode> operand)
         {
-            return operand;
+            var res = new Spv.PairIdRefIdRef[operand.Count];
+            for (int i=0; i<operand.Count; ++i)
+            {
+                res[i] = Visit(operand[i]);
+            }
+            return res;
         }
         protected virtual OpNop VisitNop(Nodes.Nop node)
         {

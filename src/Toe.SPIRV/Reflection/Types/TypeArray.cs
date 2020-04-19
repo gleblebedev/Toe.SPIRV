@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Operands;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Types
@@ -31,7 +32,7 @@ namespace Toe.SPIRV.Reflection.Types
             get { return _arrayStride.HasValue; }
         }
 
-        public uint Length { get; set; }
+        public NumberLiteral Length { get; set; }
 
         public SpirvTypeBase ElementType { get; set; }
 

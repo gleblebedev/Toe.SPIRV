@@ -18,7 +18,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Node Vector1 { get; set; }
         public Node Vector2 { get; set; }
-        public IList<uint> Components { get; set; }
+        public IList<uint> Components { get; } = new List<uint>();
         public SpirvTypeBase ResultType { get; set; }
 
         public bool RelaxedPrecision { get; set; }
@@ -65,7 +65,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Vector1 = treeBuilder.GetNode(op.Vector1);
             Vector2 = treeBuilder.GetNode(op.Vector2);
-            Components = op.Components;
+            foreach (var item in op.Components) { Components.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
         }
     }

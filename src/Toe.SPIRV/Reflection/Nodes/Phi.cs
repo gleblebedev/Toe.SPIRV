@@ -16,7 +16,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public override Op OpCode => Op.OpPhi;
 
 
-        public IList<Spv.PairIdRefIdRef> VariableParent { get; set; }
+        public IList<Operands.PairNodeNode> VariableParent { get; } = new List<Operands.PairNodeNode>();
         public SpirvTypeBase ResultType { get; set; }
 
         public bool RelaxedPrecision { get; set; }
@@ -52,7 +52,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpPhi op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
-            VariableParent = op.VariableParent;
+            foreach (var item in op.VariableParent) { VariableParent.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
         }
     }

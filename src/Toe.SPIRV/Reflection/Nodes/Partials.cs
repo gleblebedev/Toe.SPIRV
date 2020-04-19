@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Operands;
 using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
@@ -10,7 +11,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class Constant
     {
-        public Constant(SpirvTypeBase type, LiteralContextDependentNumber value)
+        public Constant(SpirvTypeBase type, NumberLiteral value)
         {
             ResultType = type;
             Value = value;

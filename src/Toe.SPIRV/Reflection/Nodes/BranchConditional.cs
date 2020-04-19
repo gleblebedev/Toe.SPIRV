@@ -19,7 +19,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node Condition { get; set; }
         public Label TrueLabel { get; set; }
         public Label FalseLabel { get; set; }
-        public IList<uint> Branchweights { get; set; }
+        public IList<uint> Branchweights { get; } = new List<uint>();
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -65,7 +65,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Condition = treeBuilder.GetNode(op.Condition);
             TrueLabel = (Label)treeBuilder.GetNode(op.TrueLabel);
             FalseLabel = (Label)treeBuilder.GetNode(op.FalseLabel);
-            Branchweights = op.Branchweights;
+            foreach (var item in op.Branchweights) { Branchweights.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
         }
     }

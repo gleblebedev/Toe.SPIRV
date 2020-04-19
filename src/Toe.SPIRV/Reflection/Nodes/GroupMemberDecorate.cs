@@ -17,7 +17,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
 
         public Node DecorationGroup { get; set; }
-        public IList<Spv.PairIdRefLiteralInteger> Targets { get; set; }
+        public IList<Operands.PairNodeLiteralInteger> Targets { get; } = new List<Operands.PairNodeLiteralInteger>();
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -52,7 +52,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpGroupMemberDecorate op, SpirvInstructionTreeBuilder treeBuilder)
         {
             DecorationGroup = treeBuilder.GetNode(op.DecorationGroup);
-            Targets = op.Targets;
+            foreach (var item in op.Targets) { Targets.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
         }
     }

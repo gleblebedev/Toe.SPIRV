@@ -17,7 +17,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
 
         public Node Composite { get; set; }
-        public IList<uint> Indexes { get; set; }
+        public IList<uint> Indexes { get; } = new List<uint>();
         public SpirvTypeBase ResultType { get; set; }
 
         public bool RelaxedPrecision { get; set; }
@@ -62,7 +62,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Composite = treeBuilder.GetNode(op.Composite);
-            Indexes = op.Indexes;
+            foreach (var item in op.Indexes) { Indexes.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
         }
     }

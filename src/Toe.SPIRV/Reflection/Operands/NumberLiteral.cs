@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Operands
 {
     [StructLayout(LayoutKind.Explicit)]
-    public struct LiteralContextDependentNumber : IEquatable<LiteralContextDependentNumber>
+    public struct NumberLiteral : IEquatable<NumberLiteral>
     {
-        public bool Equals(LiteralContextDependentNumber other)
+        public bool Equals(NumberLiteral other)
         {
             return _type == other._type && _doubleValue.Equals(other._doubleValue);
         }
 
         public override bool Equals(object obj)
         {
-            return obj is LiteralContextDependentNumber other && Equals(other);
+            return obj is NumberLiteral other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -26,17 +28,17 @@ namespace Toe.SPIRV.Reflection.Operands
             }
         }
 
-        public static bool operator ==(LiteralContextDependentNumber left, LiteralContextDependentNumber right)
+        public static bool operator ==(NumberLiteral left, NumberLiteral right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(LiteralContextDependentNumber left, LiteralContextDependentNumber right)
+        public static bool operator !=(NumberLiteral left, NumberLiteral right)
         {
             return !left.Equals(right);
         }
 
-        public static readonly LiteralContextDependentNumber Undef;
+        public static readonly NumberLiteral Undef;
 
         private const int DataOffset = 0;
         private const int TypeOffset = sizeof(double);
@@ -55,6 +57,28 @@ namespace Toe.SPIRV.Reflection.Operands
         [FieldOffset(DataOffset)] private float _floatValue;
         [FieldOffset(DataOffset)] private int _intValue;
         [FieldOffset(DataOffset)] private uint _uintValue;
+
+        public SpirvTypeBase Type
+        {
+            get
+            {
+                switch (_type)
+                {
+                    case ValueType.Zero:
+                        return null;
+                    case ValueType.Float:
+                        return SpirvTypeBase.Float;
+                    case ValueType.Double:
+                        return SpirvTypeBase.Double;
+                    case ValueType.Int:
+                        return SpirvTypeBase.Int;
+                    case ValueType.UInt:
+                        return SpirvTypeBase.UInt;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
 
         public override string ToString()
         {
@@ -75,42 +99,42 @@ namespace Toe.SPIRV.Reflection.Operands
             }
         }
 
-        public static implicit operator LiteralContextDependentNumber(double value)
+        public static implicit operator NumberLiteral(double value)
         {
-            var res = new LiteralContextDependentNumber();
+            var res = new NumberLiteral();
             res._type = ValueType.Double;
             res._doubleValue = value;
             return res;
         }
 
-        public static implicit operator LiteralContextDependentNumber(float value)
+        public static implicit operator NumberLiteral(float value)
         {
-            var res = new LiteralContextDependentNumber();
+            var res = new NumberLiteral();
             res._type = ValueType.Float;
             res._floatValue = value;
             return res;
         }
 
-        public static implicit operator LiteralContextDependentNumber(int value)
+        public static implicit operator NumberLiteral(int value)
         {
-            var res = new LiteralContextDependentNumber();
+            var res = new NumberLiteral();
             res._type = ValueType.Int;
             res._intValue = value;
             return res;
         }
 
-        public static implicit operator LiteralContextDependentNumber(uint value)
+        public static implicit operator NumberLiteral(uint value)
         {
-            var res = new LiteralContextDependentNumber();
+            var res = new NumberLiteral();
             res._type = ValueType.UInt;
             res._uintValue = value;
             return res;
         }
 
-        public static implicit operator LiteralContextDependentNumber(Spv.LiteralContextDependentNumber value)
+        public static implicit operator NumberLiteral(Spv.LiteralContextDependentNumber value)
         {
             var val = value?.Value;
-            if (val?.Type == null) return LiteralContextDependentNumber.Undef;
+            if (val?.Type == null) return NumberLiteral.Undef;
             var type = val.Type;
             switch (type.OpCode)
             {
@@ -144,7 +168,7 @@ namespace Toe.SPIRV.Reflection.Operands
             }
         }
 
-        public static implicit operator double(LiteralContextDependentNumber value)
+        public static implicit operator double(NumberLiteral value)
         {
             switch (value._type)
             {
@@ -163,7 +187,7 @@ namespace Toe.SPIRV.Reflection.Operands
             }
         }
 
-        public static implicit operator float(LiteralContextDependentNumber value)
+        public static implicit operator float(NumberLiteral value)
         {
             switch (value._type)
             {
@@ -181,8 +205,11 @@ namespace Toe.SPIRV.Reflection.Operands
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        public static implicit operator int(LiteralContextDependentNumber value)
+        public static implicit operator Constant(NumberLiteral value)
+        {
+            return new Constant(value.Type, value);
+        }
+        public static implicit operator int(NumberLiteral value)
         {
             switch (value._type)
             {
@@ -201,7 +228,7 @@ namespace Toe.SPIRV.Reflection.Operands
             }
         }
 
-        public static implicit operator uint(LiteralContextDependentNumber value)
+        public static implicit operator uint(NumberLiteral value)
         {
             switch (value._type)
             {
@@ -218,6 +245,31 @@ namespace Toe.SPIRV.Reflection.Operands
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+
+        public static implicit operator byte[](NumberLiteral value)
+        {
+            switch (value._type)
+            {
+                case ValueType.Zero:
+                    return null;
+                case ValueType.Float:
+                    return BitConverter.GetBytes(value._floatValue);
+                case ValueType.Double:
+                    return BitConverter.GetBytes(value._doubleValue);
+                case ValueType.Int:
+                    return BitConverter.GetBytes(value._intValue);
+                case ValueType.UInt:
+                    return BitConverter.GetBytes(value._uintValue);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public LiteralContextDependentNumber ToLiteral(Func<Node,Instruction> typeConverter)
+        {
+            return new LiteralContextDependentNumber(new Value(this, (TypeInstruction)typeConverter(Type)));
         }
     }
 }

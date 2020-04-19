@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Operands;
 using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Capability = Toe.SPIRV.Spv.Capability;
@@ -168,24 +169,39 @@ namespace Toe.SPIRV.Reflection
                         var branchConditional = (BranchConditional) node;
                         instructions.Add(Visit(node));
                         if (branchConditional.TrueLabel != mergeLabel && branchConditional.TrueLabel != continueLabel)
-                            AddBlock(instructions, branchConditional.TrueLabel, mergeLabel);
+                            AddBlock(instructions, branchConditional.TrueLabel, mergeLabel, continueLabel);
                         if (branchConditional.FalseLabel != mergeLabel && branchConditional.FalseLabel != continueLabel)
-                            AddBlock(instructions, branchConditional.FalseLabel, mergeLabel);
+                            AddBlock(instructions, branchConditional.FalseLabel, mergeLabel, continueLabel);
                         return;
-                    case Op.OpLoopMerge:
-                        var loopMerge = (LoopMerge) node;
-                        AddInstructionToBlock(instructions, node);
-                        AddBlock(instructions, node.GetNext(), loopMerge.MergeBlock, (Label)loopMerge.ContinueTarget);
-                        AddBlock(instructions, (Label)loopMerge.ContinueTarget, loopMerge.MergeBlock, null);
-                        node = loopMerge.MergeBlock;
+                    case Op.OpLabel:
+                        var label = (Label) node;
+                        if (label.Next.OpCode == Op.OpLoopMerge)
+                        {
+                            AddInstructionToBlock(instructions, node);
+                            var loopMerge = (LoopMerge)label.Next;
+                            AddInstructionToBlock(instructions, loopMerge);
+                            AddBlock(instructions, loopMerge.GetNext(), loopMerge.MergeBlock, (Label)loopMerge.ContinueTarget);
+                            AddBlock(instructions, (Label)loopMerge.ContinueTarget, loopMerge.MergeBlock, label);
+                            node = loopMerge.MergeBlock;
+                        }
+                        else
+                        {
+                            AddInstructionToBlock(instructions, node);
+                            node = node.GetNext();
+                        }
                         break;
+                    case Op.OpLoopMerge:
+                        throw new InvalidOperationException("OpLoopMerge should follow OpLabel");
                     case Op.OpSwitch:
                         var switchNode = (Switch)node;
                         instructions.Add(Visit(node));
                         foreach (var target in switchNode.Target)
                         {
-                            
+                            if (target.Node != mergeLabel && target.Node != continueLabel)
+                                AddBlock(instructions, (ExecutableNode)target.Node, mergeLabel, continueLabel);
                         }
+                        if (switchNode.Default != mergeLabel && switchNode.Default != continueLabel)
+                            AddBlock(instructions, (ExecutableNode)switchNode.Default, mergeLabel, continueLabel);
                         return;
                     case Op.OpSelectionMerge:
                         EnsureInputs(instructions, node.GetNext());
@@ -489,8 +505,7 @@ namespace Toe.SPIRV.Reflection
         {
             var visitTypeArray = base.VisitTypeArray(node);
             visitTypeArray.ElementType = Visit(node.ElementType);
-            var val = new Value(BitConverter.GetBytes(node.Length), (TypeInstruction)Visit(SpirvTypeBase.UInt));
-            visitTypeArray.Length = Visit(new Constant(SpirvTypeBase.UInt, new LiteralContextDependentNumber(val)));
+            visitTypeArray.Length = Visit(new Constant(SpirvTypeBase.UInt, node.Length.ToLiteral(this.Visit)));
             return Register(visitTypeArray, _typeInstructions);
         }
     }

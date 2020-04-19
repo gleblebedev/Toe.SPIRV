@@ -56,6 +56,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
         public static string GetPropertyType(SpirvOperand op)
         {
             var baseType = GetBasePropertyType(op);
+            switch (baseType)
+            {
+                case "Spv.LiteralContextDependentNumber":
+                    baseType = "Operands.NumberLiteral";
+                    break;
+                case "Spv.PairLiteralIntegerIdRef":
+                    baseType = "Operands.PairLiteralIntegerNode";
+                    break;
+                case "Spv.PairIdRefLiteralInteger":
+                    baseType = "Operands.PairNodeLiteralInteger";
+                    break;
+                case "Spv.PairIdRefIdRef":
+                    baseType = "Operands.PairNodeNode";
+                    break;
+            }
             switch (op.Quantifier)
             {
                 case SpirvOperandQuantifier.Required:

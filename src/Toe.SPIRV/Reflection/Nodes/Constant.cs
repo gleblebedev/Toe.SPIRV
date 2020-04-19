@@ -16,7 +16,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public override Op OpCode => Op.OpConstant;
 
 
-        public Spv.LiteralContextDependentNumber Value { get; set; }
+        public Operands.NumberLiteral Value { get; set; }
         public SpirvTypeBase ResultType { get; set; }
 
         public bool RelaxedPrecision { get; set; }

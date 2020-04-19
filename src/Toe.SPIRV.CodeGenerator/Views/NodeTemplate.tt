@@ -60,10 +60,18 @@ foreach (var op in _instruction.Operands)
 <# 
             break;
         default:
+        if (op.Quantifier == SpirvOperandQuantifier.Repeated)
+        {
+#>
+        public <#=GetPropertyType(op)#> <#=op.Name#> { get; } = new <#=GetPropertyType(op).Replace("IList<","List<")#>();
+<#
+        }
+        else
+        {
 #>
         public <#=GetPropertyType(op)#> <#=op.Name#> { get; set; }
-<# 
-            break;
+<#
+        }            break;
     }
 }
 
@@ -214,9 +222,18 @@ foreach (var op in _instruction.Operands)
 <# 
             break;
         default:
+            if (op.Quantifier == SpirvOperandQuantifier.Repeated)
+            {
+#>
+            foreach (var item in op.<#=op.Name#>) { <#=op.Name#>.Add(treeBuilder.Parse(item)); }
+<#
+            }
+            else
+            {
 #>
             <#=op.Name#> = op.<#=op.Name#>;
-<# 
+<#
+            }
             break;
     }
 }
