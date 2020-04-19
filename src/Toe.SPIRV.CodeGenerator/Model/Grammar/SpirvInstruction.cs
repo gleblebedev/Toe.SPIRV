@@ -17,6 +17,7 @@ namespace Toe.SPIRV.CodeGenerator.Model.Grammar
         public bool LastInstructionInABlock { get; set; }
         public bool HasDefaultEnter { get; set; }
         public bool HasDefaultExit { get; set; }
+        public InstructionClass Class { get; set; } = InstructionClass.Unknown;
 
         public IEnumerable<SpirvOperand> AllOperands()
         {

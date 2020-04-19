@@ -65,10 +65,6 @@ namespace Toe.SPIRV
                 var instruction = InstructionFactory.Parse(reader);
                 shader.Instructions.Add(instruction);
             }
-
-#if DEBUG
-            Debug.WriteLine(shader);
-#endif
             return shader;
         }
 

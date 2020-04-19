@@ -103,6 +103,7 @@ namespace Toe.SPIRV.CodeGenerator
             {
                 Name = instruction.opname,
                 OpCode = instruction.opcode,
+                Class = GetInstructionClass(instruction.@class)
             };
 
             if (instruction.capabilities != null)
@@ -179,6 +180,43 @@ namespace Toe.SPIRV.CodeGenerator
             return spirvInstruction;
         }
 
+        private InstructionClass GetInstructionClass(string instructionClass)
+        {
+            if (string.IsNullOrWhiteSpace(instructionClass))
+                return InstructionClass.Unknown;
+            switch (instructionClass)
+            {
+                case "Miscellaneous": return InstructionClass.Miscellaneous;
+                case "Debug": return InstructionClass.Debug;
+                case "Extension": return InstructionClass.Extension;
+                case "Mode-Setting": return InstructionClass.ModeSetting;
+                case "Type-Declaration": return InstructionClass.TypeDeclaration;
+                case "Constant-Creation": return InstructionClass.ConstantCreation;
+                case "Function": return InstructionClass.Function;
+                case "Memory": return InstructionClass.Memory;
+                case "Annotation": return InstructionClass.Annotation;
+                case "Composite": return InstructionClass.Composite;
+                case "Image": return InstructionClass.Image;
+                case "Conversion": return InstructionClass.Conversion;
+                case "Arithmetic": return InstructionClass.Arithmetic;
+                case "Relational_and_Logical": return InstructionClass.Relational_and_Logical;
+                case "Bit": return InstructionClass.Bit;
+                case "Derivative": return InstructionClass.Derivative;
+                case "Primitive": return InstructionClass.Primitive;
+                case "Barrier": return InstructionClass.Barrier;
+                case "Atomic": return InstructionClass.Atomic;
+                case "Control-Flow": return InstructionClass.ControlFlow;
+                case "Group": return InstructionClass.Group;
+                case "Pipe": return InstructionClass.Pipe;
+                case "Device-Side_Enqueue": return InstructionClass.DeviceSide_Enqueue;
+                case "Non-Uniform": return InstructionClass.NonUniform;
+                case "Reserved": return InstructionClass.Reserved;
+                case "@exclude": return InstructionClass.@exclude;
+                default:
+                    throw new NotImplementedException("Instruction class "+instructionClass+" not implemented");
+            }
+        }
+
         private InstructionKind EvaluateInstructionKind(SpirvInstruction spirvInstruction)
         {
             if (spirvInstruction.LastInstructionInABlock)
@@ -191,7 +229,11 @@ namespace Toe.SPIRV.CodeGenerator
                 return InstructionKind.Executable;
             if (spirvInstruction.IdResultType != null)
                 return InstructionKind.Function;
+            if (spirvInstruction.Name == "OpDecorate")
+                return InstructionKind.Other;
             if (spirvInstruction.OpCode <= 40)
+                return InstructionKind.Other;
+            if (spirvInstruction.Class == InstructionClass.Annotation)
                 return InstructionKind.Other;
             return InstructionKind.Executable;
         }
@@ -237,6 +279,7 @@ namespace Toe.SPIRV.CodeGenerator
                         if (spirvOperand.Name == "MergeBlock")
                         {
                             spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpLabel";
                             return;
                         }
                         break;
@@ -244,6 +287,7 @@ namespace Toe.SPIRV.CodeGenerator
                         if (spirvOperand.Name == "MergeBlock")
                         {
                             spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpLabel";
                             return;
                         }
                         if (spirvOperand.Name == "ContinueTarget")
@@ -295,6 +339,7 @@ namespace Toe.SPIRV.CodeGenerator
                         if (spirvOperand.Name == "Target")
                         {
                             spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpNode";
                             return;
                         }
                         break;

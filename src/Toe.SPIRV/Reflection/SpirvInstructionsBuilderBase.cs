@@ -84,11 +84,11 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpArrayLength: return VisitArrayLength((ArrayLength) node);
                 case Op.OpGenericPtrMemSemantics: return VisitGenericPtrMemSemantics((GenericPtrMemSemantics) node);
                 case Op.OpInBoundsPtrAccessChain: return VisitInBoundsPtrAccessChain((InBoundsPtrAccessChain) node);
-                case Op.OpDecorate: return VisitDecorate((Decorate) node);
-                case Op.OpMemberDecorate: return VisitMemberDecorate((MemberDecorate) node);
-                case Op.OpDecorationGroup: return VisitDecorationGroup((DecorationGroup) node);
-                case Op.OpGroupDecorate: return VisitGroupDecorate((GroupDecorate) node);
-                case Op.OpGroupMemberDecorate: return VisitGroupMemberDecorate((GroupMemberDecorate) node);
+                case Op.OpDecorate: return VisitDecorate((Nodes.Decorate) node);
+                case Op.OpMemberDecorate: return VisitMemberDecorate((Nodes.MemberDecorate) node);
+                case Op.OpDecorationGroup: return VisitDecorationGroup((Nodes.DecorationGroup) node);
+                case Op.OpGroupDecorate: return VisitGroupDecorate((Nodes.GroupDecorate) node);
+                case Op.OpGroupMemberDecorate: return VisitGroupMemberDecorate((Nodes.GroupMemberDecorate) node);
                 case Op.OpVectorExtractDynamic: return VisitVectorExtractDynamic((VectorExtractDynamic) node);
                 case Op.OpVectorInsertDynamic: return VisitVectorInsertDynamic((VectorInsertDynamic) node);
                 case Op.OpVectorShuffle: return VisitVectorShuffle((VectorShuffle) node);
@@ -325,7 +325,7 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpMemoryNamedBarrier: return VisitMemoryNamedBarrier((MemoryNamedBarrier) node);
                 case Op.OpModuleProcessed: return VisitModuleProcessed((ModuleProcessed) node);
                 case Op.OpExecutionModeId: return VisitExecutionModeId((ExecutionModeId) node);
-                case Op.OpDecorateId: return VisitDecorateId((DecorateId) node);
+                case Op.OpDecorateId: return VisitDecorateId((Nodes.DecorateId) node);
                 case Op.OpGroupNonUniformElect: return VisitGroupNonUniformElect((GroupNonUniformElect) node);
                 case Op.OpGroupNonUniformAll: return VisitGroupNonUniformAll((GroupNonUniformAll) node);
                 case Op.OpGroupNonUniformAny: return VisitGroupNonUniformAny((GroupNonUniformAny) node);
@@ -447,8 +447,8 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpUSubSatINTEL: return VisitUSubSatINTEL((USubSatINTEL) node);
                 case Op.OpIMul32x16INTEL: return VisitIMul32x16INTEL((IMul32x16INTEL) node);
                 case Op.OpUMul32x16INTEL: return VisitUMul32x16INTEL((UMul32x16INTEL) node);
-                case Op.OpDecorateString: return VisitDecorateString((DecorateString) node);
-                case Op.OpMemberDecorateString: return VisitMemberDecorateString((MemberDecorateString) node);
+                case Op.OpDecorateString: return VisitDecorateString((Nodes.DecorateString) node);
+                case Op.OpMemberDecorateString: return VisitMemberDecorateString((Nodes.MemberDecorateString) node);
                 case Op.OpVmeImageINTEL: return VisitVmeImageINTEL((VmeImageINTEL) node);
                 case Op.OpTypeVmeImageINTEL: return VisitTypeVmeImageINTEL((Types.TypeVmeImageINTEL)node);
                 case Op.OpTypeAvcImePayloadINTEL: return VisitTypeAvcImePayloadINTEL((Types.TypeAvcImePayloadINTEL)node);
@@ -1488,8 +1488,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.Target = Visit(node.Target);
             instruction.Decoration = Visit(node.Decoration);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpMemberDecorate VisitMemberDecorate(Nodes.MemberDecorate node)
@@ -1500,8 +1498,6 @@ namespace Toe.SPIRV.Reflection
             instruction.StructureType = Visit(node.StructureType);
             instruction.Member = Visit(node.Member);
             instruction.Decoration = Visit(node.Decoration);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpDecorationGroup VisitDecorationGroup(Nodes.DecorationGroup node)
@@ -1512,8 +1508,6 @@ namespace Toe.SPIRV.Reflection
             instruction.IdResult = (uint)_results.Count;
             _results.Add(instruction);
             VisitDecorations(node);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpGroupDecorate VisitGroupDecorate(Nodes.GroupDecorate node)
@@ -1523,8 +1517,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.DecorationGroup = Visit(node.DecorationGroup);
             instruction.Targets = Visit(node.Targets);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpGroupMemberDecorate VisitGroupMemberDecorate(Nodes.GroupMemberDecorate node)
@@ -1534,8 +1526,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.DecorationGroup = Visit(node.DecorationGroup);
             instruction.Targets = Visit(node.Targets);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpVectorExtractDynamic VisitVectorExtractDynamic(Nodes.VectorExtractDynamic node)
@@ -4812,8 +4802,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.Target = Visit(node.Target);
             instruction.Decoration = Visit(node.Decoration);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpGroupNonUniformElect VisitGroupNonUniformElect(Nodes.GroupNonUniformElect node)
@@ -6507,8 +6495,6 @@ namespace Toe.SPIRV.Reflection
 
             instruction.Target = Visit(node.Target);
             instruction.Decoration = Visit(node.Decoration);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpMemberDecorateString VisitMemberDecorateString(Nodes.MemberDecorateString node)
@@ -6519,8 +6505,6 @@ namespace Toe.SPIRV.Reflection
             instruction.StructType = Visit(node.StructType);
             instruction.Member = Visit(node.Member);
             instruction.Decoration = Visit(node.Decoration);
-            Visit(node.Next);
-
             return instruction;
         }
         protected virtual OpVmeImageINTEL VisitVmeImageINTEL(Nodes.VmeImageINTEL node)

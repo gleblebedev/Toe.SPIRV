@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,12 @@ namespace Toe.SPIRV.CodeGenerator
             var operands = LoadJsonOrDefault<Operands>(fileName,
                 () => throw new FileNotFoundException("File " + fileName +
                                                       " not found. Expected path to spirv.core.grammar.json."));
+
+            //foreach (var VARIABLE in operands.instructions.Select(_ => _.@class).Distinct())
+            //{
+            //    Debug.WriteLine($"case \"{VARIABLE}\" return InstructionClass.{VARIABLE.Replace("-","")};");
+            //}
+
             foreach (var instruction in operands.instructions)
             {
                 if (instruction.opname == "OpCopyMemory" || instruction.opname == "OpCopyMemorySized")

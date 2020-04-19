@@ -25,7 +25,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public Node MergeBlock { get; set; }
+        public Label MergeBlock { get; set; }
         public Spv.SelectionControl SelectionControl { get; set; }
 
         public override IEnumerable<NodePin> OutputPins
@@ -61,7 +61,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpSelectionMerge op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            MergeBlock = treeBuilder.GetNode(op.MergeBlock);
+            MergeBlock = (Label)treeBuilder.GetNode(op.MergeBlock);
             SelectionControl = op.SelectionControl;
             SetUpDecorations(op, treeBuilder);
         }

@@ -7,7 +7,7 @@ using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Nodes
 {
-    public partial class Decorate : ExecutableNode, INodeWithNext
+    public partial class Decorate : Node
     {
         public Decorate()
         {
@@ -15,15 +15,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public override Op OpCode => Op.OpDecorate;
 
-        /// <summary>
-        /// Next operation in sequence
-        /// </summary>
-        public ExecutableNode Next { get; set; }
-
-        public override ExecutableNode GetNext()
-        {
-            return Next;
-        }
 
         public Node Target { get; set; }
         public Spv.Decoration Decoration { get; set; }
@@ -36,19 +27,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             }
         }
 
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
 
         public override IEnumerable<NodePinWithConnection> ExitPins
         {
             get
             {
-                yield return CreateExitPin("", GetNext());
                 yield return CreateExitPin(nameof(Target), Target);
                 yield break;
             }

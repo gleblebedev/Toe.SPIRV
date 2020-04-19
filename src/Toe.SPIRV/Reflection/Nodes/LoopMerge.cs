@@ -25,7 +25,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public Node MergeBlock { get; set; }
+        public Label MergeBlock { get; set; }
         public Node ContinueTarget { get; set; }
         public Spv.LoopControl LoopControl { get; set; }
 
@@ -63,7 +63,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public void SetUp(OpLoopMerge op, SpirvInstructionTreeBuilder treeBuilder)
         {
-            MergeBlock = treeBuilder.GetNode(op.MergeBlock);
+            MergeBlock = (Label)treeBuilder.GetNode(op.MergeBlock);
             ContinueTarget = treeBuilder.GetNode(op.ContinueTarget);
             LoopControl = op.LoopControl;
             SetUpDecorations(op, treeBuilder);

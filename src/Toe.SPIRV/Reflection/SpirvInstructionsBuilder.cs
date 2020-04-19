@@ -145,16 +145,59 @@ namespace Toe.SPIRV.Reflection
             return visitFunction;
         }
 
-        private void AddBlock(List<Instruction> instructions, ExecutableNode node)
+        private void AddBlock(List<Instruction> instructions, ExecutableNode node, Label mergePoint = null)
         {
+            //var block = new InstructionBlock()
+            //{
+            //    Instructions = instructions,
+            //    MergeLabel = mergePoint,
+            //    AlreadyAdded = new HashSet<Node>()
+            //};
             while (node != null)
             {
-                EnsureInputs(instructions, node);
-                node = node.GetNext();
+                switch (node.OpCode)
+                {
+                    case Op.OpBranch:
+                        AddInstructionToBlock(instructions, node);
+                        var branch = ((Branch)node);
+                        if (branch.TargetLabel == mergePoint)
+                            return;
+                        node = branch.TargetLabel;
+                        break;
+                    case Op.OpBranchConditional:
+                        var branchConditional = (BranchConditional) node;
+                        instructions.Add(Visit(node));
+                        AddBlock(instructions, branchConditional.TrueLabel, mergePoint);
+                        AddBlock(instructions, branchConditional.FalseLabel, mergePoint);
+                        return;
+                    case Op.OpLoopMerge:
+                        throw new NotImplementedException();
+                    case Op.OpSwitch:
+                        throw new NotImplementedException();
+                    case Op.OpSelectionMerge:
+                        EnsureInputs(instructions, node.GetNext());
+                        AddInstructionToBlock(instructions, node);
+                        var selectionMerge = (SelectionMerge)node;
+                        AddBlock(instructions, node.GetNext(), selectionMerge.MergeBlock);
+                        node = selectionMerge.MergeBlock;
+                        break;
+                    default:
+                        AddInstructionToBlock(instructions, node);
+                        node = node.GetNext();
+                        break;
+                }
             }
         }
 
-        private void EnsureInputs(List<Instruction> instructions, Node node)
+        private void AddInstructionToBlock(List<Instruction> instructions, Node node)
+        {
+            var instruction = EnsureInputs(instructions, node);
+            if (instruction == null)
+                return;
+            instructions.Add(instruction);
+        }
+
+        private Instruction EnsureInputs(List<Instruction> instructions, Node node)
         {
             var instruction = Visit(node);
             switch (node.OpCode)
@@ -166,11 +209,11 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpConstantSampler:
                 case Op.OpConstantTrue:
                 case Op.OpFunctionParameter:
-                    return;
+                    return null;
                 case Op.OpVariable:
                 {
                     if (((OpVariable)instruction).StorageClass.Value != StorageClass.Enumerant.Function)
-                        return;
+                        return null;
                     break;
                 }
             }
@@ -179,10 +222,11 @@ namespace Toe.SPIRV.Reflection
                 var inputNode = input.ConnectedPin?.Node;
                 if (inputNode != null)
                 {
-                    EnsureInputs(instructions, inputNode);
+                    AddInstructionToBlock(instructions, inputNode);
                 }
             }
-            instructions.Add(instruction);
+
+            return instruction;
         }
 
         protected override OpCapability VisitCapability(Nodes.Capability node)

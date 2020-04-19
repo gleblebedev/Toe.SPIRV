@@ -27,8 +27,8 @@ namespace Toe.SPIRV.UnitTests
         [TestCaseSource(typeof(TestShaders), nameof(TestShaders.EnumerateShaders))]
         public void SimpleShader(string vertexShaderCode, string fragmentShaderCode)
         {
-            var vertexShader = CompileToBytecode(vertexShaderCode, ShaderStages.Vertex);
-            var fragmentShader = CompileToBytecode(fragmentShaderCode, ShaderStages.Fragment);
+            var vertexShader = CompileToBytecode(vertexShaderCode, ShaderStages.Vertex, throwOnError:true);
+            var fragmentShader = CompileToBytecode(fragmentShaderCode, ShaderStages.Fragment, throwOnError: true);
             var originalCode = DecompileBytecode(vertexShader, fragmentShader);
 
             var translatedVertexShader = TranslateShaderViaReflection(vertexShader);

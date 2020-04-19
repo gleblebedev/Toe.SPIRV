@@ -1,5 +1,6 @@
 using System;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Types;
 
 namespace Toe.SPIRV.Spv
 {
