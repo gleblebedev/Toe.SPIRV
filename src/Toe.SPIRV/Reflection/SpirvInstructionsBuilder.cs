@@ -180,7 +180,13 @@ namespace Toe.SPIRV.Reflection
                         node = loopMerge.MergeBlock;
                         break;
                     case Op.OpSwitch:
-                        throw new NotImplementedException();
+                        var switchNode = (Switch)node;
+                        instructions.Add(Visit(node));
+                        foreach (var target in switchNode.Target)
+                        {
+                            
+                        }
+                        return;
                     case Op.OpSelectionMerge:
                         EnsureInputs(instructions, node.GetNext());
                         AddInstructionToBlock(instructions, node);

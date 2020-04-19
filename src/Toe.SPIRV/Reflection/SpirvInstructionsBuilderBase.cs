@@ -1379,6 +1379,7 @@ namespace Toe.SPIRV.Reflection
             instruction.Target = Visit(node.Target);
             instruction.Source = Visit(node.Source);
             instruction.MemoryAccess = Visit(node.MemoryAccess);
+            instruction.MemoryAccess2 = Visit(node.MemoryAccess2);
             Visit(node.Next);
 
             return instruction;
@@ -1392,6 +1393,7 @@ namespace Toe.SPIRV.Reflection
             instruction.Source = Visit(node.Source);
             instruction.Size = Visit(node.Size);
             instruction.MemoryAccess = Visit(node.MemoryAccess);
+            instruction.MemoryAccess2 = Visit(node.MemoryAccess2);
             Visit(node.Next);
 
             return instruction;

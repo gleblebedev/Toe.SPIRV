@@ -148,6 +148,16 @@ namespace Toe.SPIRV.CodeGenerator
                         spirvInstruction.IdResultType = spirvOperand;
                         break;
                     default:
+                        int suffix = 1;
+                        var prefix = spirvOperand.Name;
+                        foreach (var op in spirvInstruction.Operands)
+                        {
+                            if (op.Name == spirvOperand.Name)
+                            {
+                                ++suffix;
+                                spirvOperand.Name = $"{prefix}{suffix}";
+                            }
+                        }
                         spirvInstruction.Operands.Add(spirvOperand);
                         break;
                 }
@@ -249,7 +259,8 @@ namespace Toe.SPIRV.CodeGenerator
                 Category = _operandKindCategories[spirvOperandKind]
             };
 
-            spirvOperand.Name = GetOperandName(instruction,spirvOperand);
+            var name = GetOperandName(instruction, spirvOperand);
+            spirvOperand.Name = name;
             SetOperandClass(instruction, spirvOperand);
             return spirvOperand;
         }
@@ -293,6 +304,7 @@ namespace Toe.SPIRV.CodeGenerator
                         if (spirvOperand.Name == "ContinueTarget")
                         {
                             spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpLabel";
                             return;
                         }
                         break;

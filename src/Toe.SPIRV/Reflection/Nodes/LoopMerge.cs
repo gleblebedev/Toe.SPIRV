@@ -26,7 +26,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         }
 
         public Label MergeBlock { get; set; }
-        public Node ContinueTarget { get; set; }
+        public Label ContinueTarget { get; set; }
         public Spv.LoopControl LoopControl { get; set; }
 
         public override IEnumerable<NodePin> OutputPins
@@ -64,7 +64,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public void SetUp(OpLoopMerge op, SpirvInstructionTreeBuilder treeBuilder)
         {
             MergeBlock = (Label)treeBuilder.GetNode(op.MergeBlock);
-            ContinueTarget = treeBuilder.GetNode(op.ContinueTarget);
+            ContinueTarget = (Label)treeBuilder.GetNode(op.ContinueTarget);
             LoopControl = op.LoopControl;
             SetUpDecorations(op, treeBuilder);
         }

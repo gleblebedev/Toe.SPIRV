@@ -28,6 +28,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         public Node Target { get; set; }
         public Node Source { get; set; }
         public Spv.MemoryAccess MemoryAccess { get; set; }
+        public Spv.MemoryAccess MemoryAccess2 { get; set; }
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -73,6 +74,7 @@ namespace Toe.SPIRV.Reflection.Nodes
             Target = treeBuilder.GetNode(op.Target);
             Source = treeBuilder.GetNode(op.Source);
             MemoryAccess = op.MemoryAccess;
+            MemoryAccess2 = op.MemoryAccess2;
             SetUpDecorations(op, treeBuilder);
         }
     }

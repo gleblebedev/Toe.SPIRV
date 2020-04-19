@@ -28,7 +28,7 @@ void main()
     float x = 1.1;
     for (int i=0; i<Attr;++i)
     {
-        //x *= x;
+        x *= x;
     }
     gl_Position = vec4(x);
 }", ShaderStages.Vertex, true);

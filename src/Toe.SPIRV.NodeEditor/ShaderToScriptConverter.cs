@@ -3,6 +3,7 @@ using System.Linq;
 using Toe.Scripting;
 using Toe.SPIRV.Reflection;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.NodeEditor
 {
@@ -15,17 +16,33 @@ namespace Toe.SPIRV.NodeEditor
         {
             foreach (var node in reflection.EntryPointInstructions)
             {
-                VisitNode(node.Value);
+                VisitNode(node.Value, null, null, null);
             }
             return _script;
         }
 
-        private ScriptNode VisitNode(Node node)
+        private ScriptNode VisitNode(Node node, Node mergeNode, Node continueNode, Node loopNode)
         {
             if (node == null)
                 return null;
             if (_nodeMap.TryGetValue(node, out var scriptNode))
                 return scriptNode;
+
+            Node childMergeNode = mergeNode;
+            Node childContinueNode = continueNode;
+            switch (node.OpCode)
+            {
+                case Op.OpSelectionMerge:
+                    var selectionMerge = (SelectionMerge) node;
+                    childMergeNode = selectionMerge.MergeBlock;
+                    break;
+                case Op.OpLoopMerge:
+                    var loopMerge = (LoopMerge)node;
+                    childMergeNode = loopMerge.MergeBlock;
+                    childContinueNode = loopMerge.ContinueTarget;
+                    break;
+            }
+
             scriptNode = new ScriptNode {Name = node.GetType().Name};
             if (node is Constant constant)
             {
@@ -55,7 +72,7 @@ namespace Toe.SPIRV.NodeEditor
                     var connectedNode = connectedPin?.Node;
                     if (connectedNode != null)
                     {
-                        var script = VisitNode(connectedNode);
+                        var script = VisitNode(connectedNode, childMergeNode, childContinueNode, loopNode);
                         scriptNode.InputPins[index].Connection = new Connection(script, connectedPin.Value.Name);
                     }
                 }
@@ -72,7 +89,20 @@ namespace Toe.SPIRV.NodeEditor
                     var connectedNode = connectedPin?.Node;
                     if (connectedNode != null)
                     {
-                        var script = VisitNode(connectedNode);
+                        if (connectedNode == mergeNode || connectedNode == continueNode || connectedNode == loopNode)
+                            continue;
+                        switch (connectedNode.OpCode)
+                        {
+                            case Op.OpBranch:
+                                var branch = (Branch) connectedNode;
+                                if (branch.TargetLabel == mergeNode || branch.TargetLabel == continueNode || branch.TargetLabel == loopNode)
+                                    continue;
+                                break;
+                        }
+
+                        // TODO: OpLoopMerge.Next should break when goes to Continue only!
+                        // TODO: OpLoopMerge.Continue should break when goes back to loopNode only!
+                        var script = VisitNode(connectedNode, childMergeNode, childContinueNode, (connectedNode.OpCode == Op.OpLoopMerge)?node:loopNode);
                         scriptNode.ExitPins[index].Connection = new Connection(script, connectedPin.Value.Name);
                     }
                 }

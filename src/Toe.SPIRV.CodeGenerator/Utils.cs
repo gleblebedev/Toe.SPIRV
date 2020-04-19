@@ -58,17 +58,17 @@ namespace Toe.SPIRV.CodeGenerator
             //    Debug.WriteLine($"case \"{VARIABLE}\" return InstructionClass.{VARIABLE.Replace("-","")};");
             //}
 
-            foreach (var instruction in operands.instructions)
-            {
-                if (instruction.opname == "OpCopyMemory" || instruction.opname == "OpCopyMemorySized")
-                {
-                    var memAssess = instruction.operands.Where(_ => _.kind == "MemoryAccess").ToList();
-                    foreach (var operand in memAssess.Skip(1))
-                    {
-                        instruction.operands.Remove(operand);
-                    }
-                }
-            }
+            //foreach (var instruction in operands.instructions)
+            //{
+            //    if (instruction.opname == "OpCopyMemory" || instruction.opname == "OpCopyMemorySized")
+            //    {
+            //        var memAssess = instruction.operands.Where(_ => _.kind == "MemoryAccess").ToList();
+            //        foreach (var operand in memAssess.Skip(1))
+            //        {
+            //            instruction.operands.Remove(operand);
+            //        }
+            //    }
+            //}
             return operands;
         }
 

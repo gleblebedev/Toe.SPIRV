@@ -20,6 +20,8 @@ namespace Toe.SPIRV.Instructions
 
         public Spv.MemoryAccess MemoryAccess { get; set; }
 
+        public Spv.MemoryAccess MemoryAccess2 { get; set; }
+
 
         public override void Parse(WordReader reader, uint wordCount)
         {
@@ -28,6 +30,7 @@ namespace Toe.SPIRV.Instructions
             Source = Spv.IdRef.Parse(reader, end-reader.Position);
             Size = Spv.IdRef.Parse(reader, end-reader.Position);
             MemoryAccess = Spv.MemoryAccess.ParseOptional(reader, end-reader.Position);
+            MemoryAccess2 = Spv.MemoryAccess.ParseOptional(reader, end-reader.Position);
         }
 
         public override uint GetWordCount()
@@ -37,6 +40,7 @@ namespace Toe.SPIRV.Instructions
             wordCount += Source.GetWordCount();
             wordCount += Size.GetWordCount();
             wordCount += MemoryAccess?.GetWordCount() ?? 0u;
+            wordCount += MemoryAccess2?.GetWordCount() ?? 0u;
             return wordCount;
         }
 
@@ -46,11 +50,12 @@ namespace Toe.SPIRV.Instructions
             Source.Write(writer);
             Size.Write(writer);
             if (MemoryAccess != null) MemoryAccess.Write(writer);
+            if (MemoryAccess2 != null) MemoryAccess2.Write(writer);
         }
 
         public override string ToString()
         {
-            return $"{OpCode} {Target} {Source} {Size} {MemoryAccess}";
+            return $"{OpCode} {Target} {Source} {Size} {MemoryAccess} {MemoryAccess2}";
         }
     }
 }
