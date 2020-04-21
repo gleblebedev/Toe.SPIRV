@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL SetUp(Action<SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL({ResultType}, {DebugName})";
         }
     }
 }

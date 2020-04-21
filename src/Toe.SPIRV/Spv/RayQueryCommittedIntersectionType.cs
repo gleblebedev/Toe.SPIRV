@@ -15,33 +15,95 @@ namespace Toe.SPIRV.Spv
             RayQueryCommittedIntersectionGeneratedKHR = 2,
         }
 
-        public class RayQueryCommittedIntersectionNoneKHR: RayQueryCommittedIntersectionType
+        #region RayQueryCommittedIntersectionNoneKHR
+        public static RayQueryCommittedIntersectionNoneKHRImpl RayQueryCommittedIntersectionNoneKHR()
         {
-            public static readonly RayQueryCommittedIntersectionNoneKHR Instance = new RayQueryCommittedIntersectionNoneKHR();
+            return RayQueryCommittedIntersectionNoneKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCommittedIntersectionNoneKHRImpl: RayQueryCommittedIntersectionType
+        {
+            public static readonly RayQueryCommittedIntersectionNoneKHRImpl Instance = new RayQueryCommittedIntersectionNoneKHRImpl();
+        
+            private  RayQueryCommittedIntersectionNoneKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryCommittedIntersectionType.Enumerant.RayQueryCommittedIntersectionNoneKHR;
-            public new static RayQueryCommittedIntersectionNoneKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCommittedIntersectionNoneKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCommittedIntersectionNoneKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCommittedIntersectionNoneKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryCommittedIntersectionType.RayQueryCommittedIntersectionNoneKHR()";
+            }
         }
-        public class RayQueryCommittedIntersectionTriangleKHR: RayQueryCommittedIntersectionType
+        #endregion //RayQueryCommittedIntersectionNoneKHR
+
+        #region RayQueryCommittedIntersectionTriangleKHR
+        public static RayQueryCommittedIntersectionTriangleKHRImpl RayQueryCommittedIntersectionTriangleKHR()
         {
-            public static readonly RayQueryCommittedIntersectionTriangleKHR Instance = new RayQueryCommittedIntersectionTriangleKHR();
+            return RayQueryCommittedIntersectionTriangleKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCommittedIntersectionTriangleKHRImpl: RayQueryCommittedIntersectionType
+        {
+            public static readonly RayQueryCommittedIntersectionTriangleKHRImpl Instance = new RayQueryCommittedIntersectionTriangleKHRImpl();
+        
+            private  RayQueryCommittedIntersectionTriangleKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryCommittedIntersectionType.Enumerant.RayQueryCommittedIntersectionTriangleKHR;
-            public new static RayQueryCommittedIntersectionTriangleKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCommittedIntersectionTriangleKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCommittedIntersectionTriangleKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCommittedIntersectionTriangleKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryCommittedIntersectionType.RayQueryCommittedIntersectionTriangleKHR()";
+            }
         }
-        public class RayQueryCommittedIntersectionGeneratedKHR: RayQueryCommittedIntersectionType
+        #endregion //RayQueryCommittedIntersectionTriangleKHR
+
+        #region RayQueryCommittedIntersectionGeneratedKHR
+        public static RayQueryCommittedIntersectionGeneratedKHRImpl RayQueryCommittedIntersectionGeneratedKHR()
         {
-            public static readonly RayQueryCommittedIntersectionGeneratedKHR Instance = new RayQueryCommittedIntersectionGeneratedKHR();
+            return RayQueryCommittedIntersectionGeneratedKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCommittedIntersectionGeneratedKHRImpl: RayQueryCommittedIntersectionType
+        {
+            public static readonly RayQueryCommittedIntersectionGeneratedKHRImpl Instance = new RayQueryCommittedIntersectionGeneratedKHRImpl();
+        
+            private  RayQueryCommittedIntersectionGeneratedKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryCommittedIntersectionType.Enumerant.RayQueryCommittedIntersectionGeneratedKHR;
-            public new static RayQueryCommittedIntersectionGeneratedKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCommittedIntersectionGeneratedKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCommittedIntersectionGeneratedKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCommittedIntersectionGeneratedKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryCommittedIntersectionType.RayQueryCommittedIntersectionGeneratedKHR()";
+            }
         }
+        #endregion //RayQueryCommittedIntersectionGeneratedKHR
 
         public abstract Enumerant Value { get; }
 
@@ -51,11 +113,11 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.RayQueryCommittedIntersectionNoneKHR :
-                    return RayQueryCommittedIntersectionNoneKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCommittedIntersectionNoneKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayQueryCommittedIntersectionTriangleKHR :
-                    return RayQueryCommittedIntersectionTriangleKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCommittedIntersectionTriangleKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayQueryCommittedIntersectionGeneratedKHR :
-                    return RayQueryCommittedIntersectionGeneratedKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCommittedIntersectionGeneratedKHRImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown RayQueryCommittedIntersectionType "+id);
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection.Nodes;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Reflection.Types
@@ -21,8 +22,8 @@ namespace Toe.SPIRV.Reflection.Types
         {
             DebugName = name;
             _fields = fields.ToList();
-            if (_fields.Any(_ => _.ByteOffset == null)) UpdateFieldOffsets();
-            EvaluateSizeAndAlignment();
+            //if (_fields.Any(_ => _.ByteOffset == null)) UpdateFieldOffsets();
+            //EvaluateSizeAndAlignment();
         }
 
         public IEnumerable<SpirvTypeBase> MemberTypes
@@ -141,6 +142,25 @@ namespace Toe.SPIRV.Reflection.Types
             }
         }
 
+        protected override void AddDecoration(Decoration decoration)
+        {
+            switch (decoration.Value)
+            {
+                case Decoration.Enumerant.Block:
+                    Block = true;
+                    return;
+            }
+            base.AddDecoration(decoration);
+        }
+
+        public TypeStruct WithDecoration(Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
+        public bool Block { get; set; }
+
         private void SetUpMemberDecoration(uint member, Decoration decoration, SpirvInstructionTreeBuilder treeBuilder)
         {
             var field = Fields[(int) member];
@@ -149,6 +169,8 @@ namespace Toe.SPIRV.Reflection.Types
 
         public override IEnumerable<Node> BuildDecorations()
         {
+            if (Block) yield return new Decorate(this, Decoration.Block());
+
             foreach (var decoration in base.BuildDecorations())
             {
                 yield return decoration;

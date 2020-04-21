@@ -19,51 +19,155 @@ namespace Toe.SPIRV.Spv
             VulkanKHR = 3,
         }
 
-        public class Simple: MemoryModel
+        #region Simple
+        public static SimpleImpl Simple()
         {
-            public static readonly Simple Instance = new Simple();
+            return SimpleImpl.Instance;
+            
+        }
+
+        public class SimpleImpl: MemoryModel
+        {
+            public static readonly SimpleImpl Instance = new SimpleImpl();
+        
+            private  SimpleImpl()
+            {
+            }
             public override Enumerant Value => MemoryModel.Enumerant.Simple;
-            public new static Simple Parse(WordReader reader, uint wordCount)
+            public new static SimpleImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SimpleImpl object.</summary>
+            /// <returns>A string that represents the SimpleImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" MemoryModel.Simple()";
+            }
         }
-        public class GLSL450: MemoryModel
+        #endregion //Simple
+
+        #region GLSL450
+        public static GLSL450Impl GLSL450()
         {
-            public static readonly GLSL450 Instance = new GLSL450();
+            return GLSL450Impl.Instance;
+            
+        }
+
+        public class GLSL450Impl: MemoryModel
+        {
+            public static readonly GLSL450Impl Instance = new GLSL450Impl();
+        
+            private  GLSL450Impl()
+            {
+            }
             public override Enumerant Value => MemoryModel.Enumerant.GLSL450;
-            public new static GLSL450 Parse(WordReader reader, uint wordCount)
+            public new static GLSL450Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GLSL450Impl object.</summary>
+            /// <returns>A string that represents the GLSL450Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" MemoryModel.GLSL450()";
+            }
         }
-        public class OpenCL: MemoryModel
+        #endregion //GLSL450
+
+        #region OpenCL
+        public static OpenCLImpl OpenCL()
         {
-            public static readonly OpenCL Instance = new OpenCL();
+            return OpenCLImpl.Instance;
+            
+        }
+
+        public class OpenCLImpl: MemoryModel
+        {
+            public static readonly OpenCLImpl Instance = new OpenCLImpl();
+        
+            private  OpenCLImpl()
+            {
+            }
             public override Enumerant Value => MemoryModel.Enumerant.OpenCL;
-            public new static OpenCL Parse(WordReader reader, uint wordCount)
+            public new static OpenCLImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OpenCLImpl object.</summary>
+            /// <returns>A string that represents the OpenCLImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" MemoryModel.OpenCL()";
+            }
         }
-        public class Vulkan: MemoryModel
+        #endregion //OpenCL
+
+        #region Vulkan
+        public static VulkanImpl Vulkan()
         {
-            public static readonly Vulkan Instance = new Vulkan();
+            return VulkanImpl.Instance;
+            
+        }
+
+        public class VulkanImpl: MemoryModel
+        {
+            public static readonly VulkanImpl Instance = new VulkanImpl();
+        
+            private  VulkanImpl()
+            {
+            }
             public override Enumerant Value => MemoryModel.Enumerant.Vulkan;
-            public new static Vulkan Parse(WordReader reader, uint wordCount)
+            public new static VulkanImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VulkanImpl object.</summary>
+            /// <returns>A string that represents the VulkanImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" MemoryModel.Vulkan()";
+            }
         }
-        public class VulkanKHR: MemoryModel
+        #endregion //Vulkan
+
+        #region VulkanKHR
+        public static VulkanKHRImpl VulkanKHR()
         {
-            public static readonly VulkanKHR Instance = new VulkanKHR();
+            return VulkanKHRImpl.Instance;
+            
+        }
+
+        public class VulkanKHRImpl: MemoryModel
+        {
+            public static readonly VulkanKHRImpl Instance = new VulkanKHRImpl();
+        
+            private  VulkanKHRImpl()
+            {
+            }
             public override Enumerant Value => MemoryModel.Enumerant.VulkanKHR;
-            public new static VulkanKHR Parse(WordReader reader, uint wordCount)
+            public new static VulkanKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VulkanKHRImpl object.</summary>
+            /// <returns>A string that represents the VulkanKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" MemoryModel.VulkanKHR()";
+            }
         }
+        #endregion //VulkanKHR
 
         public abstract Enumerant Value { get; }
 
@@ -73,13 +177,13 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Simple :
-                    return Simple.Parse(reader, wordCount - 1);
+                    return SimpleImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GLSL450 :
-                    return GLSL450.Parse(reader, wordCount - 1);
+                    return GLSL450Impl.Parse(reader, wordCount - 1);
                 case Enumerant.OpenCL :
-                    return OpenCL.Parse(reader, wordCount - 1);
+                    return OpenCLImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Vulkan :
-                    return Vulkan.Parse(reader, wordCount - 1);
+                    return VulkanImpl.Parse(reader, wordCount - 1);
                 //VulkanKHR has the same id as another value in enum.
                 //case Enumerant.VulkanKHR :
                 //    return VulkanKHR.Parse(reader, wordCount - 1);

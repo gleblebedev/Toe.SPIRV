@@ -19,51 +19,155 @@ namespace Toe.SPIRV.Spv
             RepeatMirrored = 4,
         }
 
-        public class None: SamplerAddressingMode
+        #region None
+        public static NoneImpl None()
         {
-            public static readonly None Instance = new None();
+            return NoneImpl.Instance;
+            
+        }
+
+        public class NoneImpl: SamplerAddressingMode
+        {
+            public static readonly NoneImpl Instance = new NoneImpl();
+        
+            private  NoneImpl()
+            {
+            }
             public override Enumerant Value => SamplerAddressingMode.Enumerant.None;
-            public new static None Parse(WordReader reader, uint wordCount)
+            public new static NoneImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoneImpl object.</summary>
+            /// <returns>A string that represents the NoneImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerAddressingMode.None()";
+            }
         }
-        public class ClampToEdge: SamplerAddressingMode
+        #endregion //None
+
+        #region ClampToEdge
+        public static ClampToEdgeImpl ClampToEdge()
         {
-            public static readonly ClampToEdge Instance = new ClampToEdge();
+            return ClampToEdgeImpl.Instance;
+            
+        }
+
+        public class ClampToEdgeImpl: SamplerAddressingMode
+        {
+            public static readonly ClampToEdgeImpl Instance = new ClampToEdgeImpl();
+        
+            private  ClampToEdgeImpl()
+            {
+            }
             public override Enumerant Value => SamplerAddressingMode.Enumerant.ClampToEdge;
-            public new static ClampToEdge Parse(WordReader reader, uint wordCount)
+            public new static ClampToEdgeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClampToEdgeImpl object.</summary>
+            /// <returns>A string that represents the ClampToEdgeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerAddressingMode.ClampToEdge()";
+            }
         }
-        public class Clamp: SamplerAddressingMode
+        #endregion //ClampToEdge
+
+        #region Clamp
+        public static ClampImpl Clamp()
         {
-            public static readonly Clamp Instance = new Clamp();
+            return ClampImpl.Instance;
+            
+        }
+
+        public class ClampImpl: SamplerAddressingMode
+        {
+            public static readonly ClampImpl Instance = new ClampImpl();
+        
+            private  ClampImpl()
+            {
+            }
             public override Enumerant Value => SamplerAddressingMode.Enumerant.Clamp;
-            public new static Clamp Parse(WordReader reader, uint wordCount)
+            public new static ClampImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClampImpl object.</summary>
+            /// <returns>A string that represents the ClampImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerAddressingMode.Clamp()";
+            }
         }
-        public class Repeat: SamplerAddressingMode
+        #endregion //Clamp
+
+        #region Repeat
+        public static RepeatImpl Repeat()
         {
-            public static readonly Repeat Instance = new Repeat();
+            return RepeatImpl.Instance;
+            
+        }
+
+        public class RepeatImpl: SamplerAddressingMode
+        {
+            public static readonly RepeatImpl Instance = new RepeatImpl();
+        
+            private  RepeatImpl()
+            {
+            }
             public override Enumerant Value => SamplerAddressingMode.Enumerant.Repeat;
-            public new static Repeat Parse(WordReader reader, uint wordCount)
+            public new static RepeatImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RepeatImpl object.</summary>
+            /// <returns>A string that represents the RepeatImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerAddressingMode.Repeat()";
+            }
         }
-        public class RepeatMirrored: SamplerAddressingMode
+        #endregion //Repeat
+
+        #region RepeatMirrored
+        public static RepeatMirroredImpl RepeatMirrored()
         {
-            public static readonly RepeatMirrored Instance = new RepeatMirrored();
+            return RepeatMirroredImpl.Instance;
+            
+        }
+
+        public class RepeatMirroredImpl: SamplerAddressingMode
+        {
+            public static readonly RepeatMirroredImpl Instance = new RepeatMirroredImpl();
+        
+            private  RepeatMirroredImpl()
+            {
+            }
             public override Enumerant Value => SamplerAddressingMode.Enumerant.RepeatMirrored;
-            public new static RepeatMirrored Parse(WordReader reader, uint wordCount)
+            public new static RepeatMirroredImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RepeatMirroredImpl object.</summary>
+            /// <returns>A string that represents the RepeatMirroredImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerAddressingMode.RepeatMirrored()";
+            }
         }
+        #endregion //RepeatMirrored
 
         public abstract Enumerant Value { get; }
 
@@ -73,15 +177,15 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.None :
-                    return None.Parse(reader, wordCount - 1);
+                    return NoneImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ClampToEdge :
-                    return ClampToEdge.Parse(reader, wordCount - 1);
+                    return ClampToEdgeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Clamp :
-                    return Clamp.Parse(reader, wordCount - 1);
+                    return ClampImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Repeat :
-                    return Repeat.Parse(reader, wordCount - 1);
+                    return RepeatImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RepeatMirrored :
-                    return RepeatMirrored.Parse(reader, wordCount - 1);
+                    return RepeatMirroredImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown SamplerAddressingMode "+id);
             }

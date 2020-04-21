@@ -6,6 +6,22 @@ namespace Toe.SPIRV.CodeGenerator.Views
 {
     public class ViewUtils
     {
+        public static string ToVarName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return name;
+            name = name.Substring(0, 1).ToLowerInvariant() + name.Substring(1);
+            switch (name)
+            {
+                case "interface":
+                case "event":
+                case "base":
+                case "object":
+                case "default":
+                    return "@" + name;
+            }
+            return name;
+        }
         public static bool IsBuildInType(string opcode)
         {
             switch (opcode)
@@ -107,7 +123,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             return res;
         }
 
-        private static string GetParameterName(Parameter parameter)
+        public static string GetParameterName(Parameter parameter)
         {
             if (string.IsNullOrWhiteSpace(parameter.name))
                 return parameter.kind;

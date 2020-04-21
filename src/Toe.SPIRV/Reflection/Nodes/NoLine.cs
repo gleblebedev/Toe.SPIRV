@@ -13,6 +13,11 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public NoLine(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpNoLine;
 
         /// <summary>
@@ -25,6 +30,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -50,15 +60,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public NoLine WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpNoLine)op, treeBuilder);
         }
 
-        public void SetUp(OpNoLine op, SpirvInstructionTreeBuilder treeBuilder)
+        public NoLine SetUp(Action<NoLine> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpNoLine op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the NoLine object.</summary>
+        /// <returns>A string that represents the NoLine object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"NoLine({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static NoLine ThenNoLine(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new NoLine(debugName));
         }
     }
 }

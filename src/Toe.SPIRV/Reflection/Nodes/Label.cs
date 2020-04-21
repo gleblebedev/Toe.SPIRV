@@ -13,6 +13,11 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public Label(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpLabel;
 
         /// <summary>
@@ -25,6 +30,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -50,15 +60,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public Label WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpLabel)op, treeBuilder);
         }
 
-        public void SetUp(OpLabel op, SpirvInstructionTreeBuilder treeBuilder)
+        public Label SetUp(Action<Label> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpLabel op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the Label object.</summary>
+        /// <returns>A string that represents the Label object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"Label({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static Label ThenLabel(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new Label(debugName));
         }
     }
 }

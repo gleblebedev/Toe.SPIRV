@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcSicGetInterRawSadsINTEL(SpirvTypeBase resultType, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcSicGetInterRawSadsINTEL;
 
-
         public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcSicGetInterRawSadsINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcSicGetInterRawSadsINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcSicGetInterRawSadsINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcSicGetInterRawSadsINTEL SetUp(Action<SubgroupAvcSicGetInterRawSadsINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcSicGetInterRawSadsINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcSicGetInterRawSadsINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcSicGetInterRawSadsINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcSicGetInterRawSadsINTEL({ResultType}, {Payload}, {DebugName})";
         }
     }
 }

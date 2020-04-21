@@ -13,19 +13,27 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcImeSetMaxMotionVectorCountINTEL(SpirvTypeBase resultType, Node maxMotionVectorCount, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.MaxMotionVectorCount = maxMotionVectorCount;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcImeSetMaxMotionVectorCountINTEL;
 
-
         public Node MaxMotionVectorCount { get; set; }
-        public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Payload { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -53,18 +61,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcImeSetMaxMotionVectorCountINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcImeSetMaxMotionVectorCountINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcImeSetMaxMotionVectorCountINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcImeSetMaxMotionVectorCountINTEL SetUp(Action<SubgroupAvcImeSetMaxMotionVectorCountINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcImeSetMaxMotionVectorCountINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             MaxMotionVectorCount = treeBuilder.GetNode(op.MaxMotionVectorCount);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcImeSetMaxMotionVectorCountINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcImeSetMaxMotionVectorCountINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcImeSetMaxMotionVectorCountINTEL({ResultType}, {MaxMotionVectorCount}, {Payload}, {DebugName})";
         }
     }
 }

@@ -13,22 +13,36 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GetKernelNDrangeSubGroupCount(SpirvTypeBase resultType, Node nDRange, Node invoke, Node param, Node paramSize, Node paramAlign, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.NDRange = nDRange;
+            this.Invoke = invoke;
+            this.Param = param;
+            this.ParamSize = paramSize;
+            this.ParamAlign = paramAlign;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGetKernelNDrangeSubGroupCount;
 
-
         public Node NDRange { get; set; }
-        public Node Invoke { get; set; }
-        public Node Param { get; set; }
-        public Node ParamSize { get; set; }
-        public Node ParamAlign { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Invoke { get; set; }
+
+        public Node Param { get; set; }
+
+        public Node ParamSize { get; set; }
+
+        public Node ParamAlign { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -59,13 +73,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GetKernelNDrangeSubGroupCount WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGetKernelNDrangeSubGroupCount)op, treeBuilder);
         }
 
-        public void SetUp(OpGetKernelNDrangeSubGroupCount op, SpirvInstructionTreeBuilder treeBuilder)
+        public GetKernelNDrangeSubGroupCount SetUp(Action<GetKernelNDrangeSubGroupCount> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGetKernelNDrangeSubGroupCount op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             NDRange = treeBuilder.GetNode(op.NDRange);
@@ -74,6 +101,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             ParamSize = treeBuilder.GetNode(op.ParamSize);
             ParamAlign = treeBuilder.GetNode(op.ParamAlign);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GetKernelNDrangeSubGroupCount object.</summary>
+        /// <returns>A string that represents the GetKernelNDrangeSubGroupCount object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GetKernelNDrangeSubGroupCount({ResultType}, {NDRange}, {Invoke}, {Param}, {ParamSize}, {ParamAlign}, {DebugName})";
         }
     }
 }

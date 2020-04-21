@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcMceGetInterDistortionsINTEL(SpirvTypeBase resultType, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcMceGetInterDistortionsINTEL;
 
-
         public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcMceGetInterDistortionsINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcMceGetInterDistortionsINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcMceGetInterDistortionsINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcMceGetInterDistortionsINTEL SetUp(Action<SubgroupAvcMceGetInterDistortionsINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcMceGetInterDistortionsINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcMceGetInterDistortionsINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcMceGetInterDistortionsINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcMceGetInterDistortionsINTEL({ResultType}, {Payload}, {DebugName})";
         }
     }
 }

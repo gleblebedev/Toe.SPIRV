@@ -13,21 +13,33 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcImeSetDualReferenceINTEL(SpirvTypeBase resultType, Node fwdRefOffset, Node bwdRefOffset, Node searchWindowConfig, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.FwdRefOffset = fwdRefOffset;
+            this.BwdRefOffset = bwdRefOffset;
+            this.SearchWindowConfig = searchWindowConfig;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcImeSetDualReferenceINTEL;
 
-
         public Node FwdRefOffset { get; set; }
-        public Node BwdRefOffset { get; set; }
-        public Node SearchWindowConfig { get; set; }
-        public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node BwdRefOffset { get; set; }
+
+        public Node SearchWindowConfig { get; set; }
+
+        public Node Payload { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -57,13 +69,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcImeSetDualReferenceINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcImeSetDualReferenceINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcImeSetDualReferenceINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcImeSetDualReferenceINTEL SetUp(Action<SubgroupAvcImeSetDualReferenceINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcImeSetDualReferenceINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             FwdRefOffset = treeBuilder.GetNode(op.FwdRefOffset);
@@ -71,6 +96,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             SearchWindowConfig = treeBuilder.GetNode(op.SearchWindowConfig);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcImeSetDualReferenceINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcImeSetDualReferenceINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcImeSetDualReferenceINTEL({ResultType}, {FwdRefOffset}, {BwdRefOffset}, {SearchWindowConfig}, {Payload}, {DebugName})";
         }
     }
 }

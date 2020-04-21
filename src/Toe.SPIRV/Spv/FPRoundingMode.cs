@@ -13,42 +13,125 @@ namespace Toe.SPIRV.Spv
             RTN = 3,
         }
 
-        public class RTE: FPRoundingMode
+        #region RTE
+        public static RTEImpl RTE()
         {
-            public static readonly RTE Instance = new RTE();
+            return RTEImpl.Instance;
+            
+        }
+
+        public class RTEImpl: FPRoundingMode
+        {
+            public static readonly RTEImpl Instance = new RTEImpl();
+        
+            private  RTEImpl()
+            {
+            }
             public override Enumerant Value => FPRoundingMode.Enumerant.RTE;
-            public new static RTE Parse(WordReader reader, uint wordCount)
+            public new static RTEImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RTEImpl object.</summary>
+            /// <returns>A string that represents the RTEImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FPRoundingMode.RTE()";
+            }
         }
-        public class RTZ: FPRoundingMode
+        #endregion //RTE
+
+        #region RTZ
+        public static RTZImpl RTZ()
         {
-            public static readonly RTZ Instance = new RTZ();
+            return RTZImpl.Instance;
+            
+        }
+
+        public class RTZImpl: FPRoundingMode
+        {
+            public static readonly RTZImpl Instance = new RTZImpl();
+        
+            private  RTZImpl()
+            {
+            }
             public override Enumerant Value => FPRoundingMode.Enumerant.RTZ;
-            public new static RTZ Parse(WordReader reader, uint wordCount)
+            public new static RTZImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RTZImpl object.</summary>
+            /// <returns>A string that represents the RTZImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FPRoundingMode.RTZ()";
+            }
         }
-        public class RTP: FPRoundingMode
+        #endregion //RTZ
+
+        #region RTP
+        public static RTPImpl RTP()
         {
-            public static readonly RTP Instance = new RTP();
+            return RTPImpl.Instance;
+            
+        }
+
+        public class RTPImpl: FPRoundingMode
+        {
+            public static readonly RTPImpl Instance = new RTPImpl();
+        
+            private  RTPImpl()
+            {
+            }
             public override Enumerant Value => FPRoundingMode.Enumerant.RTP;
-            public new static RTP Parse(WordReader reader, uint wordCount)
+            public new static RTPImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RTPImpl object.</summary>
+            /// <returns>A string that represents the RTPImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FPRoundingMode.RTP()";
+            }
         }
-        public class RTN: FPRoundingMode
+        #endregion //RTP
+
+        #region RTN
+        public static RTNImpl RTN()
         {
-            public static readonly RTN Instance = new RTN();
+            return RTNImpl.Instance;
+            
+        }
+
+        public class RTNImpl: FPRoundingMode
+        {
+            public static readonly RTNImpl Instance = new RTNImpl();
+        
+            private  RTNImpl()
+            {
+            }
             public override Enumerant Value => FPRoundingMode.Enumerant.RTN;
-            public new static RTN Parse(WordReader reader, uint wordCount)
+            public new static RTNImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RTNImpl object.</summary>
+            /// <returns>A string that represents the RTNImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FPRoundingMode.RTN()";
+            }
         }
+        #endregion //RTN
 
         public abstract Enumerant Value { get; }
 
@@ -58,13 +141,13 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.RTE :
-                    return RTE.Parse(reader, wordCount - 1);
+                    return RTEImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RTZ :
-                    return RTZ.Parse(reader, wordCount - 1);
+                    return RTZImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RTP :
-                    return RTP.Parse(reader, wordCount - 1);
+                    return RTPImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RTN :
-                    return RTN.Parse(reader, wordCount - 1);
+                    return RTNImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown FPRoundingMode "+id);
             }

@@ -13,24 +13,65 @@ namespace Toe.SPIRV.Spv
             RayQueryCandidateIntersectionAABBKHR = 1,
         }
 
-        public class RayQueryCandidateIntersectionTriangleKHR: RayQueryCandidateIntersectionType
+        #region RayQueryCandidateIntersectionTriangleKHR
+        public static RayQueryCandidateIntersectionTriangleKHRImpl RayQueryCandidateIntersectionTriangleKHR()
         {
-            public static readonly RayQueryCandidateIntersectionTriangleKHR Instance = new RayQueryCandidateIntersectionTriangleKHR();
+            return RayQueryCandidateIntersectionTriangleKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCandidateIntersectionTriangleKHRImpl: RayQueryCandidateIntersectionType
+        {
+            public static readonly RayQueryCandidateIntersectionTriangleKHRImpl Instance = new RayQueryCandidateIntersectionTriangleKHRImpl();
+        
+            private  RayQueryCandidateIntersectionTriangleKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryCandidateIntersectionType.Enumerant.RayQueryCandidateIntersectionTriangleKHR;
-            public new static RayQueryCandidateIntersectionTriangleKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCandidateIntersectionTriangleKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCandidateIntersectionTriangleKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCandidateIntersectionTriangleKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryCandidateIntersectionType.RayQueryCandidateIntersectionTriangleKHR()";
+            }
         }
-        public class RayQueryCandidateIntersectionAABBKHR: RayQueryCandidateIntersectionType
+        #endregion //RayQueryCandidateIntersectionTriangleKHR
+
+        #region RayQueryCandidateIntersectionAABBKHR
+        public static RayQueryCandidateIntersectionAABBKHRImpl RayQueryCandidateIntersectionAABBKHR()
         {
-            public static readonly RayQueryCandidateIntersectionAABBKHR Instance = new RayQueryCandidateIntersectionAABBKHR();
+            return RayQueryCandidateIntersectionAABBKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCandidateIntersectionAABBKHRImpl: RayQueryCandidateIntersectionType
+        {
+            public static readonly RayQueryCandidateIntersectionAABBKHRImpl Instance = new RayQueryCandidateIntersectionAABBKHRImpl();
+        
+            private  RayQueryCandidateIntersectionAABBKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryCandidateIntersectionType.Enumerant.RayQueryCandidateIntersectionAABBKHR;
-            public new static RayQueryCandidateIntersectionAABBKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCandidateIntersectionAABBKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCandidateIntersectionAABBKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCandidateIntersectionAABBKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryCandidateIntersectionType.RayQueryCandidateIntersectionAABBKHR()";
+            }
         }
+        #endregion //RayQueryCandidateIntersectionAABBKHR
 
         public abstract Enumerant Value { get; }
 
@@ -40,9 +81,9 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.RayQueryCandidateIntersectionTriangleKHR :
-                    return RayQueryCandidateIntersectionTriangleKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCandidateIntersectionTriangleKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayQueryCandidateIntersectionAABBKHR :
-                    return RayQueryCandidateIntersectionAABBKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCandidateIntersectionAABBKHRImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown RayQueryCandidateIntersectionType "+id);
             }

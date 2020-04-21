@@ -13,20 +13,30 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public VectorShuffle(SpirvTypeBase resultType, Node vector1, Node vector2, IList<uint> components, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Vector1 = vector1;
+            this.Vector2 = vector2;
+            if (components != null) { foreach (var node in components) this.Components.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpVectorShuffle;
 
-
         public Node Vector1 { get; set; }
-        public Node Vector2 { get; set; }
-        public IList<uint> Components { get; } = new List<uint>();
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Vector2 { get; set; }
+
+        public IList<uint> Components { get; private set; } = new List<uint>();
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -54,19 +64,40 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public VectorShuffle WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpVectorShuffle)op, treeBuilder);
         }
 
-        public void SetUp(OpVectorShuffle op, SpirvInstructionTreeBuilder treeBuilder)
+        public VectorShuffle SetUp(Action<VectorShuffle> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpVectorShuffle op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Vector1 = treeBuilder.GetNode(op.Vector1);
             Vector2 = treeBuilder.GetNode(op.Vector2);
             foreach (var item in op.Components) { Components.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the VectorShuffle object.</summary>
+        /// <returns>A string that represents the VectorShuffle object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"VectorShuffle({ResultType}, {Vector1}, {Vector2}, {Components}, {DebugName})";
         }
     }
 }

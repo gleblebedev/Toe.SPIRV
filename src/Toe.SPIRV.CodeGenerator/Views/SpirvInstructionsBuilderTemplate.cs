@@ -190,8 +190,8 @@ foreach (var codeAndInstruction in _grammar.Instructions)
                     "umber Visit(LiteralContextDependentNumber instruction)\r\n        {\r\n            r" +
                     "eturn instruction;\r\n        }\r\n\r\n        protected virtual IList<IdRef> Visit(IL" +
                     "ist<Node> instructions)\r\n        {\r\n            if (instructions == null)\r\n     " +
-                    "           return null;\r\n            return instructions.Select(_ => (IdRef)Visi" +
-                    "t(_)).ToList();\r\n        }\r\n\r\n");
+                    "           return null;\r\n            return new ListSegment<IdRef>(instructions." +
+                    "Select(_ => (IdRef)Visit(_)));\r\n        }\r\n\r\n");
             
             #line 122 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\SpirvInstructionsBuilderTemplate.tt"
 

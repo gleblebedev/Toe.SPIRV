@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ControlBarrier(uint execution, uint memory, uint semantics, string debugName = null)
+        {
+            this.Execution = execution;
+            this.Memory = memory;
+            this.Semantics = semantics;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpControlBarrier;
 
         /// <summary>
@@ -25,8 +33,16 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public uint Execution { get; set; }
+
         public uint Memory { get; set; }
+
         public uint Semantics { get; set; }
 
         public override IEnumerable<NodePin> OutputPins
@@ -53,18 +69,47 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ControlBarrier WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpControlBarrier)op, treeBuilder);
         }
 
-        public void SetUp(OpControlBarrier op, SpirvInstructionTreeBuilder treeBuilder)
+        public ControlBarrier SetUp(Action<ControlBarrier> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpControlBarrier op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Execution = op.Execution;
             Memory = op.Memory;
             Semantics = op.Semantics;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ControlBarrier object.</summary>
+        /// <returns>A string that represents the ControlBarrier object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ControlBarrier({Execution}, {Memory}, {Semantics}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static ControlBarrier ThenControlBarrier(this INodeWithNext node, uint execution, uint memory, uint semantics, string debugName = null)
+        {
+            return node.Then(new ControlBarrier(execution, memory, semantics, debugName));
         }
     }
 }

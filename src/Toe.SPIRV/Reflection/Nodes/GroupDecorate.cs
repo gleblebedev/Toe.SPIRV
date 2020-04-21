@@ -13,11 +13,19 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GroupDecorate(Node decorationGroup, IEnumerable<Node> targets, string debugName = null)
+        {
+            this.DecorationGroup = decorationGroup;
+            if (targets != null) { foreach (var node in targets) this.Targets.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGroupDecorate;
 
-
         public Node DecorationGroup { get; set; }
-        public IList<Node> Targets { get; set; }
+
+        public IList<Node> Targets { get; private set; } = new PrintableList<Node>();
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -47,17 +55,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GroupDecorate WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGroupDecorate)op, treeBuilder);
         }
 
-        public void SetUp(OpGroupDecorate op, SpirvInstructionTreeBuilder treeBuilder)
+        public GroupDecorate SetUp(Action<GroupDecorate> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGroupDecorate op, SpirvInstructionTreeBuilder treeBuilder)
         {
             DecorationGroup = treeBuilder.GetNode(op.DecorationGroup);
             Targets = treeBuilder.GetNodes(op.Targets);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GroupDecorate object.</summary>
+        /// <returns>A string that represents the GroupDecorate object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GroupDecorate({DecorationGroup}, {Targets}, {DebugName})";
         }
     }
 }

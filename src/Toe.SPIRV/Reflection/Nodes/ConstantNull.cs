@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ConstantNull(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpConstantNull;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ConstantNull WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpConstantNull)op, treeBuilder);
         }
 
-        public void SetUp(OpConstantNull op, SpirvInstructionTreeBuilder treeBuilder)
+        public ConstantNull SetUp(Action<ConstantNull> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpConstantNull op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ConstantNull object.</summary>
+        /// <returns>A string that represents the ConstantNull object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ConstantNull({ResultType}, {DebugName})";
         }
     }
 }

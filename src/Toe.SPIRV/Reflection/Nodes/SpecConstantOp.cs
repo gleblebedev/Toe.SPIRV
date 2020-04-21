@@ -13,13 +13,18 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SpecConstantOp(SpirvTypeBase resultType, uint opcode, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Opcode = opcode;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSpecConstantOp;
 
-
         public uint Opcode { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -43,17 +48,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SpecConstantOp WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSpecConstantOp)op, treeBuilder);
         }
 
-        public void SetUp(OpSpecConstantOp op, SpirvInstructionTreeBuilder treeBuilder)
+        public SpecConstantOp SetUp(Action<SpecConstantOp> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSpecConstantOp op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Opcode = op.Opcode;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SpecConstantOp object.</summary>
+        /// <returns>A string that represents the SpecConstantOp object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SpecConstantOp({ResultType}, {Opcode}, {DebugName})";
         }
     }
 }

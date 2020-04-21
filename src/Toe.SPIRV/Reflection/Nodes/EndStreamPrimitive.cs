@@ -13,6 +13,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public EndStreamPrimitive(Node stream, string debugName = null)
+        {
+            this.Stream = stream;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpEndStreamPrimitive;
 
         /// <summary>
@@ -25,7 +31,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node Stream { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -59,16 +72,45 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public EndStreamPrimitive WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpEndStreamPrimitive)op, treeBuilder);
         }
 
-        public void SetUp(OpEndStreamPrimitive op, SpirvInstructionTreeBuilder treeBuilder)
+        public EndStreamPrimitive SetUp(Action<EndStreamPrimitive> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpEndStreamPrimitive op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Stream = treeBuilder.GetNode(op.Stream);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the EndStreamPrimitive object.</summary>
+        /// <returns>A string that represents the EndStreamPrimitive object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"EndStreamPrimitive({Stream}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static EndStreamPrimitive ThenEndStreamPrimitive(this INodeWithNext node, Node stream, string debugName = null)
+        {
+            return node.Then(new EndStreamPrimitive(stream, debugName));
         }
     }
 }

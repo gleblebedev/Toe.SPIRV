@@ -13,6 +13,16 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GroupCommitWritePipe(uint execution, Node pipe, Node reserveId, Node packetSize, Node packetAlignment, string debugName = null)
+        {
+            this.Execution = execution;
+            this.Pipe = pipe;
+            this.ReserveId = reserveId;
+            this.PacketSize = packetSize;
+            this.PacketAlignment = packetAlignment;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGroupCommitWritePipe;
 
         /// <summary>
@@ -25,11 +35,22 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public uint Execution { get; set; }
+
         public Node Pipe { get; set; }
+
         public Node ReserveId { get; set; }
+
         public Node PacketSize { get; set; }
+
         public Node PacketAlignment { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -66,13 +87,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GroupCommitWritePipe WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGroupCommitWritePipe)op, treeBuilder);
         }
 
-        public void SetUp(OpGroupCommitWritePipe op, SpirvInstructionTreeBuilder treeBuilder)
+        public GroupCommitWritePipe SetUp(Action<GroupCommitWritePipe> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGroupCommitWritePipe op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Execution = op.Execution;
             Pipe = treeBuilder.GetNode(op.Pipe);
@@ -80,6 +114,22 @@ namespace Toe.SPIRV.Reflection.Nodes
             PacketSize = treeBuilder.GetNode(op.PacketSize);
             PacketAlignment = treeBuilder.GetNode(op.PacketAlignment);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GroupCommitWritePipe object.</summary>
+        /// <returns>A string that represents the GroupCommitWritePipe object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GroupCommitWritePipe({Execution}, {Pipe}, {ReserveId}, {PacketSize}, {PacketAlignment}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static GroupCommitWritePipe ThenGroupCommitWritePipe(this INodeWithNext node, uint execution, Node pipe, Node reserveId, Node packetSize, Node packetAlignment, string debugName = null)
+        {
+            return node.Then(new GroupCommitWritePipe(execution, pipe, reserveId, packetSize, packetAlignment, debugName));
         }
     }
 }

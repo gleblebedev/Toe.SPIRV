@@ -13,20 +13,30 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public BitFieldUExtract(SpirvTypeBase resultType, Node @base, Node offset, Node count, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Base = @base;
+            this.Offset = offset;
+            this.Count = count;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpBitFieldUExtract;
 
-
         public Node Base { get; set; }
-        public Node Offset { get; set; }
-        public Node Count { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Offset { get; set; }
+
+        public Node Count { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -55,19 +65,40 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public BitFieldUExtract WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpBitFieldUExtract)op, treeBuilder);
         }
 
-        public void SetUp(OpBitFieldUExtract op, SpirvInstructionTreeBuilder treeBuilder)
+        public BitFieldUExtract SetUp(Action<BitFieldUExtract> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpBitFieldUExtract op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Base = treeBuilder.GetNode(op.Base);
             Offset = treeBuilder.GetNode(op.Offset);
             Count = treeBuilder.GetNode(op.Count);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the BitFieldUExtract object.</summary>
+        /// <returns>A string that represents the BitFieldUExtract object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"BitFieldUExtract({ResultType}, {Base}, {Offset}, {Count}, {DebugName})";
         }
     }
 }

@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ConvertPtrToU(SpirvTypeBase resultType, Node pointer, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Pointer = pointer;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpConvertPtrToU;
 
-
         public Node Pointer { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ConvertPtrToU WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpConvertPtrToU)op, treeBuilder);
         }
 
-        public void SetUp(OpConvertPtrToU op, SpirvInstructionTreeBuilder treeBuilder)
+        public ConvertPtrToU SetUp(Action<ConvertPtrToU> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpConvertPtrToU op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pointer = treeBuilder.GetNode(op.Pointer);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ConvertPtrToU object.</summary>
+        /// <returns>A string that represents the ConvertPtrToU object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ConvertPtrToU({ResultType}, {Pointer}, {DebugName})";
         }
     }
 }

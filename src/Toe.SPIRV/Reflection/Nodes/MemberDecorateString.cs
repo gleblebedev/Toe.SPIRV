@@ -13,12 +13,22 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public MemberDecorateString(Node structType, uint member, Spv.Decoration decoration, string debugName = null)
+        {
+            this.StructType = structType;
+            this.Member = member;
+            this.Decoration = decoration;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpMemberDecorateString;
 
-
         public Node StructType { get; set; }
+
         public uint Member { get; set; }
+
         public Spv.Decoration Decoration { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -44,18 +54,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public MemberDecorateString WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpMemberDecorateString)op, treeBuilder);
         }
 
-        public void SetUp(OpMemberDecorateString op, SpirvInstructionTreeBuilder treeBuilder)
+        public MemberDecorateString SetUp(Action<MemberDecorateString> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpMemberDecorateString op, SpirvInstructionTreeBuilder treeBuilder)
         {
             StructType = treeBuilder.GetNode(op.StructType);
             Member = op.Member;
             Decoration = op.Decoration;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the MemberDecorateString object.</summary>
+        /// <returns>A string that represents the MemberDecorateString object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"MemberDecorateString({StructType}, {Member}, {Decoration}, {DebugName})";
         }
     }
 }

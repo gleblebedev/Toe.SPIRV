@@ -13,21 +13,33 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public WritePipe(SpirvTypeBase resultType, Node pipe, Node pointer, Node packetSize, Node packetAlignment, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Pipe = pipe;
+            this.Pointer = pointer;
+            this.PacketSize = packetSize;
+            this.PacketAlignment = packetAlignment;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpWritePipe;
 
-
         public Node Pipe { get; set; }
-        public Node Pointer { get; set; }
-        public Node PacketSize { get; set; }
-        public Node PacketAlignment { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Pointer { get; set; }
+
+        public Node PacketSize { get; set; }
+
+        public Node PacketAlignment { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -57,13 +69,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public WritePipe WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpWritePipe)op, treeBuilder);
         }
 
-        public void SetUp(OpWritePipe op, SpirvInstructionTreeBuilder treeBuilder)
+        public WritePipe SetUp(Action<WritePipe> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpWritePipe op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pipe = treeBuilder.GetNode(op.Pipe);
@@ -71,6 +96,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             PacketSize = treeBuilder.GetNode(op.PacketSize);
             PacketAlignment = treeBuilder.GetNode(op.PacketAlignment);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the WritePipe object.</summary>
+        /// <returns>A string that represents the WritePipe object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"WritePipe({ResultType}, {Pipe}, {Pointer}, {PacketSize}, {PacketAlignment}, {DebugName})";
         }
     }
 }

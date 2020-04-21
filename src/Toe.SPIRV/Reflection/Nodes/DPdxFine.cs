@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public DPdxFine(SpirvTypeBase resultType, Node p, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.P = p;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpDPdxFine;
 
-
         public Node P { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public DPdxFine WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpDPdxFine)op, treeBuilder);
         }
 
-        public void SetUp(OpDPdxFine op, SpirvInstructionTreeBuilder treeBuilder)
+        public DPdxFine SetUp(Action<DPdxFine> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpDPdxFine op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             P = treeBuilder.GetNode(op.P);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the DPdxFine object.</summary>
+        /// <returns>A string that represents the DPdxFine object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"DPdxFine({ResultType}, {P}, {DebugName})";
         }
     }
 }

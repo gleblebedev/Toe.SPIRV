@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GetDefaultQueue(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGetDefaultQueue;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GetDefaultQueue WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGetDefaultQueue)op, treeBuilder);
         }
 
-        public void SetUp(OpGetDefaultQueue op, SpirvInstructionTreeBuilder treeBuilder)
+        public GetDefaultQueue SetUp(Action<GetDefaultQueue> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGetDefaultQueue op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GetDefaultQueue object.</summary>
+        /// <returns>A string that represents the GetDefaultQueue object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GetDefaultQueue({ResultType}, {DebugName})";
         }
     }
 }

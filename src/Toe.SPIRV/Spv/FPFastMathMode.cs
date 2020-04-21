@@ -26,9 +26,95 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static FPFastMathMode CreateNone()
+        {
+            return new FPFastMathMode(Enumerant.None)
+            {
+            };
+        }
+
+        public FPFastMathMode AlsoNone()
+        {
+            Value |= Enumerant.None;
+            return this;
+        }
+
+        public static FPFastMathMode CreateNotNaN()
+        {
+            return new FPFastMathMode(Enumerant.NotNaN)
+            {
+            };
+        }
+
+        public FPFastMathMode AlsoNotNaN()
+        {
+            Value |= Enumerant.NotNaN;
+            return this;
+        }
+
+        public static FPFastMathMode CreateNotInf()
+        {
+            return new FPFastMathMode(Enumerant.NotInf)
+            {
+            };
+        }
+
+        public FPFastMathMode AlsoNotInf()
+        {
+            Value |= Enumerant.NotInf;
+            return this;
+        }
+
+        public static FPFastMathMode CreateNSZ()
+        {
+            return new FPFastMathMode(Enumerant.NSZ)
+            {
+            };
+        }
+
+        public FPFastMathMode AlsoNSZ()
+        {
+            Value |= Enumerant.NSZ;
+            return this;
+        }
+
+        public static FPFastMathMode CreateAllowRecip()
+        {
+            return new FPFastMathMode(Enumerant.AllowRecip)
+            {
+            };
+        }
+
+        public FPFastMathMode AlsoAllowRecip()
+        {
+            Value |= Enumerant.AllowRecip;
+            return this;
+        }
+
+        public static FPFastMathMode CreateFast()
+        {
+            return new FPFastMathMode(Enumerant.Fast)
+            {
+            };
+        }
+
+        public FPFastMathMode AlsoFast()
+        {
+            Value |= Enumerant.Fast;
+            return this;
+        }
 
 
+        public static implicit operator FPFastMathMode(FPFastMathMode.Enumerant value)
+        {
+            switch (value)
+            {
+                default:
+                    return new FPFastMathMode(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public static FPFastMathMode Parse(WordReader reader, uint wordCount)
         {

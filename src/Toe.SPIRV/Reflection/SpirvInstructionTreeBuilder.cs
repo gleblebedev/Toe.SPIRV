@@ -168,7 +168,7 @@ namespace Toe.SPIRV.Reflection
 
         public IList<Node> GetNodes(IList<IdRef> ids)
         {
-            var nodes = new List<Node>();
+            var nodes = new PrintableList<Node>();
             if (ids != null)
                 foreach (var idRef in ids)
                     nodes.Add(GetNode(idRef));

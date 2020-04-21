@@ -22,6 +22,8 @@ namespace Toe.SPIRV.CodeGenerator.Views
         private readonly string opname;
         private readonly string name;
         private readonly string baseClass;
+        private List<KeyValuePair<string, string>> _operands;
+
         public NodeTemplate(SpirvInstruction instruction)
         {
             _instruction = instruction;
@@ -37,7 +39,29 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     name = _instruction.Name.Substring(2);
                     break;
             }
+
+            _operands = new List<KeyValuePair<string, string>>(_instruction.Operands.Count+1);
+            if (_instruction.IdResultType != null)
+                _operands.Add(new KeyValuePair<string, string>("ResultType", "SpirvTypeBase"));
+            _operands.AddRange(_instruction.Operands.Select(MakeOperandKeyValue));
         }
+
+        private KeyValuePair<string, string> MakeOperandKeyValue(SpirvOperand op)
+        {
+            switch (op.Class)
+            {
+                case SpirvOperandClassification.Type:
+                    return new KeyValuePair<string, string>(op.Name, "SpirvTypeBase");
+                case SpirvOperandClassification.Exit:
+                case SpirvOperandClassification.Input:
+                    return new KeyValuePair<string, string>(op.Name, GetNodeType(op));
+                case SpirvOperandClassification.RepeatedInput:
+                    return new KeyValuePair<string, string>(op.Name, $"IEnumerable<{GetNodeType(op)}>");
+                default:
+                    return new KeyValuePair<string, string>(op.Name, GetPropertyType(op));
+            }
+        }
+
         public static string GetNodeType(SpirvOperand operand)
         {
             if (!string.IsNullOrWhiteSpace(operand.OperandType))

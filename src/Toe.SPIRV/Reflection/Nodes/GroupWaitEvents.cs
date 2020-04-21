@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GroupWaitEvents(uint execution, Node numEvents, Node eventsList, string debugName = null)
+        {
+            this.Execution = execution;
+            this.NumEvents = numEvents;
+            this.EventsList = eventsList;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGroupWaitEvents;
 
         /// <summary>
@@ -25,9 +33,18 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public uint Execution { get; set; }
+
         public Node NumEvents { get; set; }
+
         public Node EventsList { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -62,18 +79,47 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GroupWaitEvents WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGroupWaitEvents)op, treeBuilder);
         }
 
-        public void SetUp(OpGroupWaitEvents op, SpirvInstructionTreeBuilder treeBuilder)
+        public GroupWaitEvents SetUp(Action<GroupWaitEvents> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGroupWaitEvents op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Execution = op.Execution;
             NumEvents = treeBuilder.GetNode(op.NumEvents);
             EventsList = treeBuilder.GetNode(op.EventsList);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GroupWaitEvents object.</summary>
+        /// <returns>A string that represents the GroupWaitEvents object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GroupWaitEvents({Execution}, {NumEvents}, {EventsList}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static GroupWaitEvents ThenGroupWaitEvents(this INodeWithNext node, uint execution, Node numEvents, Node eventsList, string debugName = null)
+        {
+            return node.Then(new GroupWaitEvents(execution, numEvents, eventsList, debugName));
         }
     }
 }

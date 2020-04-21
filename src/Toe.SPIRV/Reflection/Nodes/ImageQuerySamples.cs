@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ImageQuerySamples(SpirvTypeBase resultType, Node image, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Image = image;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpImageQuerySamples;
 
-
         public Node Image { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ImageQuerySamples WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpImageQuerySamples)op, treeBuilder);
         }
 
-        public void SetUp(OpImageQuerySamples op, SpirvInstructionTreeBuilder treeBuilder)
+        public ImageQuerySamples SetUp(Action<ImageQuerySamples> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpImageQuerySamples op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Image = treeBuilder.GetNode(op.Image);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ImageQuerySamples object.</summary>
+        /// <returns>A string that represents the ImageQuerySamples object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ImageQuerySamples({ResultType}, {Image}, {DebugName})";
         }
     }
 }

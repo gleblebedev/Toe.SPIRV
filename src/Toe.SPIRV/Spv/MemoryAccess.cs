@@ -31,14 +31,170 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static MemoryAccess CreateNone()
+        {
+            return new MemoryAccess(Enumerant.None)
+            {
+            };
+        }
+
+        public MemoryAccess AlsoNone()
+        {
+            Value |= Enumerant.None;
+            return this;
+        }
+
+        public static MemoryAccess CreateVolatile()
+        {
+            return new MemoryAccess(Enumerant.Volatile)
+            {
+            };
+        }
+
+        public MemoryAccess AlsoVolatile()
+        {
+            Value |= Enumerant.Volatile;
+            return this;
+        }
+
+        public static MemoryAccess CreateAligned(uint aligned)
+        {
+            return new MemoryAccess(Enumerant.Aligned)
+            {
+                Aligned = aligned,
+            };
+        }
+
+        public MemoryAccess AlsoAligned(uint aligned)
+        {
+            Value |= Enumerant.Aligned;
+            this.Aligned = aligned;
+            return this;
+        }
+
+        public static MemoryAccess CreateNontemporal()
+        {
+            return new MemoryAccess(Enumerant.Nontemporal)
+            {
+            };
+        }
+
+        public MemoryAccess AlsoNontemporal()
+        {
+            Value |= Enumerant.Nontemporal;
+            return this;
+        }
+
+        public static MemoryAccess CreateMakePointerAvailable(uint makePointerAvailable)
+        {
+            return new MemoryAccess(Enumerant.MakePointerAvailable)
+            {
+                MakePointerAvailable = makePointerAvailable,
+            };
+        }
+
+        public MemoryAccess AlsoMakePointerAvailable(uint makePointerAvailable)
+        {
+            Value |= Enumerant.MakePointerAvailable;
+            this.MakePointerAvailable = makePointerAvailable;
+            return this;
+        }
+
+        public static MemoryAccess CreateMakePointerAvailableKHR(uint makePointerAvailableKHR)
+        {
+            return new MemoryAccess(Enumerant.MakePointerAvailableKHR)
+            {
+                MakePointerAvailableKHR = makePointerAvailableKHR,
+            };
+        }
+
+        public MemoryAccess AlsoMakePointerAvailableKHR(uint makePointerAvailableKHR)
+        {
+            Value |= Enumerant.MakePointerAvailableKHR;
+            this.MakePointerAvailableKHR = makePointerAvailableKHR;
+            return this;
+        }
+
+        public static MemoryAccess CreateMakePointerVisible(uint makePointerVisible)
+        {
+            return new MemoryAccess(Enumerant.MakePointerVisible)
+            {
+                MakePointerVisible = makePointerVisible,
+            };
+        }
+
+        public MemoryAccess AlsoMakePointerVisible(uint makePointerVisible)
+        {
+            Value |= Enumerant.MakePointerVisible;
+            this.MakePointerVisible = makePointerVisible;
+            return this;
+        }
+
+        public static MemoryAccess CreateMakePointerVisibleKHR(uint makePointerVisibleKHR)
+        {
+            return new MemoryAccess(Enumerant.MakePointerVisibleKHR)
+            {
+                MakePointerVisibleKHR = makePointerVisibleKHR,
+            };
+        }
+
+        public MemoryAccess AlsoMakePointerVisibleKHR(uint makePointerVisibleKHR)
+        {
+            Value |= Enumerant.MakePointerVisibleKHR;
+            this.MakePointerVisibleKHR = makePointerVisibleKHR;
+            return this;
+        }
+
+        public static MemoryAccess CreateNonPrivatePointer()
+        {
+            return new MemoryAccess(Enumerant.NonPrivatePointer)
+            {
+            };
+        }
+
+        public MemoryAccess AlsoNonPrivatePointer()
+        {
+            Value |= Enumerant.NonPrivatePointer;
+            return this;
+        }
+
+        public static MemoryAccess CreateNonPrivatePointerKHR()
+        {
+            return new MemoryAccess(Enumerant.NonPrivatePointerKHR)
+            {
+            };
+        }
+
+        public MemoryAccess AlsoNonPrivatePointerKHR()
+        {
+            Value |= Enumerant.NonPrivatePointerKHR;
+            return this;
+        }
+
+
+        public static implicit operator MemoryAccess(MemoryAccess.Enumerant value)
+        {
+            switch (value)
+            {
+                case Enumerant.Aligned: throw new InvalidOperationException("Can't cast Aligned because it requires additional arguments.");
+                case Enumerant.MakePointerAvailable: throw new InvalidOperationException("Can't cast MakePointerAvailable because it requires additional arguments.");
+                case Enumerant.MakePointerVisible: throw new InvalidOperationException("Can't cast MakePointerVisible because it requires additional arguments.");
+                default:
+                    return new MemoryAccess(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public uint Aligned { get; set; }
-        public uint MakePointerAvailable { get; set; }
-        public uint MakePointerAvailableKHR { get; set; }
-        public uint MakePointerVisible { get; set; }
-        public uint MakePointerVisibleKHR { get; set; }
 
+        public uint MakePointerAvailable { get; set; }
+
+        public uint MakePointerAvailableKHR { get; set; }
+
+        public uint MakePointerVisible { get; set; }
+
+        public uint MakePointerVisibleKHR { get; set; }
 
         public static MemoryAccess Parse(WordReader reader, uint wordCount)
         {

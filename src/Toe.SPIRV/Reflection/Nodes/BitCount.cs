@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public BitCount(SpirvTypeBase resultType, Node @base, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Base = @base;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpBitCount;
 
-
         public Node Base { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public BitCount WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpBitCount)op, treeBuilder);
         }
 
-        public void SetUp(OpBitCount op, SpirvInstructionTreeBuilder treeBuilder)
+        public BitCount SetUp(Action<BitCount> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpBitCount op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Base = treeBuilder.GetNode(op.Base);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the BitCount object.</summary>
+        /// <returns>A string that represents the BitCount object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"BitCount({ResultType}, {Base}, {DebugName})";
         }
     }
 }

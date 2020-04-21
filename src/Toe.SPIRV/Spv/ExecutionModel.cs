@@ -63,195 +63,635 @@ namespace Toe.SPIRV.Spv
             CallableKHR = 5318,
         }
 
-        public class Vertex: ExecutionModel
+        #region Vertex
+        public static VertexImpl Vertex()
         {
-            public static readonly Vertex Instance = new Vertex();
+            return VertexImpl.Instance;
+            
+        }
+
+        public class VertexImpl: ExecutionModel
+        {
+            public static readonly VertexImpl Instance = new VertexImpl();
+        
+            private  VertexImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.Vertex;
-            public new static Vertex Parse(WordReader reader, uint wordCount)
+            public new static VertexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VertexImpl object.</summary>
+            /// <returns>A string that represents the VertexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.Vertex()";
+            }
         }
-        public class TessellationControl: ExecutionModel
+        #endregion //Vertex
+
+        #region TessellationControl
+        public static TessellationControlImpl TessellationControl()
         {
-            public static readonly TessellationControl Instance = new TessellationControl();
+            return TessellationControlImpl.Instance;
+            
+        }
+
+        public class TessellationControlImpl: ExecutionModel
+        {
+            public static readonly TessellationControlImpl Instance = new TessellationControlImpl();
+        
+            private  TessellationControlImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.TessellationControl;
-            public new static TessellationControl Parse(WordReader reader, uint wordCount)
+            public new static TessellationControlImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessellationControlImpl object.</summary>
+            /// <returns>A string that represents the TessellationControlImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.TessellationControl()";
+            }
         }
-        public class TessellationEvaluation: ExecutionModel
+        #endregion //TessellationControl
+
+        #region TessellationEvaluation
+        public static TessellationEvaluationImpl TessellationEvaluation()
         {
-            public static readonly TessellationEvaluation Instance = new TessellationEvaluation();
+            return TessellationEvaluationImpl.Instance;
+            
+        }
+
+        public class TessellationEvaluationImpl: ExecutionModel
+        {
+            public static readonly TessellationEvaluationImpl Instance = new TessellationEvaluationImpl();
+        
+            private  TessellationEvaluationImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.TessellationEvaluation;
-            public new static TessellationEvaluation Parse(WordReader reader, uint wordCount)
+            public new static TessellationEvaluationImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessellationEvaluationImpl object.</summary>
+            /// <returns>A string that represents the TessellationEvaluationImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.TessellationEvaluation()";
+            }
         }
-        public class Geometry: ExecutionModel
+        #endregion //TessellationEvaluation
+
+        #region Geometry
+        public static GeometryImpl Geometry()
         {
-            public static readonly Geometry Instance = new Geometry();
+            return GeometryImpl.Instance;
+            
+        }
+
+        public class GeometryImpl: ExecutionModel
+        {
+            public static readonly GeometryImpl Instance = new GeometryImpl();
+        
+            private  GeometryImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.Geometry;
-            public new static Geometry Parse(WordReader reader, uint wordCount)
+            public new static GeometryImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GeometryImpl object.</summary>
+            /// <returns>A string that represents the GeometryImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.Geometry()";
+            }
         }
-        public class Fragment: ExecutionModel
+        #endregion //Geometry
+
+        #region Fragment
+        public static FragmentImpl Fragment()
         {
-            public static readonly Fragment Instance = new Fragment();
+            return FragmentImpl.Instance;
+            
+        }
+
+        public class FragmentImpl: ExecutionModel
+        {
+            public static readonly FragmentImpl Instance = new FragmentImpl();
+        
+            private  FragmentImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.Fragment;
-            public new static Fragment Parse(WordReader reader, uint wordCount)
+            public new static FragmentImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentImpl object.</summary>
+            /// <returns>A string that represents the FragmentImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.Fragment()";
+            }
         }
-        public class GLCompute: ExecutionModel
+        #endregion //Fragment
+
+        #region GLCompute
+        public static GLComputeImpl GLCompute()
         {
-            public static readonly GLCompute Instance = new GLCompute();
+            return GLComputeImpl.Instance;
+            
+        }
+
+        public class GLComputeImpl: ExecutionModel
+        {
+            public static readonly GLComputeImpl Instance = new GLComputeImpl();
+        
+            private  GLComputeImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.GLCompute;
-            public new static GLCompute Parse(WordReader reader, uint wordCount)
+            public new static GLComputeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GLComputeImpl object.</summary>
+            /// <returns>A string that represents the GLComputeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.GLCompute()";
+            }
         }
-        public class Kernel: ExecutionModel
+        #endregion //GLCompute
+
+        #region Kernel
+        public static KernelImpl Kernel()
         {
-            public static readonly Kernel Instance = new Kernel();
+            return KernelImpl.Instance;
+            
+        }
+
+        public class KernelImpl: ExecutionModel
+        {
+            public static readonly KernelImpl Instance = new KernelImpl();
+        
+            private  KernelImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.Kernel;
-            public new static Kernel Parse(WordReader reader, uint wordCount)
+            public new static KernelImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the KernelImpl object.</summary>
+            /// <returns>A string that represents the KernelImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.Kernel()";
+            }
         }
-        public class TaskNV: ExecutionModel
+        #endregion //Kernel
+
+        #region TaskNV
+        public static TaskNVImpl TaskNV()
         {
-            public static readonly TaskNV Instance = new TaskNV();
+            return TaskNVImpl.Instance;
+            
+        }
+
+        public class TaskNVImpl: ExecutionModel
+        {
+            public static readonly TaskNVImpl Instance = new TaskNVImpl();
+        
+            private  TaskNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.TaskNV;
-            public new static TaskNV Parse(WordReader reader, uint wordCount)
+            public new static TaskNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TaskNVImpl object.</summary>
+            /// <returns>A string that represents the TaskNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.TaskNV()";
+            }
         }
-        public class MeshNV: ExecutionModel
+        #endregion //TaskNV
+
+        #region MeshNV
+        public static MeshNVImpl MeshNV()
         {
-            public static readonly MeshNV Instance = new MeshNV();
+            return MeshNVImpl.Instance;
+            
+        }
+
+        public class MeshNVImpl: ExecutionModel
+        {
+            public static readonly MeshNVImpl Instance = new MeshNVImpl();
+        
+            private  MeshNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.MeshNV;
-            public new static MeshNV Parse(WordReader reader, uint wordCount)
+            public new static MeshNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MeshNVImpl object.</summary>
+            /// <returns>A string that represents the MeshNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.MeshNV()";
+            }
         }
-        public class RayGenerationNV: ExecutionModel
+        #endregion //MeshNV
+
+        #region RayGenerationNV
+        public static RayGenerationNVImpl RayGenerationNV()
         {
-            public static readonly RayGenerationNV Instance = new RayGenerationNV();
+            return RayGenerationNVImpl.Instance;
+            
+        }
+
+        public class RayGenerationNVImpl: ExecutionModel
+        {
+            public static readonly RayGenerationNVImpl Instance = new RayGenerationNVImpl();
+        
+            private  RayGenerationNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.RayGenerationNV;
-            public new static RayGenerationNV Parse(WordReader reader, uint wordCount)
+            public new static RayGenerationNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayGenerationNVImpl object.</summary>
+            /// <returns>A string that represents the RayGenerationNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.RayGenerationNV()";
+            }
         }
-        public class RayGenerationKHR: ExecutionModel
+        #endregion //RayGenerationNV
+
+        #region RayGenerationKHR
+        public static RayGenerationKHRImpl RayGenerationKHR()
         {
-            public static readonly RayGenerationKHR Instance = new RayGenerationKHR();
+            return RayGenerationKHRImpl.Instance;
+            
+        }
+
+        public class RayGenerationKHRImpl: ExecutionModel
+        {
+            public static readonly RayGenerationKHRImpl Instance = new RayGenerationKHRImpl();
+        
+            private  RayGenerationKHRImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.RayGenerationKHR;
-            public new static RayGenerationKHR Parse(WordReader reader, uint wordCount)
+            public new static RayGenerationKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayGenerationKHRImpl object.</summary>
+            /// <returns>A string that represents the RayGenerationKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.RayGenerationKHR()";
+            }
         }
-        public class IntersectionNV: ExecutionModel
+        #endregion //RayGenerationKHR
+
+        #region IntersectionNV
+        public static IntersectionNVImpl IntersectionNV()
         {
-            public static readonly IntersectionNV Instance = new IntersectionNV();
+            return IntersectionNVImpl.Instance;
+            
+        }
+
+        public class IntersectionNVImpl: ExecutionModel
+        {
+            public static readonly IntersectionNVImpl Instance = new IntersectionNVImpl();
+        
+            private  IntersectionNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.IntersectionNV;
-            public new static IntersectionNV Parse(WordReader reader, uint wordCount)
+            public new static IntersectionNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IntersectionNVImpl object.</summary>
+            /// <returns>A string that represents the IntersectionNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.IntersectionNV()";
+            }
         }
-        public class IntersectionKHR: ExecutionModel
+        #endregion //IntersectionNV
+
+        #region IntersectionKHR
+        public static IntersectionKHRImpl IntersectionKHR()
         {
-            public static readonly IntersectionKHR Instance = new IntersectionKHR();
+            return IntersectionKHRImpl.Instance;
+            
+        }
+
+        public class IntersectionKHRImpl: ExecutionModel
+        {
+            public static readonly IntersectionKHRImpl Instance = new IntersectionKHRImpl();
+        
+            private  IntersectionKHRImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.IntersectionKHR;
-            public new static IntersectionKHR Parse(WordReader reader, uint wordCount)
+            public new static IntersectionKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IntersectionKHRImpl object.</summary>
+            /// <returns>A string that represents the IntersectionKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.IntersectionKHR()";
+            }
         }
-        public class AnyHitNV: ExecutionModel
+        #endregion //IntersectionKHR
+
+        #region AnyHitNV
+        public static AnyHitNVImpl AnyHitNV()
         {
-            public static readonly AnyHitNV Instance = new AnyHitNV();
+            return AnyHitNVImpl.Instance;
+            
+        }
+
+        public class AnyHitNVImpl: ExecutionModel
+        {
+            public static readonly AnyHitNVImpl Instance = new AnyHitNVImpl();
+        
+            private  AnyHitNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.AnyHitNV;
-            public new static AnyHitNV Parse(WordReader reader, uint wordCount)
+            public new static AnyHitNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AnyHitNVImpl object.</summary>
+            /// <returns>A string that represents the AnyHitNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.AnyHitNV()";
+            }
         }
-        public class AnyHitKHR: ExecutionModel
+        #endregion //AnyHitNV
+
+        #region AnyHitKHR
+        public static AnyHitKHRImpl AnyHitKHR()
         {
-            public static readonly AnyHitKHR Instance = new AnyHitKHR();
+            return AnyHitKHRImpl.Instance;
+            
+        }
+
+        public class AnyHitKHRImpl: ExecutionModel
+        {
+            public static readonly AnyHitKHRImpl Instance = new AnyHitKHRImpl();
+        
+            private  AnyHitKHRImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.AnyHitKHR;
-            public new static AnyHitKHR Parse(WordReader reader, uint wordCount)
+            public new static AnyHitKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AnyHitKHRImpl object.</summary>
+            /// <returns>A string that represents the AnyHitKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.AnyHitKHR()";
+            }
         }
-        public class ClosestHitNV: ExecutionModel
+        #endregion //AnyHitKHR
+
+        #region ClosestHitNV
+        public static ClosestHitNVImpl ClosestHitNV()
         {
-            public static readonly ClosestHitNV Instance = new ClosestHitNV();
+            return ClosestHitNVImpl.Instance;
+            
+        }
+
+        public class ClosestHitNVImpl: ExecutionModel
+        {
+            public static readonly ClosestHitNVImpl Instance = new ClosestHitNVImpl();
+        
+            private  ClosestHitNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.ClosestHitNV;
-            public new static ClosestHitNV Parse(WordReader reader, uint wordCount)
+            public new static ClosestHitNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClosestHitNVImpl object.</summary>
+            /// <returns>A string that represents the ClosestHitNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.ClosestHitNV()";
+            }
         }
-        public class ClosestHitKHR: ExecutionModel
+        #endregion //ClosestHitNV
+
+        #region ClosestHitKHR
+        public static ClosestHitKHRImpl ClosestHitKHR()
         {
-            public static readonly ClosestHitKHR Instance = new ClosestHitKHR();
+            return ClosestHitKHRImpl.Instance;
+            
+        }
+
+        public class ClosestHitKHRImpl: ExecutionModel
+        {
+            public static readonly ClosestHitKHRImpl Instance = new ClosestHitKHRImpl();
+        
+            private  ClosestHitKHRImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.ClosestHitKHR;
-            public new static ClosestHitKHR Parse(WordReader reader, uint wordCount)
+            public new static ClosestHitKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClosestHitKHRImpl object.</summary>
+            /// <returns>A string that represents the ClosestHitKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.ClosestHitKHR()";
+            }
         }
-        public class MissNV: ExecutionModel
+        #endregion //ClosestHitKHR
+
+        #region MissNV
+        public static MissNVImpl MissNV()
         {
-            public static readonly MissNV Instance = new MissNV();
+            return MissNVImpl.Instance;
+            
+        }
+
+        public class MissNVImpl: ExecutionModel
+        {
+            public static readonly MissNVImpl Instance = new MissNVImpl();
+        
+            private  MissNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.MissNV;
-            public new static MissNV Parse(WordReader reader, uint wordCount)
+            public new static MissNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MissNVImpl object.</summary>
+            /// <returns>A string that represents the MissNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.MissNV()";
+            }
         }
-        public class MissKHR: ExecutionModel
+        #endregion //MissNV
+
+        #region MissKHR
+        public static MissKHRImpl MissKHR()
         {
-            public static readonly MissKHR Instance = new MissKHR();
+            return MissKHRImpl.Instance;
+            
+        }
+
+        public class MissKHRImpl: ExecutionModel
+        {
+            public static readonly MissKHRImpl Instance = new MissKHRImpl();
+        
+            private  MissKHRImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.MissKHR;
-            public new static MissKHR Parse(WordReader reader, uint wordCount)
+            public new static MissKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MissKHRImpl object.</summary>
+            /// <returns>A string that represents the MissKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.MissKHR()";
+            }
         }
-        public class CallableNV: ExecutionModel
+        #endregion //MissKHR
+
+        #region CallableNV
+        public static CallableNVImpl CallableNV()
         {
-            public static readonly CallableNV Instance = new CallableNV();
+            return CallableNVImpl.Instance;
+            
+        }
+
+        public class CallableNVImpl: ExecutionModel
+        {
+            public static readonly CallableNVImpl Instance = new CallableNVImpl();
+        
+            private  CallableNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.CallableNV;
-            public new static CallableNV Parse(WordReader reader, uint wordCount)
+            public new static CallableNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CallableNVImpl object.</summary>
+            /// <returns>A string that represents the CallableNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.CallableNV()";
+            }
         }
-        public class CallableKHR: ExecutionModel
+        #endregion //CallableNV
+
+        #region CallableKHR
+        public static CallableKHRImpl CallableKHR()
         {
-            public static readonly CallableKHR Instance = new CallableKHR();
+            return CallableKHRImpl.Instance;
+            
+        }
+
+        public class CallableKHRImpl: ExecutionModel
+        {
+            public static readonly CallableKHRImpl Instance = new CallableKHRImpl();
+        
+            private  CallableKHRImpl()
+            {
+            }
             public override Enumerant Value => ExecutionModel.Enumerant.CallableKHR;
-            public new static CallableKHR Parse(WordReader reader, uint wordCount)
+            public new static CallableKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CallableKHRImpl object.</summary>
+            /// <returns>A string that represents the CallableKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionModel.CallableKHR()";
+            }
         }
+        #endregion //CallableKHR
 
         public abstract Enumerant Value { get; }
 
@@ -261,50 +701,50 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Vertex :
-                    return Vertex.Parse(reader, wordCount - 1);
+                    return VertexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TessellationControl :
-                    return TessellationControl.Parse(reader, wordCount - 1);
+                    return TessellationControlImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TessellationEvaluation :
-                    return TessellationEvaluation.Parse(reader, wordCount - 1);
+                    return TessellationEvaluationImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Geometry :
-                    return Geometry.Parse(reader, wordCount - 1);
+                    return GeometryImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Fragment :
-                    return Fragment.Parse(reader, wordCount - 1);
+                    return FragmentImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GLCompute :
-                    return GLCompute.Parse(reader, wordCount - 1);
+                    return GLComputeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Kernel :
-                    return Kernel.Parse(reader, wordCount - 1);
+                    return KernelImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TaskNV :
-                    return TaskNV.Parse(reader, wordCount - 1);
+                    return TaskNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MeshNV :
-                    return MeshNV.Parse(reader, wordCount - 1);
+                    return MeshNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayGenerationNV :
-                    return RayGenerationNV.Parse(reader, wordCount - 1);
+                    return RayGenerationNVImpl.Parse(reader, wordCount - 1);
                 //RayGenerationKHR has the same id as another value in enum.
                 //case Enumerant.RayGenerationKHR :
                 //    return RayGenerationKHR.Parse(reader, wordCount - 1);
                 case Enumerant.IntersectionNV :
-                    return IntersectionNV.Parse(reader, wordCount - 1);
+                    return IntersectionNVImpl.Parse(reader, wordCount - 1);
                 //IntersectionKHR has the same id as another value in enum.
                 //case Enumerant.IntersectionKHR :
                 //    return IntersectionKHR.Parse(reader, wordCount - 1);
                 case Enumerant.AnyHitNV :
-                    return AnyHitNV.Parse(reader, wordCount - 1);
+                    return AnyHitNVImpl.Parse(reader, wordCount - 1);
                 //AnyHitKHR has the same id as another value in enum.
                 //case Enumerant.AnyHitKHR :
                 //    return AnyHitKHR.Parse(reader, wordCount - 1);
                 case Enumerant.ClosestHitNV :
-                    return ClosestHitNV.Parse(reader, wordCount - 1);
+                    return ClosestHitNVImpl.Parse(reader, wordCount - 1);
                 //ClosestHitKHR has the same id as another value in enum.
                 //case Enumerant.ClosestHitKHR :
                 //    return ClosestHitKHR.Parse(reader, wordCount - 1);
                 case Enumerant.MissNV :
-                    return MissNV.Parse(reader, wordCount - 1);
+                    return MissNVImpl.Parse(reader, wordCount - 1);
                 //MissKHR has the same id as another value in enum.
                 //case Enumerant.MissKHR :
                 //    return MissKHR.Parse(reader, wordCount - 1);
                 case Enumerant.CallableNV :
-                    return CallableNV.Parse(reader, wordCount - 1);
+                    return CallableNVImpl.Parse(reader, wordCount - 1);
                 //CallableKHR has the same id as another value in enum.
                 //case Enumerant.CallableKHR :
                 //    return CallableKHR.Parse(reader, wordCount - 1);

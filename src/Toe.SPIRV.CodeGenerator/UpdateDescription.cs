@@ -271,6 +271,14 @@ namespace Toe.SPIRV.CodeGenerator
             {
                 switch (instruction.opname)
                 {
+                    case "OpEntryPoint":
+                        if (spirvOperand.Name == "Value")
+                        {
+                            spirvOperand.Class = SpirvOperandClassification.Exit;
+                            spirvOperand.OperandType = "OpFunction";
+                            return;
+                        }
+                        break;
                     case "OpFunction":
                         if (spirvOperand.Name == "FunctionType")
                         {

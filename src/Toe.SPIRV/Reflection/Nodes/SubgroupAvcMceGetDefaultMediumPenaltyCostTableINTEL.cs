@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL SetUp(Action<SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL({ResultType}, {DebugName})";
         }
     }
 }

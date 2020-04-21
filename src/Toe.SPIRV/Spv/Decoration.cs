@@ -132,23 +132,59 @@ namespace Toe.SPIRV.Spv
             UserTypeGOOGLE = 5636,
         }
 
-        public class RelaxedPrecision: Decoration
+        #region RelaxedPrecision
+        public static RelaxedPrecisionImpl RelaxedPrecision()
         {
-            public static readonly RelaxedPrecision Instance = new RelaxedPrecision();
+            return RelaxedPrecisionImpl.Instance;
+            
+        }
+
+        public class RelaxedPrecisionImpl: Decoration
+        {
+            public static readonly RelaxedPrecisionImpl Instance = new RelaxedPrecisionImpl();
+        
+            private  RelaxedPrecisionImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.RelaxedPrecision;
-            public new static RelaxedPrecision Parse(WordReader reader, uint wordCount)
+            public new static RelaxedPrecisionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RelaxedPrecisionImpl object.</summary>
+            /// <returns>A string that represents the RelaxedPrecisionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.RelaxedPrecision()";
+            }
         }
-        public class SpecId: Decoration
+        #endregion //RelaxedPrecision
+
+        #region SpecId
+        public static SpecIdImpl SpecId(uint specializationConstantID)
         {
+            return new SpecIdImpl(specializationConstantID);
+            
+        }
+
+        public class SpecIdImpl: Decoration
+        {
+            public SpecIdImpl()
+            {
+            }
+
+            public SpecIdImpl(uint specializationConstantID)
+            {
+                this.SpecializationConstantID = specializationConstantID;
+            }
             public override Enumerant Value => Decoration.Enumerant.SpecId;
             public uint SpecializationConstantID { get; set; }
-            public new static SpecId Parse(WordReader reader, uint wordCount)
+            public new static SpecIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new SpecId();
+                var res = new SpecIdImpl();
                 res.SpecializationConstantID = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -164,276 +200,817 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 SpecializationConstantID.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the SpecIdImpl object.</summary>
+            /// <returns>A string that represents the SpecIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.SpecId({SpecializationConstantID})";
+            }
         }
-        public class Block: Decoration
+        #endregion //SpecId
+
+        #region Block
+        public static BlockImpl Block()
         {
-            public static readonly Block Instance = new Block();
+            return BlockImpl.Instance;
+            
+        }
+
+        public class BlockImpl: Decoration
+        {
+            public static readonly BlockImpl Instance = new BlockImpl();
+        
+            private  BlockImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Block;
-            public new static Block Parse(WordReader reader, uint wordCount)
+            public new static BlockImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BlockImpl object.</summary>
+            /// <returns>A string that represents the BlockImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Block()";
+            }
         }
-        public class BufferBlock: Decoration
+        #endregion //Block
+
+        #region BufferBlock
+        public static BufferBlockImpl BufferBlock()
         {
-            public static readonly BufferBlock Instance = new BufferBlock();
+            return BufferBlockImpl.Instance;
+            
+        }
+
+        public class BufferBlockImpl: Decoration
+        {
+            public static readonly BufferBlockImpl Instance = new BufferBlockImpl();
+        
+            private  BufferBlockImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.BufferBlock;
-            public new static BufferBlock Parse(WordReader reader, uint wordCount)
+            public new static BufferBlockImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BufferBlockImpl object.</summary>
+            /// <returns>A string that represents the BufferBlockImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.BufferBlock()";
+            }
         }
-        public class RowMajor: Decoration
+        #endregion //BufferBlock
+
+        #region RowMajor
+        public static RowMajorImpl RowMajor()
         {
-            public static readonly RowMajor Instance = new RowMajor();
+            return RowMajorImpl.Instance;
+            
+        }
+
+        public class RowMajorImpl: Decoration
+        {
+            public static readonly RowMajorImpl Instance = new RowMajorImpl();
+        
+            private  RowMajorImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.RowMajor;
-            public new static RowMajor Parse(WordReader reader, uint wordCount)
+            public new static RowMajorImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RowMajorImpl object.</summary>
+            /// <returns>A string that represents the RowMajorImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.RowMajor()";
+            }
         }
-        public class ColMajor: Decoration
+        #endregion //RowMajor
+
+        #region ColMajor
+        public static ColMajorImpl ColMajor()
         {
-            public static readonly ColMajor Instance = new ColMajor();
+            return ColMajorImpl.Instance;
+            
+        }
+
+        public class ColMajorImpl: Decoration
+        {
+            public static readonly ColMajorImpl Instance = new ColMajorImpl();
+        
+            private  ColMajorImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.ColMajor;
-            public new static ColMajor Parse(WordReader reader, uint wordCount)
+            public new static ColMajorImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ColMajorImpl object.</summary>
+            /// <returns>A string that represents the ColMajorImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.ColMajor()";
+            }
         }
-        public class ArrayStride: Decoration
+        #endregion //ColMajor
+
+        #region ArrayStride
+        public static ArrayStrideImpl ArrayStride(uint arrayStride)
         {
+            return new ArrayStrideImpl(arrayStride);
+            
+        }
+
+        public class ArrayStrideImpl: Decoration
+        {
+            public ArrayStrideImpl()
+            {
+            }
+
+            public ArrayStrideImpl(uint arrayStride)
+            {
+                this.ArrayStride = arrayStride;
+            }
             public override Enumerant Value => Decoration.Enumerant.ArrayStride;
-            public uint ArrayStrideValue { get; set; }
-            public new static ArrayStride Parse(WordReader reader, uint wordCount)
+            public new uint ArrayStride { get; set; }
+            public new static ArrayStrideImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new ArrayStride();
-                res.ArrayStrideValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new ArrayStrideImpl();
+                res.ArrayStride = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += ArrayStrideValue.GetWordCount();
+                wordCount += ArrayStride.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                ArrayStrideValue.Write(writer);
+                ArrayStride.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the ArrayStrideImpl object.</summary>
+            /// <returns>A string that represents the ArrayStrideImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.ArrayStride({ArrayStride})";
             }
         }
-        public class MatrixStride: Decoration
+        #endregion //ArrayStride
+
+        #region MatrixStride
+        public static MatrixStrideImpl MatrixStride(uint matrixStride)
         {
+            return new MatrixStrideImpl(matrixStride);
+            
+        }
+
+        public class MatrixStrideImpl: Decoration
+        {
+            public MatrixStrideImpl()
+            {
+            }
+
+            public MatrixStrideImpl(uint matrixStride)
+            {
+                this.MatrixStride = matrixStride;
+            }
             public override Enumerant Value => Decoration.Enumerant.MatrixStride;
-            public uint MatrixStrideValue { get; set; }
-            public new static MatrixStride Parse(WordReader reader, uint wordCount)
+            public new uint MatrixStride { get; set; }
+            public new static MatrixStrideImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new MatrixStride();
-                res.MatrixStrideValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new MatrixStrideImpl();
+                res.MatrixStride = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += MatrixStrideValue.GetWordCount();
+                wordCount += MatrixStride.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                MatrixStrideValue.Write(writer);
+                MatrixStride.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the MatrixStrideImpl object.</summary>
+            /// <returns>A string that represents the MatrixStrideImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.MatrixStride({MatrixStride})";
             }
         }
-        public class GLSLShared: Decoration
+        #endregion //MatrixStride
+
+        #region GLSLShared
+        public static GLSLSharedImpl GLSLShared()
         {
-            public static readonly GLSLShared Instance = new GLSLShared();
+            return GLSLSharedImpl.Instance;
+            
+        }
+
+        public class GLSLSharedImpl: Decoration
+        {
+            public static readonly GLSLSharedImpl Instance = new GLSLSharedImpl();
+        
+            private  GLSLSharedImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.GLSLShared;
-            public new static GLSLShared Parse(WordReader reader, uint wordCount)
+            public new static GLSLSharedImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GLSLSharedImpl object.</summary>
+            /// <returns>A string that represents the GLSLSharedImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.GLSLShared()";
+            }
         }
-        public class GLSLPacked: Decoration
+        #endregion //GLSLShared
+
+        #region GLSLPacked
+        public static GLSLPackedImpl GLSLPacked()
         {
-            public static readonly GLSLPacked Instance = new GLSLPacked();
+            return GLSLPackedImpl.Instance;
+            
+        }
+
+        public class GLSLPackedImpl: Decoration
+        {
+            public static readonly GLSLPackedImpl Instance = new GLSLPackedImpl();
+        
+            private  GLSLPackedImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.GLSLPacked;
-            public new static GLSLPacked Parse(WordReader reader, uint wordCount)
+            public new static GLSLPackedImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GLSLPackedImpl object.</summary>
+            /// <returns>A string that represents the GLSLPackedImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.GLSLPacked()";
+            }
         }
-        public class CPacked: Decoration
+        #endregion //GLSLPacked
+
+        #region CPacked
+        public static CPackedImpl CPacked()
         {
-            public static readonly CPacked Instance = new CPacked();
+            return CPackedImpl.Instance;
+            
+        }
+
+        public class CPackedImpl: Decoration
+        {
+            public static readonly CPackedImpl Instance = new CPackedImpl();
+        
+            private  CPackedImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.CPacked;
-            public new static CPacked Parse(WordReader reader, uint wordCount)
+            public new static CPackedImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CPackedImpl object.</summary>
+            /// <returns>A string that represents the CPackedImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.CPacked()";
+            }
         }
-        public class BuiltIn: Decoration
+        #endregion //CPacked
+
+        #region BuiltIn
+        public static BuiltInImpl BuiltIn(Spv.BuiltIn builtIn)
         {
+            return new BuiltInImpl(builtIn);
+            
+        }
+
+        public class BuiltInImpl: Decoration
+        {
+            public BuiltInImpl()
+            {
+            }
+
+            public BuiltInImpl(Spv.BuiltIn builtIn)
+            {
+                this.BuiltIn = builtIn;
+            }
             public override Enumerant Value => Decoration.Enumerant.BuiltIn;
-            public Spv.BuiltIn BuiltInValue { get; set; }
-            public new static BuiltIn Parse(WordReader reader, uint wordCount)
+            public new Spv.BuiltIn BuiltIn { get; set; }
+            public new static BuiltInImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new BuiltIn();
-                res.BuiltInValue = Spv.BuiltIn.Parse(reader, end-reader.Position);
+                var res = new BuiltInImpl();
+                res.BuiltIn = Spv.BuiltIn.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += BuiltInValue.GetWordCount();
+                wordCount += BuiltIn.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                BuiltInValue.Write(writer);
+                BuiltIn.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the BuiltInImpl object.</summary>
+            /// <returns>A string that represents the BuiltInImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.BuiltIn({BuiltIn})";
             }
         }
-        public class NoPerspective: Decoration
+        #endregion //BuiltIn
+
+        #region NoPerspective
+        public static NoPerspectiveImpl NoPerspective()
         {
-            public static readonly NoPerspective Instance = new NoPerspective();
+            return NoPerspectiveImpl.Instance;
+            
+        }
+
+        public class NoPerspectiveImpl: Decoration
+        {
+            public static readonly NoPerspectiveImpl Instance = new NoPerspectiveImpl();
+        
+            private  NoPerspectiveImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.NoPerspective;
-            public new static NoPerspective Parse(WordReader reader, uint wordCount)
+            public new static NoPerspectiveImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoPerspectiveImpl object.</summary>
+            /// <returns>A string that represents the NoPerspectiveImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NoPerspective()";
+            }
         }
-        public class Flat: Decoration
+        #endregion //NoPerspective
+
+        #region Flat
+        public static FlatImpl Flat()
         {
-            public static readonly Flat Instance = new Flat();
+            return FlatImpl.Instance;
+            
+        }
+
+        public class FlatImpl: Decoration
+        {
+            public static readonly FlatImpl Instance = new FlatImpl();
+        
+            private  FlatImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Flat;
-            public new static Flat Parse(WordReader reader, uint wordCount)
+            public new static FlatImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FlatImpl object.</summary>
+            /// <returns>A string that represents the FlatImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Flat()";
+            }
         }
-        public class Patch: Decoration
+        #endregion //Flat
+
+        #region Patch
+        public static PatchImpl Patch()
         {
-            public static readonly Patch Instance = new Patch();
+            return PatchImpl.Instance;
+            
+        }
+
+        public class PatchImpl: Decoration
+        {
+            public static readonly PatchImpl Instance = new PatchImpl();
+        
+            private  PatchImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Patch;
-            public new static Patch Parse(WordReader reader, uint wordCount)
+            public new static PatchImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PatchImpl object.</summary>
+            /// <returns>A string that represents the PatchImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Patch()";
+            }
         }
-        public class Centroid: Decoration
+        #endregion //Patch
+
+        #region Centroid
+        public static CentroidImpl Centroid()
         {
-            public static readonly Centroid Instance = new Centroid();
+            return CentroidImpl.Instance;
+            
+        }
+
+        public class CentroidImpl: Decoration
+        {
+            public static readonly CentroidImpl Instance = new CentroidImpl();
+        
+            private  CentroidImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Centroid;
-            public new static Centroid Parse(WordReader reader, uint wordCount)
+            public new static CentroidImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CentroidImpl object.</summary>
+            /// <returns>A string that represents the CentroidImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Centroid()";
+            }
         }
-        public class Sample: Decoration
+        #endregion //Centroid
+
+        #region Sample
+        public static SampleImpl Sample()
         {
-            public static readonly Sample Instance = new Sample();
+            return SampleImpl.Instance;
+            
+        }
+
+        public class SampleImpl: Decoration
+        {
+            public static readonly SampleImpl Instance = new SampleImpl();
+        
+            private  SampleImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Sample;
-            public new static Sample Parse(WordReader reader, uint wordCount)
+            public new static SampleImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleImpl object.</summary>
+            /// <returns>A string that represents the SampleImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Sample()";
+            }
         }
-        public class Invariant: Decoration
+        #endregion //Sample
+
+        #region Invariant
+        public static InvariantImpl Invariant()
         {
-            public static readonly Invariant Instance = new Invariant();
+            return InvariantImpl.Instance;
+            
+        }
+
+        public class InvariantImpl: Decoration
+        {
+            public static readonly InvariantImpl Instance = new InvariantImpl();
+        
+            private  InvariantImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Invariant;
-            public new static Invariant Parse(WordReader reader, uint wordCount)
+            public new static InvariantImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InvariantImpl object.</summary>
+            /// <returns>A string that represents the InvariantImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Invariant()";
+            }
         }
-        public class Restrict: Decoration
+        #endregion //Invariant
+
+        #region Restrict
+        public static RestrictImpl Restrict()
         {
-            public static readonly Restrict Instance = new Restrict();
+            return RestrictImpl.Instance;
+            
+        }
+
+        public class RestrictImpl: Decoration
+        {
+            public static readonly RestrictImpl Instance = new RestrictImpl();
+        
+            private  RestrictImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Restrict;
-            public new static Restrict Parse(WordReader reader, uint wordCount)
+            public new static RestrictImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RestrictImpl object.</summary>
+            /// <returns>A string that represents the RestrictImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Restrict()";
+            }
         }
-        public class Aliased: Decoration
+        #endregion //Restrict
+
+        #region Aliased
+        public static AliasedImpl Aliased()
         {
-            public static readonly Aliased Instance = new Aliased();
+            return AliasedImpl.Instance;
+            
+        }
+
+        public class AliasedImpl: Decoration
+        {
+            public static readonly AliasedImpl Instance = new AliasedImpl();
+        
+            private  AliasedImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Aliased;
-            public new static Aliased Parse(WordReader reader, uint wordCount)
+            public new static AliasedImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AliasedImpl object.</summary>
+            /// <returns>A string that represents the AliasedImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Aliased()";
+            }
         }
-        public class Volatile: Decoration
+        #endregion //Aliased
+
+        #region Volatile
+        public static VolatileImpl Volatile()
         {
-            public static readonly Volatile Instance = new Volatile();
+            return VolatileImpl.Instance;
+            
+        }
+
+        public class VolatileImpl: Decoration
+        {
+            public static readonly VolatileImpl Instance = new VolatileImpl();
+        
+            private  VolatileImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Volatile;
-            public new static Volatile Parse(WordReader reader, uint wordCount)
+            public new static VolatileImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VolatileImpl object.</summary>
+            /// <returns>A string that represents the VolatileImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Volatile()";
+            }
         }
-        public class Constant: Decoration
+        #endregion //Volatile
+
+        #region Constant
+        public static ConstantImpl Constant()
         {
-            public static readonly Constant Instance = new Constant();
+            return ConstantImpl.Instance;
+            
+        }
+
+        public class ConstantImpl: Decoration
+        {
+            public static readonly ConstantImpl Instance = new ConstantImpl();
+        
+            private  ConstantImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Constant;
-            public new static Constant Parse(WordReader reader, uint wordCount)
+            public new static ConstantImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ConstantImpl object.</summary>
+            /// <returns>A string that represents the ConstantImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Constant()";
+            }
         }
-        public class Coherent: Decoration
+        #endregion //Constant
+
+        #region Coherent
+        public static CoherentImpl Coherent()
         {
-            public static readonly Coherent Instance = new Coherent();
+            return CoherentImpl.Instance;
+            
+        }
+
+        public class CoherentImpl: Decoration
+        {
+            public static readonly CoherentImpl Instance = new CoherentImpl();
+        
+            private  CoherentImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Coherent;
-            public new static Coherent Parse(WordReader reader, uint wordCount)
+            public new static CoherentImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CoherentImpl object.</summary>
+            /// <returns>A string that represents the CoherentImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Coherent()";
+            }
         }
-        public class NonWritable: Decoration
+        #endregion //Coherent
+
+        #region NonWritable
+        public static NonWritableImpl NonWritable()
         {
-            public static readonly NonWritable Instance = new NonWritable();
+            return NonWritableImpl.Instance;
+            
+        }
+
+        public class NonWritableImpl: Decoration
+        {
+            public static readonly NonWritableImpl Instance = new NonWritableImpl();
+        
+            private  NonWritableImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.NonWritable;
-            public new static NonWritable Parse(WordReader reader, uint wordCount)
+            public new static NonWritableImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NonWritableImpl object.</summary>
+            /// <returns>A string that represents the NonWritableImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NonWritable()";
+            }
         }
-        public class NonReadable: Decoration
+        #endregion //NonWritable
+
+        #region NonReadable
+        public static NonReadableImpl NonReadable()
         {
-            public static readonly NonReadable Instance = new NonReadable();
+            return NonReadableImpl.Instance;
+            
+        }
+
+        public class NonReadableImpl: Decoration
+        {
+            public static readonly NonReadableImpl Instance = new NonReadableImpl();
+        
+            private  NonReadableImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.NonReadable;
-            public new static NonReadable Parse(WordReader reader, uint wordCount)
+            public new static NonReadableImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NonReadableImpl object.</summary>
+            /// <returns>A string that represents the NonReadableImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NonReadable()";
+            }
         }
-        public class Uniform: Decoration
+        #endregion //NonReadable
+
+        #region Uniform
+        public static UniformImpl Uniform()
         {
-            public static readonly Uniform Instance = new Uniform();
+            return UniformImpl.Instance;
+            
+        }
+
+        public class UniformImpl: Decoration
+        {
+            public static readonly UniformImpl Instance = new UniformImpl();
+        
+            private  UniformImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.Uniform;
-            public new static Uniform Parse(WordReader reader, uint wordCount)
+            public new static UniformImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformImpl object.</summary>
+            /// <returns>A string that represents the UniformImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Uniform()";
+            }
         }
-        public class UniformId: Decoration
+        #endregion //Uniform
+
+        #region UniformId
+        public static UniformIdImpl UniformId(uint execution)
         {
+            return new UniformIdImpl(execution);
+            
+        }
+
+        public class UniformIdImpl: Decoration
+        {
+            public UniformIdImpl()
+            {
+            }
+
+            public UniformIdImpl(uint execution)
+            {
+                this.Execution = execution;
+            }
             public override Enumerant Value => Decoration.Enumerant.UniformId;
             public uint Execution { get; set; }
-            public new static UniformId Parse(WordReader reader, uint wordCount)
+            public new static UniformIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new UniformId();
+                var res = new UniformIdImpl();
                 res.Execution = Spv.IdScope.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -449,24 +1026,70 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Execution.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the UniformIdImpl object.</summary>
+            /// <returns>A string that represents the UniformIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.UniformId({Execution})";
+            }
         }
-        public class SaturatedConversion: Decoration
+        #endregion //UniformId
+
+        #region SaturatedConversion
+        public static SaturatedConversionImpl SaturatedConversion()
         {
-            public static readonly SaturatedConversion Instance = new SaturatedConversion();
+            return SaturatedConversionImpl.Instance;
+            
+        }
+
+        public class SaturatedConversionImpl: Decoration
+        {
+            public static readonly SaturatedConversionImpl Instance = new SaturatedConversionImpl();
+        
+            private  SaturatedConversionImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.SaturatedConversion;
-            public new static SaturatedConversion Parse(WordReader reader, uint wordCount)
+            public new static SaturatedConversionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SaturatedConversionImpl object.</summary>
+            /// <returns>A string that represents the SaturatedConversionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.SaturatedConversion()";
+            }
         }
-        public class Stream: Decoration
+        #endregion //SaturatedConversion
+
+        #region Stream
+        public static StreamImpl Stream(uint streamNumber)
         {
+            return new StreamImpl(streamNumber);
+            
+        }
+
+        public class StreamImpl: Decoration
+        {
+            public StreamImpl()
+            {
+            }
+
+            public StreamImpl(uint streamNumber)
+            {
+                this.StreamNumber = streamNumber;
+            }
             public override Enumerant Value => Decoration.Enumerant.Stream;
             public uint StreamNumber { get; set; }
-            public new static Stream Parse(WordReader reader, uint wordCount)
+            public new static StreamImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Stream();
+                var res = new StreamImpl();
                 res.StreamNumber = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -482,87 +1105,187 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 StreamNumber.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the StreamImpl object.</summary>
+            /// <returns>A string that represents the StreamImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Stream({StreamNumber})";
+            }
         }
-        public class Location: Decoration
+        #endregion //Stream
+
+        #region Location
+        public static LocationImpl Location(uint location)
         {
+            return new LocationImpl(location);
+            
+        }
+
+        public class LocationImpl: Decoration
+        {
+            public LocationImpl()
+            {
+            }
+
+            public LocationImpl(uint location)
+            {
+                this.Location = location;
+            }
             public override Enumerant Value => Decoration.Enumerant.Location;
-            public uint LocationValue { get; set; }
-            public new static Location Parse(WordReader reader, uint wordCount)
+            public new uint Location { get; set; }
+            public new static LocationImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Location();
-                res.LocationValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new LocationImpl();
+                res.Location = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += LocationValue.GetWordCount();
+                wordCount += Location.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                LocationValue.Write(writer);
+                Location.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the LocationImpl object.</summary>
+            /// <returns>A string that represents the LocationImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Location({Location})";
             }
         }
-        public class Component: Decoration
+        #endregion //Location
+
+        #region Component
+        public static ComponentImpl Component(uint component)
         {
+            return new ComponentImpl(component);
+            
+        }
+
+        public class ComponentImpl: Decoration
+        {
+            public ComponentImpl()
+            {
+            }
+
+            public ComponentImpl(uint component)
+            {
+                this.Component = component;
+            }
             public override Enumerant Value => Decoration.Enumerant.Component;
-            public uint ComponentValue { get; set; }
-            public new static Component Parse(WordReader reader, uint wordCount)
+            public new uint Component { get; set; }
+            public new static ComponentImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Component();
-                res.ComponentValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new ComponentImpl();
+                res.Component = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += ComponentValue.GetWordCount();
+                wordCount += Component.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                ComponentValue.Write(writer);
+                Component.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the ComponentImpl object.</summary>
+            /// <returns>A string that represents the ComponentImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Component({Component})";
             }
         }
-        public class Index: Decoration
+        #endregion //Component
+
+        #region Index
+        public static IndexImpl Index(uint index)
         {
+            return new IndexImpl(index);
+            
+        }
+
+        public class IndexImpl: Decoration
+        {
+            public IndexImpl()
+            {
+            }
+
+            public IndexImpl(uint index)
+            {
+                this.Index = index;
+            }
             public override Enumerant Value => Decoration.Enumerant.Index;
-            public uint IndexValue { get; set; }
-            public new static Index Parse(WordReader reader, uint wordCount)
+            public new uint Index { get; set; }
+            public new static IndexImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Index();
-                res.IndexValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new IndexImpl();
+                res.Index = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += IndexValue.GetWordCount();
+                wordCount += Index.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                IndexValue.Write(writer);
+                Index.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the IndexImpl object.</summary>
+            /// <returns>A string that represents the IndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Index({Index})";
             }
         }
-        public class Binding: Decoration
+        #endregion //Index
+
+        #region Binding
+        public static BindingImpl Binding(uint bindingPoint)
         {
+            return new BindingImpl(bindingPoint);
+            
+        }
+
+        public class BindingImpl: Decoration
+        {
+            public BindingImpl()
+            {
+            }
+
+            public BindingImpl(uint bindingPoint)
+            {
+                this.BindingPoint = bindingPoint;
+            }
             public override Enumerant Value => Decoration.Enumerant.Binding;
             public uint BindingPoint { get; set; }
-            public new static Binding Parse(WordReader reader, uint wordCount)
+            public new static BindingImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Binding();
+                var res = new BindingImpl();
                 res.BindingPoint = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -578,39 +1301,89 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 BindingPoint.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the BindingImpl object.</summary>
+            /// <returns>A string that represents the BindingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Binding({BindingPoint})";
+            }
         }
-        public class DescriptorSet: Decoration
+        #endregion //Binding
+
+        #region DescriptorSet
+        public static DescriptorSetImpl DescriptorSet(uint descriptorSet)
         {
+            return new DescriptorSetImpl(descriptorSet);
+            
+        }
+
+        public class DescriptorSetImpl: Decoration
+        {
+            public DescriptorSetImpl()
+            {
+            }
+
+            public DescriptorSetImpl(uint descriptorSet)
+            {
+                this.DescriptorSet = descriptorSet;
+            }
             public override Enumerant Value => Decoration.Enumerant.DescriptorSet;
-            public uint DescriptorSetValue { get; set; }
-            public new static DescriptorSet Parse(WordReader reader, uint wordCount)
+            public new uint DescriptorSet { get; set; }
+            public new static DescriptorSetImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new DescriptorSet();
-                res.DescriptorSetValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new DescriptorSetImpl();
+                res.DescriptorSet = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += DescriptorSetValue.GetWordCount();
+                wordCount += DescriptorSet.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                DescriptorSetValue.Write(writer);
+                DescriptorSet.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the DescriptorSetImpl object.</summary>
+            /// <returns>A string that represents the DescriptorSetImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.DescriptorSet({DescriptorSet})";
             }
         }
-        public class Offset: Decoration
+        #endregion //DescriptorSet
+
+        #region Offset
+        public static OffsetImpl Offset(uint byteOffset)
         {
+            return new OffsetImpl(byteOffset);
+            
+        }
+
+        public class OffsetImpl: Decoration
+        {
+            public OffsetImpl()
+            {
+            }
+
+            public OffsetImpl(uint byteOffset)
+            {
+                this.ByteOffset = byteOffset;
+            }
             public override Enumerant Value => Decoration.Enumerant.Offset;
             public uint ByteOffset { get; set; }
-            public new static Offset Parse(WordReader reader, uint wordCount)
+            public new static OffsetImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Offset();
+                var res = new OffsetImpl();
                 res.ByteOffset = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -626,15 +1399,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 ByteOffset.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the OffsetImpl object.</summary>
+            /// <returns>A string that represents the OffsetImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Offset({ByteOffset})";
+            }
         }
-        public class XfbBuffer: Decoration
+        #endregion //Offset
+
+        #region XfbBuffer
+        public static XfbBufferImpl XfbBuffer(uint xFBBufferNumber)
         {
+            return new XfbBufferImpl(xFBBufferNumber);
+            
+        }
+
+        public class XfbBufferImpl: Decoration
+        {
+            public XfbBufferImpl()
+            {
+            }
+
+            public XfbBufferImpl(uint xFBBufferNumber)
+            {
+                this.XFBBufferNumber = xFBBufferNumber;
+            }
             public override Enumerant Value => Decoration.Enumerant.XfbBuffer;
             public uint XFBBufferNumber { get; set; }
-            public new static XfbBuffer Parse(WordReader reader, uint wordCount)
+            public new static XfbBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new XfbBuffer();
+                var res = new XfbBufferImpl();
                 res.XFBBufferNumber = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -650,15 +1448,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 XFBBufferNumber.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the XfbBufferImpl object.</summary>
+            /// <returns>A string that represents the XfbBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.XfbBuffer({XFBBufferNumber})";
+            }
         }
-        public class XfbStride: Decoration
+        #endregion //XfbBuffer
+
+        #region XfbStride
+        public static XfbStrideImpl XfbStride(uint xFBStride)
         {
+            return new XfbStrideImpl(xFBStride);
+            
+        }
+
+        public class XfbStrideImpl: Decoration
+        {
+            public XfbStrideImpl()
+            {
+            }
+
+            public XfbStrideImpl(uint xFBStride)
+            {
+                this.XFBStride = xFBStride;
+            }
             public override Enumerant Value => Decoration.Enumerant.XfbStride;
             public uint XFBStride { get; set; }
-            public new static XfbStride Parse(WordReader reader, uint wordCount)
+            public new static XfbStrideImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new XfbStride();
+                var res = new XfbStrideImpl();
                 res.XFBStride = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -674,15 +1497,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 XFBStride.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the XfbStrideImpl object.</summary>
+            /// <returns>A string that represents the XfbStrideImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.XfbStride({XFBStride})";
+            }
         }
-        public class FuncParamAttr: Decoration
+        #endregion //XfbStride
+
+        #region FuncParamAttr
+        public static FuncParamAttrImpl FuncParamAttr(Spv.FunctionParameterAttribute functionParameterAttribute)
         {
+            return new FuncParamAttrImpl(functionParameterAttribute);
+            
+        }
+
+        public class FuncParamAttrImpl: Decoration
+        {
+            public FuncParamAttrImpl()
+            {
+            }
+
+            public FuncParamAttrImpl(Spv.FunctionParameterAttribute functionParameterAttribute)
+            {
+                this.FunctionParameterAttribute = functionParameterAttribute;
+            }
             public override Enumerant Value => Decoration.Enumerant.FuncParamAttr;
             public Spv.FunctionParameterAttribute FunctionParameterAttribute { get; set; }
-            public new static FuncParamAttr Parse(WordReader reader, uint wordCount)
+            public new static FuncParamAttrImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new FuncParamAttr();
+                var res = new FuncParamAttrImpl();
                 res.FunctionParameterAttribute = Spv.FunctionParameterAttribute.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -698,15 +1546,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 FunctionParameterAttribute.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the FuncParamAttrImpl object.</summary>
+            /// <returns>A string that represents the FuncParamAttrImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.FuncParamAttr({FunctionParameterAttribute})";
+            }
         }
-        public class FPRoundingMode: Decoration
+        #endregion //FuncParamAttr
+
+        #region FPRoundingMode
+        public static FPRoundingModeImpl FPRoundingMode(Spv.FPRoundingMode floatingPointRoundingMode)
         {
+            return new FPRoundingModeImpl(floatingPointRoundingMode);
+            
+        }
+
+        public class FPRoundingModeImpl: Decoration
+        {
+            public FPRoundingModeImpl()
+            {
+            }
+
+            public FPRoundingModeImpl(Spv.FPRoundingMode floatingPointRoundingMode)
+            {
+                this.FloatingPointRoundingMode = floatingPointRoundingMode;
+            }
             public override Enumerant Value => Decoration.Enumerant.FPRoundingMode;
             public Spv.FPRoundingMode FloatingPointRoundingMode { get; set; }
-            public new static FPRoundingMode Parse(WordReader reader, uint wordCount)
+            public new static FPRoundingModeImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new FPRoundingMode();
+                var res = new FPRoundingModeImpl();
                 res.FloatingPointRoundingMode = Spv.FPRoundingMode.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -722,15 +1595,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 FloatingPointRoundingMode.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the FPRoundingModeImpl object.</summary>
+            /// <returns>A string that represents the FPRoundingModeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.FPRoundingMode({FloatingPointRoundingMode})";
+            }
         }
-        public class FPFastMathMode: Decoration
+        #endregion //FPRoundingMode
+
+        #region FPFastMathMode
+        public static FPFastMathModeImpl FPFastMathMode(Spv.FPFastMathMode fastMathMode)
         {
+            return new FPFastMathModeImpl(fastMathMode);
+            
+        }
+
+        public class FPFastMathModeImpl: Decoration
+        {
+            public FPFastMathModeImpl()
+            {
+            }
+
+            public FPFastMathModeImpl(Spv.FPFastMathMode fastMathMode)
+            {
+                this.FastMathMode = fastMathMode;
+            }
             public override Enumerant Value => Decoration.Enumerant.FPFastMathMode;
             public Spv.FPFastMathMode FastMathMode { get; set; }
-            public new static FPFastMathMode Parse(WordReader reader, uint wordCount)
+            public new static FPFastMathModeImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new FPFastMathMode();
+                var res = new FPFastMathModeImpl();
                 res.FastMathMode = Spv.FPFastMathMode.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -746,16 +1644,42 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 FastMathMode.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the FPFastMathModeImpl object.</summary>
+            /// <returns>A string that represents the FPFastMathModeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.FPFastMathMode({FastMathMode})";
+            }
         }
-        public class LinkageAttributes: Decoration
+        #endregion //FPFastMathMode
+
+        #region LinkageAttributes
+        public static LinkageAttributesImpl LinkageAttributes(string name, Spv.LinkageType linkageType)
         {
+            return new LinkageAttributesImpl(name, linkageType);
+            
+        }
+
+        public class LinkageAttributesImpl: Decoration
+        {
+            public LinkageAttributesImpl()
+            {
+            }
+
+            public LinkageAttributesImpl(string name, Spv.LinkageType linkageType)
+            {
+                this.Name = name;
+                this.LinkageType = linkageType;
+            }
             public override Enumerant Value => Decoration.Enumerant.LinkageAttributes;
             public string Name { get; set; }
             public Spv.LinkageType LinkageType { get; set; }
-            public new static LinkageAttributes Parse(WordReader reader, uint wordCount)
+            public new static LinkageAttributesImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new LinkageAttributes();
+                var res = new LinkageAttributesImpl();
                 res.Name = Spv.LiteralString.Parse(reader, end-reader.Position);
                 res.LinkageType = Spv.LinkageType.Parse(reader, end-reader.Position);
                 return res;
@@ -774,24 +1698,70 @@ namespace Toe.SPIRV.Spv
                 Name.Write(writer);
                 LinkageType.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the LinkageAttributesImpl object.</summary>
+            /// <returns>A string that represents the LinkageAttributesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.LinkageAttributes({Name}, {LinkageType})";
+            }
         }
-        public class NoContraction: Decoration
+        #endregion //LinkageAttributes
+
+        #region NoContraction
+        public static NoContractionImpl NoContraction()
         {
-            public static readonly NoContraction Instance = new NoContraction();
+            return NoContractionImpl.Instance;
+            
+        }
+
+        public class NoContractionImpl: Decoration
+        {
+            public static readonly NoContractionImpl Instance = new NoContractionImpl();
+        
+            private  NoContractionImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.NoContraction;
-            public new static NoContraction Parse(WordReader reader, uint wordCount)
+            public new static NoContractionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoContractionImpl object.</summary>
+            /// <returns>A string that represents the NoContractionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NoContraction()";
+            }
         }
-        public class InputAttachmentIndex: Decoration
+        #endregion //NoContraction
+
+        #region InputAttachmentIndex
+        public static InputAttachmentIndexImpl InputAttachmentIndex(uint attachmentIndex)
         {
+            return new InputAttachmentIndexImpl(attachmentIndex);
+            
+        }
+
+        public class InputAttachmentIndexImpl: Decoration
+        {
+            public InputAttachmentIndexImpl()
+            {
+            }
+
+            public InputAttachmentIndexImpl(uint attachmentIndex)
+            {
+                this.AttachmentIndex = attachmentIndex;
+            }
             public override Enumerant Value => Decoration.Enumerant.InputAttachmentIndex;
             public uint AttachmentIndex { get; set; }
-            public new static InputAttachmentIndex Parse(WordReader reader, uint wordCount)
+            public new static InputAttachmentIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new InputAttachmentIndex();
+                var res = new InputAttachmentIndexImpl();
                 res.AttachmentIndex = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -807,63 +1777,138 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 AttachmentIndex.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the InputAttachmentIndexImpl object.</summary>
+            /// <returns>A string that represents the InputAttachmentIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.InputAttachmentIndex({AttachmentIndex})";
+            }
         }
-        public class Alignment: Decoration
+        #endregion //InputAttachmentIndex
+
+        #region Alignment
+        public static AlignmentImpl Alignment(uint alignment)
         {
+            return new AlignmentImpl(alignment);
+            
+        }
+
+        public class AlignmentImpl: Decoration
+        {
+            public AlignmentImpl()
+            {
+            }
+
+            public AlignmentImpl(uint alignment)
+            {
+                this.Alignment = alignment;
+            }
             public override Enumerant Value => Decoration.Enumerant.Alignment;
-            public uint AlignmentValue { get; set; }
-            public new static Alignment Parse(WordReader reader, uint wordCount)
+            public new uint Alignment { get; set; }
+            public new static AlignmentImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Alignment();
-                res.AlignmentValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new AlignmentImpl();
+                res.Alignment = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += AlignmentValue.GetWordCount();
+                wordCount += Alignment.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                AlignmentValue.Write(writer);
+                Alignment.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the AlignmentImpl object.</summary>
+            /// <returns>A string that represents the AlignmentImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.Alignment({Alignment})";
             }
         }
-        public class MaxByteOffset: Decoration
+        #endregion //Alignment
+
+        #region MaxByteOffset
+        public static MaxByteOffsetImpl MaxByteOffset(uint maxByteOffset)
         {
+            return new MaxByteOffsetImpl(maxByteOffset);
+            
+        }
+
+        public class MaxByteOffsetImpl: Decoration
+        {
+            public MaxByteOffsetImpl()
+            {
+            }
+
+            public MaxByteOffsetImpl(uint maxByteOffset)
+            {
+                this.MaxByteOffset = maxByteOffset;
+            }
             public override Enumerant Value => Decoration.Enumerant.MaxByteOffset;
-            public uint MaxByteOffsetValue { get; set; }
-            public new static MaxByteOffset Parse(WordReader reader, uint wordCount)
+            public new uint MaxByteOffset { get; set; }
+            public new static MaxByteOffsetImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new MaxByteOffset();
-                res.MaxByteOffsetValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new MaxByteOffsetImpl();
+                res.MaxByteOffset = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += MaxByteOffsetValue.GetWordCount();
+                wordCount += MaxByteOffset.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                MaxByteOffsetValue.Write(writer);
+                MaxByteOffset.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the MaxByteOffsetImpl object.</summary>
+            /// <returns>A string that represents the MaxByteOffsetImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.MaxByteOffset({MaxByteOffset})";
             }
         }
-        public class AlignmentId: Decoration
+        #endregion //MaxByteOffset
+
+        #region AlignmentId
+        public static AlignmentIdImpl AlignmentId(Spv.IdRef alignment)
         {
+            return new AlignmentIdImpl(alignment);
+            
+        }
+
+        public class AlignmentIdImpl: Decoration
+        {
+            public AlignmentIdImpl()
+            {
+            }
+
+            public AlignmentIdImpl(Spv.IdRef alignment)
+            {
+                this.Alignment = alignment;
+            }
             public override Enumerant Value => Decoration.Enumerant.AlignmentId;
             public Spv.IdRef Alignment { get; set; }
-            public new static AlignmentId Parse(WordReader reader, uint wordCount)
+            public new static AlignmentIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new AlignmentId();
+                var res = new AlignmentIdImpl();
                 res.Alignment = Spv.IdRef.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -879,15 +1924,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Alignment.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the AlignmentIdImpl object.</summary>
+            /// <returns>A string that represents the AlignmentIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.AlignmentId({Alignment})";
+            }
         }
-        public class MaxByteOffsetId: Decoration
+        #endregion //AlignmentId
+
+        #region MaxByteOffsetId
+        public static MaxByteOffsetIdImpl MaxByteOffsetId(Spv.IdRef maxByteOffset)
         {
+            return new MaxByteOffsetIdImpl(maxByteOffset);
+            
+        }
+
+        public class MaxByteOffsetIdImpl: Decoration
+        {
+            public MaxByteOffsetIdImpl()
+            {
+            }
+
+            public MaxByteOffsetIdImpl(Spv.IdRef maxByteOffset)
+            {
+                this.MaxByteOffset = maxByteOffset;
+            }
             public override Enumerant Value => Decoration.Enumerant.MaxByteOffsetId;
             public Spv.IdRef MaxByteOffset { get; set; }
-            public new static MaxByteOffsetId Parse(WordReader reader, uint wordCount)
+            public new static MaxByteOffsetIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new MaxByteOffsetId();
+                var res = new MaxByteOffsetIdImpl();
                 res.MaxByteOffset = Spv.IdRef.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -903,69 +1973,220 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 MaxByteOffset.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the MaxByteOffsetIdImpl object.</summary>
+            /// <returns>A string that represents the MaxByteOffsetIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.MaxByteOffsetId({MaxByteOffset})";
+            }
         }
-        public class NoSignedWrap: Decoration
+        #endregion //MaxByteOffsetId
+
+        #region NoSignedWrap
+        public static NoSignedWrapImpl NoSignedWrap()
         {
-            public static readonly NoSignedWrap Instance = new NoSignedWrap();
+            return NoSignedWrapImpl.Instance;
+            
+        }
+
+        public class NoSignedWrapImpl: Decoration
+        {
+            public static readonly NoSignedWrapImpl Instance = new NoSignedWrapImpl();
+        
+            private  NoSignedWrapImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.NoSignedWrap;
-            public new static NoSignedWrap Parse(WordReader reader, uint wordCount)
+            public new static NoSignedWrapImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoSignedWrapImpl object.</summary>
+            /// <returns>A string that represents the NoSignedWrapImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NoSignedWrap()";
+            }
         }
-        public class NoUnsignedWrap: Decoration
+        #endregion //NoSignedWrap
+
+        #region NoUnsignedWrap
+        public static NoUnsignedWrapImpl NoUnsignedWrap()
         {
-            public static readonly NoUnsignedWrap Instance = new NoUnsignedWrap();
+            return NoUnsignedWrapImpl.Instance;
+            
+        }
+
+        public class NoUnsignedWrapImpl: Decoration
+        {
+            public static readonly NoUnsignedWrapImpl Instance = new NoUnsignedWrapImpl();
+        
+            private  NoUnsignedWrapImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.NoUnsignedWrap;
-            public new static NoUnsignedWrap Parse(WordReader reader, uint wordCount)
+            public new static NoUnsignedWrapImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoUnsignedWrapImpl object.</summary>
+            /// <returns>A string that represents the NoUnsignedWrapImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NoUnsignedWrap()";
+            }
         }
-        public class ExplicitInterpAMD: Decoration
+        #endregion //NoUnsignedWrap
+
+        #region ExplicitInterpAMD
+        public static ExplicitInterpAMDImpl ExplicitInterpAMD()
         {
-            public static readonly ExplicitInterpAMD Instance = new ExplicitInterpAMD();
+            return ExplicitInterpAMDImpl.Instance;
+            
+        }
+
+        public class ExplicitInterpAMDImpl: Decoration
+        {
+            public static readonly ExplicitInterpAMDImpl Instance = new ExplicitInterpAMDImpl();
+        
+            private  ExplicitInterpAMDImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.ExplicitInterpAMD;
-            public new static ExplicitInterpAMD Parse(WordReader reader, uint wordCount)
+            public new static ExplicitInterpAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ExplicitInterpAMDImpl object.</summary>
+            /// <returns>A string that represents the ExplicitInterpAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.ExplicitInterpAMD()";
+            }
         }
-        public class OverrideCoverageNV: Decoration
+        #endregion //ExplicitInterpAMD
+
+        #region OverrideCoverageNV
+        public static OverrideCoverageNVImpl OverrideCoverageNV()
         {
-            public static readonly OverrideCoverageNV Instance = new OverrideCoverageNV();
+            return OverrideCoverageNVImpl.Instance;
+            
+        }
+
+        public class OverrideCoverageNVImpl: Decoration
+        {
+            public static readonly OverrideCoverageNVImpl Instance = new OverrideCoverageNVImpl();
+        
+            private  OverrideCoverageNVImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.OverrideCoverageNV;
-            public new static OverrideCoverageNV Parse(WordReader reader, uint wordCount)
+            public new static OverrideCoverageNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OverrideCoverageNVImpl object.</summary>
+            /// <returns>A string that represents the OverrideCoverageNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.OverrideCoverageNV()";
+            }
         }
-        public class PassthroughNV: Decoration
+        #endregion //OverrideCoverageNV
+
+        #region PassthroughNV
+        public static PassthroughNVImpl PassthroughNV()
         {
-            public static readonly PassthroughNV Instance = new PassthroughNV();
+            return PassthroughNVImpl.Instance;
+            
+        }
+
+        public class PassthroughNVImpl: Decoration
+        {
+            public static readonly PassthroughNVImpl Instance = new PassthroughNVImpl();
+        
+            private  PassthroughNVImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.PassthroughNV;
-            public new static PassthroughNV Parse(WordReader reader, uint wordCount)
+            public new static PassthroughNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PassthroughNVImpl object.</summary>
+            /// <returns>A string that represents the PassthroughNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.PassthroughNV()";
+            }
         }
-        public class ViewportRelativeNV: Decoration
+        #endregion //PassthroughNV
+
+        #region ViewportRelativeNV
+        public static ViewportRelativeNVImpl ViewportRelativeNV()
         {
-            public static readonly ViewportRelativeNV Instance = new ViewportRelativeNV();
+            return ViewportRelativeNVImpl.Instance;
+            
+        }
+
+        public class ViewportRelativeNVImpl: Decoration
+        {
+            public static readonly ViewportRelativeNVImpl Instance = new ViewportRelativeNVImpl();
+        
+            private  ViewportRelativeNVImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.ViewportRelativeNV;
-            public new static ViewportRelativeNV Parse(WordReader reader, uint wordCount)
+            public new static ViewportRelativeNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ViewportRelativeNVImpl object.</summary>
+            /// <returns>A string that represents the ViewportRelativeNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.ViewportRelativeNV()";
+            }
         }
-        public class SecondaryViewportRelativeNV: Decoration
+        #endregion //ViewportRelativeNV
+
+        #region SecondaryViewportRelativeNV
+        public static SecondaryViewportRelativeNVImpl SecondaryViewportRelativeNV(uint offset)
         {
+            return new SecondaryViewportRelativeNVImpl(offset);
+            
+        }
+
+        public class SecondaryViewportRelativeNVImpl: Decoration
+        {
+            public SecondaryViewportRelativeNVImpl()
+            {
+            }
+
+            public SecondaryViewportRelativeNVImpl(uint offset)
+            {
+                this.Offset = offset;
+            }
             public override Enumerant Value => Decoration.Enumerant.SecondaryViewportRelativeNV;
             public uint Offset { get; set; }
-            public new static SecondaryViewportRelativeNV Parse(WordReader reader, uint wordCount)
+            public new static SecondaryViewportRelativeNVImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new SecondaryViewportRelativeNV();
+                var res = new SecondaryViewportRelativeNVImpl();
                 res.Offset = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -981,129 +2202,340 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Offset.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the SecondaryViewportRelativeNVImpl object.</summary>
+            /// <returns>A string that represents the SecondaryViewportRelativeNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.SecondaryViewportRelativeNV({Offset})";
+            }
         }
-        public class PerPrimitiveNV: Decoration
+        #endregion //SecondaryViewportRelativeNV
+
+        #region PerPrimitiveNV
+        public static PerPrimitiveNVImpl PerPrimitiveNV()
         {
-            public static readonly PerPrimitiveNV Instance = new PerPrimitiveNV();
+            return PerPrimitiveNVImpl.Instance;
+            
+        }
+
+        public class PerPrimitiveNVImpl: Decoration
+        {
+            public static readonly PerPrimitiveNVImpl Instance = new PerPrimitiveNVImpl();
+        
+            private  PerPrimitiveNVImpl()
+            {
+            }
             public override Enumerant Value => Decoration.Enumerant.PerPrimitiveNV;
-            public new static PerPrimitiveNV Parse(WordReader reader, uint wordCount)
+            public new static PerPrimitiveNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
-            }
-        }
-        public class PerViewNV: Decoration
-        {
-            public static readonly PerViewNV Instance = new PerViewNV();
-            public override Enumerant Value => Decoration.Enumerant.PerViewNV;
-            public new static PerViewNV Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class PerTaskNV: Decoration
-        {
-            public static readonly PerTaskNV Instance = new PerTaskNV();
-            public override Enumerant Value => Decoration.Enumerant.PerTaskNV;
-            public new static PerTaskNV Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class PerVertexNV: Decoration
-        {
-            public static readonly PerVertexNV Instance = new PerVertexNV();
-            public override Enumerant Value => Decoration.Enumerant.PerVertexNV;
-            public new static PerVertexNV Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class NonUniform: Decoration
-        {
-            public static readonly NonUniform Instance = new NonUniform();
-            public override Enumerant Value => Decoration.Enumerant.NonUniform;
-            public new static NonUniform Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class NonUniformEXT: Decoration
-        {
-            public static readonly NonUniformEXT Instance = new NonUniformEXT();
-            public override Enumerant Value => Decoration.Enumerant.NonUniformEXT;
-            public new static NonUniformEXT Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class RestrictPointer: Decoration
-        {
-            public static readonly RestrictPointer Instance = new RestrictPointer();
-            public override Enumerant Value => Decoration.Enumerant.RestrictPointer;
-            public new static RestrictPointer Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class RestrictPointerEXT: Decoration
-        {
-            public static readonly RestrictPointerEXT Instance = new RestrictPointerEXT();
-            public override Enumerant Value => Decoration.Enumerant.RestrictPointerEXT;
-            public new static RestrictPointerEXT Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class AliasedPointer: Decoration
-        {
-            public static readonly AliasedPointer Instance = new AliasedPointer();
-            public override Enumerant Value => Decoration.Enumerant.AliasedPointer;
-            public new static AliasedPointer Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class AliasedPointerEXT: Decoration
-        {
-            public static readonly AliasedPointerEXT Instance = new AliasedPointerEXT();
-            public override Enumerant Value => Decoration.Enumerant.AliasedPointerEXT;
-            public new static AliasedPointerEXT Parse(WordReader reader, uint wordCount)
-            {
-                return Instance;
-            }
-        }
-        public class CounterBuffer: Decoration
-        {
-            public override Enumerant Value => Decoration.Enumerant.CounterBuffer;
-            public Spv.IdRef CounterBufferValue { get; set; }
-            public new static CounterBuffer Parse(WordReader reader, uint wordCount)
-            {
-                var end = reader.Position+wordCount;
-                var res = new CounterBuffer();
-                res.CounterBufferValue = Spv.IdRef.Parse(reader, end-reader.Position);
-                return res;
-            }
-            public override uint GetWordCount()
-            {
-                uint wordCount = base.GetWordCount();
-                wordCount += CounterBufferValue.GetWordCount();
-                return wordCount;
             }
 
-            public override void Write(WordWriter writer)
+            /// <summary>Returns a string that represents the PerPrimitiveNVImpl object.</summary>
+            /// <returns>A string that represents the PerPrimitiveNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
             {
-                base.Write(writer);
-                CounterBufferValue.Write(writer);
+                return $" Decoration.PerPrimitiveNV()";
             }
         }
-        public class HlslCounterBufferGOOGLE: Decoration
+        #endregion //PerPrimitiveNV
+
+        #region PerViewNV
+        public static PerViewNVImpl PerViewNV()
         {
-            public override Enumerant Value => Decoration.Enumerant.HlslCounterBufferGOOGLE;
-            public Spv.IdRef CounterBuffer { get; set; }
-            public new static HlslCounterBufferGOOGLE Parse(WordReader reader, uint wordCount)
+            return PerViewNVImpl.Instance;
+            
+        }
+
+        public class PerViewNVImpl: Decoration
+        {
+            public static readonly PerViewNVImpl Instance = new PerViewNVImpl();
+        
+            private  PerViewNVImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.PerViewNV;
+            public new static PerViewNVImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the PerViewNVImpl object.</summary>
+            /// <returns>A string that represents the PerViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.PerViewNV()";
+            }
+        }
+        #endregion //PerViewNV
+
+        #region PerTaskNV
+        public static PerTaskNVImpl PerTaskNV()
+        {
+            return PerTaskNVImpl.Instance;
+            
+        }
+
+        public class PerTaskNVImpl: Decoration
+        {
+            public static readonly PerTaskNVImpl Instance = new PerTaskNVImpl();
+        
+            private  PerTaskNVImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.PerTaskNV;
+            public new static PerTaskNVImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the PerTaskNVImpl object.</summary>
+            /// <returns>A string that represents the PerTaskNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.PerTaskNV()";
+            }
+        }
+        #endregion //PerTaskNV
+
+        #region PerVertexNV
+        public static PerVertexNVImpl PerVertexNV()
+        {
+            return PerVertexNVImpl.Instance;
+            
+        }
+
+        public class PerVertexNVImpl: Decoration
+        {
+            public static readonly PerVertexNVImpl Instance = new PerVertexNVImpl();
+        
+            private  PerVertexNVImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.PerVertexNV;
+            public new static PerVertexNVImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the PerVertexNVImpl object.</summary>
+            /// <returns>A string that represents the PerVertexNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.PerVertexNV()";
+            }
+        }
+        #endregion //PerVertexNV
+
+        #region NonUniform
+        public static NonUniformImpl NonUniform()
+        {
+            return NonUniformImpl.Instance;
+            
+        }
+
+        public class NonUniformImpl: Decoration
+        {
+            public static readonly NonUniformImpl Instance = new NonUniformImpl();
+        
+            private  NonUniformImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.NonUniform;
+            public new static NonUniformImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the NonUniformImpl object.</summary>
+            /// <returns>A string that represents the NonUniformImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NonUniform()";
+            }
+        }
+        #endregion //NonUniform
+
+        #region NonUniformEXT
+        public static NonUniformEXTImpl NonUniformEXT()
+        {
+            return NonUniformEXTImpl.Instance;
+            
+        }
+
+        public class NonUniformEXTImpl: Decoration
+        {
+            public static readonly NonUniformEXTImpl Instance = new NonUniformEXTImpl();
+        
+            private  NonUniformEXTImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.NonUniformEXT;
+            public new static NonUniformEXTImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the NonUniformEXTImpl object.</summary>
+            /// <returns>A string that represents the NonUniformEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.NonUniformEXT()";
+            }
+        }
+        #endregion //NonUniformEXT
+
+        #region RestrictPointer
+        public static RestrictPointerImpl RestrictPointer()
+        {
+            return RestrictPointerImpl.Instance;
+            
+        }
+
+        public class RestrictPointerImpl: Decoration
+        {
+            public static readonly RestrictPointerImpl Instance = new RestrictPointerImpl();
+        
+            private  RestrictPointerImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.RestrictPointer;
+            public new static RestrictPointerImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the RestrictPointerImpl object.</summary>
+            /// <returns>A string that represents the RestrictPointerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.RestrictPointer()";
+            }
+        }
+        #endregion //RestrictPointer
+
+        #region RestrictPointerEXT
+        public static RestrictPointerEXTImpl RestrictPointerEXT()
+        {
+            return RestrictPointerEXTImpl.Instance;
+            
+        }
+
+        public class RestrictPointerEXTImpl: Decoration
+        {
+            public static readonly RestrictPointerEXTImpl Instance = new RestrictPointerEXTImpl();
+        
+            private  RestrictPointerEXTImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.RestrictPointerEXT;
+            public new static RestrictPointerEXTImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the RestrictPointerEXTImpl object.</summary>
+            /// <returns>A string that represents the RestrictPointerEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.RestrictPointerEXT()";
+            }
+        }
+        #endregion //RestrictPointerEXT
+
+        #region AliasedPointer
+        public static AliasedPointerImpl AliasedPointer()
+        {
+            return AliasedPointerImpl.Instance;
+            
+        }
+
+        public class AliasedPointerImpl: Decoration
+        {
+            public static readonly AliasedPointerImpl Instance = new AliasedPointerImpl();
+        
+            private  AliasedPointerImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.AliasedPointer;
+            public new static AliasedPointerImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the AliasedPointerImpl object.</summary>
+            /// <returns>A string that represents the AliasedPointerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.AliasedPointer()";
+            }
+        }
+        #endregion //AliasedPointer
+
+        #region AliasedPointerEXT
+        public static AliasedPointerEXTImpl AliasedPointerEXT()
+        {
+            return AliasedPointerEXTImpl.Instance;
+            
+        }
+
+        public class AliasedPointerEXTImpl: Decoration
+        {
+            public static readonly AliasedPointerEXTImpl Instance = new AliasedPointerEXTImpl();
+        
+            private  AliasedPointerEXTImpl()
+            {
+            }
+            public override Enumerant Value => Decoration.Enumerant.AliasedPointerEXT;
+            public new static AliasedPointerEXTImpl Parse(WordReader reader, uint wordCount)
+            {
+                return Instance;
+            }
+
+            /// <summary>Returns a string that represents the AliasedPointerEXTImpl object.</summary>
+            /// <returns>A string that represents the AliasedPointerEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.AliasedPointerEXT()";
+            }
+        }
+        #endregion //AliasedPointerEXT
+
+        #region CounterBuffer
+        public static CounterBufferImpl CounterBuffer(Spv.IdRef counterBuffer)
+        {
+            return new CounterBufferImpl(counterBuffer);
+            
+        }
+
+        public class CounterBufferImpl: Decoration
+        {
+            public CounterBufferImpl()
+            {
+            }
+
+            public CounterBufferImpl(Spv.IdRef counterBuffer)
+            {
+                this.CounterBuffer = counterBuffer;
+            }
+            public override Enumerant Value => Decoration.Enumerant.CounterBuffer;
+            public new Spv.IdRef CounterBuffer { get; set; }
+            public new static CounterBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new HlslCounterBufferGOOGLE();
+                var res = new CounterBufferImpl();
                 res.CounterBuffer = Spv.IdRef.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -1119,15 +2551,89 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 CounterBuffer.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the CounterBufferImpl object.</summary>
+            /// <returns>A string that represents the CounterBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.CounterBuffer({CounterBuffer})";
+            }
         }
-        public class UserSemantic: Decoration
+        #endregion //CounterBuffer
+
+        #region HlslCounterBufferGOOGLE
+        public static HlslCounterBufferGOOGLEImpl HlslCounterBufferGOOGLE(Spv.IdRef counterBuffer)
         {
+            return new HlslCounterBufferGOOGLEImpl(counterBuffer);
+            
+        }
+
+        public class HlslCounterBufferGOOGLEImpl: Decoration
+        {
+            public HlslCounterBufferGOOGLEImpl()
+            {
+            }
+
+            public HlslCounterBufferGOOGLEImpl(Spv.IdRef counterBuffer)
+            {
+                this.CounterBuffer = counterBuffer;
+            }
+            public override Enumerant Value => Decoration.Enumerant.HlslCounterBufferGOOGLE;
+            public Spv.IdRef CounterBuffer { get; set; }
+            public new static HlslCounterBufferGOOGLEImpl Parse(WordReader reader, uint wordCount)
+            {
+                var end = reader.Position+wordCount;
+                var res = new HlslCounterBufferGOOGLEImpl();
+                res.CounterBuffer = Spv.IdRef.Parse(reader, end-reader.Position);
+                return res;
+            }
+            public override uint GetWordCount()
+            {
+                uint wordCount = base.GetWordCount();
+                wordCount += CounterBuffer.GetWordCount();
+                return wordCount;
+            }
+
+            public override void Write(WordWriter writer)
+            {
+                base.Write(writer);
+                CounterBuffer.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the HlslCounterBufferGOOGLEImpl object.</summary>
+            /// <returns>A string that represents the HlslCounterBufferGOOGLEImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.HlslCounterBufferGOOGLE({CounterBuffer})";
+            }
+        }
+        #endregion //HlslCounterBufferGOOGLE
+
+        #region UserSemantic
+        public static UserSemanticImpl UserSemantic(string semantic)
+        {
+            return new UserSemanticImpl(semantic);
+            
+        }
+
+        public class UserSemanticImpl: Decoration
+        {
+            public UserSemanticImpl()
+            {
+            }
+
+            public UserSemanticImpl(string semantic)
+            {
+                this.Semantic = semantic;
+            }
             public override Enumerant Value => Decoration.Enumerant.UserSemantic;
             public string Semantic { get; set; }
-            public new static UserSemantic Parse(WordReader reader, uint wordCount)
+            public new static UserSemanticImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new UserSemantic();
+                var res = new UserSemanticImpl();
                 res.Semantic = Spv.LiteralString.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -1143,15 +2649,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Semantic.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the UserSemanticImpl object.</summary>
+            /// <returns>A string that represents the UserSemanticImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.UserSemantic({Semantic})";
+            }
         }
-        public class HlslSemanticGOOGLE: Decoration
+        #endregion //UserSemantic
+
+        #region HlslSemanticGOOGLE
+        public static HlslSemanticGOOGLEImpl HlslSemanticGOOGLE(string semantic)
         {
+            return new HlslSemanticGOOGLEImpl(semantic);
+            
+        }
+
+        public class HlslSemanticGOOGLEImpl: Decoration
+        {
+            public HlslSemanticGOOGLEImpl()
+            {
+            }
+
+            public HlslSemanticGOOGLEImpl(string semantic)
+            {
+                this.Semantic = semantic;
+            }
             public override Enumerant Value => Decoration.Enumerant.HlslSemanticGOOGLE;
             public string Semantic { get; set; }
-            public new static HlslSemanticGOOGLE Parse(WordReader reader, uint wordCount)
+            public new static HlslSemanticGOOGLEImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new HlslSemanticGOOGLE();
+                var res = new HlslSemanticGOOGLEImpl();
                 res.Semantic = Spv.LiteralString.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -1167,15 +2698,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Semantic.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the HlslSemanticGOOGLEImpl object.</summary>
+            /// <returns>A string that represents the HlslSemanticGOOGLEImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.HlslSemanticGOOGLE({Semantic})";
+            }
         }
-        public class UserTypeGOOGLE: Decoration
+        #endregion //HlslSemanticGOOGLE
+
+        #region UserTypeGOOGLE
+        public static UserTypeGOOGLEImpl UserTypeGOOGLE(string userType)
         {
+            return new UserTypeGOOGLEImpl(userType);
+            
+        }
+
+        public class UserTypeGOOGLEImpl: Decoration
+        {
+            public UserTypeGOOGLEImpl()
+            {
+            }
+
+            public UserTypeGOOGLEImpl(string userType)
+            {
+                this.UserType = userType;
+            }
             public override Enumerant Value => Decoration.Enumerant.UserTypeGOOGLE;
             public string UserType { get; set; }
-            public new static UserTypeGOOGLE Parse(WordReader reader, uint wordCount)
+            public new static UserTypeGOOGLEImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new UserTypeGOOGLE();
+                var res = new UserTypeGOOGLEImpl();
                 res.UserType = Spv.LiteralString.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -1191,7 +2747,16 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 UserType.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the UserTypeGOOGLEImpl object.</summary>
+            /// <returns>A string that represents the UserTypeGOOGLEImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Decoration.UserTypeGOOGLE({UserType})";
+            }
         }
+        #endregion //UserTypeGOOGLE
 
         public abstract Enumerant Value { get; }
 
@@ -1201,148 +2766,148 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.RelaxedPrecision :
-                    return RelaxedPrecision.Parse(reader, wordCount - 1);
+                    return RelaxedPrecisionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SpecId :
-                    return SpecId.Parse(reader, wordCount - 1);
+                    return SpecIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Block :
-                    return Block.Parse(reader, wordCount - 1);
+                    return BlockImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BufferBlock :
-                    return BufferBlock.Parse(reader, wordCount - 1);
+                    return BufferBlockImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RowMajor :
-                    return RowMajor.Parse(reader, wordCount - 1);
+                    return RowMajorImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ColMajor :
-                    return ColMajor.Parse(reader, wordCount - 1);
+                    return ColMajorImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ArrayStride :
-                    return ArrayStride.Parse(reader, wordCount - 1);
+                    return ArrayStrideImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MatrixStride :
-                    return MatrixStride.Parse(reader, wordCount - 1);
+                    return MatrixStrideImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GLSLShared :
-                    return GLSLShared.Parse(reader, wordCount - 1);
+                    return GLSLSharedImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GLSLPacked :
-                    return GLSLPacked.Parse(reader, wordCount - 1);
+                    return GLSLPackedImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CPacked :
-                    return CPacked.Parse(reader, wordCount - 1);
+                    return CPackedImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BuiltIn :
-                    return BuiltIn.Parse(reader, wordCount - 1);
+                    return BuiltInImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoPerspective :
-                    return NoPerspective.Parse(reader, wordCount - 1);
+                    return NoPerspectiveImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Flat :
-                    return Flat.Parse(reader, wordCount - 1);
+                    return FlatImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Patch :
-                    return Patch.Parse(reader, wordCount - 1);
+                    return PatchImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Centroid :
-                    return Centroid.Parse(reader, wordCount - 1);
+                    return CentroidImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Sample :
-                    return Sample.Parse(reader, wordCount - 1);
+                    return SampleImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Invariant :
-                    return Invariant.Parse(reader, wordCount - 1);
+                    return InvariantImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Restrict :
-                    return Restrict.Parse(reader, wordCount - 1);
+                    return RestrictImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Aliased :
-                    return Aliased.Parse(reader, wordCount - 1);
+                    return AliasedImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Volatile :
-                    return Volatile.Parse(reader, wordCount - 1);
+                    return VolatileImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Constant :
-                    return Constant.Parse(reader, wordCount - 1);
+                    return ConstantImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Coherent :
-                    return Coherent.Parse(reader, wordCount - 1);
+                    return CoherentImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NonWritable :
-                    return NonWritable.Parse(reader, wordCount - 1);
+                    return NonWritableImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NonReadable :
-                    return NonReadable.Parse(reader, wordCount - 1);
+                    return NonReadableImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Uniform :
-                    return Uniform.Parse(reader, wordCount - 1);
+                    return UniformImpl.Parse(reader, wordCount - 1);
                 case Enumerant.UniformId :
-                    return UniformId.Parse(reader, wordCount - 1);
+                    return UniformIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SaturatedConversion :
-                    return SaturatedConversion.Parse(reader, wordCount - 1);
+                    return SaturatedConversionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Stream :
-                    return Stream.Parse(reader, wordCount - 1);
+                    return StreamImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Location :
-                    return Location.Parse(reader, wordCount - 1);
+                    return LocationImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Component :
-                    return Component.Parse(reader, wordCount - 1);
+                    return ComponentImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Index :
-                    return Index.Parse(reader, wordCount - 1);
+                    return IndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Binding :
-                    return Binding.Parse(reader, wordCount - 1);
+                    return BindingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DescriptorSet :
-                    return DescriptorSet.Parse(reader, wordCount - 1);
+                    return DescriptorSetImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Offset :
-                    return Offset.Parse(reader, wordCount - 1);
+                    return OffsetImpl.Parse(reader, wordCount - 1);
                 case Enumerant.XfbBuffer :
-                    return XfbBuffer.Parse(reader, wordCount - 1);
+                    return XfbBufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.XfbStride :
-                    return XfbStride.Parse(reader, wordCount - 1);
+                    return XfbStrideImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FuncParamAttr :
-                    return FuncParamAttr.Parse(reader, wordCount - 1);
+                    return FuncParamAttrImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FPRoundingMode :
-                    return FPRoundingMode.Parse(reader, wordCount - 1);
+                    return FPRoundingModeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FPFastMathMode :
-                    return FPFastMathMode.Parse(reader, wordCount - 1);
+                    return FPFastMathModeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LinkageAttributes :
-                    return LinkageAttributes.Parse(reader, wordCount - 1);
+                    return LinkageAttributesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoContraction :
-                    return NoContraction.Parse(reader, wordCount - 1);
+                    return NoContractionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InputAttachmentIndex :
-                    return InputAttachmentIndex.Parse(reader, wordCount - 1);
+                    return InputAttachmentIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Alignment :
-                    return Alignment.Parse(reader, wordCount - 1);
+                    return AlignmentImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MaxByteOffset :
-                    return MaxByteOffset.Parse(reader, wordCount - 1);
+                    return MaxByteOffsetImpl.Parse(reader, wordCount - 1);
                 case Enumerant.AlignmentId :
-                    return AlignmentId.Parse(reader, wordCount - 1);
+                    return AlignmentIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MaxByteOffsetId :
-                    return MaxByteOffsetId.Parse(reader, wordCount - 1);
+                    return MaxByteOffsetIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoSignedWrap :
-                    return NoSignedWrap.Parse(reader, wordCount - 1);
+                    return NoSignedWrapImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoUnsignedWrap :
-                    return NoUnsignedWrap.Parse(reader, wordCount - 1);
+                    return NoUnsignedWrapImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ExplicitInterpAMD :
-                    return ExplicitInterpAMD.Parse(reader, wordCount - 1);
+                    return ExplicitInterpAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OverrideCoverageNV :
-                    return OverrideCoverageNV.Parse(reader, wordCount - 1);
+                    return OverrideCoverageNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PassthroughNV :
-                    return PassthroughNV.Parse(reader, wordCount - 1);
+                    return PassthroughNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ViewportRelativeNV :
-                    return ViewportRelativeNV.Parse(reader, wordCount - 1);
+                    return ViewportRelativeNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SecondaryViewportRelativeNV :
-                    return SecondaryViewportRelativeNV.Parse(reader, wordCount - 1);
+                    return SecondaryViewportRelativeNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PerPrimitiveNV :
-                    return PerPrimitiveNV.Parse(reader, wordCount - 1);
+                    return PerPrimitiveNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PerViewNV :
-                    return PerViewNV.Parse(reader, wordCount - 1);
+                    return PerViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PerTaskNV :
-                    return PerTaskNV.Parse(reader, wordCount - 1);
+                    return PerTaskNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PerVertexNV :
-                    return PerVertexNV.Parse(reader, wordCount - 1);
+                    return PerVertexNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NonUniform :
-                    return NonUniform.Parse(reader, wordCount - 1);
+                    return NonUniformImpl.Parse(reader, wordCount - 1);
                 //NonUniformEXT has the same id as another value in enum.
                 //case Enumerant.NonUniformEXT :
                 //    return NonUniformEXT.Parse(reader, wordCount - 1);
                 case Enumerant.RestrictPointer :
-                    return RestrictPointer.Parse(reader, wordCount - 1);
+                    return RestrictPointerImpl.Parse(reader, wordCount - 1);
                 //RestrictPointerEXT has the same id as another value in enum.
                 //case Enumerant.RestrictPointerEXT :
                 //    return RestrictPointerEXT.Parse(reader, wordCount - 1);
                 case Enumerant.AliasedPointer :
-                    return AliasedPointer.Parse(reader, wordCount - 1);
+                    return AliasedPointerImpl.Parse(reader, wordCount - 1);
                 //AliasedPointerEXT has the same id as another value in enum.
                 //case Enumerant.AliasedPointerEXT :
                 //    return AliasedPointerEXT.Parse(reader, wordCount - 1);
                 case Enumerant.CounterBuffer :
-                    return CounterBuffer.Parse(reader, wordCount - 1);
+                    return CounterBufferImpl.Parse(reader, wordCount - 1);
                 //HlslCounterBufferGOOGLE has the same id as another value in enum.
                 //case Enumerant.HlslCounterBufferGOOGLE :
                 //    return HlslCounterBufferGOOGLE.Parse(reader, wordCount - 1);
                 case Enumerant.UserSemantic :
-                    return UserSemantic.Parse(reader, wordCount - 1);
+                    return UserSemanticImpl.Parse(reader, wordCount - 1);
                 //HlslSemanticGOOGLE has the same id as another value in enum.
                 //case Enumerant.HlslSemanticGOOGLE :
                 //    return HlslSemanticGOOGLE.Parse(reader, wordCount - 1);
                 case Enumerant.UserTypeGOOGLE :
-                    return UserTypeGOOGLE.Parse(reader, wordCount - 1);
+                    return UserTypeGOOGLEImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown Decoration "+id);
             }

@@ -18,51 +18,155 @@ namespace Toe.SPIRV.Spv
             PhysicalStorageBuffer64EXT = 5348,
         }
 
-        public class Logical: AddressingModel
+        #region Logical
+        public static LogicalImpl Logical()
         {
-            public static readonly Logical Instance = new Logical();
+            return LogicalImpl.Instance;
+            
+        }
+
+        public class LogicalImpl: AddressingModel
+        {
+            public static readonly LogicalImpl Instance = new LogicalImpl();
+        
+            private  LogicalImpl()
+            {
+            }
             public override Enumerant Value => AddressingModel.Enumerant.Logical;
-            public new static Logical Parse(WordReader reader, uint wordCount)
+            public new static LogicalImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LogicalImpl object.</summary>
+            /// <returns>A string that represents the LogicalImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AddressingModel.Logical()";
+            }
         }
-        public class Physical32: AddressingModel
+        #endregion //Logical
+
+        #region Physical32
+        public static Physical32Impl Physical32()
         {
-            public static readonly Physical32 Instance = new Physical32();
+            return Physical32Impl.Instance;
+            
+        }
+
+        public class Physical32Impl: AddressingModel
+        {
+            public static readonly Physical32Impl Instance = new Physical32Impl();
+        
+            private  Physical32Impl()
+            {
+            }
             public override Enumerant Value => AddressingModel.Enumerant.Physical32;
-            public new static Physical32 Parse(WordReader reader, uint wordCount)
+            public new static Physical32Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Physical32Impl object.</summary>
+            /// <returns>A string that represents the Physical32Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AddressingModel.Physical32()";
+            }
         }
-        public class Physical64: AddressingModel
+        #endregion //Physical32
+
+        #region Physical64
+        public static Physical64Impl Physical64()
         {
-            public static readonly Physical64 Instance = new Physical64();
+            return Physical64Impl.Instance;
+            
+        }
+
+        public class Physical64Impl: AddressingModel
+        {
+            public static readonly Physical64Impl Instance = new Physical64Impl();
+        
+            private  Physical64Impl()
+            {
+            }
             public override Enumerant Value => AddressingModel.Enumerant.Physical64;
-            public new static Physical64 Parse(WordReader reader, uint wordCount)
+            public new static Physical64Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Physical64Impl object.</summary>
+            /// <returns>A string that represents the Physical64Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AddressingModel.Physical64()";
+            }
         }
-        public class PhysicalStorageBuffer64: AddressingModel
+        #endregion //Physical64
+
+        #region PhysicalStorageBuffer64
+        public static PhysicalStorageBuffer64Impl PhysicalStorageBuffer64()
         {
-            public static readonly PhysicalStorageBuffer64 Instance = new PhysicalStorageBuffer64();
+            return PhysicalStorageBuffer64Impl.Instance;
+            
+        }
+
+        public class PhysicalStorageBuffer64Impl: AddressingModel
+        {
+            public static readonly PhysicalStorageBuffer64Impl Instance = new PhysicalStorageBuffer64Impl();
+        
+            private  PhysicalStorageBuffer64Impl()
+            {
+            }
             public override Enumerant Value => AddressingModel.Enumerant.PhysicalStorageBuffer64;
-            public new static PhysicalStorageBuffer64 Parse(WordReader reader, uint wordCount)
+            public new static PhysicalStorageBuffer64Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PhysicalStorageBuffer64Impl object.</summary>
+            /// <returns>A string that represents the PhysicalStorageBuffer64Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AddressingModel.PhysicalStorageBuffer64()";
+            }
         }
-        public class PhysicalStorageBuffer64EXT: AddressingModel
+        #endregion //PhysicalStorageBuffer64
+
+        #region PhysicalStorageBuffer64EXT
+        public static PhysicalStorageBuffer64EXTImpl PhysicalStorageBuffer64EXT()
         {
-            public static readonly PhysicalStorageBuffer64EXT Instance = new PhysicalStorageBuffer64EXT();
+            return PhysicalStorageBuffer64EXTImpl.Instance;
+            
+        }
+
+        public class PhysicalStorageBuffer64EXTImpl: AddressingModel
+        {
+            public static readonly PhysicalStorageBuffer64EXTImpl Instance = new PhysicalStorageBuffer64EXTImpl();
+        
+            private  PhysicalStorageBuffer64EXTImpl()
+            {
+            }
             public override Enumerant Value => AddressingModel.Enumerant.PhysicalStorageBuffer64EXT;
-            public new static PhysicalStorageBuffer64EXT Parse(WordReader reader, uint wordCount)
+            public new static PhysicalStorageBuffer64EXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PhysicalStorageBuffer64EXTImpl object.</summary>
+            /// <returns>A string that represents the PhysicalStorageBuffer64EXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AddressingModel.PhysicalStorageBuffer64EXT()";
+            }
         }
+        #endregion //PhysicalStorageBuffer64EXT
 
         public abstract Enumerant Value { get; }
 
@@ -72,13 +176,13 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Logical :
-                    return Logical.Parse(reader, wordCount - 1);
+                    return LogicalImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Physical32 :
-                    return Physical32.Parse(reader, wordCount - 1);
+                    return Physical32Impl.Parse(reader, wordCount - 1);
                 case Enumerant.Physical64 :
-                    return Physical64.Parse(reader, wordCount - 1);
+                    return Physical64Impl.Parse(reader, wordCount - 1);
                 case Enumerant.PhysicalStorageBuffer64 :
-                    return PhysicalStorageBuffer64.Parse(reader, wordCount - 1);
+                    return PhysicalStorageBuffer64Impl.Parse(reader, wordCount - 1);
                 //PhysicalStorageBuffer64EXT has the same id as another value in enum.
                 //case Enumerant.PhysicalStorageBuffer64EXT :
                 //    return PhysicalStorageBuffer64EXT.Parse(reader, wordCount - 1);

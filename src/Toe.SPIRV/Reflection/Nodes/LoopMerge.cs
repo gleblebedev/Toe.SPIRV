@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public LoopMerge(Label mergeBlock, Label continueTarget, Spv.LoopControl loopControl, string debugName = null)
+        {
+            this.MergeBlock = mergeBlock;
+            this.ContinueTarget = continueTarget;
+            this.LoopControl = loopControl;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpLoopMerge;
 
         /// <summary>
@@ -25,8 +33,16 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Label MergeBlock { get; set; }
+
         public Label ContinueTarget { get; set; }
+
         public Spv.LoopControl LoopControl { get; set; }
 
         public override IEnumerable<NodePin> OutputPins
@@ -55,18 +71,47 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public LoopMerge WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpLoopMerge)op, treeBuilder);
         }
 
-        public void SetUp(OpLoopMerge op, SpirvInstructionTreeBuilder treeBuilder)
+        public LoopMerge SetUp(Action<LoopMerge> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpLoopMerge op, SpirvInstructionTreeBuilder treeBuilder)
         {
             MergeBlock = (Label)treeBuilder.GetNode(op.MergeBlock);
             ContinueTarget = (Label)treeBuilder.GetNode(op.ContinueTarget);
             LoopControl = op.LoopControl;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the LoopMerge object.</summary>
+        /// <returns>A string that represents the LoopMerge object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"LoopMerge({MergeBlock}, {ContinueTarget}, {LoopControl}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static LoopMerge ThenLoopMerge(this INodeWithNext node, Label mergeBlock, Label continueTarget, Spv.LoopControl loopControl, string debugName = null)
+        {
+            return node.Then(new LoopMerge(mergeBlock, continueTarget, loopControl, debugName));
         }
     }
 }

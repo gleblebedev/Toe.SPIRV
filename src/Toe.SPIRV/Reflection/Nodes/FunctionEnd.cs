@@ -13,6 +13,11 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public FunctionEnd(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpFunctionEnd;
 
         /// <summary>
@@ -25,6 +30,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -50,15 +60,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public FunctionEnd WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpFunctionEnd)op, treeBuilder);
         }
 
-        public void SetUp(OpFunctionEnd op, SpirvInstructionTreeBuilder treeBuilder)
+        public FunctionEnd SetUp(Action<FunctionEnd> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpFunctionEnd op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the FunctionEnd object.</summary>
+        /// <returns>A string that represents the FunctionEnd object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"FunctionEnd({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static FunctionEnd ThenFunctionEnd(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new FunctionEnd(debugName));
         }
     }
 }

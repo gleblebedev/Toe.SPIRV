@@ -15,33 +15,95 @@ namespace Toe.SPIRV.Spv
             WaitWorkGroup = 2,
         }
 
-        public class NoWait: KernelEnqueueFlags
+        #region NoWait
+        public static NoWaitImpl NoWait()
         {
-            public static readonly NoWait Instance = new NoWait();
+            return NoWaitImpl.Instance;
+            
+        }
+
+        public class NoWaitImpl: KernelEnqueueFlags
+        {
+            public static readonly NoWaitImpl Instance = new NoWaitImpl();
+        
+            private  NoWaitImpl()
+            {
+            }
             public override Enumerant Value => KernelEnqueueFlags.Enumerant.NoWait;
-            public new static NoWait Parse(WordReader reader, uint wordCount)
+            public new static NoWaitImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoWaitImpl object.</summary>
+            /// <returns>A string that represents the NoWaitImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" KernelEnqueueFlags.NoWait()";
+            }
         }
-        public class WaitKernel: KernelEnqueueFlags
+        #endregion //NoWait
+
+        #region WaitKernel
+        public static WaitKernelImpl WaitKernel()
         {
-            public static readonly WaitKernel Instance = new WaitKernel();
+            return WaitKernelImpl.Instance;
+            
+        }
+
+        public class WaitKernelImpl: KernelEnqueueFlags
+        {
+            public static readonly WaitKernelImpl Instance = new WaitKernelImpl();
+        
+            private  WaitKernelImpl()
+            {
+            }
             public override Enumerant Value => KernelEnqueueFlags.Enumerant.WaitKernel;
-            public new static WaitKernel Parse(WordReader reader, uint wordCount)
+            public new static WaitKernelImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WaitKernelImpl object.</summary>
+            /// <returns>A string that represents the WaitKernelImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" KernelEnqueueFlags.WaitKernel()";
+            }
         }
-        public class WaitWorkGroup: KernelEnqueueFlags
+        #endregion //WaitKernel
+
+        #region WaitWorkGroup
+        public static WaitWorkGroupImpl WaitWorkGroup()
         {
-            public static readonly WaitWorkGroup Instance = new WaitWorkGroup();
+            return WaitWorkGroupImpl.Instance;
+            
+        }
+
+        public class WaitWorkGroupImpl: KernelEnqueueFlags
+        {
+            public static readonly WaitWorkGroupImpl Instance = new WaitWorkGroupImpl();
+        
+            private  WaitWorkGroupImpl()
+            {
+            }
             public override Enumerant Value => KernelEnqueueFlags.Enumerant.WaitWorkGroup;
-            public new static WaitWorkGroup Parse(WordReader reader, uint wordCount)
+            public new static WaitWorkGroupImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WaitWorkGroupImpl object.</summary>
+            /// <returns>A string that represents the WaitWorkGroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" KernelEnqueueFlags.WaitWorkGroup()";
+            }
         }
+        #endregion //WaitWorkGroup
 
         public abstract Enumerant Value { get; }
 
@@ -51,11 +113,11 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.NoWait :
-                    return NoWait.Parse(reader, wordCount - 1);
+                    return NoWaitImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WaitKernel :
-                    return WaitKernel.Parse(reader, wordCount - 1);
+                    return WaitKernelImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WaitWorkGroup :
-                    return WaitWorkGroup.Parse(reader, wordCount - 1);
+                    return WaitWorkGroupImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown KernelEnqueueFlags "+id);
             }

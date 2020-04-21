@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public IsHelperInvocationEXT(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpIsHelperInvocationEXT;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public IsHelperInvocationEXT WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpIsHelperInvocationEXT)op, treeBuilder);
         }
 
-        public void SetUp(OpIsHelperInvocationEXT op, SpirvInstructionTreeBuilder treeBuilder)
+        public IsHelperInvocationEXT SetUp(Action<IsHelperInvocationEXT> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpIsHelperInvocationEXT op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the IsHelperInvocationEXT object.</summary>
+        /// <returns>A string that represents the IsHelperInvocationEXT object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"IsHelperInvocationEXT({ResultType}, {DebugName})";
         }
     }
 }

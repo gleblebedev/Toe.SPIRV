@@ -13,6 +13,13 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ExecuteCallableNV(Node sBTIndex, Node callableDataId, string debugName = null)
+        {
+            this.SBTIndex = sBTIndex;
+            this.CallableDataId = callableDataId;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpExecuteCallableNV;
 
         /// <summary>
@@ -25,8 +32,16 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node SBTIndex { get; set; }
+
         public Node CallableDataId { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -61,17 +76,46 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ExecuteCallableNV WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpExecuteCallableNV)op, treeBuilder);
         }
 
-        public void SetUp(OpExecuteCallableNV op, SpirvInstructionTreeBuilder treeBuilder)
+        public ExecuteCallableNV SetUp(Action<ExecuteCallableNV> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpExecuteCallableNV op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SBTIndex = treeBuilder.GetNode(op.SBTIndex);
             CallableDataId = treeBuilder.GetNode(op.CallableDataId);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ExecuteCallableNV object.</summary>
+        /// <returns>A string that represents the ExecuteCallableNV object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ExecuteCallableNV({SBTIndex}, {CallableDataId}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static ExecuteCallableNV ThenExecuteCallableNV(this INodeWithNext node, Node sBTIndex, Node callableDataId, string debugName = null)
+        {
+            return node.Then(new ExecuteCallableNV(sBTIndex, callableDataId, debugName));
         }
     }
 }

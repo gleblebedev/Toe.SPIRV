@@ -626,7 +626,7 @@ namespace Toe.SPIRV.Reflection
         {
             if (instructions == null)
                 return null;
-            return instructions.Select(_ => (IdRef)Visit(_)).ToList();
+            return new ListSegment<IdRef>(instructions.Select(_ => (IdRef)Visit(_)));
         }
 
         protected virtual Spv.ImageOperands Visit(Spv.ImageOperands operand)

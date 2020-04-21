@@ -13,6 +13,11 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public EmitVertex(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpEmitVertex;
 
         /// <summary>
@@ -25,6 +30,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -50,15 +60,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public EmitVertex WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpEmitVertex)op, treeBuilder);
         }
 
-        public void SetUp(OpEmitVertex op, SpirvInstructionTreeBuilder treeBuilder)
+        public EmitVertex SetUp(Action<EmitVertex> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpEmitVertex op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the EmitVertex object.</summary>
+        /// <returns>A string that represents the EmitVertex object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"EmitVertex({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static EmitVertex ThenEmitVertex(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new EmitVertex(debugName));
         }
     }
 }

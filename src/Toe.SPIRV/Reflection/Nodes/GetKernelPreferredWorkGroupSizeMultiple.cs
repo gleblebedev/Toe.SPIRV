@@ -13,21 +13,33 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GetKernelPreferredWorkGroupSizeMultiple(SpirvTypeBase resultType, Node invoke, Node param, Node paramSize, Node paramAlign, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Invoke = invoke;
+            this.Param = param;
+            this.ParamSize = paramSize;
+            this.ParamAlign = paramAlign;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGetKernelPreferredWorkGroupSizeMultiple;
 
-
         public Node Invoke { get; set; }
-        public Node Param { get; set; }
-        public Node ParamSize { get; set; }
-        public Node ParamAlign { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Param { get; set; }
+
+        public Node ParamSize { get; set; }
+
+        public Node ParamAlign { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -57,13 +69,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GetKernelPreferredWorkGroupSizeMultiple WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGetKernelPreferredWorkGroupSizeMultiple)op, treeBuilder);
         }
 
-        public void SetUp(OpGetKernelPreferredWorkGroupSizeMultiple op, SpirvInstructionTreeBuilder treeBuilder)
+        public GetKernelPreferredWorkGroupSizeMultiple SetUp(Action<GetKernelPreferredWorkGroupSizeMultiple> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGetKernelPreferredWorkGroupSizeMultiple op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Invoke = treeBuilder.GetNode(op.Invoke);
@@ -71,6 +96,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             ParamSize = treeBuilder.GetNode(op.ParamSize);
             ParamAlign = treeBuilder.GetNode(op.ParamAlign);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GetKernelPreferredWorkGroupSizeMultiple object.</summary>
+        /// <returns>A string that represents the GetKernelPreferredWorkGroupSizeMultiple object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GetKernelPreferredWorkGroupSizeMultiple({ResultType}, {Invoke}, {Param}, {ParamSize}, {ParamAlign}, {DebugName})";
         }
     }
 }

@@ -40,19 +40,24 @@ namespace Toe.SPIRV.Reflection.Types
 
         public void SetUpDecoration(Decoration decoration, SpirvInstructionTreeBuilder treeBuilder)
         {
+            AddDecoration(decoration);
+        }
+
+        protected void AddDecoration(Decoration decoration)
+        {
             switch (decoration.Value)
             {
                 case Decoration.Enumerant.BuiltIn:
-                    BuiltIn = ((Decoration.BuiltIn)decoration).BuiltInValue;
+                    BuiltIn = ((Decoration.BuiltInImpl) decoration).BuiltIn;
                     break;
                 case Decoration.Enumerant.Location:
-                    Location = ((Decoration.Location)decoration).LocationValue;
+                    Location = ((Decoration.LocationImpl) decoration).Location;
                     break;
                 case Decoration.Enumerant.Component:
-                    Component = ((Decoration.Component)decoration).ComponentValue;
+                    Component = ((Decoration.ComponentImpl) decoration).Component;
                     break;
                 case Decoration.Enumerant.Offset:
-                    ByteOffset = ((Decoration.Offset)decoration).ByteOffset;
+                    ByteOffset = ((Decoration.OffsetImpl) decoration).ByteOffset;
                     break;
                 case Decoration.Enumerant.RowMajor:
                     RowMajor = true;
@@ -61,7 +66,7 @@ namespace Toe.SPIRV.Reflection.Types
                     ColMajor = true;
                     break;
                 case Decoration.Enumerant.MatrixStride:
-                    MatrixStride = ((Decoration.MatrixStride)decoration).MatrixStrideValue;
+                    MatrixStride = ((Decoration.MatrixStrideImpl) decoration).MatrixStride;
                     break;
                 case Decoration.Enumerant.NoPerspective:
                     NoPerspective = true;
@@ -109,7 +114,8 @@ namespace Toe.SPIRV.Reflection.Types
                 //    XfbBuffer = ((Decoration.XfbBuffer)decoration).XFBBufferNumber;
                 //    break;
                 default:
-                    throw new NotImplementedException("Member decoration instruction " + decoration.Value + " not yet implemented by " + this.GetType().Name + " class.");
+                    throw new NotImplementedException("Member decoration instruction " + decoration.Value +
+                                                      " not yet implemented by " + this.GetType().Name + " class.");
             }
         }
 
@@ -150,25 +156,31 @@ namespace Toe.SPIRV.Reflection.Types
         public IEnumerable<Node> BuildDecorations(TypeStruct typeStruct, uint index)
         {
             if (Name != null) yield return new MemberName() {Type = typeStruct, Member = index, Name = Name};
-            if (BuiltIn != null) yield return new MemberDecorate() {StructureType = typeStruct, Member = index, Decoration = new Decoration.BuiltIn(){ BuiltInValue = BuiltIn}};
-            if (ByteOffset != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = new Decoration.Offset() { ByteOffset = ByteOffset.Value } };
-            if (RowMajor) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.RowMajor.Instance };
-            if (ColMajor) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.ColMajor.Instance };
-            if (MatrixStride != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = new Decoration.MatrixStride() { MatrixStrideValue = MatrixStride.Value } };
-            if (Location != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = new Decoration.Location() { LocationValue = Location.Value } };
-            if (Component != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = new Decoration.Location() { LocationValue = Component.Value } };
-            if (NoPerspective) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.NoPerspective.Instance };
-            if (Flat) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Flat.Instance };
-            if (Patch) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Patch.Instance };
-            if (Centroid) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Centroid.Instance };
-            if (Sample) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Sample.Instance };
-            if (Volatile) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Volatile.Instance };
-            if (Coherent) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Coherent.Instance };
-            if (NonWritable) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.NonWritable.Instance };
-            if (NonReadable) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.NonReadable.Instance };
-            if (Uniform) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Uniform.Instance };
-            if (RelaxedPrecision) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.RelaxedPrecision.Instance };
-            if (Invariant) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Invariant.Instance };
+            if (BuiltIn != null) yield return new MemberDecorate() {StructureType = typeStruct, Member = index, Decoration = Decoration.BuiltIn(BuiltIn)};
+            if (ByteOffset != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Offset(ByteOffset.Value) };
+            if (RowMajor) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.RowMajor() };
+            if (ColMajor) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.ColMajor() };
+            if (MatrixStride != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.MatrixStride(MatrixStride.Value) };
+            if (Location != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Location(Location.Value) };
+            if (Component != null) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Location(Component.Value) };
+            if (NoPerspective) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.NoPerspective() };
+            if (Flat) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Flat() };
+            if (Patch) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Patch() };
+            if (Centroid) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Centroid() };
+            if (Sample) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Sample() };
+            if (Volatile) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Volatile() };
+            if (Coherent) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Coherent() };
+            if (NonWritable) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.NonWritable() };
+            if (NonReadable) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.NonReadable() };
+            if (Uniform) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Uniform() };
+            if (RelaxedPrecision) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.RelaxedPrecision() };
+            if (Invariant) yield return new MemberDecorate() { StructureType = typeStruct, Member = index, Decoration = Decoration.Invariant() };
+        }
+
+        public TypeStructureField WithDecoration(Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
         }
     }
 }

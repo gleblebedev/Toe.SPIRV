@@ -69,249 +69,815 @@ namespace Toe.SPIRV.Spv
             PhysicalStorageBufferEXT = 5349,
         }
 
-        public class UniformConstant: StorageClass
+        #region UniformConstant
+        public static UniformConstantImpl UniformConstant()
         {
-            public static readonly UniformConstant Instance = new UniformConstant();
+            return UniformConstantImpl.Instance;
+            
+        }
+
+        public class UniformConstantImpl: StorageClass
+        {
+            public static readonly UniformConstantImpl Instance = new UniformConstantImpl();
+        
+            private  UniformConstantImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.UniformConstant;
-            public new static UniformConstant Parse(WordReader reader, uint wordCount)
+            public new static UniformConstantImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformConstantImpl object.</summary>
+            /// <returns>A string that represents the UniformConstantImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.UniformConstant()";
+            }
         }
-        public class Input: StorageClass
+        #endregion //UniformConstant
+
+        #region Input
+        public static InputImpl Input()
         {
-            public static readonly Input Instance = new Input();
+            return InputImpl.Instance;
+            
+        }
+
+        public class InputImpl: StorageClass
+        {
+            public static readonly InputImpl Instance = new InputImpl();
+        
+            private  InputImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Input;
-            public new static Input Parse(WordReader reader, uint wordCount)
+            public new static InputImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputImpl object.</summary>
+            /// <returns>A string that represents the InputImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Input()";
+            }
         }
-        public class Uniform: StorageClass
+        #endregion //Input
+
+        #region Uniform
+        public static UniformImpl Uniform()
         {
-            public static readonly Uniform Instance = new Uniform();
+            return UniformImpl.Instance;
+            
+        }
+
+        public class UniformImpl: StorageClass
+        {
+            public static readonly UniformImpl Instance = new UniformImpl();
+        
+            private  UniformImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Uniform;
-            public new static Uniform Parse(WordReader reader, uint wordCount)
+            public new static UniformImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformImpl object.</summary>
+            /// <returns>A string that represents the UniformImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Uniform()";
+            }
         }
-        public class Output: StorageClass
+        #endregion //Uniform
+
+        #region Output
+        public static OutputImpl Output()
         {
-            public static readonly Output Instance = new Output();
+            return OutputImpl.Instance;
+            
+        }
+
+        public class OutputImpl: StorageClass
+        {
+            public static readonly OutputImpl Instance = new OutputImpl();
+        
+            private  OutputImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Output;
-            public new static Output Parse(WordReader reader, uint wordCount)
+            public new static OutputImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OutputImpl object.</summary>
+            /// <returns>A string that represents the OutputImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Output()";
+            }
         }
-        public class Workgroup: StorageClass
+        #endregion //Output
+
+        #region Workgroup
+        public static WorkgroupImpl Workgroup()
         {
-            public static readonly Workgroup Instance = new Workgroup();
+            return WorkgroupImpl.Instance;
+            
+        }
+
+        public class WorkgroupImpl: StorageClass
+        {
+            public static readonly WorkgroupImpl Instance = new WorkgroupImpl();
+        
+            private  WorkgroupImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Workgroup;
-            public new static Workgroup Parse(WordReader reader, uint wordCount)
+            public new static WorkgroupImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorkgroupImpl object.</summary>
+            /// <returns>A string that represents the WorkgroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Workgroup()";
+            }
         }
-        public class CrossWorkgroup: StorageClass
+        #endregion //Workgroup
+
+        #region CrossWorkgroup
+        public static CrossWorkgroupImpl CrossWorkgroup()
         {
-            public static readonly CrossWorkgroup Instance = new CrossWorkgroup();
+            return CrossWorkgroupImpl.Instance;
+            
+        }
+
+        public class CrossWorkgroupImpl: StorageClass
+        {
+            public static readonly CrossWorkgroupImpl Instance = new CrossWorkgroupImpl();
+        
+            private  CrossWorkgroupImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.CrossWorkgroup;
-            public new static CrossWorkgroup Parse(WordReader reader, uint wordCount)
+            public new static CrossWorkgroupImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CrossWorkgroupImpl object.</summary>
+            /// <returns>A string that represents the CrossWorkgroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.CrossWorkgroup()";
+            }
         }
-        public class Private: StorageClass
+        #endregion //CrossWorkgroup
+
+        #region Private
+        public static PrivateImpl Private()
         {
-            public static readonly Private Instance = new Private();
+            return PrivateImpl.Instance;
+            
+        }
+
+        public class PrivateImpl: StorageClass
+        {
+            public static readonly PrivateImpl Instance = new PrivateImpl();
+        
+            private  PrivateImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Private;
-            public new static Private Parse(WordReader reader, uint wordCount)
+            public new static PrivateImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PrivateImpl object.</summary>
+            /// <returns>A string that represents the PrivateImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Private()";
+            }
         }
-        public class Function: StorageClass
+        #endregion //Private
+
+        #region Function
+        public static FunctionImpl Function()
         {
-            public static readonly Function Instance = new Function();
+            return FunctionImpl.Instance;
+            
+        }
+
+        public class FunctionImpl: StorageClass
+        {
+            public static readonly FunctionImpl Instance = new FunctionImpl();
+        
+            private  FunctionImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Function;
-            public new static Function Parse(WordReader reader, uint wordCount)
+            public new static FunctionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FunctionImpl object.</summary>
+            /// <returns>A string that represents the FunctionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Function()";
+            }
         }
-        public class Generic: StorageClass
+        #endregion //Function
+
+        #region Generic
+        public static GenericImpl Generic()
         {
-            public static readonly Generic Instance = new Generic();
+            return GenericImpl.Instance;
+            
+        }
+
+        public class GenericImpl: StorageClass
+        {
+            public static readonly GenericImpl Instance = new GenericImpl();
+        
+            private  GenericImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Generic;
-            public new static Generic Parse(WordReader reader, uint wordCount)
+            public new static GenericImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GenericImpl object.</summary>
+            /// <returns>A string that represents the GenericImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Generic()";
+            }
         }
-        public class PushConstant: StorageClass
+        #endregion //Generic
+
+        #region PushConstant
+        public static PushConstantImpl PushConstant()
         {
-            public static readonly PushConstant Instance = new PushConstant();
+            return PushConstantImpl.Instance;
+            
+        }
+
+        public class PushConstantImpl: StorageClass
+        {
+            public static readonly PushConstantImpl Instance = new PushConstantImpl();
+        
+            private  PushConstantImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.PushConstant;
-            public new static PushConstant Parse(WordReader reader, uint wordCount)
+            public new static PushConstantImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PushConstantImpl object.</summary>
+            /// <returns>A string that represents the PushConstantImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.PushConstant()";
+            }
         }
-        public class AtomicCounter: StorageClass
+        #endregion //PushConstant
+
+        #region AtomicCounter
+        public static AtomicCounterImpl AtomicCounter()
         {
-            public static readonly AtomicCounter Instance = new AtomicCounter();
+            return AtomicCounterImpl.Instance;
+            
+        }
+
+        public class AtomicCounterImpl: StorageClass
+        {
+            public static readonly AtomicCounterImpl Instance = new AtomicCounterImpl();
+        
+            private  AtomicCounterImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.AtomicCounter;
-            public new static AtomicCounter Parse(WordReader reader, uint wordCount)
+            public new static AtomicCounterImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AtomicCounterImpl object.</summary>
+            /// <returns>A string that represents the AtomicCounterImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.AtomicCounter()";
+            }
         }
-        public class Image: StorageClass
+        #endregion //AtomicCounter
+
+        #region Image
+        public static ImageImpl Image()
         {
-            public static readonly Image Instance = new Image();
+            return ImageImpl.Instance;
+            
+        }
+
+        public class ImageImpl: StorageClass
+        {
+            public static readonly ImageImpl Instance = new ImageImpl();
+        
+            private  ImageImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.Image;
-            public new static Image Parse(WordReader reader, uint wordCount)
+            public new static ImageImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageImpl object.</summary>
+            /// <returns>A string that represents the ImageImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.Image()";
+            }
         }
-        public class StorageBuffer: StorageClass
+        #endregion //Image
+
+        #region StorageBuffer
+        public static StorageBufferImpl StorageBuffer()
         {
-            public static readonly StorageBuffer Instance = new StorageBuffer();
+            return StorageBufferImpl.Instance;
+            
+        }
+
+        public class StorageBufferImpl: StorageClass
+        {
+            public static readonly StorageBufferImpl Instance = new StorageBufferImpl();
+        
+            private  StorageBufferImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.StorageBuffer;
-            public new static StorageBuffer Parse(WordReader reader, uint wordCount)
+            public new static StorageBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageBufferImpl object.</summary>
+            /// <returns>A string that represents the StorageBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.StorageBuffer()";
+            }
         }
-        public class CallableDataNV: StorageClass
+        #endregion //StorageBuffer
+
+        #region CallableDataNV
+        public static CallableDataNVImpl CallableDataNV()
         {
-            public static readonly CallableDataNV Instance = new CallableDataNV();
+            return CallableDataNVImpl.Instance;
+            
+        }
+
+        public class CallableDataNVImpl: StorageClass
+        {
+            public static readonly CallableDataNVImpl Instance = new CallableDataNVImpl();
+        
+            private  CallableDataNVImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.CallableDataNV;
-            public new static CallableDataNV Parse(WordReader reader, uint wordCount)
+            public new static CallableDataNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CallableDataNVImpl object.</summary>
+            /// <returns>A string that represents the CallableDataNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.CallableDataNV()";
+            }
         }
-        public class CallableDataKHR: StorageClass
+        #endregion //CallableDataNV
+
+        #region CallableDataKHR
+        public static CallableDataKHRImpl CallableDataKHR()
         {
-            public static readonly CallableDataKHR Instance = new CallableDataKHR();
+            return CallableDataKHRImpl.Instance;
+            
+        }
+
+        public class CallableDataKHRImpl: StorageClass
+        {
+            public static readonly CallableDataKHRImpl Instance = new CallableDataKHRImpl();
+        
+            private  CallableDataKHRImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.CallableDataKHR;
-            public new static CallableDataKHR Parse(WordReader reader, uint wordCount)
+            public new static CallableDataKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CallableDataKHRImpl object.</summary>
+            /// <returns>A string that represents the CallableDataKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.CallableDataKHR()";
+            }
         }
-        public class IncomingCallableDataNV: StorageClass
+        #endregion //CallableDataKHR
+
+        #region IncomingCallableDataNV
+        public static IncomingCallableDataNVImpl IncomingCallableDataNV()
         {
-            public static readonly IncomingCallableDataNV Instance = new IncomingCallableDataNV();
+            return IncomingCallableDataNVImpl.Instance;
+            
+        }
+
+        public class IncomingCallableDataNVImpl: StorageClass
+        {
+            public static readonly IncomingCallableDataNVImpl Instance = new IncomingCallableDataNVImpl();
+        
+            private  IncomingCallableDataNVImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.IncomingCallableDataNV;
-            public new static IncomingCallableDataNV Parse(WordReader reader, uint wordCount)
+            public new static IncomingCallableDataNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IncomingCallableDataNVImpl object.</summary>
+            /// <returns>A string that represents the IncomingCallableDataNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.IncomingCallableDataNV()";
+            }
         }
-        public class IncomingCallableDataKHR: StorageClass
+        #endregion //IncomingCallableDataNV
+
+        #region IncomingCallableDataKHR
+        public static IncomingCallableDataKHRImpl IncomingCallableDataKHR()
         {
-            public static readonly IncomingCallableDataKHR Instance = new IncomingCallableDataKHR();
+            return IncomingCallableDataKHRImpl.Instance;
+            
+        }
+
+        public class IncomingCallableDataKHRImpl: StorageClass
+        {
+            public static readonly IncomingCallableDataKHRImpl Instance = new IncomingCallableDataKHRImpl();
+        
+            private  IncomingCallableDataKHRImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.IncomingCallableDataKHR;
-            public new static IncomingCallableDataKHR Parse(WordReader reader, uint wordCount)
+            public new static IncomingCallableDataKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IncomingCallableDataKHRImpl object.</summary>
+            /// <returns>A string that represents the IncomingCallableDataKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.IncomingCallableDataKHR()";
+            }
         }
-        public class RayPayloadNV: StorageClass
+        #endregion //IncomingCallableDataKHR
+
+        #region RayPayloadNV
+        public static RayPayloadNVImpl RayPayloadNV()
         {
-            public static readonly RayPayloadNV Instance = new RayPayloadNV();
+            return RayPayloadNVImpl.Instance;
+            
+        }
+
+        public class RayPayloadNVImpl: StorageClass
+        {
+            public static readonly RayPayloadNVImpl Instance = new RayPayloadNVImpl();
+        
+            private  RayPayloadNVImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.RayPayloadNV;
-            public new static RayPayloadNV Parse(WordReader reader, uint wordCount)
+            public new static RayPayloadNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayPayloadNVImpl object.</summary>
+            /// <returns>A string that represents the RayPayloadNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.RayPayloadNV()";
+            }
         }
-        public class RayPayloadKHR: StorageClass
+        #endregion //RayPayloadNV
+
+        #region RayPayloadKHR
+        public static RayPayloadKHRImpl RayPayloadKHR()
         {
-            public static readonly RayPayloadKHR Instance = new RayPayloadKHR();
+            return RayPayloadKHRImpl.Instance;
+            
+        }
+
+        public class RayPayloadKHRImpl: StorageClass
+        {
+            public static readonly RayPayloadKHRImpl Instance = new RayPayloadKHRImpl();
+        
+            private  RayPayloadKHRImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.RayPayloadKHR;
-            public new static RayPayloadKHR Parse(WordReader reader, uint wordCount)
+            public new static RayPayloadKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayPayloadKHRImpl object.</summary>
+            /// <returns>A string that represents the RayPayloadKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.RayPayloadKHR()";
+            }
         }
-        public class HitAttributeNV: StorageClass
+        #endregion //RayPayloadKHR
+
+        #region HitAttributeNV
+        public static HitAttributeNVImpl HitAttributeNV()
         {
-            public static readonly HitAttributeNV Instance = new HitAttributeNV();
+            return HitAttributeNVImpl.Instance;
+            
+        }
+
+        public class HitAttributeNVImpl: StorageClass
+        {
+            public static readonly HitAttributeNVImpl Instance = new HitAttributeNVImpl();
+        
+            private  HitAttributeNVImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.HitAttributeNV;
-            public new static HitAttributeNV Parse(WordReader reader, uint wordCount)
+            public new static HitAttributeNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HitAttributeNVImpl object.</summary>
+            /// <returns>A string that represents the HitAttributeNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.HitAttributeNV()";
+            }
         }
-        public class HitAttributeKHR: StorageClass
+        #endregion //HitAttributeNV
+
+        #region HitAttributeKHR
+        public static HitAttributeKHRImpl HitAttributeKHR()
         {
-            public static readonly HitAttributeKHR Instance = new HitAttributeKHR();
+            return HitAttributeKHRImpl.Instance;
+            
+        }
+
+        public class HitAttributeKHRImpl: StorageClass
+        {
+            public static readonly HitAttributeKHRImpl Instance = new HitAttributeKHRImpl();
+        
+            private  HitAttributeKHRImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.HitAttributeKHR;
-            public new static HitAttributeKHR Parse(WordReader reader, uint wordCount)
+            public new static HitAttributeKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HitAttributeKHRImpl object.</summary>
+            /// <returns>A string that represents the HitAttributeKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.HitAttributeKHR()";
+            }
         }
-        public class IncomingRayPayloadNV: StorageClass
+        #endregion //HitAttributeKHR
+
+        #region IncomingRayPayloadNV
+        public static IncomingRayPayloadNVImpl IncomingRayPayloadNV()
         {
-            public static readonly IncomingRayPayloadNV Instance = new IncomingRayPayloadNV();
+            return IncomingRayPayloadNVImpl.Instance;
+            
+        }
+
+        public class IncomingRayPayloadNVImpl: StorageClass
+        {
+            public static readonly IncomingRayPayloadNVImpl Instance = new IncomingRayPayloadNVImpl();
+        
+            private  IncomingRayPayloadNVImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.IncomingRayPayloadNV;
-            public new static IncomingRayPayloadNV Parse(WordReader reader, uint wordCount)
+            public new static IncomingRayPayloadNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IncomingRayPayloadNVImpl object.</summary>
+            /// <returns>A string that represents the IncomingRayPayloadNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.IncomingRayPayloadNV()";
+            }
         }
-        public class IncomingRayPayloadKHR: StorageClass
+        #endregion //IncomingRayPayloadNV
+
+        #region IncomingRayPayloadKHR
+        public static IncomingRayPayloadKHRImpl IncomingRayPayloadKHR()
         {
-            public static readonly IncomingRayPayloadKHR Instance = new IncomingRayPayloadKHR();
+            return IncomingRayPayloadKHRImpl.Instance;
+            
+        }
+
+        public class IncomingRayPayloadKHRImpl: StorageClass
+        {
+            public static readonly IncomingRayPayloadKHRImpl Instance = new IncomingRayPayloadKHRImpl();
+        
+            private  IncomingRayPayloadKHRImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.IncomingRayPayloadKHR;
-            public new static IncomingRayPayloadKHR Parse(WordReader reader, uint wordCount)
+            public new static IncomingRayPayloadKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IncomingRayPayloadKHRImpl object.</summary>
+            /// <returns>A string that represents the IncomingRayPayloadKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.IncomingRayPayloadKHR()";
+            }
         }
-        public class ShaderRecordBufferNV: StorageClass
+        #endregion //IncomingRayPayloadKHR
+
+        #region ShaderRecordBufferNV
+        public static ShaderRecordBufferNVImpl ShaderRecordBufferNV()
         {
-            public static readonly ShaderRecordBufferNV Instance = new ShaderRecordBufferNV();
+            return ShaderRecordBufferNVImpl.Instance;
+            
+        }
+
+        public class ShaderRecordBufferNVImpl: StorageClass
+        {
+            public static readonly ShaderRecordBufferNVImpl Instance = new ShaderRecordBufferNVImpl();
+        
+            private  ShaderRecordBufferNVImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.ShaderRecordBufferNV;
-            public new static ShaderRecordBufferNV Parse(WordReader reader, uint wordCount)
+            public new static ShaderRecordBufferNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderRecordBufferNVImpl object.</summary>
+            /// <returns>A string that represents the ShaderRecordBufferNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.ShaderRecordBufferNV()";
+            }
         }
-        public class ShaderRecordBufferKHR: StorageClass
+        #endregion //ShaderRecordBufferNV
+
+        #region ShaderRecordBufferKHR
+        public static ShaderRecordBufferKHRImpl ShaderRecordBufferKHR()
         {
-            public static readonly ShaderRecordBufferKHR Instance = new ShaderRecordBufferKHR();
+            return ShaderRecordBufferKHRImpl.Instance;
+            
+        }
+
+        public class ShaderRecordBufferKHRImpl: StorageClass
+        {
+            public static readonly ShaderRecordBufferKHRImpl Instance = new ShaderRecordBufferKHRImpl();
+        
+            private  ShaderRecordBufferKHRImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.ShaderRecordBufferKHR;
-            public new static ShaderRecordBufferKHR Parse(WordReader reader, uint wordCount)
+            public new static ShaderRecordBufferKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderRecordBufferKHRImpl object.</summary>
+            /// <returns>A string that represents the ShaderRecordBufferKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.ShaderRecordBufferKHR()";
+            }
         }
-        public class PhysicalStorageBuffer: StorageClass
+        #endregion //ShaderRecordBufferKHR
+
+        #region PhysicalStorageBuffer
+        public static PhysicalStorageBufferImpl PhysicalStorageBuffer()
         {
-            public static readonly PhysicalStorageBuffer Instance = new PhysicalStorageBuffer();
+            return PhysicalStorageBufferImpl.Instance;
+            
+        }
+
+        public class PhysicalStorageBufferImpl: StorageClass
+        {
+            public static readonly PhysicalStorageBufferImpl Instance = new PhysicalStorageBufferImpl();
+        
+            private  PhysicalStorageBufferImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.PhysicalStorageBuffer;
-            public new static PhysicalStorageBuffer Parse(WordReader reader, uint wordCount)
+            public new static PhysicalStorageBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PhysicalStorageBufferImpl object.</summary>
+            /// <returns>A string that represents the PhysicalStorageBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.PhysicalStorageBuffer()";
+            }
         }
-        public class PhysicalStorageBufferEXT: StorageClass
+        #endregion //PhysicalStorageBuffer
+
+        #region PhysicalStorageBufferEXT
+        public static PhysicalStorageBufferEXTImpl PhysicalStorageBufferEXT()
         {
-            public static readonly PhysicalStorageBufferEXT Instance = new PhysicalStorageBufferEXT();
+            return PhysicalStorageBufferEXTImpl.Instance;
+            
+        }
+
+        public class PhysicalStorageBufferEXTImpl: StorageClass
+        {
+            public static readonly PhysicalStorageBufferEXTImpl Instance = new PhysicalStorageBufferEXTImpl();
+        
+            private  PhysicalStorageBufferEXTImpl()
+            {
+            }
             public override Enumerant Value => StorageClass.Enumerant.PhysicalStorageBufferEXT;
-            public new static PhysicalStorageBufferEXT Parse(WordReader reader, uint wordCount)
+            public new static PhysicalStorageBufferEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PhysicalStorageBufferEXTImpl object.</summary>
+            /// <returns>A string that represents the PhysicalStorageBufferEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" StorageClass.PhysicalStorageBufferEXT()";
+            }
         }
+        #endregion //PhysicalStorageBufferEXT
 
         public abstract Enumerant Value { get; }
 
@@ -321,63 +887,63 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.UniformConstant :
-                    return UniformConstant.Parse(reader, wordCount - 1);
+                    return UniformConstantImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Input :
-                    return Input.Parse(reader, wordCount - 1);
+                    return InputImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Uniform :
-                    return Uniform.Parse(reader, wordCount - 1);
+                    return UniformImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Output :
-                    return Output.Parse(reader, wordCount - 1);
+                    return OutputImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Workgroup :
-                    return Workgroup.Parse(reader, wordCount - 1);
+                    return WorkgroupImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CrossWorkgroup :
-                    return CrossWorkgroup.Parse(reader, wordCount - 1);
+                    return CrossWorkgroupImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Private :
-                    return Private.Parse(reader, wordCount - 1);
+                    return PrivateImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Function :
-                    return Function.Parse(reader, wordCount - 1);
+                    return FunctionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Generic :
-                    return Generic.Parse(reader, wordCount - 1);
+                    return GenericImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PushConstant :
-                    return PushConstant.Parse(reader, wordCount - 1);
+                    return PushConstantImpl.Parse(reader, wordCount - 1);
                 case Enumerant.AtomicCounter :
-                    return AtomicCounter.Parse(reader, wordCount - 1);
+                    return AtomicCounterImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Image :
-                    return Image.Parse(reader, wordCount - 1);
+                    return ImageImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageBuffer :
-                    return StorageBuffer.Parse(reader, wordCount - 1);
+                    return StorageBufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CallableDataNV :
-                    return CallableDataNV.Parse(reader, wordCount - 1);
+                    return CallableDataNVImpl.Parse(reader, wordCount - 1);
                 //CallableDataKHR has the same id as another value in enum.
                 //case Enumerant.CallableDataKHR :
                 //    return CallableDataKHR.Parse(reader, wordCount - 1);
                 case Enumerant.IncomingCallableDataNV :
-                    return IncomingCallableDataNV.Parse(reader, wordCount - 1);
+                    return IncomingCallableDataNVImpl.Parse(reader, wordCount - 1);
                 //IncomingCallableDataKHR has the same id as another value in enum.
                 //case Enumerant.IncomingCallableDataKHR :
                 //    return IncomingCallableDataKHR.Parse(reader, wordCount - 1);
                 case Enumerant.RayPayloadNV :
-                    return RayPayloadNV.Parse(reader, wordCount - 1);
+                    return RayPayloadNVImpl.Parse(reader, wordCount - 1);
                 //RayPayloadKHR has the same id as another value in enum.
                 //case Enumerant.RayPayloadKHR :
                 //    return RayPayloadKHR.Parse(reader, wordCount - 1);
                 case Enumerant.HitAttributeNV :
-                    return HitAttributeNV.Parse(reader, wordCount - 1);
+                    return HitAttributeNVImpl.Parse(reader, wordCount - 1);
                 //HitAttributeKHR has the same id as another value in enum.
                 //case Enumerant.HitAttributeKHR :
                 //    return HitAttributeKHR.Parse(reader, wordCount - 1);
                 case Enumerant.IncomingRayPayloadNV :
-                    return IncomingRayPayloadNV.Parse(reader, wordCount - 1);
+                    return IncomingRayPayloadNVImpl.Parse(reader, wordCount - 1);
                 //IncomingRayPayloadKHR has the same id as another value in enum.
                 //case Enumerant.IncomingRayPayloadKHR :
                 //    return IncomingRayPayloadKHR.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderRecordBufferNV :
-                    return ShaderRecordBufferNV.Parse(reader, wordCount - 1);
+                    return ShaderRecordBufferNVImpl.Parse(reader, wordCount - 1);
                 //ShaderRecordBufferKHR has the same id as another value in enum.
                 //case Enumerant.ShaderRecordBufferKHR :
                 //    return ShaderRecordBufferKHR.Parse(reader, wordCount - 1);
                 case Enumerant.PhysicalStorageBuffer :
-                    return PhysicalStorageBuffer.Parse(reader, wordCount - 1);
+                    return PhysicalStorageBufferImpl.Parse(reader, wordCount - 1);
                 //PhysicalStorageBufferEXT has the same id as another value in enum.
                 //case Enumerant.PhysicalStorageBufferEXT :
                 //    return PhysicalStorageBufferEXT.Parse(reader, wordCount - 1);

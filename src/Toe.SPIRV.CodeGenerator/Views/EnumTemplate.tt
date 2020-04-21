@@ -29,34 +29,82 @@ namespace Toe.SPIRV.Spv
         }
 #>
         }
-
 <#
         foreach (var kv in _operand.Enumerants)
         {
+            var enumerantId = ViewUtils.GetParameterId(_operand, kv.enumerant);
+            var enumerantType = enumerantId+"Impl";
             var parameters = kv.parameters ?? new List<Parameter>();
-            //if (parameters.Count > 0)
+            var parameterKv = parameters.Select(parameter=>new KeyValuePair<string,string>(ViewUtils.GetParameterName(enumerantType, parameter), ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(parameter.kind))))
+                .ToList();
             {
 #>
-        public class <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>: <#= _operand.Name #>
+
+        #region <#= enumerantId #>
+        public static <#= enumerantType #> <#= enumerantId #>(<# Write(string.Join(", ", parameterKv.Select(parameter=>$"{parameter.Value} {ViewUtils.ToVarName(parameter.Key)}"))); #>)
         {
 <#
         if (parameters.Count == 0)
         {
 #>
-            public static readonly <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> Instance = new <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>();
+            return <#= enumerantType #>.Instance;
 <#
         }
-#>
-            public override Enumerant Value => <#= _operand.Name #>.Enumerant.<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>;
-<#
-        foreach (var parameter in parameters)
+        else
         {
 #>
-            public <#= ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(parameter.kind)) #> <#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #> { get; set; }
+            return new <#= enumerantType #>(<#
+            Write(string.Join(", ", parameterKv.Select(parameter=>$"{ViewUtils.ToVarName(parameter.Key)}")));
+#>);
+<#
+        }
+#>            
+        }
+
+        public class <#= enumerantType #>: <#= _operand.Name #>
+        {
+<#
+        if (parameters.Count == 0)
+        {
+#>
+            public static readonly <#= enumerantType #> Instance = new <#= enumerantType #>();
+        
+            private  <#= enumerantType #>()
+            {
+            }
+<#
+        } //end of if (parameters.Count == 0)
+        else
+        {
+#>
+            public <#= enumerantType #>()
+            {
+            }
+
+            public <#= enumerantType #>(<# Write(string.Join(", ", parameterKv.Select(parameter=>$"{parameter.Value} {ViewUtils.ToVarName(parameter.Key)}"))); #>)
+            {
+<#
+            foreach (var parameter in parameterKv)
+            {
+#>
+                this.<#=parameter.Key#> = <#=ViewUtils.ToVarName(parameter.Key)#>;
+<#
+            }
+#>
+            }
+<#
+        } //end of if (parameters.Count == 0) else
+#>
+            public override Enumerant Value => <#= _operand.Name #>.Enumerant.<#= enumerantId #>;
+<#
+        foreach (var parameter in parameterKv)
+        {
+#>
+            public <#=(parameter.Key==enumerantId)?"new ":""#><#= parameter.Value #> <#= parameter.Key #> { get; set; }
 <#
         }
 #>
-            public new static <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> Parse(WordReader reader, uint wordCount)
+            public new static <#= enumerantType #> Parse(WordReader reader, uint wordCount)
             {
 <#
         if (parameters.Count == 0)
@@ -69,12 +117,12 @@ namespace Toe.SPIRV.Spv
         {
 #>
                 var end = reader.Position+wordCount;
-                var res = new <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>();
+                var res = new <#= enumerantType #>();
 <#
             foreach (var parameter in parameters)
             {
 #>
-                res.<#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #> = Spv.<#= parameter.kind #>.Parse(reader, end-reader.Position);
+                res.<#= ViewUtils.GetParameterName(enumerantType, parameter) #> = Spv.<#= parameter.kind #>.Parse(reader, end-reader.Position);
 <#
             }
 #>
@@ -94,7 +142,7 @@ namespace Toe.SPIRV.Spv
         foreach (var parameter in parameters)
         {
 #>
-                wordCount += <#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #>.GetWordCount();
+                wordCount += <#= ViewUtils.GetParameterName(enumerantType, parameter) #>.GetWordCount();
 <#
         }
 #>
@@ -108,7 +156,7 @@ namespace Toe.SPIRV.Spv
         foreach (var parameter in parameters)
         {
 #>
-                <#= ViewUtils.GetParameterName(ViewUtils.GetParameterId(_operand, kv.enumerant), parameter) #>.Write(writer);
+                <#= ViewUtils.GetParameterName(enumerantType, parameter) #>.Write(writer);
 <#
         }
 #>
@@ -116,7 +164,16 @@ namespace Toe.SPIRV.Spv
 <#
         } // if (parameters.Count > 0)
 #>
+
+            /// <summary>Returns a string that represents the <#= enumerantType #> object.</summary>
+            /// <returns>A string that represents the <#= enumerantType #> object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" <#= _operand.Name #>.<#= enumerantId #>(<#=string.Join(", ", parameterKv.Select(_=>"{"+_.Key+"}"))#>)";
+            }
         }
+        #endregion //<#= enumerantId #>
 <#
             }
         }
@@ -137,7 +194,7 @@ namespace Toe.SPIRV.Spv
             {
 #>
                 case Enumerant.<#= ViewUtils.GetParameterId(_operand, kv.enumerant) #> :
-                    return <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>.Parse(reader, wordCount - 1);
+                    return <#= ViewUtils.GetParameterId(_operand, kv.enumerant) #>Impl.Parse(reader, wordCount - 1);
 <#
             }
             else

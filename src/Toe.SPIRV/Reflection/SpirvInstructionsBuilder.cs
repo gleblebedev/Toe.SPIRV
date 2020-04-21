@@ -543,7 +543,7 @@ namespace Toe.SPIRV.Reflection
         protected override OpTypeStruct VisitTypeStruct(TypeStruct node)
         {
             var visitTypeStruct = base.VisitTypeStruct(node);
-            visitTypeStruct.MemberTypes = node.Fields.Select(_ => (IdRef)Visit(_.Type)).ToList();
+            visitTypeStruct.MemberTypes = new PrintableList<IdRef>(node.Fields.Select(_ => (IdRef)Visit(_.Type)));
             return Register(visitTypeStruct, _typeInstructions);
         }
 

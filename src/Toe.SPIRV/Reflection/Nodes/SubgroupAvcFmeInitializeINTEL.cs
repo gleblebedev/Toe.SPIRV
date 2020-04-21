@@ -13,24 +13,42 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcFmeInitializeINTEL(SpirvTypeBase resultType, Node srcCoord, Node motionVectors, Node majorShapes, Node minorShapes, Node direction, Node pixelResolution, Node sadAdjustment, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.SrcCoord = srcCoord;
+            this.MotionVectors = motionVectors;
+            this.MajorShapes = majorShapes;
+            this.MinorShapes = minorShapes;
+            this.Direction = direction;
+            this.PixelResolution = pixelResolution;
+            this.SadAdjustment = sadAdjustment;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcFmeInitializeINTEL;
 
-
         public Node SrcCoord { get; set; }
-        public Node MotionVectors { get; set; }
-        public Node MajorShapes { get; set; }
-        public Node MinorShapes { get; set; }
-        public Node Direction { get; set; }
-        public Node PixelResolution { get; set; }
-        public Node SadAdjustment { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node MotionVectors { get; set; }
+
+        public Node MajorShapes { get; set; }
+
+        public Node MinorShapes { get; set; }
+
+        public Node Direction { get; set; }
+
+        public Node PixelResolution { get; set; }
+
+        public Node SadAdjustment { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -63,13 +81,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcFmeInitializeINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcFmeInitializeINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcFmeInitializeINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcFmeInitializeINTEL SetUp(Action<SubgroupAvcFmeInitializeINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcFmeInitializeINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SrcCoord = treeBuilder.GetNode(op.SrcCoord);
@@ -80,6 +111,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             PixelResolution = treeBuilder.GetNode(op.PixelResolution);
             SadAdjustment = treeBuilder.GetNode(op.SadAdjustment);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcFmeInitializeINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcFmeInitializeINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcFmeInitializeINTEL({ResultType}, {SrcCoord}, {MotionVectors}, {MajorShapes}, {MinorShapes}, {Direction}, {PixelResolution}, {SadAdjustment}, {DebugName})";
         }
     }
 }

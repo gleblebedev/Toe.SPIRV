@@ -13,9 +13,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public Kill(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpKill;
-
-
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -40,15 +43,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public Kill WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpKill)op, treeBuilder);
         }
 
-        public void SetUp(OpKill op, SpirvInstructionTreeBuilder treeBuilder)
+        public Kill SetUp(Action<Kill> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpKill op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the Kill object.</summary>
+        /// <returns>A string that represents the Kill object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"Kill({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static Kill ThenKill(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new Kill(debugName));
         }
     }
 }

@@ -13,8 +13,13 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
-        public override Op OpCode => Op.OpString;
+        public String(string value, string debugName = null)
+        {
+            this.Value = value;
+            DebugName = debugName;
+        }
 
+        public override Op OpCode => Op.OpString;
 
         public string Value { get; set; }
 
@@ -34,16 +39,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public String WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpString)op, treeBuilder);
         }
 
-        public void SetUp(OpString op, SpirvInstructionTreeBuilder treeBuilder)
+        public String SetUp(Action<String> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpString op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Value = op.Value;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the String object.</summary>
+        /// <returns>A string that represents the String object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"String({Value}, {DebugName})";
         }
     }
 }

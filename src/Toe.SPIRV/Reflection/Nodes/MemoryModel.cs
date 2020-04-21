@@ -13,10 +13,17 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public MemoryModel(Spv.AddressingModel addressingModel, Spv.MemoryModel value, string debugName = null)
+        {
+            this.AddressingModel = addressingModel;
+            this.Value = value;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpMemoryModel;
 
-
         public Spv.AddressingModel AddressingModel { get; set; }
+
         public Spv.MemoryModel Value { get; set; }
 
         public override IEnumerable<NodePin> OutputPins
@@ -35,17 +42,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public MemoryModel WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpMemoryModel)op, treeBuilder);
         }
 
-        public void SetUp(OpMemoryModel op, SpirvInstructionTreeBuilder treeBuilder)
+        public MemoryModel SetUp(Action<MemoryModel> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpMemoryModel op, SpirvInstructionTreeBuilder treeBuilder)
         {
             AddressingModel = op.AddressingModel;
             Value = op.Value;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the MemoryModel object.</summary>
+        /// <returns>A string that represents the MemoryModel object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"MemoryModel({AddressingModel}, {Value}, {DebugName})";
         }
     }
 }

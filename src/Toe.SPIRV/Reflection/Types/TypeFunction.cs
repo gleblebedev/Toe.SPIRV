@@ -10,6 +10,17 @@ namespace Toe.SPIRV.Reflection.Types
         {
         }
 
+        public TypeFunction(SpirvTypeBase returnType, IEnumerable<TypeFunctionArgument> arguments)
+        {
+            ReturnType = returnType;
+            if (arguments != null) { foreach (var argument in arguments) { Arguments.Add(argument); } }
+        }
+
+        public TypeFunction(SpirvTypeBase returnType, params TypeFunctionArgument[] arguments)
+        {
+            ReturnType = returnType;
+            foreach (var argument in arguments) { Arguments.Add(argument); }
+        }
 
         public SpirvTypeBase ReturnType { get; set; }
 

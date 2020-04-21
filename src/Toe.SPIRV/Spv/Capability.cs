@@ -295,1464 +295,4865 @@ namespace Toe.SPIRV.Spv
             SubgroupAvcMotionEstimationChromaINTEL = 5698,
         }
 
-        public class Matrix: Capability
+        #region Matrix
+        public static MatrixImpl Matrix()
         {
-            public static readonly Matrix Instance = new Matrix();
+            return MatrixImpl.Instance;
+            
+        }
+
+        public class MatrixImpl: Capability
+        {
+            public static readonly MatrixImpl Instance = new MatrixImpl();
+        
+            private  MatrixImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Matrix;
-            public new static Matrix Parse(WordReader reader, uint wordCount)
+            public new static MatrixImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MatrixImpl object.</summary>
+            /// <returns>A string that represents the MatrixImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Matrix()";
+            }
         }
-        public class Shader: Capability
+        #endregion //Matrix
+
+        #region Shader
+        public static ShaderImpl Shader()
         {
-            public static readonly Shader Instance = new Shader();
+            return ShaderImpl.Instance;
+            
+        }
+
+        public class ShaderImpl: Capability
+        {
+            public static readonly ShaderImpl Instance = new ShaderImpl();
+        
+            private  ShaderImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Shader;
-            public new static Shader Parse(WordReader reader, uint wordCount)
+            public new static ShaderImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderImpl object.</summary>
+            /// <returns>A string that represents the ShaderImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Shader()";
+            }
         }
-        public class Geometry: Capability
+        #endregion //Shader
+
+        #region Geometry
+        public static GeometryImpl Geometry()
         {
-            public static readonly Geometry Instance = new Geometry();
+            return GeometryImpl.Instance;
+            
+        }
+
+        public class GeometryImpl: Capability
+        {
+            public static readonly GeometryImpl Instance = new GeometryImpl();
+        
+            private  GeometryImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Geometry;
-            public new static Geometry Parse(WordReader reader, uint wordCount)
+            public new static GeometryImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GeometryImpl object.</summary>
+            /// <returns>A string that represents the GeometryImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Geometry()";
+            }
         }
-        public class Tessellation: Capability
+        #endregion //Geometry
+
+        #region Tessellation
+        public static TessellationImpl Tessellation()
         {
-            public static readonly Tessellation Instance = new Tessellation();
+            return TessellationImpl.Instance;
+            
+        }
+
+        public class TessellationImpl: Capability
+        {
+            public static readonly TessellationImpl Instance = new TessellationImpl();
+        
+            private  TessellationImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Tessellation;
-            public new static Tessellation Parse(WordReader reader, uint wordCount)
+            public new static TessellationImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessellationImpl object.</summary>
+            /// <returns>A string that represents the TessellationImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Tessellation()";
+            }
         }
-        public class Addresses: Capability
+        #endregion //Tessellation
+
+        #region Addresses
+        public static AddressesImpl Addresses()
         {
-            public static readonly Addresses Instance = new Addresses();
+            return AddressesImpl.Instance;
+            
+        }
+
+        public class AddressesImpl: Capability
+        {
+            public static readonly AddressesImpl Instance = new AddressesImpl();
+        
+            private  AddressesImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Addresses;
-            public new static Addresses Parse(WordReader reader, uint wordCount)
+            public new static AddressesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AddressesImpl object.</summary>
+            /// <returns>A string that represents the AddressesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Addresses()";
+            }
         }
-        public class Linkage: Capability
+        #endregion //Addresses
+
+        #region Linkage
+        public static LinkageImpl Linkage()
         {
-            public static readonly Linkage Instance = new Linkage();
+            return LinkageImpl.Instance;
+            
+        }
+
+        public class LinkageImpl: Capability
+        {
+            public static readonly LinkageImpl Instance = new LinkageImpl();
+        
+            private  LinkageImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Linkage;
-            public new static Linkage Parse(WordReader reader, uint wordCount)
+            public new static LinkageImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LinkageImpl object.</summary>
+            /// <returns>A string that represents the LinkageImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Linkage()";
+            }
         }
-        public class Kernel: Capability
+        #endregion //Linkage
+
+        #region Kernel
+        public static KernelImpl Kernel()
         {
-            public static readonly Kernel Instance = new Kernel();
+            return KernelImpl.Instance;
+            
+        }
+
+        public class KernelImpl: Capability
+        {
+            public static readonly KernelImpl Instance = new KernelImpl();
+        
+            private  KernelImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Kernel;
-            public new static Kernel Parse(WordReader reader, uint wordCount)
+            public new static KernelImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the KernelImpl object.</summary>
+            /// <returns>A string that represents the KernelImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Kernel()";
+            }
         }
-        public class Vector16: Capability
+        #endregion //Kernel
+
+        #region Vector16
+        public static Vector16Impl Vector16()
         {
-            public static readonly Vector16 Instance = new Vector16();
+            return Vector16Impl.Instance;
+            
+        }
+
+        public class Vector16Impl: Capability
+        {
+            public static readonly Vector16Impl Instance = new Vector16Impl();
+        
+            private  Vector16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Vector16;
-            public new static Vector16 Parse(WordReader reader, uint wordCount)
+            public new static Vector16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Vector16Impl object.</summary>
+            /// <returns>A string that represents the Vector16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Vector16()";
+            }
         }
-        public class Float16Buffer: Capability
+        #endregion //Vector16
+
+        #region Float16Buffer
+        public static Float16BufferImpl Float16Buffer()
         {
-            public static readonly Float16Buffer Instance = new Float16Buffer();
+            return Float16BufferImpl.Instance;
+            
+        }
+
+        public class Float16BufferImpl: Capability
+        {
+            public static readonly Float16BufferImpl Instance = new Float16BufferImpl();
+        
+            private  Float16BufferImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Float16Buffer;
-            public new static Float16Buffer Parse(WordReader reader, uint wordCount)
+            public new static Float16BufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Float16BufferImpl object.</summary>
+            /// <returns>A string that represents the Float16BufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Float16Buffer()";
+            }
         }
-        public class Float16: Capability
+        #endregion //Float16Buffer
+
+        #region Float16
+        public static Float16Impl Float16()
         {
-            public static readonly Float16 Instance = new Float16();
+            return Float16Impl.Instance;
+            
+        }
+
+        public class Float16Impl: Capability
+        {
+            public static readonly Float16Impl Instance = new Float16Impl();
+        
+            private  Float16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Float16;
-            public new static Float16 Parse(WordReader reader, uint wordCount)
+            public new static Float16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Float16Impl object.</summary>
+            /// <returns>A string that represents the Float16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Float16()";
+            }
         }
-        public class Float64: Capability
+        #endregion //Float16
+
+        #region Float64
+        public static Float64Impl Float64()
         {
-            public static readonly Float64 Instance = new Float64();
+            return Float64Impl.Instance;
+            
+        }
+
+        public class Float64Impl: Capability
+        {
+            public static readonly Float64Impl Instance = new Float64Impl();
+        
+            private  Float64Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Float64;
-            public new static Float64 Parse(WordReader reader, uint wordCount)
+            public new static Float64Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Float64Impl object.</summary>
+            /// <returns>A string that represents the Float64Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Float64()";
+            }
         }
-        public class Int64: Capability
+        #endregion //Float64
+
+        #region Int64
+        public static Int64Impl Int64()
         {
-            public static readonly Int64 Instance = new Int64();
+            return Int64Impl.Instance;
+            
+        }
+
+        public class Int64Impl: Capability
+        {
+            public static readonly Int64Impl Instance = new Int64Impl();
+        
+            private  Int64Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Int64;
-            public new static Int64 Parse(WordReader reader, uint wordCount)
+            public new static Int64Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Int64Impl object.</summary>
+            /// <returns>A string that represents the Int64Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Int64()";
+            }
         }
-        public class Int64Atomics: Capability
+        #endregion //Int64
+
+        #region Int64Atomics
+        public static Int64AtomicsImpl Int64Atomics()
         {
-            public static readonly Int64Atomics Instance = new Int64Atomics();
+            return Int64AtomicsImpl.Instance;
+            
+        }
+
+        public class Int64AtomicsImpl: Capability
+        {
+            public static readonly Int64AtomicsImpl Instance = new Int64AtomicsImpl();
+        
+            private  Int64AtomicsImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Int64Atomics;
-            public new static Int64Atomics Parse(WordReader reader, uint wordCount)
+            public new static Int64AtomicsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Int64AtomicsImpl object.</summary>
+            /// <returns>A string that represents the Int64AtomicsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Int64Atomics()";
+            }
         }
-        public class ImageBasic: Capability
+        #endregion //Int64Atomics
+
+        #region ImageBasic
+        public static ImageBasicImpl ImageBasic()
         {
-            public static readonly ImageBasic Instance = new ImageBasic();
+            return ImageBasicImpl.Instance;
+            
+        }
+
+        public class ImageBasicImpl: Capability
+        {
+            public static readonly ImageBasicImpl Instance = new ImageBasicImpl();
+        
+            private  ImageBasicImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageBasic;
-            public new static ImageBasic Parse(WordReader reader, uint wordCount)
+            public new static ImageBasicImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageBasicImpl object.</summary>
+            /// <returns>A string that represents the ImageBasicImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageBasic()";
+            }
         }
-        public class ImageReadWrite: Capability
+        #endregion //ImageBasic
+
+        #region ImageReadWrite
+        public static ImageReadWriteImpl ImageReadWrite()
         {
-            public static readonly ImageReadWrite Instance = new ImageReadWrite();
+            return ImageReadWriteImpl.Instance;
+            
+        }
+
+        public class ImageReadWriteImpl: Capability
+        {
+            public static readonly ImageReadWriteImpl Instance = new ImageReadWriteImpl();
+        
+            private  ImageReadWriteImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageReadWrite;
-            public new static ImageReadWrite Parse(WordReader reader, uint wordCount)
+            public new static ImageReadWriteImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageReadWriteImpl object.</summary>
+            /// <returns>A string that represents the ImageReadWriteImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageReadWrite()";
+            }
         }
-        public class ImageMipmap: Capability
+        #endregion //ImageReadWrite
+
+        #region ImageMipmap
+        public static ImageMipmapImpl ImageMipmap()
         {
-            public static readonly ImageMipmap Instance = new ImageMipmap();
+            return ImageMipmapImpl.Instance;
+            
+        }
+
+        public class ImageMipmapImpl: Capability
+        {
+            public static readonly ImageMipmapImpl Instance = new ImageMipmapImpl();
+        
+            private  ImageMipmapImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageMipmap;
-            public new static ImageMipmap Parse(WordReader reader, uint wordCount)
+            public new static ImageMipmapImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageMipmapImpl object.</summary>
+            /// <returns>A string that represents the ImageMipmapImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageMipmap()";
+            }
         }
-        public class Pipes: Capability
+        #endregion //ImageMipmap
+
+        #region Pipes
+        public static PipesImpl Pipes()
         {
-            public static readonly Pipes Instance = new Pipes();
+            return PipesImpl.Instance;
+            
+        }
+
+        public class PipesImpl: Capability
+        {
+            public static readonly PipesImpl Instance = new PipesImpl();
+        
+            private  PipesImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Pipes;
-            public new static Pipes Parse(WordReader reader, uint wordCount)
+            public new static PipesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PipesImpl object.</summary>
+            /// <returns>A string that represents the PipesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Pipes()";
+            }
         }
-        public class Groups: Capability
+        #endregion //Pipes
+
+        #region Groups
+        public static GroupsImpl Groups()
         {
-            public static readonly Groups Instance = new Groups();
+            return GroupsImpl.Instance;
+            
+        }
+
+        public class GroupsImpl: Capability
+        {
+            public static readonly GroupsImpl Instance = new GroupsImpl();
+        
+            private  GroupsImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Groups;
-            public new static Groups Parse(WordReader reader, uint wordCount)
+            public new static GroupsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupsImpl object.</summary>
+            /// <returns>A string that represents the GroupsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Groups()";
+            }
         }
-        public class DeviceEnqueue: Capability
+        #endregion //Groups
+
+        #region DeviceEnqueue
+        public static DeviceEnqueueImpl DeviceEnqueue()
         {
-            public static readonly DeviceEnqueue Instance = new DeviceEnqueue();
+            return DeviceEnqueueImpl.Instance;
+            
+        }
+
+        public class DeviceEnqueueImpl: Capability
+        {
+            public static readonly DeviceEnqueueImpl Instance = new DeviceEnqueueImpl();
+        
+            private  DeviceEnqueueImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DeviceEnqueue;
-            public new static DeviceEnqueue Parse(WordReader reader, uint wordCount)
+            public new static DeviceEnqueueImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DeviceEnqueueImpl object.</summary>
+            /// <returns>A string that represents the DeviceEnqueueImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DeviceEnqueue()";
+            }
         }
-        public class LiteralSampler: Capability
+        #endregion //DeviceEnqueue
+
+        #region LiteralSampler
+        public static LiteralSamplerImpl LiteralSampler()
         {
-            public static readonly LiteralSampler Instance = new LiteralSampler();
+            return LiteralSamplerImpl.Instance;
+            
+        }
+
+        public class LiteralSamplerImpl: Capability
+        {
+            public static readonly LiteralSamplerImpl Instance = new LiteralSamplerImpl();
+        
+            private  LiteralSamplerImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.LiteralSampler;
-            public new static LiteralSampler Parse(WordReader reader, uint wordCount)
+            public new static LiteralSamplerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LiteralSamplerImpl object.</summary>
+            /// <returns>A string that represents the LiteralSamplerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.LiteralSampler()";
+            }
         }
-        public class AtomicStorage: Capability
+        #endregion //LiteralSampler
+
+        #region AtomicStorage
+        public static AtomicStorageImpl AtomicStorage()
         {
-            public static readonly AtomicStorage Instance = new AtomicStorage();
+            return AtomicStorageImpl.Instance;
+            
+        }
+
+        public class AtomicStorageImpl: Capability
+        {
+            public static readonly AtomicStorageImpl Instance = new AtomicStorageImpl();
+        
+            private  AtomicStorageImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.AtomicStorage;
-            public new static AtomicStorage Parse(WordReader reader, uint wordCount)
+            public new static AtomicStorageImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AtomicStorageImpl object.</summary>
+            /// <returns>A string that represents the AtomicStorageImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.AtomicStorage()";
+            }
         }
-        public class Int16: Capability
+        #endregion //AtomicStorage
+
+        #region Int16
+        public static Int16Impl Int16()
         {
-            public static readonly Int16 Instance = new Int16();
+            return Int16Impl.Instance;
+            
+        }
+
+        public class Int16Impl: Capability
+        {
+            public static readonly Int16Impl Instance = new Int16Impl();
+        
+            private  Int16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Int16;
-            public new static Int16 Parse(WordReader reader, uint wordCount)
+            public new static Int16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Int16Impl object.</summary>
+            /// <returns>A string that represents the Int16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Int16()";
+            }
         }
-        public class TessellationPointSize: Capability
+        #endregion //Int16
+
+        #region TessellationPointSize
+        public static TessellationPointSizeImpl TessellationPointSize()
         {
-            public static readonly TessellationPointSize Instance = new TessellationPointSize();
+            return TessellationPointSizeImpl.Instance;
+            
+        }
+
+        public class TessellationPointSizeImpl: Capability
+        {
+            public static readonly TessellationPointSizeImpl Instance = new TessellationPointSizeImpl();
+        
+            private  TessellationPointSizeImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.TessellationPointSize;
-            public new static TessellationPointSize Parse(WordReader reader, uint wordCount)
+            public new static TessellationPointSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessellationPointSizeImpl object.</summary>
+            /// <returns>A string that represents the TessellationPointSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.TessellationPointSize()";
+            }
         }
-        public class GeometryPointSize: Capability
+        #endregion //TessellationPointSize
+
+        #region GeometryPointSize
+        public static GeometryPointSizeImpl GeometryPointSize()
         {
-            public static readonly GeometryPointSize Instance = new GeometryPointSize();
+            return GeometryPointSizeImpl.Instance;
+            
+        }
+
+        public class GeometryPointSizeImpl: Capability
+        {
+            public static readonly GeometryPointSizeImpl Instance = new GeometryPointSizeImpl();
+        
+            private  GeometryPointSizeImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GeometryPointSize;
-            public new static GeometryPointSize Parse(WordReader reader, uint wordCount)
+            public new static GeometryPointSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GeometryPointSizeImpl object.</summary>
+            /// <returns>A string that represents the GeometryPointSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GeometryPointSize()";
+            }
         }
-        public class ImageGatherExtended: Capability
+        #endregion //GeometryPointSize
+
+        #region ImageGatherExtended
+        public static ImageGatherExtendedImpl ImageGatherExtended()
         {
-            public static readonly ImageGatherExtended Instance = new ImageGatherExtended();
+            return ImageGatherExtendedImpl.Instance;
+            
+        }
+
+        public class ImageGatherExtendedImpl: Capability
+        {
+            public static readonly ImageGatherExtendedImpl Instance = new ImageGatherExtendedImpl();
+        
+            private  ImageGatherExtendedImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageGatherExtended;
-            public new static ImageGatherExtended Parse(WordReader reader, uint wordCount)
+            public new static ImageGatherExtendedImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageGatherExtendedImpl object.</summary>
+            /// <returns>A string that represents the ImageGatherExtendedImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageGatherExtended()";
+            }
         }
-        public class StorageImageMultisample: Capability
+        #endregion //ImageGatherExtended
+
+        #region StorageImageMultisample
+        public static StorageImageMultisampleImpl StorageImageMultisample()
         {
-            public static readonly StorageImageMultisample Instance = new StorageImageMultisample();
+            return StorageImageMultisampleImpl.Instance;
+            
+        }
+
+        public class StorageImageMultisampleImpl: Capability
+        {
+            public static readonly StorageImageMultisampleImpl Instance = new StorageImageMultisampleImpl();
+        
+            private  StorageImageMultisampleImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageMultisample;
-            public new static StorageImageMultisample Parse(WordReader reader, uint wordCount)
+            public new static StorageImageMultisampleImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageMultisampleImpl object.</summary>
+            /// <returns>A string that represents the StorageImageMultisampleImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageMultisample()";
+            }
         }
-        public class UniformBufferArrayDynamicIndexing: Capability
+        #endregion //StorageImageMultisample
+
+        #region UniformBufferArrayDynamicIndexing
+        public static UniformBufferArrayDynamicIndexingImpl UniformBufferArrayDynamicIndexing()
         {
-            public static readonly UniformBufferArrayDynamicIndexing Instance = new UniformBufferArrayDynamicIndexing();
+            return UniformBufferArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class UniformBufferArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly UniformBufferArrayDynamicIndexingImpl Instance = new UniformBufferArrayDynamicIndexingImpl();
+        
+            private  UniformBufferArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformBufferArrayDynamicIndexing;
-            public new static UniformBufferArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static UniformBufferArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformBufferArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the UniformBufferArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformBufferArrayDynamicIndexing()";
+            }
         }
-        public class SampledImageArrayDynamicIndexing: Capability
+        #endregion //UniformBufferArrayDynamicIndexing
+
+        #region SampledImageArrayDynamicIndexing
+        public static SampledImageArrayDynamicIndexingImpl SampledImageArrayDynamicIndexing()
         {
-            public static readonly SampledImageArrayDynamicIndexing Instance = new SampledImageArrayDynamicIndexing();
+            return SampledImageArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class SampledImageArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly SampledImageArrayDynamicIndexingImpl Instance = new SampledImageArrayDynamicIndexingImpl();
+        
+            private  SampledImageArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampledImageArrayDynamicIndexing;
-            public new static SampledImageArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static SampledImageArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampledImageArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the SampledImageArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampledImageArrayDynamicIndexing()";
+            }
         }
-        public class StorageBufferArrayDynamicIndexing: Capability
+        #endregion //SampledImageArrayDynamicIndexing
+
+        #region StorageBufferArrayDynamicIndexing
+        public static StorageBufferArrayDynamicIndexingImpl StorageBufferArrayDynamicIndexing()
         {
-            public static readonly StorageBufferArrayDynamicIndexing Instance = new StorageBufferArrayDynamicIndexing();
+            return StorageBufferArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class StorageBufferArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly StorageBufferArrayDynamicIndexingImpl Instance = new StorageBufferArrayDynamicIndexingImpl();
+        
+            private  StorageBufferArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageBufferArrayDynamicIndexing;
-            public new static StorageBufferArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static StorageBufferArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageBufferArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the StorageBufferArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageBufferArrayDynamicIndexing()";
+            }
         }
-        public class StorageImageArrayDynamicIndexing: Capability
+        #endregion //StorageBufferArrayDynamicIndexing
+
+        #region StorageImageArrayDynamicIndexing
+        public static StorageImageArrayDynamicIndexingImpl StorageImageArrayDynamicIndexing()
         {
-            public static readonly StorageImageArrayDynamicIndexing Instance = new StorageImageArrayDynamicIndexing();
+            return StorageImageArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class StorageImageArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly StorageImageArrayDynamicIndexingImpl Instance = new StorageImageArrayDynamicIndexingImpl();
+        
+            private  StorageImageArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageArrayDynamicIndexing;
-            public new static StorageImageArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static StorageImageArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the StorageImageArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageArrayDynamicIndexing()";
+            }
         }
-        public class ClipDistance: Capability
+        #endregion //StorageImageArrayDynamicIndexing
+
+        #region ClipDistance
+        public static ClipDistanceImpl ClipDistance()
         {
-            public static readonly ClipDistance Instance = new ClipDistance();
+            return ClipDistanceImpl.Instance;
+            
+        }
+
+        public class ClipDistanceImpl: Capability
+        {
+            public static readonly ClipDistanceImpl Instance = new ClipDistanceImpl();
+        
+            private  ClipDistanceImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ClipDistance;
-            public new static ClipDistance Parse(WordReader reader, uint wordCount)
+            public new static ClipDistanceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClipDistanceImpl object.</summary>
+            /// <returns>A string that represents the ClipDistanceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ClipDistance()";
+            }
         }
-        public class CullDistance: Capability
+        #endregion //ClipDistance
+
+        #region CullDistance
+        public static CullDistanceImpl CullDistance()
         {
-            public static readonly CullDistance Instance = new CullDistance();
+            return CullDistanceImpl.Instance;
+            
+        }
+
+        public class CullDistanceImpl: Capability
+        {
+            public static readonly CullDistanceImpl Instance = new CullDistanceImpl();
+        
+            private  CullDistanceImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.CullDistance;
-            public new static CullDistance Parse(WordReader reader, uint wordCount)
+            public new static CullDistanceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CullDistanceImpl object.</summary>
+            /// <returns>A string that represents the CullDistanceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.CullDistance()";
+            }
         }
-        public class ImageCubeArray: Capability
+        #endregion //CullDistance
+
+        #region ImageCubeArray
+        public static ImageCubeArrayImpl ImageCubeArray()
         {
-            public static readonly ImageCubeArray Instance = new ImageCubeArray();
+            return ImageCubeArrayImpl.Instance;
+            
+        }
+
+        public class ImageCubeArrayImpl: Capability
+        {
+            public static readonly ImageCubeArrayImpl Instance = new ImageCubeArrayImpl();
+        
+            private  ImageCubeArrayImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageCubeArray;
-            public new static ImageCubeArray Parse(WordReader reader, uint wordCount)
+            public new static ImageCubeArrayImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageCubeArrayImpl object.</summary>
+            /// <returns>A string that represents the ImageCubeArrayImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageCubeArray()";
+            }
         }
-        public class SampleRateShading: Capability
+        #endregion //ImageCubeArray
+
+        #region SampleRateShading
+        public static SampleRateShadingImpl SampleRateShading()
         {
-            public static readonly SampleRateShading Instance = new SampleRateShading();
+            return SampleRateShadingImpl.Instance;
+            
+        }
+
+        public class SampleRateShadingImpl: Capability
+        {
+            public static readonly SampleRateShadingImpl Instance = new SampleRateShadingImpl();
+        
+            private  SampleRateShadingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampleRateShading;
-            public new static SampleRateShading Parse(WordReader reader, uint wordCount)
+            public new static SampleRateShadingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleRateShadingImpl object.</summary>
+            /// <returns>A string that represents the SampleRateShadingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampleRateShading()";
+            }
         }
-        public class ImageRect: Capability
+        #endregion //SampleRateShading
+
+        #region ImageRect
+        public static ImageRectImpl ImageRect()
         {
-            public static readonly ImageRect Instance = new ImageRect();
+            return ImageRectImpl.Instance;
+            
+        }
+
+        public class ImageRectImpl: Capability
+        {
+            public static readonly ImageRectImpl Instance = new ImageRectImpl();
+        
+            private  ImageRectImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageRect;
-            public new static ImageRect Parse(WordReader reader, uint wordCount)
+            public new static ImageRectImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageRectImpl object.</summary>
+            /// <returns>A string that represents the ImageRectImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageRect()";
+            }
         }
-        public class SampledRect: Capability
+        #endregion //ImageRect
+
+        #region SampledRect
+        public static SampledRectImpl SampledRect()
         {
-            public static readonly SampledRect Instance = new SampledRect();
+            return SampledRectImpl.Instance;
+            
+        }
+
+        public class SampledRectImpl: Capability
+        {
+            public static readonly SampledRectImpl Instance = new SampledRectImpl();
+        
+            private  SampledRectImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampledRect;
-            public new static SampledRect Parse(WordReader reader, uint wordCount)
+            public new static SampledRectImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampledRectImpl object.</summary>
+            /// <returns>A string that represents the SampledRectImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampledRect()";
+            }
         }
-        public class GenericPointer: Capability
+        #endregion //SampledRect
+
+        #region GenericPointer
+        public static GenericPointerImpl GenericPointer()
         {
-            public static readonly GenericPointer Instance = new GenericPointer();
+            return GenericPointerImpl.Instance;
+            
+        }
+
+        public class GenericPointerImpl: Capability
+        {
+            public static readonly GenericPointerImpl Instance = new GenericPointerImpl();
+        
+            private  GenericPointerImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GenericPointer;
-            public new static GenericPointer Parse(WordReader reader, uint wordCount)
+            public new static GenericPointerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GenericPointerImpl object.</summary>
+            /// <returns>A string that represents the GenericPointerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GenericPointer()";
+            }
         }
-        public class Int8: Capability
+        #endregion //GenericPointer
+
+        #region Int8
+        public static Int8Impl Int8()
         {
-            public static readonly Int8 Instance = new Int8();
+            return Int8Impl.Instance;
+            
+        }
+
+        public class Int8Impl: Capability
+        {
+            public static readonly Int8Impl Instance = new Int8Impl();
+        
+            private  Int8Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Int8;
-            public new static Int8 Parse(WordReader reader, uint wordCount)
+            public new static Int8Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Int8Impl object.</summary>
+            /// <returns>A string that represents the Int8Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Int8()";
+            }
         }
-        public class InputAttachment: Capability
+        #endregion //Int8
+
+        #region InputAttachment
+        public static InputAttachmentImpl InputAttachment()
         {
-            public static readonly InputAttachment Instance = new InputAttachment();
+            return InputAttachmentImpl.Instance;
+            
+        }
+
+        public class InputAttachmentImpl: Capability
+        {
+            public static readonly InputAttachmentImpl Instance = new InputAttachmentImpl();
+        
+            private  InputAttachmentImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.InputAttachment;
-            public new static InputAttachment Parse(WordReader reader, uint wordCount)
+            public new static InputAttachmentImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputAttachmentImpl object.</summary>
+            /// <returns>A string that represents the InputAttachmentImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.InputAttachment()";
+            }
         }
-        public class SparseResidency: Capability
+        #endregion //InputAttachment
+
+        #region SparseResidency
+        public static SparseResidencyImpl SparseResidency()
         {
-            public static readonly SparseResidency Instance = new SparseResidency();
+            return SparseResidencyImpl.Instance;
+            
+        }
+
+        public class SparseResidencyImpl: Capability
+        {
+            public static readonly SparseResidencyImpl Instance = new SparseResidencyImpl();
+        
+            private  SparseResidencyImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SparseResidency;
-            public new static SparseResidency Parse(WordReader reader, uint wordCount)
+            public new static SparseResidencyImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SparseResidencyImpl object.</summary>
+            /// <returns>A string that represents the SparseResidencyImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SparseResidency()";
+            }
         }
-        public class MinLod: Capability
+        #endregion //SparseResidency
+
+        #region MinLod
+        public static MinLodImpl MinLod()
         {
-            public static readonly MinLod Instance = new MinLod();
+            return MinLodImpl.Instance;
+            
+        }
+
+        public class MinLodImpl: Capability
+        {
+            public static readonly MinLodImpl Instance = new MinLodImpl();
+        
+            private  MinLodImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.MinLod;
-            public new static MinLod Parse(WordReader reader, uint wordCount)
+            public new static MinLodImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MinLodImpl object.</summary>
+            /// <returns>A string that represents the MinLodImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.MinLod()";
+            }
         }
-        public class Sampled1D: Capability
+        #endregion //MinLod
+
+        #region Sampled1D
+        public static Sampled1DImpl Sampled1D()
         {
-            public static readonly Sampled1D Instance = new Sampled1D();
+            return Sampled1DImpl.Instance;
+            
+        }
+
+        public class Sampled1DImpl: Capability
+        {
+            public static readonly Sampled1DImpl Instance = new Sampled1DImpl();
+        
+            private  Sampled1DImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Sampled1D;
-            public new static Sampled1D Parse(WordReader reader, uint wordCount)
+            public new static Sampled1DImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Sampled1DImpl object.</summary>
+            /// <returns>A string that represents the Sampled1DImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Sampled1D()";
+            }
         }
-        public class Image1D: Capability
+        #endregion //Sampled1D
+
+        #region Image1D
+        public static Image1DImpl Image1D()
         {
-            public static readonly Image1D Instance = new Image1D();
+            return Image1DImpl.Instance;
+            
+        }
+
+        public class Image1DImpl: Capability
+        {
+            public static readonly Image1DImpl Instance = new Image1DImpl();
+        
+            private  Image1DImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Image1D;
-            public new static Image1D Parse(WordReader reader, uint wordCount)
+            public new static Image1DImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Image1DImpl object.</summary>
+            /// <returns>A string that represents the Image1DImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Image1D()";
+            }
         }
-        public class SampledCubeArray: Capability
+        #endregion //Image1D
+
+        #region SampledCubeArray
+        public static SampledCubeArrayImpl SampledCubeArray()
         {
-            public static readonly SampledCubeArray Instance = new SampledCubeArray();
+            return SampledCubeArrayImpl.Instance;
+            
+        }
+
+        public class SampledCubeArrayImpl: Capability
+        {
+            public static readonly SampledCubeArrayImpl Instance = new SampledCubeArrayImpl();
+        
+            private  SampledCubeArrayImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampledCubeArray;
-            public new static SampledCubeArray Parse(WordReader reader, uint wordCount)
+            public new static SampledCubeArrayImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampledCubeArrayImpl object.</summary>
+            /// <returns>A string that represents the SampledCubeArrayImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampledCubeArray()";
+            }
         }
-        public class SampledBuffer: Capability
+        #endregion //SampledCubeArray
+
+        #region SampledBuffer
+        public static SampledBufferImpl SampledBuffer()
         {
-            public static readonly SampledBuffer Instance = new SampledBuffer();
+            return SampledBufferImpl.Instance;
+            
+        }
+
+        public class SampledBufferImpl: Capability
+        {
+            public static readonly SampledBufferImpl Instance = new SampledBufferImpl();
+        
+            private  SampledBufferImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampledBuffer;
-            public new static SampledBuffer Parse(WordReader reader, uint wordCount)
+            public new static SampledBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampledBufferImpl object.</summary>
+            /// <returns>A string that represents the SampledBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampledBuffer()";
+            }
         }
-        public class ImageBuffer: Capability
+        #endregion //SampledBuffer
+
+        #region ImageBuffer
+        public static ImageBufferImpl ImageBuffer()
         {
-            public static readonly ImageBuffer Instance = new ImageBuffer();
+            return ImageBufferImpl.Instance;
+            
+        }
+
+        public class ImageBufferImpl: Capability
+        {
+            public static readonly ImageBufferImpl Instance = new ImageBufferImpl();
+        
+            private  ImageBufferImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageBuffer;
-            public new static ImageBuffer Parse(WordReader reader, uint wordCount)
+            public new static ImageBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageBufferImpl object.</summary>
+            /// <returns>A string that represents the ImageBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageBuffer()";
+            }
         }
-        public class ImageMSArray: Capability
+        #endregion //ImageBuffer
+
+        #region ImageMSArray
+        public static ImageMSArrayImpl ImageMSArray()
         {
-            public static readonly ImageMSArray Instance = new ImageMSArray();
+            return ImageMSArrayImpl.Instance;
+            
+        }
+
+        public class ImageMSArrayImpl: Capability
+        {
+            public static readonly ImageMSArrayImpl Instance = new ImageMSArrayImpl();
+        
+            private  ImageMSArrayImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageMSArray;
-            public new static ImageMSArray Parse(WordReader reader, uint wordCount)
+            public new static ImageMSArrayImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageMSArrayImpl object.</summary>
+            /// <returns>A string that represents the ImageMSArrayImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageMSArray()";
+            }
         }
-        public class StorageImageExtendedFormats: Capability
+        #endregion //ImageMSArray
+
+        #region StorageImageExtendedFormats
+        public static StorageImageExtendedFormatsImpl StorageImageExtendedFormats()
         {
-            public static readonly StorageImageExtendedFormats Instance = new StorageImageExtendedFormats();
+            return StorageImageExtendedFormatsImpl.Instance;
+            
+        }
+
+        public class StorageImageExtendedFormatsImpl: Capability
+        {
+            public static readonly StorageImageExtendedFormatsImpl Instance = new StorageImageExtendedFormatsImpl();
+        
+            private  StorageImageExtendedFormatsImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageExtendedFormats;
-            public new static StorageImageExtendedFormats Parse(WordReader reader, uint wordCount)
+            public new static StorageImageExtendedFormatsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageExtendedFormatsImpl object.</summary>
+            /// <returns>A string that represents the StorageImageExtendedFormatsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageExtendedFormats()";
+            }
         }
-        public class ImageQuery: Capability
+        #endregion //StorageImageExtendedFormats
+
+        #region ImageQuery
+        public static ImageQueryImpl ImageQuery()
         {
-            public static readonly ImageQuery Instance = new ImageQuery();
+            return ImageQueryImpl.Instance;
+            
+        }
+
+        public class ImageQueryImpl: Capability
+        {
+            public static readonly ImageQueryImpl Instance = new ImageQueryImpl();
+        
+            private  ImageQueryImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageQuery;
-            public new static ImageQuery Parse(WordReader reader, uint wordCount)
+            public new static ImageQueryImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageQueryImpl object.</summary>
+            /// <returns>A string that represents the ImageQueryImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageQuery()";
+            }
         }
-        public class DerivativeControl: Capability
+        #endregion //ImageQuery
+
+        #region DerivativeControl
+        public static DerivativeControlImpl DerivativeControl()
         {
-            public static readonly DerivativeControl Instance = new DerivativeControl();
+            return DerivativeControlImpl.Instance;
+            
+        }
+
+        public class DerivativeControlImpl: Capability
+        {
+            public static readonly DerivativeControlImpl Instance = new DerivativeControlImpl();
+        
+            private  DerivativeControlImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DerivativeControl;
-            public new static DerivativeControl Parse(WordReader reader, uint wordCount)
+            public new static DerivativeControlImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DerivativeControlImpl object.</summary>
+            /// <returns>A string that represents the DerivativeControlImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DerivativeControl()";
+            }
         }
-        public class InterpolationFunction: Capability
+        #endregion //DerivativeControl
+
+        #region InterpolationFunction
+        public static InterpolationFunctionImpl InterpolationFunction()
         {
-            public static readonly InterpolationFunction Instance = new InterpolationFunction();
+            return InterpolationFunctionImpl.Instance;
+            
+        }
+
+        public class InterpolationFunctionImpl: Capability
+        {
+            public static readonly InterpolationFunctionImpl Instance = new InterpolationFunctionImpl();
+        
+            private  InterpolationFunctionImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.InterpolationFunction;
-            public new static InterpolationFunction Parse(WordReader reader, uint wordCount)
+            public new static InterpolationFunctionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InterpolationFunctionImpl object.</summary>
+            /// <returns>A string that represents the InterpolationFunctionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.InterpolationFunction()";
+            }
         }
-        public class TransformFeedback: Capability
+        #endregion //InterpolationFunction
+
+        #region TransformFeedback
+        public static TransformFeedbackImpl TransformFeedback()
         {
-            public static readonly TransformFeedback Instance = new TransformFeedback();
+            return TransformFeedbackImpl.Instance;
+            
+        }
+
+        public class TransformFeedbackImpl: Capability
+        {
+            public static readonly TransformFeedbackImpl Instance = new TransformFeedbackImpl();
+        
+            private  TransformFeedbackImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.TransformFeedback;
-            public new static TransformFeedback Parse(WordReader reader, uint wordCount)
+            public new static TransformFeedbackImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TransformFeedbackImpl object.</summary>
+            /// <returns>A string that represents the TransformFeedbackImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.TransformFeedback()";
+            }
         }
-        public class GeometryStreams: Capability
+        #endregion //TransformFeedback
+
+        #region GeometryStreams
+        public static GeometryStreamsImpl GeometryStreams()
         {
-            public static readonly GeometryStreams Instance = new GeometryStreams();
+            return GeometryStreamsImpl.Instance;
+            
+        }
+
+        public class GeometryStreamsImpl: Capability
+        {
+            public static readonly GeometryStreamsImpl Instance = new GeometryStreamsImpl();
+        
+            private  GeometryStreamsImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GeometryStreams;
-            public new static GeometryStreams Parse(WordReader reader, uint wordCount)
+            public new static GeometryStreamsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GeometryStreamsImpl object.</summary>
+            /// <returns>A string that represents the GeometryStreamsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GeometryStreams()";
+            }
         }
-        public class StorageImageReadWithoutFormat: Capability
+        #endregion //GeometryStreams
+
+        #region StorageImageReadWithoutFormat
+        public static StorageImageReadWithoutFormatImpl StorageImageReadWithoutFormat()
         {
-            public static readonly StorageImageReadWithoutFormat Instance = new StorageImageReadWithoutFormat();
+            return StorageImageReadWithoutFormatImpl.Instance;
+            
+        }
+
+        public class StorageImageReadWithoutFormatImpl: Capability
+        {
+            public static readonly StorageImageReadWithoutFormatImpl Instance = new StorageImageReadWithoutFormatImpl();
+        
+            private  StorageImageReadWithoutFormatImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageReadWithoutFormat;
-            public new static StorageImageReadWithoutFormat Parse(WordReader reader, uint wordCount)
+            public new static StorageImageReadWithoutFormatImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageReadWithoutFormatImpl object.</summary>
+            /// <returns>A string that represents the StorageImageReadWithoutFormatImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageReadWithoutFormat()";
+            }
         }
-        public class StorageImageWriteWithoutFormat: Capability
+        #endregion //StorageImageReadWithoutFormat
+
+        #region StorageImageWriteWithoutFormat
+        public static StorageImageWriteWithoutFormatImpl StorageImageWriteWithoutFormat()
         {
-            public static readonly StorageImageWriteWithoutFormat Instance = new StorageImageWriteWithoutFormat();
+            return StorageImageWriteWithoutFormatImpl.Instance;
+            
+        }
+
+        public class StorageImageWriteWithoutFormatImpl: Capability
+        {
+            public static readonly StorageImageWriteWithoutFormatImpl Instance = new StorageImageWriteWithoutFormatImpl();
+        
+            private  StorageImageWriteWithoutFormatImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageWriteWithoutFormat;
-            public new static StorageImageWriteWithoutFormat Parse(WordReader reader, uint wordCount)
+            public new static StorageImageWriteWithoutFormatImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageWriteWithoutFormatImpl object.</summary>
+            /// <returns>A string that represents the StorageImageWriteWithoutFormatImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageWriteWithoutFormat()";
+            }
         }
-        public class MultiViewport: Capability
+        #endregion //StorageImageWriteWithoutFormat
+
+        #region MultiViewport
+        public static MultiViewportImpl MultiViewport()
         {
-            public static readonly MultiViewport Instance = new MultiViewport();
+            return MultiViewportImpl.Instance;
+            
+        }
+
+        public class MultiViewportImpl: Capability
+        {
+            public static readonly MultiViewportImpl Instance = new MultiViewportImpl();
+        
+            private  MultiViewportImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.MultiViewport;
-            public new static MultiViewport Parse(WordReader reader, uint wordCount)
+            public new static MultiViewportImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MultiViewportImpl object.</summary>
+            /// <returns>A string that represents the MultiViewportImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.MultiViewport()";
+            }
         }
-        public class SubgroupDispatch: Capability
+        #endregion //MultiViewport
+
+        #region SubgroupDispatch
+        public static SubgroupDispatchImpl SubgroupDispatch()
         {
-            public static readonly SubgroupDispatch Instance = new SubgroupDispatch();
+            return SubgroupDispatchImpl.Instance;
+            
+        }
+
+        public class SubgroupDispatchImpl: Capability
+        {
+            public static readonly SubgroupDispatchImpl Instance = new SubgroupDispatchImpl();
+        
+            private  SubgroupDispatchImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupDispatch;
-            public new static SubgroupDispatch Parse(WordReader reader, uint wordCount)
+            public new static SubgroupDispatchImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupDispatchImpl object.</summary>
+            /// <returns>A string that represents the SubgroupDispatchImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupDispatch()";
+            }
         }
-        public class NamedBarrier: Capability
+        #endregion //SubgroupDispatch
+
+        #region NamedBarrier
+        public static NamedBarrierImpl NamedBarrier()
         {
-            public static readonly NamedBarrier Instance = new NamedBarrier();
+            return NamedBarrierImpl.Instance;
+            
+        }
+
+        public class NamedBarrierImpl: Capability
+        {
+            public static readonly NamedBarrierImpl Instance = new NamedBarrierImpl();
+        
+            private  NamedBarrierImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.NamedBarrier;
-            public new static NamedBarrier Parse(WordReader reader, uint wordCount)
+            public new static NamedBarrierImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NamedBarrierImpl object.</summary>
+            /// <returns>A string that represents the NamedBarrierImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.NamedBarrier()";
+            }
         }
-        public class PipeStorage: Capability
+        #endregion //NamedBarrier
+
+        #region PipeStorage
+        public static PipeStorageImpl PipeStorage()
         {
-            public static readonly PipeStorage Instance = new PipeStorage();
+            return PipeStorageImpl.Instance;
+            
+        }
+
+        public class PipeStorageImpl: Capability
+        {
+            public static readonly PipeStorageImpl Instance = new PipeStorageImpl();
+        
+            private  PipeStorageImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.PipeStorage;
-            public new static PipeStorage Parse(WordReader reader, uint wordCount)
+            public new static PipeStorageImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PipeStorageImpl object.</summary>
+            /// <returns>A string that represents the PipeStorageImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.PipeStorage()";
+            }
         }
-        public class GroupNonUniform: Capability
+        #endregion //PipeStorage
+
+        #region GroupNonUniform
+        public static GroupNonUniformImpl GroupNonUniform()
         {
-            public static readonly GroupNonUniform Instance = new GroupNonUniform();
+            return GroupNonUniformImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformImpl: Capability
+        {
+            public static readonly GroupNonUniformImpl Instance = new GroupNonUniformImpl();
+        
+            private  GroupNonUniformImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniform;
-            public new static GroupNonUniform Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniform()";
+            }
         }
-        public class GroupNonUniformVote: Capability
+        #endregion //GroupNonUniform
+
+        #region GroupNonUniformVote
+        public static GroupNonUniformVoteImpl GroupNonUniformVote()
         {
-            public static readonly GroupNonUniformVote Instance = new GroupNonUniformVote();
+            return GroupNonUniformVoteImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformVoteImpl: Capability
+        {
+            public static readonly GroupNonUniformVoteImpl Instance = new GroupNonUniformVoteImpl();
+        
+            private  GroupNonUniformVoteImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformVote;
-            public new static GroupNonUniformVote Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformVoteImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformVoteImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformVoteImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformVote()";
+            }
         }
-        public class GroupNonUniformArithmetic: Capability
+        #endregion //GroupNonUniformVote
+
+        #region GroupNonUniformArithmetic
+        public static GroupNonUniformArithmeticImpl GroupNonUniformArithmetic()
         {
-            public static readonly GroupNonUniformArithmetic Instance = new GroupNonUniformArithmetic();
+            return GroupNonUniformArithmeticImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformArithmeticImpl: Capability
+        {
+            public static readonly GroupNonUniformArithmeticImpl Instance = new GroupNonUniformArithmeticImpl();
+        
+            private  GroupNonUniformArithmeticImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformArithmetic;
-            public new static GroupNonUniformArithmetic Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformArithmeticImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformArithmeticImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformArithmeticImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformArithmetic()";
+            }
         }
-        public class GroupNonUniformBallot: Capability
+        #endregion //GroupNonUniformArithmetic
+
+        #region GroupNonUniformBallot
+        public static GroupNonUniformBallotImpl GroupNonUniformBallot()
         {
-            public static readonly GroupNonUniformBallot Instance = new GroupNonUniformBallot();
+            return GroupNonUniformBallotImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformBallotImpl: Capability
+        {
+            public static readonly GroupNonUniformBallotImpl Instance = new GroupNonUniformBallotImpl();
+        
+            private  GroupNonUniformBallotImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformBallot;
-            public new static GroupNonUniformBallot Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformBallotImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformBallotImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformBallotImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformBallot()";
+            }
         }
-        public class GroupNonUniformShuffle: Capability
+        #endregion //GroupNonUniformBallot
+
+        #region GroupNonUniformShuffle
+        public static GroupNonUniformShuffleImpl GroupNonUniformShuffle()
         {
-            public static readonly GroupNonUniformShuffle Instance = new GroupNonUniformShuffle();
+            return GroupNonUniformShuffleImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformShuffleImpl: Capability
+        {
+            public static readonly GroupNonUniformShuffleImpl Instance = new GroupNonUniformShuffleImpl();
+        
+            private  GroupNonUniformShuffleImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformShuffle;
-            public new static GroupNonUniformShuffle Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformShuffleImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformShuffleImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformShuffleImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformShuffle()";
+            }
         }
-        public class GroupNonUniformShuffleRelative: Capability
+        #endregion //GroupNonUniformShuffle
+
+        #region GroupNonUniformShuffleRelative
+        public static GroupNonUniformShuffleRelativeImpl GroupNonUniformShuffleRelative()
         {
-            public static readonly GroupNonUniformShuffleRelative Instance = new GroupNonUniformShuffleRelative();
+            return GroupNonUniformShuffleRelativeImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformShuffleRelativeImpl: Capability
+        {
+            public static readonly GroupNonUniformShuffleRelativeImpl Instance = new GroupNonUniformShuffleRelativeImpl();
+        
+            private  GroupNonUniformShuffleRelativeImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformShuffleRelative;
-            public new static GroupNonUniformShuffleRelative Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformShuffleRelativeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformShuffleRelativeImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformShuffleRelativeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformShuffleRelative()";
+            }
         }
-        public class GroupNonUniformClustered: Capability
+        #endregion //GroupNonUniformShuffleRelative
+
+        #region GroupNonUniformClustered
+        public static GroupNonUniformClusteredImpl GroupNonUniformClustered()
         {
-            public static readonly GroupNonUniformClustered Instance = new GroupNonUniformClustered();
+            return GroupNonUniformClusteredImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformClusteredImpl: Capability
+        {
+            public static readonly GroupNonUniformClusteredImpl Instance = new GroupNonUniformClusteredImpl();
+        
+            private  GroupNonUniformClusteredImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformClustered;
-            public new static GroupNonUniformClustered Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformClusteredImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformClusteredImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformClusteredImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformClustered()";
+            }
         }
-        public class GroupNonUniformQuad: Capability
+        #endregion //GroupNonUniformClustered
+
+        #region GroupNonUniformQuad
+        public static GroupNonUniformQuadImpl GroupNonUniformQuad()
         {
-            public static readonly GroupNonUniformQuad Instance = new GroupNonUniformQuad();
+            return GroupNonUniformQuadImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformQuadImpl: Capability
+        {
+            public static readonly GroupNonUniformQuadImpl Instance = new GroupNonUniformQuadImpl();
+        
+            private  GroupNonUniformQuadImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformQuad;
-            public new static GroupNonUniformQuad Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformQuadImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformQuadImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformQuadImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformQuad()";
+            }
         }
-        public class ShaderLayer: Capability
+        #endregion //GroupNonUniformQuad
+
+        #region ShaderLayer
+        public static ShaderLayerImpl ShaderLayer()
         {
-            public static readonly ShaderLayer Instance = new ShaderLayer();
+            return ShaderLayerImpl.Instance;
+            
+        }
+
+        public class ShaderLayerImpl: Capability
+        {
+            public static readonly ShaderLayerImpl Instance = new ShaderLayerImpl();
+        
+            private  ShaderLayerImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderLayer;
-            public new static ShaderLayer Parse(WordReader reader, uint wordCount)
+            public new static ShaderLayerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderLayerImpl object.</summary>
+            /// <returns>A string that represents the ShaderLayerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderLayer()";
+            }
         }
-        public class ShaderViewportIndex: Capability
+        #endregion //ShaderLayer
+
+        #region ShaderViewportIndex
+        public static ShaderViewportIndexImpl ShaderViewportIndex()
         {
-            public static readonly ShaderViewportIndex Instance = new ShaderViewportIndex();
+            return ShaderViewportIndexImpl.Instance;
+            
+        }
+
+        public class ShaderViewportIndexImpl: Capability
+        {
+            public static readonly ShaderViewportIndexImpl Instance = new ShaderViewportIndexImpl();
+        
+            private  ShaderViewportIndexImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderViewportIndex;
-            public new static ShaderViewportIndex Parse(WordReader reader, uint wordCount)
+            public new static ShaderViewportIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderViewportIndexImpl object.</summary>
+            /// <returns>A string that represents the ShaderViewportIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderViewportIndex()";
+            }
         }
-        public class SubgroupBallotKHR: Capability
+        #endregion //ShaderViewportIndex
+
+        #region SubgroupBallotKHR
+        public static SubgroupBallotKHRImpl SubgroupBallotKHR()
         {
-            public static readonly SubgroupBallotKHR Instance = new SubgroupBallotKHR();
+            return SubgroupBallotKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupBallotKHRImpl: Capability
+        {
+            public static readonly SubgroupBallotKHRImpl Instance = new SubgroupBallotKHRImpl();
+        
+            private  SubgroupBallotKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupBallotKHR;
-            public new static SubgroupBallotKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupBallotKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupBallotKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupBallotKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupBallotKHR()";
+            }
         }
-        public class DrawParameters: Capability
+        #endregion //SubgroupBallotKHR
+
+        #region DrawParameters
+        public static DrawParametersImpl DrawParameters()
         {
-            public static readonly DrawParameters Instance = new DrawParameters();
+            return DrawParametersImpl.Instance;
+            
+        }
+
+        public class DrawParametersImpl: Capability
+        {
+            public static readonly DrawParametersImpl Instance = new DrawParametersImpl();
+        
+            private  DrawParametersImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DrawParameters;
-            public new static DrawParameters Parse(WordReader reader, uint wordCount)
+            public new static DrawParametersImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DrawParametersImpl object.</summary>
+            /// <returns>A string that represents the DrawParametersImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DrawParameters()";
+            }
         }
-        public class SubgroupVoteKHR: Capability
+        #endregion //DrawParameters
+
+        #region SubgroupVoteKHR
+        public static SubgroupVoteKHRImpl SubgroupVoteKHR()
         {
-            public static readonly SubgroupVoteKHR Instance = new SubgroupVoteKHR();
+            return SubgroupVoteKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupVoteKHRImpl: Capability
+        {
+            public static readonly SubgroupVoteKHRImpl Instance = new SubgroupVoteKHRImpl();
+        
+            private  SubgroupVoteKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupVoteKHR;
-            public new static SubgroupVoteKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupVoteKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupVoteKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupVoteKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupVoteKHR()";
+            }
         }
-        public class StorageBuffer16BitAccess: Capability
+        #endregion //SubgroupVoteKHR
+
+        #region StorageBuffer16BitAccess
+        public static StorageBuffer16BitAccessImpl StorageBuffer16BitAccess()
         {
-            public static readonly StorageBuffer16BitAccess Instance = new StorageBuffer16BitAccess();
+            return StorageBuffer16BitAccessImpl.Instance;
+            
+        }
+
+        public class StorageBuffer16BitAccessImpl: Capability
+        {
+            public static readonly StorageBuffer16BitAccessImpl Instance = new StorageBuffer16BitAccessImpl();
+        
+            private  StorageBuffer16BitAccessImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageBuffer16BitAccess;
-            public new static StorageBuffer16BitAccess Parse(WordReader reader, uint wordCount)
+            public new static StorageBuffer16BitAccessImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageBuffer16BitAccessImpl object.</summary>
+            /// <returns>A string that represents the StorageBuffer16BitAccessImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageBuffer16BitAccess()";
+            }
         }
-        public class StorageUniformBufferBlock16: Capability
+        #endregion //StorageBuffer16BitAccess
+
+        #region StorageUniformBufferBlock16
+        public static StorageUniformBufferBlock16Impl StorageUniformBufferBlock16()
         {
-            public static readonly StorageUniformBufferBlock16 Instance = new StorageUniformBufferBlock16();
+            return StorageUniformBufferBlock16Impl.Instance;
+            
+        }
+
+        public class StorageUniformBufferBlock16Impl: Capability
+        {
+            public static readonly StorageUniformBufferBlock16Impl Instance = new StorageUniformBufferBlock16Impl();
+        
+            private  StorageUniformBufferBlock16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageUniformBufferBlock16;
-            public new static StorageUniformBufferBlock16 Parse(WordReader reader, uint wordCount)
+            public new static StorageUniformBufferBlock16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageUniformBufferBlock16Impl object.</summary>
+            /// <returns>A string that represents the StorageUniformBufferBlock16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageUniformBufferBlock16()";
+            }
         }
-        public class UniformAndStorageBuffer16BitAccess: Capability
+        #endregion //StorageUniformBufferBlock16
+
+        #region UniformAndStorageBuffer16BitAccess
+        public static UniformAndStorageBuffer16BitAccessImpl UniformAndStorageBuffer16BitAccess()
         {
-            public static readonly UniformAndStorageBuffer16BitAccess Instance = new UniformAndStorageBuffer16BitAccess();
+            return UniformAndStorageBuffer16BitAccessImpl.Instance;
+            
+        }
+
+        public class UniformAndStorageBuffer16BitAccessImpl: Capability
+        {
+            public static readonly UniformAndStorageBuffer16BitAccessImpl Instance = new UniformAndStorageBuffer16BitAccessImpl();
+        
+            private  UniformAndStorageBuffer16BitAccessImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformAndStorageBuffer16BitAccess;
-            public new static UniformAndStorageBuffer16BitAccess Parse(WordReader reader, uint wordCount)
+            public new static UniformAndStorageBuffer16BitAccessImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformAndStorageBuffer16BitAccessImpl object.</summary>
+            /// <returns>A string that represents the UniformAndStorageBuffer16BitAccessImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformAndStorageBuffer16BitAccess()";
+            }
         }
-        public class StorageUniform16: Capability
+        #endregion //UniformAndStorageBuffer16BitAccess
+
+        #region StorageUniform16
+        public static StorageUniform16Impl StorageUniform16()
         {
-            public static readonly StorageUniform16 Instance = new StorageUniform16();
+            return StorageUniform16Impl.Instance;
+            
+        }
+
+        public class StorageUniform16Impl: Capability
+        {
+            public static readonly StorageUniform16Impl Instance = new StorageUniform16Impl();
+        
+            private  StorageUniform16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageUniform16;
-            public new static StorageUniform16 Parse(WordReader reader, uint wordCount)
+            public new static StorageUniform16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageUniform16Impl object.</summary>
+            /// <returns>A string that represents the StorageUniform16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageUniform16()";
+            }
         }
-        public class StoragePushConstant16: Capability
+        #endregion //StorageUniform16
+
+        #region StoragePushConstant16
+        public static StoragePushConstant16Impl StoragePushConstant16()
         {
-            public static readonly StoragePushConstant16 Instance = new StoragePushConstant16();
+            return StoragePushConstant16Impl.Instance;
+            
+        }
+
+        public class StoragePushConstant16Impl: Capability
+        {
+            public static readonly StoragePushConstant16Impl Instance = new StoragePushConstant16Impl();
+        
+            private  StoragePushConstant16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StoragePushConstant16;
-            public new static StoragePushConstant16 Parse(WordReader reader, uint wordCount)
+            public new static StoragePushConstant16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StoragePushConstant16Impl object.</summary>
+            /// <returns>A string that represents the StoragePushConstant16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StoragePushConstant16()";
+            }
         }
-        public class StorageInputOutput16: Capability
+        #endregion //StoragePushConstant16
+
+        #region StorageInputOutput16
+        public static StorageInputOutput16Impl StorageInputOutput16()
         {
-            public static readonly StorageInputOutput16 Instance = new StorageInputOutput16();
+            return StorageInputOutput16Impl.Instance;
+            
+        }
+
+        public class StorageInputOutput16Impl: Capability
+        {
+            public static readonly StorageInputOutput16Impl Instance = new StorageInputOutput16Impl();
+        
+            private  StorageInputOutput16Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageInputOutput16;
-            public new static StorageInputOutput16 Parse(WordReader reader, uint wordCount)
+            public new static StorageInputOutput16Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageInputOutput16Impl object.</summary>
+            /// <returns>A string that represents the StorageInputOutput16Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageInputOutput16()";
+            }
         }
-        public class DeviceGroup: Capability
+        #endregion //StorageInputOutput16
+
+        #region DeviceGroup
+        public static DeviceGroupImpl DeviceGroup()
         {
-            public static readonly DeviceGroup Instance = new DeviceGroup();
+            return DeviceGroupImpl.Instance;
+            
+        }
+
+        public class DeviceGroupImpl: Capability
+        {
+            public static readonly DeviceGroupImpl Instance = new DeviceGroupImpl();
+        
+            private  DeviceGroupImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DeviceGroup;
-            public new static DeviceGroup Parse(WordReader reader, uint wordCount)
+            public new static DeviceGroupImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DeviceGroupImpl object.</summary>
+            /// <returns>A string that represents the DeviceGroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DeviceGroup()";
+            }
         }
-        public class MultiView: Capability
+        #endregion //DeviceGroup
+
+        #region MultiView
+        public static MultiViewImpl MultiView()
         {
-            public static readonly MultiView Instance = new MultiView();
+            return MultiViewImpl.Instance;
+            
+        }
+
+        public class MultiViewImpl: Capability
+        {
+            public static readonly MultiViewImpl Instance = new MultiViewImpl();
+        
+            private  MultiViewImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.MultiView;
-            public new static MultiView Parse(WordReader reader, uint wordCount)
+            public new static MultiViewImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MultiViewImpl object.</summary>
+            /// <returns>A string that represents the MultiViewImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.MultiView()";
+            }
         }
-        public class VariablePointersStorageBuffer: Capability
+        #endregion //MultiView
+
+        #region VariablePointersStorageBuffer
+        public static VariablePointersStorageBufferImpl VariablePointersStorageBuffer()
         {
-            public static readonly VariablePointersStorageBuffer Instance = new VariablePointersStorageBuffer();
+            return VariablePointersStorageBufferImpl.Instance;
+            
+        }
+
+        public class VariablePointersStorageBufferImpl: Capability
+        {
+            public static readonly VariablePointersStorageBufferImpl Instance = new VariablePointersStorageBufferImpl();
+        
+            private  VariablePointersStorageBufferImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.VariablePointersStorageBuffer;
-            public new static VariablePointersStorageBuffer Parse(WordReader reader, uint wordCount)
+            public new static VariablePointersStorageBufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VariablePointersStorageBufferImpl object.</summary>
+            /// <returns>A string that represents the VariablePointersStorageBufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.VariablePointersStorageBuffer()";
+            }
         }
-        public class VariablePointers: Capability
+        #endregion //VariablePointersStorageBuffer
+
+        #region VariablePointers
+        public static VariablePointersImpl VariablePointers()
         {
-            public static readonly VariablePointers Instance = new VariablePointers();
+            return VariablePointersImpl.Instance;
+            
+        }
+
+        public class VariablePointersImpl: Capability
+        {
+            public static readonly VariablePointersImpl Instance = new VariablePointersImpl();
+        
+            private  VariablePointersImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.VariablePointers;
-            public new static VariablePointers Parse(WordReader reader, uint wordCount)
+            public new static VariablePointersImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VariablePointersImpl object.</summary>
+            /// <returns>A string that represents the VariablePointersImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.VariablePointers()";
+            }
         }
-        public class AtomicStorageOps: Capability
+        #endregion //VariablePointers
+
+        #region AtomicStorageOps
+        public static AtomicStorageOpsImpl AtomicStorageOps()
         {
-            public static readonly AtomicStorageOps Instance = new AtomicStorageOps();
+            return AtomicStorageOpsImpl.Instance;
+            
+        }
+
+        public class AtomicStorageOpsImpl: Capability
+        {
+            public static readonly AtomicStorageOpsImpl Instance = new AtomicStorageOpsImpl();
+        
+            private  AtomicStorageOpsImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.AtomicStorageOps;
-            public new static AtomicStorageOps Parse(WordReader reader, uint wordCount)
+            public new static AtomicStorageOpsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AtomicStorageOpsImpl object.</summary>
+            /// <returns>A string that represents the AtomicStorageOpsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.AtomicStorageOps()";
+            }
         }
-        public class SampleMaskPostDepthCoverage: Capability
+        #endregion //AtomicStorageOps
+
+        #region SampleMaskPostDepthCoverage
+        public static SampleMaskPostDepthCoverageImpl SampleMaskPostDepthCoverage()
         {
-            public static readonly SampleMaskPostDepthCoverage Instance = new SampleMaskPostDepthCoverage();
+            return SampleMaskPostDepthCoverageImpl.Instance;
+            
+        }
+
+        public class SampleMaskPostDepthCoverageImpl: Capability
+        {
+            public static readonly SampleMaskPostDepthCoverageImpl Instance = new SampleMaskPostDepthCoverageImpl();
+        
+            private  SampleMaskPostDepthCoverageImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampleMaskPostDepthCoverage;
-            public new static SampleMaskPostDepthCoverage Parse(WordReader reader, uint wordCount)
+            public new static SampleMaskPostDepthCoverageImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleMaskPostDepthCoverageImpl object.</summary>
+            /// <returns>A string that represents the SampleMaskPostDepthCoverageImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampleMaskPostDepthCoverage()";
+            }
         }
-        public class StorageBuffer8BitAccess: Capability
+        #endregion //SampleMaskPostDepthCoverage
+
+        #region StorageBuffer8BitAccess
+        public static StorageBuffer8BitAccessImpl StorageBuffer8BitAccess()
         {
-            public static readonly StorageBuffer8BitAccess Instance = new StorageBuffer8BitAccess();
+            return StorageBuffer8BitAccessImpl.Instance;
+            
+        }
+
+        public class StorageBuffer8BitAccessImpl: Capability
+        {
+            public static readonly StorageBuffer8BitAccessImpl Instance = new StorageBuffer8BitAccessImpl();
+        
+            private  StorageBuffer8BitAccessImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageBuffer8BitAccess;
-            public new static StorageBuffer8BitAccess Parse(WordReader reader, uint wordCount)
+            public new static StorageBuffer8BitAccessImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageBuffer8BitAccessImpl object.</summary>
+            /// <returns>A string that represents the StorageBuffer8BitAccessImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageBuffer8BitAccess()";
+            }
         }
-        public class UniformAndStorageBuffer8BitAccess: Capability
+        #endregion //StorageBuffer8BitAccess
+
+        #region UniformAndStorageBuffer8BitAccess
+        public static UniformAndStorageBuffer8BitAccessImpl UniformAndStorageBuffer8BitAccess()
         {
-            public static readonly UniformAndStorageBuffer8BitAccess Instance = new UniformAndStorageBuffer8BitAccess();
+            return UniformAndStorageBuffer8BitAccessImpl.Instance;
+            
+        }
+
+        public class UniformAndStorageBuffer8BitAccessImpl: Capability
+        {
+            public static readonly UniformAndStorageBuffer8BitAccessImpl Instance = new UniformAndStorageBuffer8BitAccessImpl();
+        
+            private  UniformAndStorageBuffer8BitAccessImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformAndStorageBuffer8BitAccess;
-            public new static UniformAndStorageBuffer8BitAccess Parse(WordReader reader, uint wordCount)
+            public new static UniformAndStorageBuffer8BitAccessImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformAndStorageBuffer8BitAccessImpl object.</summary>
+            /// <returns>A string that represents the UniformAndStorageBuffer8BitAccessImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformAndStorageBuffer8BitAccess()";
+            }
         }
-        public class StoragePushConstant8: Capability
+        #endregion //UniformAndStorageBuffer8BitAccess
+
+        #region StoragePushConstant8
+        public static StoragePushConstant8Impl StoragePushConstant8()
         {
-            public static readonly StoragePushConstant8 Instance = new StoragePushConstant8();
+            return StoragePushConstant8Impl.Instance;
+            
+        }
+
+        public class StoragePushConstant8Impl: Capability
+        {
+            public static readonly StoragePushConstant8Impl Instance = new StoragePushConstant8Impl();
+        
+            private  StoragePushConstant8Impl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StoragePushConstant8;
-            public new static StoragePushConstant8 Parse(WordReader reader, uint wordCount)
+            public new static StoragePushConstant8Impl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StoragePushConstant8Impl object.</summary>
+            /// <returns>A string that represents the StoragePushConstant8Impl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StoragePushConstant8()";
+            }
         }
-        public class DenormPreserve: Capability
+        #endregion //StoragePushConstant8
+
+        #region DenormPreserve
+        public static DenormPreserveImpl DenormPreserve()
         {
-            public static readonly DenormPreserve Instance = new DenormPreserve();
+            return DenormPreserveImpl.Instance;
+            
+        }
+
+        public class DenormPreserveImpl: Capability
+        {
+            public static readonly DenormPreserveImpl Instance = new DenormPreserveImpl();
+        
+            private  DenormPreserveImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DenormPreserve;
-            public new static DenormPreserve Parse(WordReader reader, uint wordCount)
+            public new static DenormPreserveImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DenormPreserveImpl object.</summary>
+            /// <returns>A string that represents the DenormPreserveImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DenormPreserve()";
+            }
         }
-        public class DenormFlushToZero: Capability
+        #endregion //DenormPreserve
+
+        #region DenormFlushToZero
+        public static DenormFlushToZeroImpl DenormFlushToZero()
         {
-            public static readonly DenormFlushToZero Instance = new DenormFlushToZero();
+            return DenormFlushToZeroImpl.Instance;
+            
+        }
+
+        public class DenormFlushToZeroImpl: Capability
+        {
+            public static readonly DenormFlushToZeroImpl Instance = new DenormFlushToZeroImpl();
+        
+            private  DenormFlushToZeroImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DenormFlushToZero;
-            public new static DenormFlushToZero Parse(WordReader reader, uint wordCount)
+            public new static DenormFlushToZeroImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DenormFlushToZeroImpl object.</summary>
+            /// <returns>A string that represents the DenormFlushToZeroImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DenormFlushToZero()";
+            }
         }
-        public class SignedZeroInfNanPreserve: Capability
+        #endregion //DenormFlushToZero
+
+        #region SignedZeroInfNanPreserve
+        public static SignedZeroInfNanPreserveImpl SignedZeroInfNanPreserve()
         {
-            public static readonly SignedZeroInfNanPreserve Instance = new SignedZeroInfNanPreserve();
+            return SignedZeroInfNanPreserveImpl.Instance;
+            
+        }
+
+        public class SignedZeroInfNanPreserveImpl: Capability
+        {
+            public static readonly SignedZeroInfNanPreserveImpl Instance = new SignedZeroInfNanPreserveImpl();
+        
+            private  SignedZeroInfNanPreserveImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SignedZeroInfNanPreserve;
-            public new static SignedZeroInfNanPreserve Parse(WordReader reader, uint wordCount)
+            public new static SignedZeroInfNanPreserveImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SignedZeroInfNanPreserveImpl object.</summary>
+            /// <returns>A string that represents the SignedZeroInfNanPreserveImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SignedZeroInfNanPreserve()";
+            }
         }
-        public class RoundingModeRTE: Capability
+        #endregion //SignedZeroInfNanPreserve
+
+        #region RoundingModeRTE
+        public static RoundingModeRTEImpl RoundingModeRTE()
         {
-            public static readonly RoundingModeRTE Instance = new RoundingModeRTE();
+            return RoundingModeRTEImpl.Instance;
+            
+        }
+
+        public class RoundingModeRTEImpl: Capability
+        {
+            public static readonly RoundingModeRTEImpl Instance = new RoundingModeRTEImpl();
+        
+            private  RoundingModeRTEImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RoundingModeRTE;
-            public new static RoundingModeRTE Parse(WordReader reader, uint wordCount)
+            public new static RoundingModeRTEImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RoundingModeRTEImpl object.</summary>
+            /// <returns>A string that represents the RoundingModeRTEImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RoundingModeRTE()";
+            }
         }
-        public class RoundingModeRTZ: Capability
+        #endregion //RoundingModeRTE
+
+        #region RoundingModeRTZ
+        public static RoundingModeRTZImpl RoundingModeRTZ()
         {
-            public static readonly RoundingModeRTZ Instance = new RoundingModeRTZ();
+            return RoundingModeRTZImpl.Instance;
+            
+        }
+
+        public class RoundingModeRTZImpl: Capability
+        {
+            public static readonly RoundingModeRTZImpl Instance = new RoundingModeRTZImpl();
+        
+            private  RoundingModeRTZImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RoundingModeRTZ;
-            public new static RoundingModeRTZ Parse(WordReader reader, uint wordCount)
+            public new static RoundingModeRTZImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RoundingModeRTZImpl object.</summary>
+            /// <returns>A string that represents the RoundingModeRTZImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RoundingModeRTZ()";
+            }
         }
-        public class RayQueryProvisionalKHR: Capability
+        #endregion //RoundingModeRTZ
+
+        #region RayQueryProvisionalKHR
+        public static RayQueryProvisionalKHRImpl RayQueryProvisionalKHR()
         {
-            public static readonly RayQueryProvisionalKHR Instance = new RayQueryProvisionalKHR();
+            return RayQueryProvisionalKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryProvisionalKHRImpl: Capability
+        {
+            public static readonly RayQueryProvisionalKHRImpl Instance = new RayQueryProvisionalKHRImpl();
+        
+            private  RayQueryProvisionalKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RayQueryProvisionalKHR;
-            public new static RayQueryProvisionalKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryProvisionalKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryProvisionalKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryProvisionalKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RayQueryProvisionalKHR()";
+            }
         }
-        public class RayTraversalPrimitiveCullingProvisionalKHR: Capability
+        #endregion //RayQueryProvisionalKHR
+
+        #region RayTraversalPrimitiveCullingProvisionalKHR
+        public static RayTraversalPrimitiveCullingProvisionalKHRImpl RayTraversalPrimitiveCullingProvisionalKHR()
         {
-            public static readonly RayTraversalPrimitiveCullingProvisionalKHR Instance = new RayTraversalPrimitiveCullingProvisionalKHR();
+            return RayTraversalPrimitiveCullingProvisionalKHRImpl.Instance;
+            
+        }
+
+        public class RayTraversalPrimitiveCullingProvisionalKHRImpl: Capability
+        {
+            public static readonly RayTraversalPrimitiveCullingProvisionalKHRImpl Instance = new RayTraversalPrimitiveCullingProvisionalKHRImpl();
+        
+            private  RayTraversalPrimitiveCullingProvisionalKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RayTraversalPrimitiveCullingProvisionalKHR;
-            public new static RayTraversalPrimitiveCullingProvisionalKHR Parse(WordReader reader, uint wordCount)
+            public new static RayTraversalPrimitiveCullingProvisionalKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTraversalPrimitiveCullingProvisionalKHRImpl object.</summary>
+            /// <returns>A string that represents the RayTraversalPrimitiveCullingProvisionalKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RayTraversalPrimitiveCullingProvisionalKHR()";
+            }
         }
-        public class Float16ImageAMD: Capability
+        #endregion //RayTraversalPrimitiveCullingProvisionalKHR
+
+        #region Float16ImageAMD
+        public static Float16ImageAMDImpl Float16ImageAMD()
         {
-            public static readonly Float16ImageAMD Instance = new Float16ImageAMD();
+            return Float16ImageAMDImpl.Instance;
+            
+        }
+
+        public class Float16ImageAMDImpl: Capability
+        {
+            public static readonly Float16ImageAMDImpl Instance = new Float16ImageAMDImpl();
+        
+            private  Float16ImageAMDImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.Float16ImageAMD;
-            public new static Float16ImageAMD Parse(WordReader reader, uint wordCount)
+            public new static Float16ImageAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Float16ImageAMDImpl object.</summary>
+            /// <returns>A string that represents the Float16ImageAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.Float16ImageAMD()";
+            }
         }
-        public class ImageGatherBiasLodAMD: Capability
+        #endregion //Float16ImageAMD
+
+        #region ImageGatherBiasLodAMD
+        public static ImageGatherBiasLodAMDImpl ImageGatherBiasLodAMD()
         {
-            public static readonly ImageGatherBiasLodAMD Instance = new ImageGatherBiasLodAMD();
+            return ImageGatherBiasLodAMDImpl.Instance;
+            
+        }
+
+        public class ImageGatherBiasLodAMDImpl: Capability
+        {
+            public static readonly ImageGatherBiasLodAMDImpl Instance = new ImageGatherBiasLodAMDImpl();
+        
+            private  ImageGatherBiasLodAMDImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageGatherBiasLodAMD;
-            public new static ImageGatherBiasLodAMD Parse(WordReader reader, uint wordCount)
+            public new static ImageGatherBiasLodAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageGatherBiasLodAMDImpl object.</summary>
+            /// <returns>A string that represents the ImageGatherBiasLodAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageGatherBiasLodAMD()";
+            }
         }
-        public class FragmentMaskAMD: Capability
+        #endregion //ImageGatherBiasLodAMD
+
+        #region FragmentMaskAMD
+        public static FragmentMaskAMDImpl FragmentMaskAMD()
         {
-            public static readonly FragmentMaskAMD Instance = new FragmentMaskAMD();
+            return FragmentMaskAMDImpl.Instance;
+            
+        }
+
+        public class FragmentMaskAMDImpl: Capability
+        {
+            public static readonly FragmentMaskAMDImpl Instance = new FragmentMaskAMDImpl();
+        
+            private  FragmentMaskAMDImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentMaskAMD;
-            public new static FragmentMaskAMD Parse(WordReader reader, uint wordCount)
+            public new static FragmentMaskAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentMaskAMDImpl object.</summary>
+            /// <returns>A string that represents the FragmentMaskAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentMaskAMD()";
+            }
         }
-        public class StencilExportEXT: Capability
+        #endregion //FragmentMaskAMD
+
+        #region StencilExportEXT
+        public static StencilExportEXTImpl StencilExportEXT()
         {
-            public static readonly StencilExportEXT Instance = new StencilExportEXT();
+            return StencilExportEXTImpl.Instance;
+            
+        }
+
+        public class StencilExportEXTImpl: Capability
+        {
+            public static readonly StencilExportEXTImpl Instance = new StencilExportEXTImpl();
+        
+            private  StencilExportEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StencilExportEXT;
-            public new static StencilExportEXT Parse(WordReader reader, uint wordCount)
+            public new static StencilExportEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StencilExportEXTImpl object.</summary>
+            /// <returns>A string that represents the StencilExportEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StencilExportEXT()";
+            }
         }
-        public class ImageReadWriteLodAMD: Capability
+        #endregion //StencilExportEXT
+
+        #region ImageReadWriteLodAMD
+        public static ImageReadWriteLodAMDImpl ImageReadWriteLodAMD()
         {
-            public static readonly ImageReadWriteLodAMD Instance = new ImageReadWriteLodAMD();
+            return ImageReadWriteLodAMDImpl.Instance;
+            
+        }
+
+        public class ImageReadWriteLodAMDImpl: Capability
+        {
+            public static readonly ImageReadWriteLodAMDImpl Instance = new ImageReadWriteLodAMDImpl();
+        
+            private  ImageReadWriteLodAMDImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageReadWriteLodAMD;
-            public new static ImageReadWriteLodAMD Parse(WordReader reader, uint wordCount)
+            public new static ImageReadWriteLodAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageReadWriteLodAMDImpl object.</summary>
+            /// <returns>A string that represents the ImageReadWriteLodAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageReadWriteLodAMD()";
+            }
         }
-        public class ShaderClockKHR: Capability
+        #endregion //ImageReadWriteLodAMD
+
+        #region ShaderClockKHR
+        public static ShaderClockKHRImpl ShaderClockKHR()
         {
-            public static readonly ShaderClockKHR Instance = new ShaderClockKHR();
+            return ShaderClockKHRImpl.Instance;
+            
+        }
+
+        public class ShaderClockKHRImpl: Capability
+        {
+            public static readonly ShaderClockKHRImpl Instance = new ShaderClockKHRImpl();
+        
+            private  ShaderClockKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderClockKHR;
-            public new static ShaderClockKHR Parse(WordReader reader, uint wordCount)
+            public new static ShaderClockKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderClockKHRImpl object.</summary>
+            /// <returns>A string that represents the ShaderClockKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderClockKHR()";
+            }
         }
-        public class SampleMaskOverrideCoverageNV: Capability
+        #endregion //ShaderClockKHR
+
+        #region SampleMaskOverrideCoverageNV
+        public static SampleMaskOverrideCoverageNVImpl SampleMaskOverrideCoverageNV()
         {
-            public static readonly SampleMaskOverrideCoverageNV Instance = new SampleMaskOverrideCoverageNV();
+            return SampleMaskOverrideCoverageNVImpl.Instance;
+            
+        }
+
+        public class SampleMaskOverrideCoverageNVImpl: Capability
+        {
+            public static readonly SampleMaskOverrideCoverageNVImpl Instance = new SampleMaskOverrideCoverageNVImpl();
+        
+            private  SampleMaskOverrideCoverageNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampleMaskOverrideCoverageNV;
-            public new static SampleMaskOverrideCoverageNV Parse(WordReader reader, uint wordCount)
+            public new static SampleMaskOverrideCoverageNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleMaskOverrideCoverageNVImpl object.</summary>
+            /// <returns>A string that represents the SampleMaskOverrideCoverageNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampleMaskOverrideCoverageNV()";
+            }
         }
-        public class GeometryShaderPassthroughNV: Capability
+        #endregion //SampleMaskOverrideCoverageNV
+
+        #region GeometryShaderPassthroughNV
+        public static GeometryShaderPassthroughNVImpl GeometryShaderPassthroughNV()
         {
-            public static readonly GeometryShaderPassthroughNV Instance = new GeometryShaderPassthroughNV();
+            return GeometryShaderPassthroughNVImpl.Instance;
+            
+        }
+
+        public class GeometryShaderPassthroughNVImpl: Capability
+        {
+            public static readonly GeometryShaderPassthroughNVImpl Instance = new GeometryShaderPassthroughNVImpl();
+        
+            private  GeometryShaderPassthroughNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GeometryShaderPassthroughNV;
-            public new static GeometryShaderPassthroughNV Parse(WordReader reader, uint wordCount)
+            public new static GeometryShaderPassthroughNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GeometryShaderPassthroughNVImpl object.</summary>
+            /// <returns>A string that represents the GeometryShaderPassthroughNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GeometryShaderPassthroughNV()";
+            }
         }
-        public class ShaderViewportIndexLayerEXT: Capability
+        #endregion //GeometryShaderPassthroughNV
+
+        #region ShaderViewportIndexLayerEXT
+        public static ShaderViewportIndexLayerEXTImpl ShaderViewportIndexLayerEXT()
         {
-            public static readonly ShaderViewportIndexLayerEXT Instance = new ShaderViewportIndexLayerEXT();
+            return ShaderViewportIndexLayerEXTImpl.Instance;
+            
+        }
+
+        public class ShaderViewportIndexLayerEXTImpl: Capability
+        {
+            public static readonly ShaderViewportIndexLayerEXTImpl Instance = new ShaderViewportIndexLayerEXTImpl();
+        
+            private  ShaderViewportIndexLayerEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderViewportIndexLayerEXT;
-            public new static ShaderViewportIndexLayerEXT Parse(WordReader reader, uint wordCount)
+            public new static ShaderViewportIndexLayerEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderViewportIndexLayerEXTImpl object.</summary>
+            /// <returns>A string that represents the ShaderViewportIndexLayerEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderViewportIndexLayerEXT()";
+            }
         }
-        public class ShaderViewportIndexLayerNV: Capability
+        #endregion //ShaderViewportIndexLayerEXT
+
+        #region ShaderViewportIndexLayerNV
+        public static ShaderViewportIndexLayerNVImpl ShaderViewportIndexLayerNV()
         {
-            public static readonly ShaderViewportIndexLayerNV Instance = new ShaderViewportIndexLayerNV();
+            return ShaderViewportIndexLayerNVImpl.Instance;
+            
+        }
+
+        public class ShaderViewportIndexLayerNVImpl: Capability
+        {
+            public static readonly ShaderViewportIndexLayerNVImpl Instance = new ShaderViewportIndexLayerNVImpl();
+        
+            private  ShaderViewportIndexLayerNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderViewportIndexLayerNV;
-            public new static ShaderViewportIndexLayerNV Parse(WordReader reader, uint wordCount)
+            public new static ShaderViewportIndexLayerNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderViewportIndexLayerNVImpl object.</summary>
+            /// <returns>A string that represents the ShaderViewportIndexLayerNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderViewportIndexLayerNV()";
+            }
         }
-        public class ShaderViewportMaskNV: Capability
+        #endregion //ShaderViewportIndexLayerNV
+
+        #region ShaderViewportMaskNV
+        public static ShaderViewportMaskNVImpl ShaderViewportMaskNV()
         {
-            public static readonly ShaderViewportMaskNV Instance = new ShaderViewportMaskNV();
+            return ShaderViewportMaskNVImpl.Instance;
+            
+        }
+
+        public class ShaderViewportMaskNVImpl: Capability
+        {
+            public static readonly ShaderViewportMaskNVImpl Instance = new ShaderViewportMaskNVImpl();
+        
+            private  ShaderViewportMaskNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderViewportMaskNV;
-            public new static ShaderViewportMaskNV Parse(WordReader reader, uint wordCount)
+            public new static ShaderViewportMaskNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderViewportMaskNVImpl object.</summary>
+            /// <returns>A string that represents the ShaderViewportMaskNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderViewportMaskNV()";
+            }
         }
-        public class ShaderStereoViewNV: Capability
+        #endregion //ShaderViewportMaskNV
+
+        #region ShaderStereoViewNV
+        public static ShaderStereoViewNVImpl ShaderStereoViewNV()
         {
-            public static readonly ShaderStereoViewNV Instance = new ShaderStereoViewNV();
+            return ShaderStereoViewNVImpl.Instance;
+            
+        }
+
+        public class ShaderStereoViewNVImpl: Capability
+        {
+            public static readonly ShaderStereoViewNVImpl Instance = new ShaderStereoViewNVImpl();
+        
+            private  ShaderStereoViewNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderStereoViewNV;
-            public new static ShaderStereoViewNV Parse(WordReader reader, uint wordCount)
+            public new static ShaderStereoViewNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderStereoViewNVImpl object.</summary>
+            /// <returns>A string that represents the ShaderStereoViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderStereoViewNV()";
+            }
         }
-        public class PerViewAttributesNV: Capability
+        #endregion //ShaderStereoViewNV
+
+        #region PerViewAttributesNV
+        public static PerViewAttributesNVImpl PerViewAttributesNV()
         {
-            public static readonly PerViewAttributesNV Instance = new PerViewAttributesNV();
+            return PerViewAttributesNVImpl.Instance;
+            
+        }
+
+        public class PerViewAttributesNVImpl: Capability
+        {
+            public static readonly PerViewAttributesNVImpl Instance = new PerViewAttributesNVImpl();
+        
+            private  PerViewAttributesNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.PerViewAttributesNV;
-            public new static PerViewAttributesNV Parse(WordReader reader, uint wordCount)
+            public new static PerViewAttributesNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PerViewAttributesNVImpl object.</summary>
+            /// <returns>A string that represents the PerViewAttributesNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.PerViewAttributesNV()";
+            }
         }
-        public class FragmentFullyCoveredEXT: Capability
+        #endregion //PerViewAttributesNV
+
+        #region FragmentFullyCoveredEXT
+        public static FragmentFullyCoveredEXTImpl FragmentFullyCoveredEXT()
         {
-            public static readonly FragmentFullyCoveredEXT Instance = new FragmentFullyCoveredEXT();
+            return FragmentFullyCoveredEXTImpl.Instance;
+            
+        }
+
+        public class FragmentFullyCoveredEXTImpl: Capability
+        {
+            public static readonly FragmentFullyCoveredEXTImpl Instance = new FragmentFullyCoveredEXTImpl();
+        
+            private  FragmentFullyCoveredEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentFullyCoveredEXT;
-            public new static FragmentFullyCoveredEXT Parse(WordReader reader, uint wordCount)
+            public new static FragmentFullyCoveredEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentFullyCoveredEXTImpl object.</summary>
+            /// <returns>A string that represents the FragmentFullyCoveredEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentFullyCoveredEXT()";
+            }
         }
-        public class MeshShadingNV: Capability
+        #endregion //FragmentFullyCoveredEXT
+
+        #region MeshShadingNV
+        public static MeshShadingNVImpl MeshShadingNV()
         {
-            public static readonly MeshShadingNV Instance = new MeshShadingNV();
+            return MeshShadingNVImpl.Instance;
+            
+        }
+
+        public class MeshShadingNVImpl: Capability
+        {
+            public static readonly MeshShadingNVImpl Instance = new MeshShadingNVImpl();
+        
+            private  MeshShadingNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.MeshShadingNV;
-            public new static MeshShadingNV Parse(WordReader reader, uint wordCount)
+            public new static MeshShadingNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MeshShadingNVImpl object.</summary>
+            /// <returns>A string that represents the MeshShadingNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.MeshShadingNV()";
+            }
         }
-        public class ImageFootprintNV: Capability
+        #endregion //MeshShadingNV
+
+        #region ImageFootprintNV
+        public static ImageFootprintNVImpl ImageFootprintNV()
         {
-            public static readonly ImageFootprintNV Instance = new ImageFootprintNV();
+            return ImageFootprintNVImpl.Instance;
+            
+        }
+
+        public class ImageFootprintNVImpl: Capability
+        {
+            public static readonly ImageFootprintNVImpl Instance = new ImageFootprintNVImpl();
+        
+            private  ImageFootprintNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ImageFootprintNV;
-            public new static ImageFootprintNV Parse(WordReader reader, uint wordCount)
+            public new static ImageFootprintNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImageFootprintNVImpl object.</summary>
+            /// <returns>A string that represents the ImageFootprintNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ImageFootprintNV()";
+            }
         }
-        public class FragmentBarycentricNV: Capability
+        #endregion //ImageFootprintNV
+
+        #region FragmentBarycentricNV
+        public static FragmentBarycentricNVImpl FragmentBarycentricNV()
         {
-            public static readonly FragmentBarycentricNV Instance = new FragmentBarycentricNV();
+            return FragmentBarycentricNVImpl.Instance;
+            
+        }
+
+        public class FragmentBarycentricNVImpl: Capability
+        {
+            public static readonly FragmentBarycentricNVImpl Instance = new FragmentBarycentricNVImpl();
+        
+            private  FragmentBarycentricNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentBarycentricNV;
-            public new static FragmentBarycentricNV Parse(WordReader reader, uint wordCount)
+            public new static FragmentBarycentricNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentBarycentricNVImpl object.</summary>
+            /// <returns>A string that represents the FragmentBarycentricNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentBarycentricNV()";
+            }
         }
-        public class ComputeDerivativeGroupQuadsNV: Capability
+        #endregion //FragmentBarycentricNV
+
+        #region ComputeDerivativeGroupQuadsNV
+        public static ComputeDerivativeGroupQuadsNVImpl ComputeDerivativeGroupQuadsNV()
         {
-            public static readonly ComputeDerivativeGroupQuadsNV Instance = new ComputeDerivativeGroupQuadsNV();
+            return ComputeDerivativeGroupQuadsNVImpl.Instance;
+            
+        }
+
+        public class ComputeDerivativeGroupQuadsNVImpl: Capability
+        {
+            public static readonly ComputeDerivativeGroupQuadsNVImpl Instance = new ComputeDerivativeGroupQuadsNVImpl();
+        
+            private  ComputeDerivativeGroupQuadsNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ComputeDerivativeGroupQuadsNV;
-            public new static ComputeDerivativeGroupQuadsNV Parse(WordReader reader, uint wordCount)
+            public new static ComputeDerivativeGroupQuadsNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ComputeDerivativeGroupQuadsNVImpl object.</summary>
+            /// <returns>A string that represents the ComputeDerivativeGroupQuadsNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ComputeDerivativeGroupQuadsNV()";
+            }
         }
-        public class FragmentDensityEXT: Capability
+        #endregion //ComputeDerivativeGroupQuadsNV
+
+        #region FragmentDensityEXT
+        public static FragmentDensityEXTImpl FragmentDensityEXT()
         {
-            public static readonly FragmentDensityEXT Instance = new FragmentDensityEXT();
+            return FragmentDensityEXTImpl.Instance;
+            
+        }
+
+        public class FragmentDensityEXTImpl: Capability
+        {
+            public static readonly FragmentDensityEXTImpl Instance = new FragmentDensityEXTImpl();
+        
+            private  FragmentDensityEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentDensityEXT;
-            public new static FragmentDensityEXT Parse(WordReader reader, uint wordCount)
+            public new static FragmentDensityEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentDensityEXTImpl object.</summary>
+            /// <returns>A string that represents the FragmentDensityEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentDensityEXT()";
+            }
         }
-        public class ShadingRateNV: Capability
+        #endregion //FragmentDensityEXT
+
+        #region ShadingRateNV
+        public static ShadingRateNVImpl ShadingRateNV()
         {
-            public static readonly ShadingRateNV Instance = new ShadingRateNV();
+            return ShadingRateNVImpl.Instance;
+            
+        }
+
+        public class ShadingRateNVImpl: Capability
+        {
+            public static readonly ShadingRateNVImpl Instance = new ShadingRateNVImpl();
+        
+            private  ShadingRateNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShadingRateNV;
-            public new static ShadingRateNV Parse(WordReader reader, uint wordCount)
+            public new static ShadingRateNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShadingRateNVImpl object.</summary>
+            /// <returns>A string that represents the ShadingRateNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShadingRateNV()";
+            }
         }
-        public class GroupNonUniformPartitionedNV: Capability
+        #endregion //ShadingRateNV
+
+        #region GroupNonUniformPartitionedNV
+        public static GroupNonUniformPartitionedNVImpl GroupNonUniformPartitionedNV()
         {
-            public static readonly GroupNonUniformPartitionedNV Instance = new GroupNonUniformPartitionedNV();
+            return GroupNonUniformPartitionedNVImpl.Instance;
+            
+        }
+
+        public class GroupNonUniformPartitionedNVImpl: Capability
+        {
+            public static readonly GroupNonUniformPartitionedNVImpl Instance = new GroupNonUniformPartitionedNVImpl();
+        
+            private  GroupNonUniformPartitionedNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.GroupNonUniformPartitionedNV;
-            public new static GroupNonUniformPartitionedNV Parse(WordReader reader, uint wordCount)
+            public new static GroupNonUniformPartitionedNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GroupNonUniformPartitionedNVImpl object.</summary>
+            /// <returns>A string that represents the GroupNonUniformPartitionedNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.GroupNonUniformPartitionedNV()";
+            }
         }
-        public class ShaderNonUniform: Capability
+        #endregion //GroupNonUniformPartitionedNV
+
+        #region ShaderNonUniform
+        public static ShaderNonUniformImpl ShaderNonUniform()
         {
-            public static readonly ShaderNonUniform Instance = new ShaderNonUniform();
+            return ShaderNonUniformImpl.Instance;
+            
+        }
+
+        public class ShaderNonUniformImpl: Capability
+        {
+            public static readonly ShaderNonUniformImpl Instance = new ShaderNonUniformImpl();
+        
+            private  ShaderNonUniformImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderNonUniform;
-            public new static ShaderNonUniform Parse(WordReader reader, uint wordCount)
+            public new static ShaderNonUniformImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderNonUniformImpl object.</summary>
+            /// <returns>A string that represents the ShaderNonUniformImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderNonUniform()";
+            }
         }
-        public class ShaderNonUniformEXT: Capability
+        #endregion //ShaderNonUniform
+
+        #region ShaderNonUniformEXT
+        public static ShaderNonUniformEXTImpl ShaderNonUniformEXT()
         {
-            public static readonly ShaderNonUniformEXT Instance = new ShaderNonUniformEXT();
+            return ShaderNonUniformEXTImpl.Instance;
+            
+        }
+
+        public class ShaderNonUniformEXTImpl: Capability
+        {
+            public static readonly ShaderNonUniformEXTImpl Instance = new ShaderNonUniformEXTImpl();
+        
+            private  ShaderNonUniformEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderNonUniformEXT;
-            public new static ShaderNonUniformEXT Parse(WordReader reader, uint wordCount)
+            public new static ShaderNonUniformEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderNonUniformEXTImpl object.</summary>
+            /// <returns>A string that represents the ShaderNonUniformEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderNonUniformEXT()";
+            }
         }
-        public class RuntimeDescriptorArray: Capability
+        #endregion //ShaderNonUniformEXT
+
+        #region RuntimeDescriptorArray
+        public static RuntimeDescriptorArrayImpl RuntimeDescriptorArray()
         {
-            public static readonly RuntimeDescriptorArray Instance = new RuntimeDescriptorArray();
+            return RuntimeDescriptorArrayImpl.Instance;
+            
+        }
+
+        public class RuntimeDescriptorArrayImpl: Capability
+        {
+            public static readonly RuntimeDescriptorArrayImpl Instance = new RuntimeDescriptorArrayImpl();
+        
+            private  RuntimeDescriptorArrayImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RuntimeDescriptorArray;
-            public new static RuntimeDescriptorArray Parse(WordReader reader, uint wordCount)
+            public new static RuntimeDescriptorArrayImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RuntimeDescriptorArrayImpl object.</summary>
+            /// <returns>A string that represents the RuntimeDescriptorArrayImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RuntimeDescriptorArray()";
+            }
         }
-        public class RuntimeDescriptorArrayEXT: Capability
+        #endregion //RuntimeDescriptorArray
+
+        #region RuntimeDescriptorArrayEXT
+        public static RuntimeDescriptorArrayEXTImpl RuntimeDescriptorArrayEXT()
         {
-            public static readonly RuntimeDescriptorArrayEXT Instance = new RuntimeDescriptorArrayEXT();
+            return RuntimeDescriptorArrayEXTImpl.Instance;
+            
+        }
+
+        public class RuntimeDescriptorArrayEXTImpl: Capability
+        {
+            public static readonly RuntimeDescriptorArrayEXTImpl Instance = new RuntimeDescriptorArrayEXTImpl();
+        
+            private  RuntimeDescriptorArrayEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RuntimeDescriptorArrayEXT;
-            public new static RuntimeDescriptorArrayEXT Parse(WordReader reader, uint wordCount)
+            public new static RuntimeDescriptorArrayEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RuntimeDescriptorArrayEXTImpl object.</summary>
+            /// <returns>A string that represents the RuntimeDescriptorArrayEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RuntimeDescriptorArrayEXT()";
+            }
         }
-        public class InputAttachmentArrayDynamicIndexing: Capability
+        #endregion //RuntimeDescriptorArrayEXT
+
+        #region InputAttachmentArrayDynamicIndexing
+        public static InputAttachmentArrayDynamicIndexingImpl InputAttachmentArrayDynamicIndexing()
         {
-            public static readonly InputAttachmentArrayDynamicIndexing Instance = new InputAttachmentArrayDynamicIndexing();
+            return InputAttachmentArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class InputAttachmentArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly InputAttachmentArrayDynamicIndexingImpl Instance = new InputAttachmentArrayDynamicIndexingImpl();
+        
+            private  InputAttachmentArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.InputAttachmentArrayDynamicIndexing;
-            public new static InputAttachmentArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static InputAttachmentArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputAttachmentArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the InputAttachmentArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.InputAttachmentArrayDynamicIndexing()";
+            }
         }
-        public class InputAttachmentArrayDynamicIndexingEXT: Capability
+        #endregion //InputAttachmentArrayDynamicIndexing
+
+        #region InputAttachmentArrayDynamicIndexingEXT
+        public static InputAttachmentArrayDynamicIndexingEXTImpl InputAttachmentArrayDynamicIndexingEXT()
         {
-            public static readonly InputAttachmentArrayDynamicIndexingEXT Instance = new InputAttachmentArrayDynamicIndexingEXT();
+            return InputAttachmentArrayDynamicIndexingEXTImpl.Instance;
+            
+        }
+
+        public class InputAttachmentArrayDynamicIndexingEXTImpl: Capability
+        {
+            public static readonly InputAttachmentArrayDynamicIndexingEXTImpl Instance = new InputAttachmentArrayDynamicIndexingEXTImpl();
+        
+            private  InputAttachmentArrayDynamicIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.InputAttachmentArrayDynamicIndexingEXT;
-            public new static InputAttachmentArrayDynamicIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static InputAttachmentArrayDynamicIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputAttachmentArrayDynamicIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the InputAttachmentArrayDynamicIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.InputAttachmentArrayDynamicIndexingEXT()";
+            }
         }
-        public class UniformTexelBufferArrayDynamicIndexing: Capability
+        #endregion //InputAttachmentArrayDynamicIndexingEXT
+
+        #region UniformTexelBufferArrayDynamicIndexing
+        public static UniformTexelBufferArrayDynamicIndexingImpl UniformTexelBufferArrayDynamicIndexing()
         {
-            public static readonly UniformTexelBufferArrayDynamicIndexing Instance = new UniformTexelBufferArrayDynamicIndexing();
+            return UniformTexelBufferArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class UniformTexelBufferArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly UniformTexelBufferArrayDynamicIndexingImpl Instance = new UniformTexelBufferArrayDynamicIndexingImpl();
+        
+            private  UniformTexelBufferArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformTexelBufferArrayDynamicIndexing;
-            public new static UniformTexelBufferArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static UniformTexelBufferArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformTexelBufferArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the UniformTexelBufferArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformTexelBufferArrayDynamicIndexing()";
+            }
         }
-        public class UniformTexelBufferArrayDynamicIndexingEXT: Capability
+        #endregion //UniformTexelBufferArrayDynamicIndexing
+
+        #region UniformTexelBufferArrayDynamicIndexingEXT
+        public static UniformTexelBufferArrayDynamicIndexingEXTImpl UniformTexelBufferArrayDynamicIndexingEXT()
         {
-            public static readonly UniformTexelBufferArrayDynamicIndexingEXT Instance = new UniformTexelBufferArrayDynamicIndexingEXT();
+            return UniformTexelBufferArrayDynamicIndexingEXTImpl.Instance;
+            
+        }
+
+        public class UniformTexelBufferArrayDynamicIndexingEXTImpl: Capability
+        {
+            public static readonly UniformTexelBufferArrayDynamicIndexingEXTImpl Instance = new UniformTexelBufferArrayDynamicIndexingEXTImpl();
+        
+            private  UniformTexelBufferArrayDynamicIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformTexelBufferArrayDynamicIndexingEXT;
-            public new static UniformTexelBufferArrayDynamicIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static UniformTexelBufferArrayDynamicIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformTexelBufferArrayDynamicIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the UniformTexelBufferArrayDynamicIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformTexelBufferArrayDynamicIndexingEXT()";
+            }
         }
-        public class StorageTexelBufferArrayDynamicIndexing: Capability
+        #endregion //UniformTexelBufferArrayDynamicIndexingEXT
+
+        #region StorageTexelBufferArrayDynamicIndexing
+        public static StorageTexelBufferArrayDynamicIndexingImpl StorageTexelBufferArrayDynamicIndexing()
         {
-            public static readonly StorageTexelBufferArrayDynamicIndexing Instance = new StorageTexelBufferArrayDynamicIndexing();
+            return StorageTexelBufferArrayDynamicIndexingImpl.Instance;
+            
+        }
+
+        public class StorageTexelBufferArrayDynamicIndexingImpl: Capability
+        {
+            public static readonly StorageTexelBufferArrayDynamicIndexingImpl Instance = new StorageTexelBufferArrayDynamicIndexingImpl();
+        
+            private  StorageTexelBufferArrayDynamicIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageTexelBufferArrayDynamicIndexing;
-            public new static StorageTexelBufferArrayDynamicIndexing Parse(WordReader reader, uint wordCount)
+            public new static StorageTexelBufferArrayDynamicIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageTexelBufferArrayDynamicIndexingImpl object.</summary>
+            /// <returns>A string that represents the StorageTexelBufferArrayDynamicIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageTexelBufferArrayDynamicIndexing()";
+            }
         }
-        public class StorageTexelBufferArrayDynamicIndexingEXT: Capability
+        #endregion //StorageTexelBufferArrayDynamicIndexing
+
+        #region StorageTexelBufferArrayDynamicIndexingEXT
+        public static StorageTexelBufferArrayDynamicIndexingEXTImpl StorageTexelBufferArrayDynamicIndexingEXT()
         {
-            public static readonly StorageTexelBufferArrayDynamicIndexingEXT Instance = new StorageTexelBufferArrayDynamicIndexingEXT();
+            return StorageTexelBufferArrayDynamicIndexingEXTImpl.Instance;
+            
+        }
+
+        public class StorageTexelBufferArrayDynamicIndexingEXTImpl: Capability
+        {
+            public static readonly StorageTexelBufferArrayDynamicIndexingEXTImpl Instance = new StorageTexelBufferArrayDynamicIndexingEXTImpl();
+        
+            private  StorageTexelBufferArrayDynamicIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageTexelBufferArrayDynamicIndexingEXT;
-            public new static StorageTexelBufferArrayDynamicIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static StorageTexelBufferArrayDynamicIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageTexelBufferArrayDynamicIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the StorageTexelBufferArrayDynamicIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageTexelBufferArrayDynamicIndexingEXT()";
+            }
         }
-        public class UniformBufferArrayNonUniformIndexing: Capability
+        #endregion //StorageTexelBufferArrayDynamicIndexingEXT
+
+        #region UniformBufferArrayNonUniformIndexing
+        public static UniformBufferArrayNonUniformIndexingImpl UniformBufferArrayNonUniformIndexing()
         {
-            public static readonly UniformBufferArrayNonUniformIndexing Instance = new UniformBufferArrayNonUniformIndexing();
+            return UniformBufferArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class UniformBufferArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly UniformBufferArrayNonUniformIndexingImpl Instance = new UniformBufferArrayNonUniformIndexingImpl();
+        
+            private  UniformBufferArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformBufferArrayNonUniformIndexing;
-            public new static UniformBufferArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static UniformBufferArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformBufferArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the UniformBufferArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformBufferArrayNonUniformIndexing()";
+            }
         }
-        public class UniformBufferArrayNonUniformIndexingEXT: Capability
+        #endregion //UniformBufferArrayNonUniformIndexing
+
+        #region UniformBufferArrayNonUniformIndexingEXT
+        public static UniformBufferArrayNonUniformIndexingEXTImpl UniformBufferArrayNonUniformIndexingEXT()
         {
-            public static readonly UniformBufferArrayNonUniformIndexingEXT Instance = new UniformBufferArrayNonUniformIndexingEXT();
+            return UniformBufferArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class UniformBufferArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly UniformBufferArrayNonUniformIndexingEXTImpl Instance = new UniformBufferArrayNonUniformIndexingEXTImpl();
+        
+            private  UniformBufferArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformBufferArrayNonUniformIndexingEXT;
-            public new static UniformBufferArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static UniformBufferArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformBufferArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the UniformBufferArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformBufferArrayNonUniformIndexingEXT()";
+            }
         }
-        public class SampledImageArrayNonUniformIndexing: Capability
+        #endregion //UniformBufferArrayNonUniformIndexingEXT
+
+        #region SampledImageArrayNonUniformIndexing
+        public static SampledImageArrayNonUniformIndexingImpl SampledImageArrayNonUniformIndexing()
         {
-            public static readonly SampledImageArrayNonUniformIndexing Instance = new SampledImageArrayNonUniformIndexing();
+            return SampledImageArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class SampledImageArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly SampledImageArrayNonUniformIndexingImpl Instance = new SampledImageArrayNonUniformIndexingImpl();
+        
+            private  SampledImageArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampledImageArrayNonUniformIndexing;
-            public new static SampledImageArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static SampledImageArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampledImageArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the SampledImageArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampledImageArrayNonUniformIndexing()";
+            }
         }
-        public class SampledImageArrayNonUniformIndexingEXT: Capability
+        #endregion //SampledImageArrayNonUniformIndexing
+
+        #region SampledImageArrayNonUniformIndexingEXT
+        public static SampledImageArrayNonUniformIndexingEXTImpl SampledImageArrayNonUniformIndexingEXT()
         {
-            public static readonly SampledImageArrayNonUniformIndexingEXT Instance = new SampledImageArrayNonUniformIndexingEXT();
+            return SampledImageArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class SampledImageArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly SampledImageArrayNonUniformIndexingEXTImpl Instance = new SampledImageArrayNonUniformIndexingEXTImpl();
+        
+            private  SampledImageArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SampledImageArrayNonUniformIndexingEXT;
-            public new static SampledImageArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static SampledImageArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampledImageArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the SampledImageArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SampledImageArrayNonUniformIndexingEXT()";
+            }
         }
-        public class StorageBufferArrayNonUniformIndexing: Capability
+        #endregion //SampledImageArrayNonUniformIndexingEXT
+
+        #region StorageBufferArrayNonUniformIndexing
+        public static StorageBufferArrayNonUniformIndexingImpl StorageBufferArrayNonUniformIndexing()
         {
-            public static readonly StorageBufferArrayNonUniformIndexing Instance = new StorageBufferArrayNonUniformIndexing();
+            return StorageBufferArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class StorageBufferArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly StorageBufferArrayNonUniformIndexingImpl Instance = new StorageBufferArrayNonUniformIndexingImpl();
+        
+            private  StorageBufferArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageBufferArrayNonUniformIndexing;
-            public new static StorageBufferArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static StorageBufferArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageBufferArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the StorageBufferArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageBufferArrayNonUniformIndexing()";
+            }
         }
-        public class StorageBufferArrayNonUniformIndexingEXT: Capability
+        #endregion //StorageBufferArrayNonUniformIndexing
+
+        #region StorageBufferArrayNonUniformIndexingEXT
+        public static StorageBufferArrayNonUniformIndexingEXTImpl StorageBufferArrayNonUniformIndexingEXT()
         {
-            public static readonly StorageBufferArrayNonUniformIndexingEXT Instance = new StorageBufferArrayNonUniformIndexingEXT();
+            return StorageBufferArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class StorageBufferArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly StorageBufferArrayNonUniformIndexingEXTImpl Instance = new StorageBufferArrayNonUniformIndexingEXTImpl();
+        
+            private  StorageBufferArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageBufferArrayNonUniformIndexingEXT;
-            public new static StorageBufferArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static StorageBufferArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageBufferArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the StorageBufferArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageBufferArrayNonUniformIndexingEXT()";
+            }
         }
-        public class StorageImageArrayNonUniformIndexing: Capability
+        #endregion //StorageBufferArrayNonUniformIndexingEXT
+
+        #region StorageImageArrayNonUniformIndexing
+        public static StorageImageArrayNonUniformIndexingImpl StorageImageArrayNonUniformIndexing()
         {
-            public static readonly StorageImageArrayNonUniformIndexing Instance = new StorageImageArrayNonUniformIndexing();
+            return StorageImageArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class StorageImageArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly StorageImageArrayNonUniformIndexingImpl Instance = new StorageImageArrayNonUniformIndexingImpl();
+        
+            private  StorageImageArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageArrayNonUniformIndexing;
-            public new static StorageImageArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static StorageImageArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the StorageImageArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageArrayNonUniformIndexing()";
+            }
         }
-        public class StorageImageArrayNonUniformIndexingEXT: Capability
+        #endregion //StorageImageArrayNonUniformIndexing
+
+        #region StorageImageArrayNonUniformIndexingEXT
+        public static StorageImageArrayNonUniformIndexingEXTImpl StorageImageArrayNonUniformIndexingEXT()
         {
-            public static readonly StorageImageArrayNonUniformIndexingEXT Instance = new StorageImageArrayNonUniformIndexingEXT();
+            return StorageImageArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class StorageImageArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly StorageImageArrayNonUniformIndexingEXTImpl Instance = new StorageImageArrayNonUniformIndexingEXTImpl();
+        
+            private  StorageImageArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageImageArrayNonUniformIndexingEXT;
-            public new static StorageImageArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static StorageImageArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageImageArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the StorageImageArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageImageArrayNonUniformIndexingEXT()";
+            }
         }
-        public class InputAttachmentArrayNonUniformIndexing: Capability
+        #endregion //StorageImageArrayNonUniformIndexingEXT
+
+        #region InputAttachmentArrayNonUniformIndexing
+        public static InputAttachmentArrayNonUniformIndexingImpl InputAttachmentArrayNonUniformIndexing()
         {
-            public static readonly InputAttachmentArrayNonUniformIndexing Instance = new InputAttachmentArrayNonUniformIndexing();
+            return InputAttachmentArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class InputAttachmentArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly InputAttachmentArrayNonUniformIndexingImpl Instance = new InputAttachmentArrayNonUniformIndexingImpl();
+        
+            private  InputAttachmentArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.InputAttachmentArrayNonUniformIndexing;
-            public new static InputAttachmentArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static InputAttachmentArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputAttachmentArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the InputAttachmentArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.InputAttachmentArrayNonUniformIndexing()";
+            }
         }
-        public class InputAttachmentArrayNonUniformIndexingEXT: Capability
+        #endregion //InputAttachmentArrayNonUniformIndexing
+
+        #region InputAttachmentArrayNonUniformIndexingEXT
+        public static InputAttachmentArrayNonUniformIndexingEXTImpl InputAttachmentArrayNonUniformIndexingEXT()
         {
-            public static readonly InputAttachmentArrayNonUniformIndexingEXT Instance = new InputAttachmentArrayNonUniformIndexingEXT();
+            return InputAttachmentArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class InputAttachmentArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly InputAttachmentArrayNonUniformIndexingEXTImpl Instance = new InputAttachmentArrayNonUniformIndexingEXTImpl();
+        
+            private  InputAttachmentArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.InputAttachmentArrayNonUniformIndexingEXT;
-            public new static InputAttachmentArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static InputAttachmentArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputAttachmentArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the InputAttachmentArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.InputAttachmentArrayNonUniformIndexingEXT()";
+            }
         }
-        public class UniformTexelBufferArrayNonUniformIndexing: Capability
+        #endregion //InputAttachmentArrayNonUniformIndexingEXT
+
+        #region UniformTexelBufferArrayNonUniformIndexing
+        public static UniformTexelBufferArrayNonUniformIndexingImpl UniformTexelBufferArrayNonUniformIndexing()
         {
-            public static readonly UniformTexelBufferArrayNonUniformIndexing Instance = new UniformTexelBufferArrayNonUniformIndexing();
+            return UniformTexelBufferArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class UniformTexelBufferArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly UniformTexelBufferArrayNonUniformIndexingImpl Instance = new UniformTexelBufferArrayNonUniformIndexingImpl();
+        
+            private  UniformTexelBufferArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformTexelBufferArrayNonUniformIndexing;
-            public new static UniformTexelBufferArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static UniformTexelBufferArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformTexelBufferArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the UniformTexelBufferArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformTexelBufferArrayNonUniformIndexing()";
+            }
         }
-        public class UniformTexelBufferArrayNonUniformIndexingEXT: Capability
+        #endregion //UniformTexelBufferArrayNonUniformIndexing
+
+        #region UniformTexelBufferArrayNonUniformIndexingEXT
+        public static UniformTexelBufferArrayNonUniformIndexingEXTImpl UniformTexelBufferArrayNonUniformIndexingEXT()
         {
-            public static readonly UniformTexelBufferArrayNonUniformIndexingEXT Instance = new UniformTexelBufferArrayNonUniformIndexingEXT();
+            return UniformTexelBufferArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class UniformTexelBufferArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly UniformTexelBufferArrayNonUniformIndexingEXTImpl Instance = new UniformTexelBufferArrayNonUniformIndexingEXTImpl();
+        
+            private  UniformTexelBufferArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.UniformTexelBufferArrayNonUniformIndexingEXT;
-            public new static UniformTexelBufferArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static UniformTexelBufferArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UniformTexelBufferArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the UniformTexelBufferArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.UniformTexelBufferArrayNonUniformIndexingEXT()";
+            }
         }
-        public class StorageTexelBufferArrayNonUniformIndexing: Capability
+        #endregion //UniformTexelBufferArrayNonUniformIndexingEXT
+
+        #region StorageTexelBufferArrayNonUniformIndexing
+        public static StorageTexelBufferArrayNonUniformIndexingImpl StorageTexelBufferArrayNonUniformIndexing()
         {
-            public static readonly StorageTexelBufferArrayNonUniformIndexing Instance = new StorageTexelBufferArrayNonUniformIndexing();
+            return StorageTexelBufferArrayNonUniformIndexingImpl.Instance;
+            
+        }
+
+        public class StorageTexelBufferArrayNonUniformIndexingImpl: Capability
+        {
+            public static readonly StorageTexelBufferArrayNonUniformIndexingImpl Instance = new StorageTexelBufferArrayNonUniformIndexingImpl();
+        
+            private  StorageTexelBufferArrayNonUniformIndexingImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageTexelBufferArrayNonUniformIndexing;
-            public new static StorageTexelBufferArrayNonUniformIndexing Parse(WordReader reader, uint wordCount)
+            public new static StorageTexelBufferArrayNonUniformIndexingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageTexelBufferArrayNonUniformIndexingImpl object.</summary>
+            /// <returns>A string that represents the StorageTexelBufferArrayNonUniformIndexingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageTexelBufferArrayNonUniformIndexing()";
+            }
         }
-        public class StorageTexelBufferArrayNonUniformIndexingEXT: Capability
+        #endregion //StorageTexelBufferArrayNonUniformIndexing
+
+        #region StorageTexelBufferArrayNonUniformIndexingEXT
+        public static StorageTexelBufferArrayNonUniformIndexingEXTImpl StorageTexelBufferArrayNonUniformIndexingEXT()
         {
-            public static readonly StorageTexelBufferArrayNonUniformIndexingEXT Instance = new StorageTexelBufferArrayNonUniformIndexingEXT();
+            return StorageTexelBufferArrayNonUniformIndexingEXTImpl.Instance;
+            
+        }
+
+        public class StorageTexelBufferArrayNonUniformIndexingEXTImpl: Capability
+        {
+            public static readonly StorageTexelBufferArrayNonUniformIndexingEXTImpl Instance = new StorageTexelBufferArrayNonUniformIndexingEXTImpl();
+        
+            private  StorageTexelBufferArrayNonUniformIndexingEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.StorageTexelBufferArrayNonUniformIndexingEXT;
-            public new static StorageTexelBufferArrayNonUniformIndexingEXT Parse(WordReader reader, uint wordCount)
+            public new static StorageTexelBufferArrayNonUniformIndexingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StorageTexelBufferArrayNonUniformIndexingEXTImpl object.</summary>
+            /// <returns>A string that represents the StorageTexelBufferArrayNonUniformIndexingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.StorageTexelBufferArrayNonUniformIndexingEXT()";
+            }
         }
-        public class RayTracingNV: Capability
+        #endregion //StorageTexelBufferArrayNonUniformIndexingEXT
+
+        #region RayTracingNV
+        public static RayTracingNVImpl RayTracingNV()
         {
-            public static readonly RayTracingNV Instance = new RayTracingNV();
+            return RayTracingNVImpl.Instance;
+            
+        }
+
+        public class RayTracingNVImpl: Capability
+        {
+            public static readonly RayTracingNVImpl Instance = new RayTracingNVImpl();
+        
+            private  RayTracingNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RayTracingNV;
-            public new static RayTracingNV Parse(WordReader reader, uint wordCount)
+            public new static RayTracingNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTracingNVImpl object.</summary>
+            /// <returns>A string that represents the RayTracingNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RayTracingNV()";
+            }
         }
-        public class VulkanMemoryModel: Capability
+        #endregion //RayTracingNV
+
+        #region VulkanMemoryModel
+        public static VulkanMemoryModelImpl VulkanMemoryModel()
         {
-            public static readonly VulkanMemoryModel Instance = new VulkanMemoryModel();
+            return VulkanMemoryModelImpl.Instance;
+            
+        }
+
+        public class VulkanMemoryModelImpl: Capability
+        {
+            public static readonly VulkanMemoryModelImpl Instance = new VulkanMemoryModelImpl();
+        
+            private  VulkanMemoryModelImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.VulkanMemoryModel;
-            public new static VulkanMemoryModel Parse(WordReader reader, uint wordCount)
+            public new static VulkanMemoryModelImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VulkanMemoryModelImpl object.</summary>
+            /// <returns>A string that represents the VulkanMemoryModelImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.VulkanMemoryModel()";
+            }
         }
-        public class VulkanMemoryModelKHR: Capability
+        #endregion //VulkanMemoryModel
+
+        #region VulkanMemoryModelKHR
+        public static VulkanMemoryModelKHRImpl VulkanMemoryModelKHR()
         {
-            public static readonly VulkanMemoryModelKHR Instance = new VulkanMemoryModelKHR();
+            return VulkanMemoryModelKHRImpl.Instance;
+            
+        }
+
+        public class VulkanMemoryModelKHRImpl: Capability
+        {
+            public static readonly VulkanMemoryModelKHRImpl Instance = new VulkanMemoryModelKHRImpl();
+        
+            private  VulkanMemoryModelKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.VulkanMemoryModelKHR;
-            public new static VulkanMemoryModelKHR Parse(WordReader reader, uint wordCount)
+            public new static VulkanMemoryModelKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VulkanMemoryModelKHRImpl object.</summary>
+            /// <returns>A string that represents the VulkanMemoryModelKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.VulkanMemoryModelKHR()";
+            }
         }
-        public class VulkanMemoryModelDeviceScope: Capability
+        #endregion //VulkanMemoryModelKHR
+
+        #region VulkanMemoryModelDeviceScope
+        public static VulkanMemoryModelDeviceScopeImpl VulkanMemoryModelDeviceScope()
         {
-            public static readonly VulkanMemoryModelDeviceScope Instance = new VulkanMemoryModelDeviceScope();
+            return VulkanMemoryModelDeviceScopeImpl.Instance;
+            
+        }
+
+        public class VulkanMemoryModelDeviceScopeImpl: Capability
+        {
+            public static readonly VulkanMemoryModelDeviceScopeImpl Instance = new VulkanMemoryModelDeviceScopeImpl();
+        
+            private  VulkanMemoryModelDeviceScopeImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.VulkanMemoryModelDeviceScope;
-            public new static VulkanMemoryModelDeviceScope Parse(WordReader reader, uint wordCount)
+            public new static VulkanMemoryModelDeviceScopeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VulkanMemoryModelDeviceScopeImpl object.</summary>
+            /// <returns>A string that represents the VulkanMemoryModelDeviceScopeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.VulkanMemoryModelDeviceScope()";
+            }
         }
-        public class VulkanMemoryModelDeviceScopeKHR: Capability
+        #endregion //VulkanMemoryModelDeviceScope
+
+        #region VulkanMemoryModelDeviceScopeKHR
+        public static VulkanMemoryModelDeviceScopeKHRImpl VulkanMemoryModelDeviceScopeKHR()
         {
-            public static readonly VulkanMemoryModelDeviceScopeKHR Instance = new VulkanMemoryModelDeviceScopeKHR();
+            return VulkanMemoryModelDeviceScopeKHRImpl.Instance;
+            
+        }
+
+        public class VulkanMemoryModelDeviceScopeKHRImpl: Capability
+        {
+            public static readonly VulkanMemoryModelDeviceScopeKHRImpl Instance = new VulkanMemoryModelDeviceScopeKHRImpl();
+        
+            private  VulkanMemoryModelDeviceScopeKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.VulkanMemoryModelDeviceScopeKHR;
-            public new static VulkanMemoryModelDeviceScopeKHR Parse(WordReader reader, uint wordCount)
+            public new static VulkanMemoryModelDeviceScopeKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VulkanMemoryModelDeviceScopeKHRImpl object.</summary>
+            /// <returns>A string that represents the VulkanMemoryModelDeviceScopeKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.VulkanMemoryModelDeviceScopeKHR()";
+            }
         }
-        public class PhysicalStorageBufferAddresses: Capability
+        #endregion //VulkanMemoryModelDeviceScopeKHR
+
+        #region PhysicalStorageBufferAddresses
+        public static PhysicalStorageBufferAddressesImpl PhysicalStorageBufferAddresses()
         {
-            public static readonly PhysicalStorageBufferAddresses Instance = new PhysicalStorageBufferAddresses();
+            return PhysicalStorageBufferAddressesImpl.Instance;
+            
+        }
+
+        public class PhysicalStorageBufferAddressesImpl: Capability
+        {
+            public static readonly PhysicalStorageBufferAddressesImpl Instance = new PhysicalStorageBufferAddressesImpl();
+        
+            private  PhysicalStorageBufferAddressesImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.PhysicalStorageBufferAddresses;
-            public new static PhysicalStorageBufferAddresses Parse(WordReader reader, uint wordCount)
+            public new static PhysicalStorageBufferAddressesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PhysicalStorageBufferAddressesImpl object.</summary>
+            /// <returns>A string that represents the PhysicalStorageBufferAddressesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.PhysicalStorageBufferAddresses()";
+            }
         }
-        public class PhysicalStorageBufferAddressesEXT: Capability
+        #endregion //PhysicalStorageBufferAddresses
+
+        #region PhysicalStorageBufferAddressesEXT
+        public static PhysicalStorageBufferAddressesEXTImpl PhysicalStorageBufferAddressesEXT()
         {
-            public static readonly PhysicalStorageBufferAddressesEXT Instance = new PhysicalStorageBufferAddressesEXT();
+            return PhysicalStorageBufferAddressesEXTImpl.Instance;
+            
+        }
+
+        public class PhysicalStorageBufferAddressesEXTImpl: Capability
+        {
+            public static readonly PhysicalStorageBufferAddressesEXTImpl Instance = new PhysicalStorageBufferAddressesEXTImpl();
+        
+            private  PhysicalStorageBufferAddressesEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.PhysicalStorageBufferAddressesEXT;
-            public new static PhysicalStorageBufferAddressesEXT Parse(WordReader reader, uint wordCount)
+            public new static PhysicalStorageBufferAddressesEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PhysicalStorageBufferAddressesEXTImpl object.</summary>
+            /// <returns>A string that represents the PhysicalStorageBufferAddressesEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.PhysicalStorageBufferAddressesEXT()";
+            }
         }
-        public class ComputeDerivativeGroupLinearNV: Capability
+        #endregion //PhysicalStorageBufferAddressesEXT
+
+        #region ComputeDerivativeGroupLinearNV
+        public static ComputeDerivativeGroupLinearNVImpl ComputeDerivativeGroupLinearNV()
         {
-            public static readonly ComputeDerivativeGroupLinearNV Instance = new ComputeDerivativeGroupLinearNV();
+            return ComputeDerivativeGroupLinearNVImpl.Instance;
+            
+        }
+
+        public class ComputeDerivativeGroupLinearNVImpl: Capability
+        {
+            public static readonly ComputeDerivativeGroupLinearNVImpl Instance = new ComputeDerivativeGroupLinearNVImpl();
+        
+            private  ComputeDerivativeGroupLinearNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ComputeDerivativeGroupLinearNV;
-            public new static ComputeDerivativeGroupLinearNV Parse(WordReader reader, uint wordCount)
+            public new static ComputeDerivativeGroupLinearNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ComputeDerivativeGroupLinearNVImpl object.</summary>
+            /// <returns>A string that represents the ComputeDerivativeGroupLinearNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ComputeDerivativeGroupLinearNV()";
+            }
         }
-        public class RayTracingProvisionalKHR: Capability
+        #endregion //ComputeDerivativeGroupLinearNV
+
+        #region RayTracingProvisionalKHR
+        public static RayTracingProvisionalKHRImpl RayTracingProvisionalKHR()
         {
-            public static readonly RayTracingProvisionalKHR Instance = new RayTracingProvisionalKHR();
+            return RayTracingProvisionalKHRImpl.Instance;
+            
+        }
+
+        public class RayTracingProvisionalKHRImpl: Capability
+        {
+            public static readonly RayTracingProvisionalKHRImpl Instance = new RayTracingProvisionalKHRImpl();
+        
+            private  RayTracingProvisionalKHRImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.RayTracingProvisionalKHR;
-            public new static RayTracingProvisionalKHR Parse(WordReader reader, uint wordCount)
+            public new static RayTracingProvisionalKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTracingProvisionalKHRImpl object.</summary>
+            /// <returns>A string that represents the RayTracingProvisionalKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.RayTracingProvisionalKHR()";
+            }
         }
-        public class CooperativeMatrixNV: Capability
+        #endregion //RayTracingProvisionalKHR
+
+        #region CooperativeMatrixNV
+        public static CooperativeMatrixNVImpl CooperativeMatrixNV()
         {
-            public static readonly CooperativeMatrixNV Instance = new CooperativeMatrixNV();
+            return CooperativeMatrixNVImpl.Instance;
+            
+        }
+
+        public class CooperativeMatrixNVImpl: Capability
+        {
+            public static readonly CooperativeMatrixNVImpl Instance = new CooperativeMatrixNVImpl();
+        
+            private  CooperativeMatrixNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.CooperativeMatrixNV;
-            public new static CooperativeMatrixNV Parse(WordReader reader, uint wordCount)
+            public new static CooperativeMatrixNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CooperativeMatrixNVImpl object.</summary>
+            /// <returns>A string that represents the CooperativeMatrixNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.CooperativeMatrixNV()";
+            }
         }
-        public class FragmentShaderSampleInterlockEXT: Capability
+        #endregion //CooperativeMatrixNV
+
+        #region FragmentShaderSampleInterlockEXT
+        public static FragmentShaderSampleInterlockEXTImpl FragmentShaderSampleInterlockEXT()
         {
-            public static readonly FragmentShaderSampleInterlockEXT Instance = new FragmentShaderSampleInterlockEXT();
+            return FragmentShaderSampleInterlockEXTImpl.Instance;
+            
+        }
+
+        public class FragmentShaderSampleInterlockEXTImpl: Capability
+        {
+            public static readonly FragmentShaderSampleInterlockEXTImpl Instance = new FragmentShaderSampleInterlockEXTImpl();
+        
+            private  FragmentShaderSampleInterlockEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentShaderSampleInterlockEXT;
-            public new static FragmentShaderSampleInterlockEXT Parse(WordReader reader, uint wordCount)
+            public new static FragmentShaderSampleInterlockEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentShaderSampleInterlockEXTImpl object.</summary>
+            /// <returns>A string that represents the FragmentShaderSampleInterlockEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentShaderSampleInterlockEXT()";
+            }
         }
-        public class FragmentShaderShadingRateInterlockEXT: Capability
+        #endregion //FragmentShaderSampleInterlockEXT
+
+        #region FragmentShaderShadingRateInterlockEXT
+        public static FragmentShaderShadingRateInterlockEXTImpl FragmentShaderShadingRateInterlockEXT()
         {
-            public static readonly FragmentShaderShadingRateInterlockEXT Instance = new FragmentShaderShadingRateInterlockEXT();
+            return FragmentShaderShadingRateInterlockEXTImpl.Instance;
+            
+        }
+
+        public class FragmentShaderShadingRateInterlockEXTImpl: Capability
+        {
+            public static readonly FragmentShaderShadingRateInterlockEXTImpl Instance = new FragmentShaderShadingRateInterlockEXTImpl();
+        
+            private  FragmentShaderShadingRateInterlockEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentShaderShadingRateInterlockEXT;
-            public new static FragmentShaderShadingRateInterlockEXT Parse(WordReader reader, uint wordCount)
+            public new static FragmentShaderShadingRateInterlockEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentShaderShadingRateInterlockEXTImpl object.</summary>
+            /// <returns>A string that represents the FragmentShaderShadingRateInterlockEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentShaderShadingRateInterlockEXT()";
+            }
         }
-        public class ShaderSMBuiltinsNV: Capability
+        #endregion //FragmentShaderShadingRateInterlockEXT
+
+        #region ShaderSMBuiltinsNV
+        public static ShaderSMBuiltinsNVImpl ShaderSMBuiltinsNV()
         {
-            public static readonly ShaderSMBuiltinsNV Instance = new ShaderSMBuiltinsNV();
+            return ShaderSMBuiltinsNVImpl.Instance;
+            
+        }
+
+        public class ShaderSMBuiltinsNVImpl: Capability
+        {
+            public static readonly ShaderSMBuiltinsNVImpl Instance = new ShaderSMBuiltinsNVImpl();
+        
+            private  ShaderSMBuiltinsNVImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.ShaderSMBuiltinsNV;
-            public new static ShaderSMBuiltinsNV Parse(WordReader reader, uint wordCount)
+            public new static ShaderSMBuiltinsNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderSMBuiltinsNVImpl object.</summary>
+            /// <returns>A string that represents the ShaderSMBuiltinsNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.ShaderSMBuiltinsNV()";
+            }
         }
-        public class FragmentShaderPixelInterlockEXT: Capability
+        #endregion //ShaderSMBuiltinsNV
+
+        #region FragmentShaderPixelInterlockEXT
+        public static FragmentShaderPixelInterlockEXTImpl FragmentShaderPixelInterlockEXT()
         {
-            public static readonly FragmentShaderPixelInterlockEXT Instance = new FragmentShaderPixelInterlockEXT();
+            return FragmentShaderPixelInterlockEXTImpl.Instance;
+            
+        }
+
+        public class FragmentShaderPixelInterlockEXTImpl: Capability
+        {
+            public static readonly FragmentShaderPixelInterlockEXTImpl Instance = new FragmentShaderPixelInterlockEXTImpl();
+        
+            private  FragmentShaderPixelInterlockEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.FragmentShaderPixelInterlockEXT;
-            public new static FragmentShaderPixelInterlockEXT Parse(WordReader reader, uint wordCount)
+            public new static FragmentShaderPixelInterlockEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentShaderPixelInterlockEXTImpl object.</summary>
+            /// <returns>A string that represents the FragmentShaderPixelInterlockEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.FragmentShaderPixelInterlockEXT()";
+            }
         }
-        public class DemoteToHelperInvocationEXT: Capability
+        #endregion //FragmentShaderPixelInterlockEXT
+
+        #region DemoteToHelperInvocationEXT
+        public static DemoteToHelperInvocationEXTImpl DemoteToHelperInvocationEXT()
         {
-            public static readonly DemoteToHelperInvocationEXT Instance = new DemoteToHelperInvocationEXT();
+            return DemoteToHelperInvocationEXTImpl.Instance;
+            
+        }
+
+        public class DemoteToHelperInvocationEXTImpl: Capability
+        {
+            public static readonly DemoteToHelperInvocationEXTImpl Instance = new DemoteToHelperInvocationEXTImpl();
+        
+            private  DemoteToHelperInvocationEXTImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.DemoteToHelperInvocationEXT;
-            public new static DemoteToHelperInvocationEXT Parse(WordReader reader, uint wordCount)
+            public new static DemoteToHelperInvocationEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DemoteToHelperInvocationEXTImpl object.</summary>
+            /// <returns>A string that represents the DemoteToHelperInvocationEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.DemoteToHelperInvocationEXT()";
+            }
         }
-        public class SubgroupShuffleINTEL: Capability
+        #endregion //DemoteToHelperInvocationEXT
+
+        #region SubgroupShuffleINTEL
+        public static SubgroupShuffleINTELImpl SubgroupShuffleINTEL()
         {
-            public static readonly SubgroupShuffleINTEL Instance = new SubgroupShuffleINTEL();
+            return SubgroupShuffleINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupShuffleINTELImpl: Capability
+        {
+            public static readonly SubgroupShuffleINTELImpl Instance = new SubgroupShuffleINTELImpl();
+        
+            private  SubgroupShuffleINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupShuffleINTEL;
-            public new static SubgroupShuffleINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupShuffleINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupShuffleINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupShuffleINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupShuffleINTEL()";
+            }
         }
-        public class SubgroupBufferBlockIOINTEL: Capability
+        #endregion //SubgroupShuffleINTEL
+
+        #region SubgroupBufferBlockIOINTEL
+        public static SubgroupBufferBlockIOINTELImpl SubgroupBufferBlockIOINTEL()
         {
-            public static readonly SubgroupBufferBlockIOINTEL Instance = new SubgroupBufferBlockIOINTEL();
+            return SubgroupBufferBlockIOINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupBufferBlockIOINTELImpl: Capability
+        {
+            public static readonly SubgroupBufferBlockIOINTELImpl Instance = new SubgroupBufferBlockIOINTELImpl();
+        
+            private  SubgroupBufferBlockIOINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupBufferBlockIOINTEL;
-            public new static SubgroupBufferBlockIOINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupBufferBlockIOINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupBufferBlockIOINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupBufferBlockIOINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupBufferBlockIOINTEL()";
+            }
         }
-        public class SubgroupImageBlockIOINTEL: Capability
+        #endregion //SubgroupBufferBlockIOINTEL
+
+        #region SubgroupImageBlockIOINTEL
+        public static SubgroupImageBlockIOINTELImpl SubgroupImageBlockIOINTEL()
         {
-            public static readonly SubgroupImageBlockIOINTEL Instance = new SubgroupImageBlockIOINTEL();
+            return SubgroupImageBlockIOINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupImageBlockIOINTELImpl: Capability
+        {
+            public static readonly SubgroupImageBlockIOINTELImpl Instance = new SubgroupImageBlockIOINTELImpl();
+        
+            private  SubgroupImageBlockIOINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupImageBlockIOINTEL;
-            public new static SubgroupImageBlockIOINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupImageBlockIOINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupImageBlockIOINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupImageBlockIOINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupImageBlockIOINTEL()";
+            }
         }
-        public class SubgroupImageMediaBlockIOINTEL: Capability
+        #endregion //SubgroupImageBlockIOINTEL
+
+        #region SubgroupImageMediaBlockIOINTEL
+        public static SubgroupImageMediaBlockIOINTELImpl SubgroupImageMediaBlockIOINTEL()
         {
-            public static readonly SubgroupImageMediaBlockIOINTEL Instance = new SubgroupImageMediaBlockIOINTEL();
+            return SubgroupImageMediaBlockIOINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupImageMediaBlockIOINTELImpl: Capability
+        {
+            public static readonly SubgroupImageMediaBlockIOINTELImpl Instance = new SubgroupImageMediaBlockIOINTELImpl();
+        
+            private  SubgroupImageMediaBlockIOINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupImageMediaBlockIOINTEL;
-            public new static SubgroupImageMediaBlockIOINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupImageMediaBlockIOINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupImageMediaBlockIOINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupImageMediaBlockIOINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupImageMediaBlockIOINTEL()";
+            }
         }
-        public class IntegerFunctions2INTEL: Capability
+        #endregion //SubgroupImageMediaBlockIOINTEL
+
+        #region IntegerFunctions2INTEL
+        public static IntegerFunctions2INTELImpl IntegerFunctions2INTEL()
         {
-            public static readonly IntegerFunctions2INTEL Instance = new IntegerFunctions2INTEL();
+            return IntegerFunctions2INTELImpl.Instance;
+            
+        }
+
+        public class IntegerFunctions2INTELImpl: Capability
+        {
+            public static readonly IntegerFunctions2INTELImpl Instance = new IntegerFunctions2INTELImpl();
+        
+            private  IntegerFunctions2INTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.IntegerFunctions2INTEL;
-            public new static IntegerFunctions2INTEL Parse(WordReader reader, uint wordCount)
+            public new static IntegerFunctions2INTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IntegerFunctions2INTELImpl object.</summary>
+            /// <returns>A string that represents the IntegerFunctions2INTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.IntegerFunctions2INTEL()";
+            }
         }
-        public class SubgroupAvcMotionEstimationINTEL: Capability
+        #endregion //IntegerFunctions2INTEL
+
+        #region SubgroupAvcMotionEstimationINTEL
+        public static SubgroupAvcMotionEstimationINTELImpl SubgroupAvcMotionEstimationINTEL()
         {
-            public static readonly SubgroupAvcMotionEstimationINTEL Instance = new SubgroupAvcMotionEstimationINTEL();
+            return SubgroupAvcMotionEstimationINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupAvcMotionEstimationINTELImpl: Capability
+        {
+            public static readonly SubgroupAvcMotionEstimationINTELImpl Instance = new SubgroupAvcMotionEstimationINTELImpl();
+        
+            private  SubgroupAvcMotionEstimationINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupAvcMotionEstimationINTEL;
-            public new static SubgroupAvcMotionEstimationINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupAvcMotionEstimationINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupAvcMotionEstimationINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupAvcMotionEstimationINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupAvcMotionEstimationINTEL()";
+            }
         }
-        public class SubgroupAvcMotionEstimationIntraINTEL: Capability
+        #endregion //SubgroupAvcMotionEstimationINTEL
+
+        #region SubgroupAvcMotionEstimationIntraINTEL
+        public static SubgroupAvcMotionEstimationIntraINTELImpl SubgroupAvcMotionEstimationIntraINTEL()
         {
-            public static readonly SubgroupAvcMotionEstimationIntraINTEL Instance = new SubgroupAvcMotionEstimationIntraINTEL();
+            return SubgroupAvcMotionEstimationIntraINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupAvcMotionEstimationIntraINTELImpl: Capability
+        {
+            public static readonly SubgroupAvcMotionEstimationIntraINTELImpl Instance = new SubgroupAvcMotionEstimationIntraINTELImpl();
+        
+            private  SubgroupAvcMotionEstimationIntraINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupAvcMotionEstimationIntraINTEL;
-            public new static SubgroupAvcMotionEstimationIntraINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupAvcMotionEstimationIntraINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupAvcMotionEstimationIntraINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupAvcMotionEstimationIntraINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupAvcMotionEstimationIntraINTEL()";
+            }
         }
-        public class SubgroupAvcMotionEstimationChromaINTEL: Capability
+        #endregion //SubgroupAvcMotionEstimationIntraINTEL
+
+        #region SubgroupAvcMotionEstimationChromaINTEL
+        public static SubgroupAvcMotionEstimationChromaINTELImpl SubgroupAvcMotionEstimationChromaINTEL()
         {
-            public static readonly SubgroupAvcMotionEstimationChromaINTEL Instance = new SubgroupAvcMotionEstimationChromaINTEL();
+            return SubgroupAvcMotionEstimationChromaINTELImpl.Instance;
+            
+        }
+
+        public class SubgroupAvcMotionEstimationChromaINTELImpl: Capability
+        {
+            public static readonly SubgroupAvcMotionEstimationChromaINTELImpl Instance = new SubgroupAvcMotionEstimationChromaINTELImpl();
+        
+            private  SubgroupAvcMotionEstimationChromaINTELImpl()
+            {
+            }
             public override Enumerant Value => Capability.Enumerant.SubgroupAvcMotionEstimationChromaINTEL;
-            public new static SubgroupAvcMotionEstimationChromaINTEL Parse(WordReader reader, uint wordCount)
+            public new static SubgroupAvcMotionEstimationChromaINTELImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupAvcMotionEstimationChromaINTELImpl object.</summary>
+            /// <returns>A string that represents the SubgroupAvcMotionEstimationChromaINTELImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Capability.SubgroupAvcMotionEstimationChromaINTEL()";
+            }
         }
+        #endregion //SubgroupAvcMotionEstimationChromaINTEL
 
         public abstract Enumerant Value { get; }
 
@@ -1762,348 +5163,348 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Matrix :
-                    return Matrix.Parse(reader, wordCount - 1);
+                    return MatrixImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Shader :
-                    return Shader.Parse(reader, wordCount - 1);
+                    return ShaderImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Geometry :
-                    return Geometry.Parse(reader, wordCount - 1);
+                    return GeometryImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Tessellation :
-                    return Tessellation.Parse(reader, wordCount - 1);
+                    return TessellationImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Addresses :
-                    return Addresses.Parse(reader, wordCount - 1);
+                    return AddressesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Linkage :
-                    return Linkage.Parse(reader, wordCount - 1);
+                    return LinkageImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Kernel :
-                    return Kernel.Parse(reader, wordCount - 1);
+                    return KernelImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Vector16 :
-                    return Vector16.Parse(reader, wordCount - 1);
+                    return Vector16Impl.Parse(reader, wordCount - 1);
                 case Enumerant.Float16Buffer :
-                    return Float16Buffer.Parse(reader, wordCount - 1);
+                    return Float16BufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Float16 :
-                    return Float16.Parse(reader, wordCount - 1);
+                    return Float16Impl.Parse(reader, wordCount - 1);
                 case Enumerant.Float64 :
-                    return Float64.Parse(reader, wordCount - 1);
+                    return Float64Impl.Parse(reader, wordCount - 1);
                 case Enumerant.Int64 :
-                    return Int64.Parse(reader, wordCount - 1);
+                    return Int64Impl.Parse(reader, wordCount - 1);
                 case Enumerant.Int64Atomics :
-                    return Int64Atomics.Parse(reader, wordCount - 1);
+                    return Int64AtomicsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageBasic :
-                    return ImageBasic.Parse(reader, wordCount - 1);
+                    return ImageBasicImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageReadWrite :
-                    return ImageReadWrite.Parse(reader, wordCount - 1);
+                    return ImageReadWriteImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageMipmap :
-                    return ImageMipmap.Parse(reader, wordCount - 1);
+                    return ImageMipmapImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Pipes :
-                    return Pipes.Parse(reader, wordCount - 1);
+                    return PipesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Groups :
-                    return Groups.Parse(reader, wordCount - 1);
+                    return GroupsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DeviceEnqueue :
-                    return DeviceEnqueue.Parse(reader, wordCount - 1);
+                    return DeviceEnqueueImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LiteralSampler :
-                    return LiteralSampler.Parse(reader, wordCount - 1);
+                    return LiteralSamplerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.AtomicStorage :
-                    return AtomicStorage.Parse(reader, wordCount - 1);
+                    return AtomicStorageImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Int16 :
-                    return Int16.Parse(reader, wordCount - 1);
+                    return Int16Impl.Parse(reader, wordCount - 1);
                 case Enumerant.TessellationPointSize :
-                    return TessellationPointSize.Parse(reader, wordCount - 1);
+                    return TessellationPointSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GeometryPointSize :
-                    return GeometryPointSize.Parse(reader, wordCount - 1);
+                    return GeometryPointSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageGatherExtended :
-                    return ImageGatherExtended.Parse(reader, wordCount - 1);
+                    return ImageGatherExtendedImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageImageMultisample :
-                    return StorageImageMultisample.Parse(reader, wordCount - 1);
+                    return StorageImageMultisampleImpl.Parse(reader, wordCount - 1);
                 case Enumerant.UniformBufferArrayDynamicIndexing :
-                    return UniformBufferArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return UniformBufferArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampledImageArrayDynamicIndexing :
-                    return SampledImageArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return SampledImageArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageBufferArrayDynamicIndexing :
-                    return StorageBufferArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return StorageBufferArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageImageArrayDynamicIndexing :
-                    return StorageImageArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return StorageImageArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ClipDistance :
-                    return ClipDistance.Parse(reader, wordCount - 1);
+                    return ClipDistanceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CullDistance :
-                    return CullDistance.Parse(reader, wordCount - 1);
+                    return CullDistanceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageCubeArray :
-                    return ImageCubeArray.Parse(reader, wordCount - 1);
+                    return ImageCubeArrayImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleRateShading :
-                    return SampleRateShading.Parse(reader, wordCount - 1);
+                    return SampleRateShadingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageRect :
-                    return ImageRect.Parse(reader, wordCount - 1);
+                    return ImageRectImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampledRect :
-                    return SampledRect.Parse(reader, wordCount - 1);
+                    return SampledRectImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GenericPointer :
-                    return GenericPointer.Parse(reader, wordCount - 1);
+                    return GenericPointerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Int8 :
-                    return Int8.Parse(reader, wordCount - 1);
+                    return Int8Impl.Parse(reader, wordCount - 1);
                 case Enumerant.InputAttachment :
-                    return InputAttachment.Parse(reader, wordCount - 1);
+                    return InputAttachmentImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SparseResidency :
-                    return SparseResidency.Parse(reader, wordCount - 1);
+                    return SparseResidencyImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MinLod :
-                    return MinLod.Parse(reader, wordCount - 1);
+                    return MinLodImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Sampled1D :
-                    return Sampled1D.Parse(reader, wordCount - 1);
+                    return Sampled1DImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Image1D :
-                    return Image1D.Parse(reader, wordCount - 1);
+                    return Image1DImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampledCubeArray :
-                    return SampledCubeArray.Parse(reader, wordCount - 1);
+                    return SampledCubeArrayImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampledBuffer :
-                    return SampledBuffer.Parse(reader, wordCount - 1);
+                    return SampledBufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageBuffer :
-                    return ImageBuffer.Parse(reader, wordCount - 1);
+                    return ImageBufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageMSArray :
-                    return ImageMSArray.Parse(reader, wordCount - 1);
+                    return ImageMSArrayImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageImageExtendedFormats :
-                    return StorageImageExtendedFormats.Parse(reader, wordCount - 1);
+                    return StorageImageExtendedFormatsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageQuery :
-                    return ImageQuery.Parse(reader, wordCount - 1);
+                    return ImageQueryImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DerivativeControl :
-                    return DerivativeControl.Parse(reader, wordCount - 1);
+                    return DerivativeControlImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InterpolationFunction :
-                    return InterpolationFunction.Parse(reader, wordCount - 1);
+                    return InterpolationFunctionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TransformFeedback :
-                    return TransformFeedback.Parse(reader, wordCount - 1);
+                    return TransformFeedbackImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GeometryStreams :
-                    return GeometryStreams.Parse(reader, wordCount - 1);
+                    return GeometryStreamsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageImageReadWithoutFormat :
-                    return StorageImageReadWithoutFormat.Parse(reader, wordCount - 1);
+                    return StorageImageReadWithoutFormatImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageImageWriteWithoutFormat :
-                    return StorageImageWriteWithoutFormat.Parse(reader, wordCount - 1);
+                    return StorageImageWriteWithoutFormatImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MultiViewport :
-                    return MultiViewport.Parse(reader, wordCount - 1);
+                    return MultiViewportImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupDispatch :
-                    return SubgroupDispatch.Parse(reader, wordCount - 1);
+                    return SubgroupDispatchImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NamedBarrier :
-                    return NamedBarrier.Parse(reader, wordCount - 1);
+                    return NamedBarrierImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PipeStorage :
-                    return PipeStorage.Parse(reader, wordCount - 1);
+                    return PipeStorageImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniform :
-                    return GroupNonUniform.Parse(reader, wordCount - 1);
+                    return GroupNonUniformImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformVote :
-                    return GroupNonUniformVote.Parse(reader, wordCount - 1);
+                    return GroupNonUniformVoteImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformArithmetic :
-                    return GroupNonUniformArithmetic.Parse(reader, wordCount - 1);
+                    return GroupNonUniformArithmeticImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformBallot :
-                    return GroupNonUniformBallot.Parse(reader, wordCount - 1);
+                    return GroupNonUniformBallotImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformShuffle :
-                    return GroupNonUniformShuffle.Parse(reader, wordCount - 1);
+                    return GroupNonUniformShuffleImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformShuffleRelative :
-                    return GroupNonUniformShuffleRelative.Parse(reader, wordCount - 1);
+                    return GroupNonUniformShuffleRelativeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformClustered :
-                    return GroupNonUniformClustered.Parse(reader, wordCount - 1);
+                    return GroupNonUniformClusteredImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformQuad :
-                    return GroupNonUniformQuad.Parse(reader, wordCount - 1);
+                    return GroupNonUniformQuadImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderLayer :
-                    return ShaderLayer.Parse(reader, wordCount - 1);
+                    return ShaderLayerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderViewportIndex :
-                    return ShaderViewportIndex.Parse(reader, wordCount - 1);
+                    return ShaderViewportIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupBallotKHR :
-                    return SubgroupBallotKHR.Parse(reader, wordCount - 1);
+                    return SubgroupBallotKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DrawParameters :
-                    return DrawParameters.Parse(reader, wordCount - 1);
+                    return DrawParametersImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupVoteKHR :
-                    return SubgroupVoteKHR.Parse(reader, wordCount - 1);
+                    return SubgroupVoteKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageBuffer16BitAccess :
-                    return StorageBuffer16BitAccess.Parse(reader, wordCount - 1);
+                    return StorageBuffer16BitAccessImpl.Parse(reader, wordCount - 1);
                 //StorageUniformBufferBlock16 has the same id as another value in enum.
                 //case Enumerant.StorageUniformBufferBlock16 :
                 //    return StorageUniformBufferBlock16.Parse(reader, wordCount - 1);
                 case Enumerant.UniformAndStorageBuffer16BitAccess :
-                    return UniformAndStorageBuffer16BitAccess.Parse(reader, wordCount - 1);
+                    return UniformAndStorageBuffer16BitAccessImpl.Parse(reader, wordCount - 1);
                 //StorageUniform16 has the same id as another value in enum.
                 //case Enumerant.StorageUniform16 :
                 //    return StorageUniform16.Parse(reader, wordCount - 1);
                 case Enumerant.StoragePushConstant16 :
-                    return StoragePushConstant16.Parse(reader, wordCount - 1);
+                    return StoragePushConstant16Impl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageInputOutput16 :
-                    return StorageInputOutput16.Parse(reader, wordCount - 1);
+                    return StorageInputOutput16Impl.Parse(reader, wordCount - 1);
                 case Enumerant.DeviceGroup :
-                    return DeviceGroup.Parse(reader, wordCount - 1);
+                    return DeviceGroupImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MultiView :
-                    return MultiView.Parse(reader, wordCount - 1);
+                    return MultiViewImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VariablePointersStorageBuffer :
-                    return VariablePointersStorageBuffer.Parse(reader, wordCount - 1);
+                    return VariablePointersStorageBufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VariablePointers :
-                    return VariablePointers.Parse(reader, wordCount - 1);
+                    return VariablePointersImpl.Parse(reader, wordCount - 1);
                 case Enumerant.AtomicStorageOps :
-                    return AtomicStorageOps.Parse(reader, wordCount - 1);
+                    return AtomicStorageOpsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleMaskPostDepthCoverage :
-                    return SampleMaskPostDepthCoverage.Parse(reader, wordCount - 1);
+                    return SampleMaskPostDepthCoverageImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StorageBuffer8BitAccess :
-                    return StorageBuffer8BitAccess.Parse(reader, wordCount - 1);
+                    return StorageBuffer8BitAccessImpl.Parse(reader, wordCount - 1);
                 case Enumerant.UniformAndStorageBuffer8BitAccess :
-                    return UniformAndStorageBuffer8BitAccess.Parse(reader, wordCount - 1);
+                    return UniformAndStorageBuffer8BitAccessImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StoragePushConstant8 :
-                    return StoragePushConstant8.Parse(reader, wordCount - 1);
+                    return StoragePushConstant8Impl.Parse(reader, wordCount - 1);
                 case Enumerant.DenormPreserve :
-                    return DenormPreserve.Parse(reader, wordCount - 1);
+                    return DenormPreserveImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DenormFlushToZero :
-                    return DenormFlushToZero.Parse(reader, wordCount - 1);
+                    return DenormFlushToZeroImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SignedZeroInfNanPreserve :
-                    return SignedZeroInfNanPreserve.Parse(reader, wordCount - 1);
+                    return SignedZeroInfNanPreserveImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RoundingModeRTE :
-                    return RoundingModeRTE.Parse(reader, wordCount - 1);
+                    return RoundingModeRTEImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RoundingModeRTZ :
-                    return RoundingModeRTZ.Parse(reader, wordCount - 1);
+                    return RoundingModeRTZImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayQueryProvisionalKHR :
-                    return RayQueryProvisionalKHR.Parse(reader, wordCount - 1);
+                    return RayQueryProvisionalKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayTraversalPrimitiveCullingProvisionalKHR :
-                    return RayTraversalPrimitiveCullingProvisionalKHR.Parse(reader, wordCount - 1);
+                    return RayTraversalPrimitiveCullingProvisionalKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Float16ImageAMD :
-                    return Float16ImageAMD.Parse(reader, wordCount - 1);
+                    return Float16ImageAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageGatherBiasLodAMD :
-                    return ImageGatherBiasLodAMD.Parse(reader, wordCount - 1);
+                    return ImageGatherBiasLodAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentMaskAMD :
-                    return FragmentMaskAMD.Parse(reader, wordCount - 1);
+                    return FragmentMaskAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StencilExportEXT :
-                    return StencilExportEXT.Parse(reader, wordCount - 1);
+                    return StencilExportEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageReadWriteLodAMD :
-                    return ImageReadWriteLodAMD.Parse(reader, wordCount - 1);
+                    return ImageReadWriteLodAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderClockKHR :
-                    return ShaderClockKHR.Parse(reader, wordCount - 1);
+                    return ShaderClockKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleMaskOverrideCoverageNV :
-                    return SampleMaskOverrideCoverageNV.Parse(reader, wordCount - 1);
+                    return SampleMaskOverrideCoverageNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GeometryShaderPassthroughNV :
-                    return GeometryShaderPassthroughNV.Parse(reader, wordCount - 1);
+                    return GeometryShaderPassthroughNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderViewportIndexLayerEXT :
-                    return ShaderViewportIndexLayerEXT.Parse(reader, wordCount - 1);
+                    return ShaderViewportIndexLayerEXTImpl.Parse(reader, wordCount - 1);
                 //ShaderViewportIndexLayerNV has the same id as another value in enum.
                 //case Enumerant.ShaderViewportIndexLayerNV :
                 //    return ShaderViewportIndexLayerNV.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderViewportMaskNV :
-                    return ShaderViewportMaskNV.Parse(reader, wordCount - 1);
+                    return ShaderViewportMaskNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderStereoViewNV :
-                    return ShaderStereoViewNV.Parse(reader, wordCount - 1);
+                    return ShaderStereoViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PerViewAttributesNV :
-                    return PerViewAttributesNV.Parse(reader, wordCount - 1);
+                    return PerViewAttributesNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentFullyCoveredEXT :
-                    return FragmentFullyCoveredEXT.Parse(reader, wordCount - 1);
+                    return FragmentFullyCoveredEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MeshShadingNV :
-                    return MeshShadingNV.Parse(reader, wordCount - 1);
+                    return MeshShadingNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ImageFootprintNV :
-                    return ImageFootprintNV.Parse(reader, wordCount - 1);
+                    return ImageFootprintNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentBarycentricNV :
-                    return FragmentBarycentricNV.Parse(reader, wordCount - 1);
+                    return FragmentBarycentricNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ComputeDerivativeGroupQuadsNV :
-                    return ComputeDerivativeGroupQuadsNV.Parse(reader, wordCount - 1);
+                    return ComputeDerivativeGroupQuadsNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentDensityEXT :
-                    return FragmentDensityEXT.Parse(reader, wordCount - 1);
+                    return FragmentDensityEXTImpl.Parse(reader, wordCount - 1);
                 //ShadingRateNV has the same id as another value in enum.
                 //case Enumerant.ShadingRateNV :
                 //    return ShadingRateNV.Parse(reader, wordCount - 1);
                 case Enumerant.GroupNonUniformPartitionedNV :
-                    return GroupNonUniformPartitionedNV.Parse(reader, wordCount - 1);
+                    return GroupNonUniformPartitionedNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderNonUniform :
-                    return ShaderNonUniform.Parse(reader, wordCount - 1);
+                    return ShaderNonUniformImpl.Parse(reader, wordCount - 1);
                 //ShaderNonUniformEXT has the same id as another value in enum.
                 //case Enumerant.ShaderNonUniformEXT :
                 //    return ShaderNonUniformEXT.Parse(reader, wordCount - 1);
                 case Enumerant.RuntimeDescriptorArray :
-                    return RuntimeDescriptorArray.Parse(reader, wordCount - 1);
+                    return RuntimeDescriptorArrayImpl.Parse(reader, wordCount - 1);
                 //RuntimeDescriptorArrayEXT has the same id as another value in enum.
                 //case Enumerant.RuntimeDescriptorArrayEXT :
                 //    return RuntimeDescriptorArrayEXT.Parse(reader, wordCount - 1);
                 case Enumerant.InputAttachmentArrayDynamicIndexing :
-                    return InputAttachmentArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return InputAttachmentArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 //InputAttachmentArrayDynamicIndexingEXT has the same id as another value in enum.
                 //case Enumerant.InputAttachmentArrayDynamicIndexingEXT :
                 //    return InputAttachmentArrayDynamicIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.UniformTexelBufferArrayDynamicIndexing :
-                    return UniformTexelBufferArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return UniformTexelBufferArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 //UniformTexelBufferArrayDynamicIndexingEXT has the same id as another value in enum.
                 //case Enumerant.UniformTexelBufferArrayDynamicIndexingEXT :
                 //    return UniformTexelBufferArrayDynamicIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.StorageTexelBufferArrayDynamicIndexing :
-                    return StorageTexelBufferArrayDynamicIndexing.Parse(reader, wordCount - 1);
+                    return StorageTexelBufferArrayDynamicIndexingImpl.Parse(reader, wordCount - 1);
                 //StorageTexelBufferArrayDynamicIndexingEXT has the same id as another value in enum.
                 //case Enumerant.StorageTexelBufferArrayDynamicIndexingEXT :
                 //    return StorageTexelBufferArrayDynamicIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.UniformBufferArrayNonUniformIndexing :
-                    return UniformBufferArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return UniformBufferArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //UniformBufferArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.UniformBufferArrayNonUniformIndexingEXT :
                 //    return UniformBufferArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.SampledImageArrayNonUniformIndexing :
-                    return SampledImageArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return SampledImageArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //SampledImageArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.SampledImageArrayNonUniformIndexingEXT :
                 //    return SampledImageArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.StorageBufferArrayNonUniformIndexing :
-                    return StorageBufferArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return StorageBufferArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //StorageBufferArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.StorageBufferArrayNonUniformIndexingEXT :
                 //    return StorageBufferArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.StorageImageArrayNonUniformIndexing :
-                    return StorageImageArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return StorageImageArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //StorageImageArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.StorageImageArrayNonUniformIndexingEXT :
                 //    return StorageImageArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.InputAttachmentArrayNonUniformIndexing :
-                    return InputAttachmentArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return InputAttachmentArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //InputAttachmentArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.InputAttachmentArrayNonUniformIndexingEXT :
                 //    return InputAttachmentArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.UniformTexelBufferArrayNonUniformIndexing :
-                    return UniformTexelBufferArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return UniformTexelBufferArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //UniformTexelBufferArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.UniformTexelBufferArrayNonUniformIndexingEXT :
                 //    return UniformTexelBufferArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.StorageTexelBufferArrayNonUniformIndexing :
-                    return StorageTexelBufferArrayNonUniformIndexing.Parse(reader, wordCount - 1);
+                    return StorageTexelBufferArrayNonUniformIndexingImpl.Parse(reader, wordCount - 1);
                 //StorageTexelBufferArrayNonUniformIndexingEXT has the same id as another value in enum.
                 //case Enumerant.StorageTexelBufferArrayNonUniformIndexingEXT :
                 //    return StorageTexelBufferArrayNonUniformIndexingEXT.Parse(reader, wordCount - 1);
                 case Enumerant.RayTracingNV :
-                    return RayTracingNV.Parse(reader, wordCount - 1);
+                    return RayTracingNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VulkanMemoryModel :
-                    return VulkanMemoryModel.Parse(reader, wordCount - 1);
+                    return VulkanMemoryModelImpl.Parse(reader, wordCount - 1);
                 //VulkanMemoryModelKHR has the same id as another value in enum.
                 //case Enumerant.VulkanMemoryModelKHR :
                 //    return VulkanMemoryModelKHR.Parse(reader, wordCount - 1);
                 case Enumerant.VulkanMemoryModelDeviceScope :
-                    return VulkanMemoryModelDeviceScope.Parse(reader, wordCount - 1);
+                    return VulkanMemoryModelDeviceScopeImpl.Parse(reader, wordCount - 1);
                 //VulkanMemoryModelDeviceScopeKHR has the same id as another value in enum.
                 //case Enumerant.VulkanMemoryModelDeviceScopeKHR :
                 //    return VulkanMemoryModelDeviceScopeKHR.Parse(reader, wordCount - 1);
                 case Enumerant.PhysicalStorageBufferAddresses :
-                    return PhysicalStorageBufferAddresses.Parse(reader, wordCount - 1);
+                    return PhysicalStorageBufferAddressesImpl.Parse(reader, wordCount - 1);
                 //PhysicalStorageBufferAddressesEXT has the same id as another value in enum.
                 //case Enumerant.PhysicalStorageBufferAddressesEXT :
                 //    return PhysicalStorageBufferAddressesEXT.Parse(reader, wordCount - 1);
                 case Enumerant.ComputeDerivativeGroupLinearNV :
-                    return ComputeDerivativeGroupLinearNV.Parse(reader, wordCount - 1);
+                    return ComputeDerivativeGroupLinearNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayTracingProvisionalKHR :
-                    return RayTracingProvisionalKHR.Parse(reader, wordCount - 1);
+                    return RayTracingProvisionalKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CooperativeMatrixNV :
-                    return CooperativeMatrixNV.Parse(reader, wordCount - 1);
+                    return CooperativeMatrixNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentShaderSampleInterlockEXT :
-                    return FragmentShaderSampleInterlockEXT.Parse(reader, wordCount - 1);
+                    return FragmentShaderSampleInterlockEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentShaderShadingRateInterlockEXT :
-                    return FragmentShaderShadingRateInterlockEXT.Parse(reader, wordCount - 1);
+                    return FragmentShaderShadingRateInterlockEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderSMBuiltinsNV :
-                    return ShaderSMBuiltinsNV.Parse(reader, wordCount - 1);
+                    return ShaderSMBuiltinsNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragmentShaderPixelInterlockEXT :
-                    return FragmentShaderPixelInterlockEXT.Parse(reader, wordCount - 1);
+                    return FragmentShaderPixelInterlockEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DemoteToHelperInvocationEXT :
-                    return DemoteToHelperInvocationEXT.Parse(reader, wordCount - 1);
+                    return DemoteToHelperInvocationEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupShuffleINTEL :
-                    return SubgroupShuffleINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupShuffleINTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupBufferBlockIOINTEL :
-                    return SubgroupBufferBlockIOINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupBufferBlockIOINTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupImageBlockIOINTEL :
-                    return SubgroupImageBlockIOINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupImageBlockIOINTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupImageMediaBlockIOINTEL :
-                    return SubgroupImageMediaBlockIOINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupImageMediaBlockIOINTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.IntegerFunctions2INTEL :
-                    return IntegerFunctions2INTEL.Parse(reader, wordCount - 1);
+                    return IntegerFunctions2INTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupAvcMotionEstimationINTEL :
-                    return SubgroupAvcMotionEstimationINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupAvcMotionEstimationINTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupAvcMotionEstimationIntraINTEL :
-                    return SubgroupAvcMotionEstimationIntraINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupAvcMotionEstimationIntraINTELImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupAvcMotionEstimationChromaINTEL :
-                    return SubgroupAvcMotionEstimationChromaINTEL.Parse(reader, wordCount - 1);
+                    return SubgroupAvcMotionEstimationChromaINTELImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown Capability "+id);
             }

@@ -18,9 +18,43 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static KernelProfilingInfo CreateNone()
+        {
+            return new KernelProfilingInfo(Enumerant.None)
+            {
+            };
+        }
+
+        public KernelProfilingInfo AlsoNone()
+        {
+            Value |= Enumerant.None;
+            return this;
+        }
+
+        public static KernelProfilingInfo CreateCmdExecTime()
+        {
+            return new KernelProfilingInfo(Enumerant.CmdExecTime)
+            {
+            };
+        }
+
+        public KernelProfilingInfo AlsoCmdExecTime()
+        {
+            Value |= Enumerant.CmdExecTime;
+            return this;
+        }
 
 
+        public static implicit operator KernelProfilingInfo(KernelProfilingInfo.Enumerant value)
+        {
+            switch (value)
+            {
+                default:
+                    return new KernelProfilingInfo(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public static KernelProfilingInfo Parse(WordReader reader, uint wordCount)
         {

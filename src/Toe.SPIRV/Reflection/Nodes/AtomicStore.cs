@@ -13,6 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public AtomicStore(Node pointer, uint memory, uint semantics, Node value, string debugName = null)
+        {
+            this.Pointer = pointer;
+            this.Memory = memory;
+            this.Semantics = semantics;
+            this.Value = value;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpAtomicStore;
 
         /// <summary>
@@ -25,10 +34,20 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node Pointer { get; set; }
+
         public uint Memory { get; set; }
+
         public uint Semantics { get; set; }
+
         public Node Value { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -63,19 +82,48 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public AtomicStore WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpAtomicStore)op, treeBuilder);
         }
 
-        public void SetUp(OpAtomicStore op, SpirvInstructionTreeBuilder treeBuilder)
+        public AtomicStore SetUp(Action<AtomicStore> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpAtomicStore op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Pointer = treeBuilder.GetNode(op.Pointer);
             Memory = op.Memory;
             Semantics = op.Semantics;
             Value = treeBuilder.GetNode(op.Value);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the AtomicStore object.</summary>
+        /// <returns>A string that represents the AtomicStore object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"AtomicStore({Pointer}, {Memory}, {Semantics}, {Value}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static AtomicStore ThenAtomicStore(this INodeWithNext node, Node pointer, uint memory, uint semantics, Node value, string debugName = null)
+        {
+            return node.Then(new AtomicStore(pointer, memory, semantics, value, debugName));
         }
     }
 }

@@ -13,24 +13,65 @@ namespace Toe.SPIRV.Spv
             Import = 1,
         }
 
-        public class Export: LinkageType
+        #region Export
+        public static ExportImpl Export()
         {
-            public static readonly Export Instance = new Export();
+            return ExportImpl.Instance;
+            
+        }
+
+        public class ExportImpl: LinkageType
+        {
+            public static readonly ExportImpl Instance = new ExportImpl();
+        
+            private  ExportImpl()
+            {
+            }
             public override Enumerant Value => LinkageType.Enumerant.Export;
-            public new static Export Parse(WordReader reader, uint wordCount)
+            public new static ExportImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ExportImpl object.</summary>
+            /// <returns>A string that represents the ExportImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" LinkageType.Export()";
+            }
         }
-        public class Import: LinkageType
+        #endregion //Export
+
+        #region Import
+        public static ImportImpl Import()
         {
-            public static readonly Import Instance = new Import();
+            return ImportImpl.Instance;
+            
+        }
+
+        public class ImportImpl: LinkageType
+        {
+            public static readonly ImportImpl Instance = new ImportImpl();
+        
+            private  ImportImpl()
+            {
+            }
             public override Enumerant Value => LinkageType.Enumerant.Import;
-            public new static Import Parse(WordReader reader, uint wordCount)
+            public new static ImportImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ImportImpl object.</summary>
+            /// <returns>A string that represents the ImportImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" LinkageType.Import()";
+            }
         }
+        #endregion //Import
 
         public abstract Enumerant Value { get; }
 
@@ -40,9 +81,9 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Export :
-                    return Export.Parse(reader, wordCount - 1);
+                    return ExportImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Import :
-                    return Import.Parse(reader, wordCount - 1);
+                    return ImportImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown LinkageType "+id);
             }

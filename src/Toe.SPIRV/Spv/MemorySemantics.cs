@@ -43,9 +43,264 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static MemorySemantics CreateRelaxed()
+        {
+            return new MemorySemantics(Enumerant.Relaxed)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoRelaxed()
+        {
+            Value |= Enumerant.Relaxed;
+            return this;
+        }
+
+        public static MemorySemantics CreateNone()
+        {
+            return new MemorySemantics(Enumerant.None)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoNone()
+        {
+            Value |= Enumerant.None;
+            return this;
+        }
+
+        public static MemorySemantics CreateAcquire()
+        {
+            return new MemorySemantics(Enumerant.Acquire)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoAcquire()
+        {
+            Value |= Enumerant.Acquire;
+            return this;
+        }
+
+        public static MemorySemantics CreateRelease()
+        {
+            return new MemorySemantics(Enumerant.Release)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoRelease()
+        {
+            Value |= Enumerant.Release;
+            return this;
+        }
+
+        public static MemorySemantics CreateAcquireRelease()
+        {
+            return new MemorySemantics(Enumerant.AcquireRelease)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoAcquireRelease()
+        {
+            Value |= Enumerant.AcquireRelease;
+            return this;
+        }
+
+        public static MemorySemantics CreateSequentiallyConsistent()
+        {
+            return new MemorySemantics(Enumerant.SequentiallyConsistent)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoSequentiallyConsistent()
+        {
+            Value |= Enumerant.SequentiallyConsistent;
+            return this;
+        }
+
+        public static MemorySemantics CreateUniformMemory()
+        {
+            return new MemorySemantics(Enumerant.UniformMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoUniformMemory()
+        {
+            Value |= Enumerant.UniformMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateSubgroupMemory()
+        {
+            return new MemorySemantics(Enumerant.SubgroupMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoSubgroupMemory()
+        {
+            Value |= Enumerant.SubgroupMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateWorkgroupMemory()
+        {
+            return new MemorySemantics(Enumerant.WorkgroupMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoWorkgroupMemory()
+        {
+            Value |= Enumerant.WorkgroupMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateCrossWorkgroupMemory()
+        {
+            return new MemorySemantics(Enumerant.CrossWorkgroupMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoCrossWorkgroupMemory()
+        {
+            Value |= Enumerant.CrossWorkgroupMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateAtomicCounterMemory()
+        {
+            return new MemorySemantics(Enumerant.AtomicCounterMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoAtomicCounterMemory()
+        {
+            Value |= Enumerant.AtomicCounterMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateImageMemory()
+        {
+            return new MemorySemantics(Enumerant.ImageMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoImageMemory()
+        {
+            Value |= Enumerant.ImageMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateOutputMemory()
+        {
+            return new MemorySemantics(Enumerant.OutputMemory)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoOutputMemory()
+        {
+            Value |= Enumerant.OutputMemory;
+            return this;
+        }
+
+        public static MemorySemantics CreateOutputMemoryKHR()
+        {
+            return new MemorySemantics(Enumerant.OutputMemoryKHR)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoOutputMemoryKHR()
+        {
+            Value |= Enumerant.OutputMemoryKHR;
+            return this;
+        }
+
+        public static MemorySemantics CreateMakeAvailable()
+        {
+            return new MemorySemantics(Enumerant.MakeAvailable)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoMakeAvailable()
+        {
+            Value |= Enumerant.MakeAvailable;
+            return this;
+        }
+
+        public static MemorySemantics CreateMakeAvailableKHR()
+        {
+            return new MemorySemantics(Enumerant.MakeAvailableKHR)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoMakeAvailableKHR()
+        {
+            Value |= Enumerant.MakeAvailableKHR;
+            return this;
+        }
+
+        public static MemorySemantics CreateMakeVisible()
+        {
+            return new MemorySemantics(Enumerant.MakeVisible)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoMakeVisible()
+        {
+            Value |= Enumerant.MakeVisible;
+            return this;
+        }
+
+        public static MemorySemantics CreateMakeVisibleKHR()
+        {
+            return new MemorySemantics(Enumerant.MakeVisibleKHR)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoMakeVisibleKHR()
+        {
+            Value |= Enumerant.MakeVisibleKHR;
+            return this;
+        }
+
+        public static MemorySemantics CreateVolatile()
+        {
+            return new MemorySemantics(Enumerant.Volatile)
+            {
+            };
+        }
+
+        public MemorySemantics AlsoVolatile()
+        {
+            Value |= Enumerant.Volatile;
+            return this;
+        }
 
 
+        public static implicit operator MemorySemantics(MemorySemantics.Enumerant value)
+        {
+            switch (value)
+            {
+                default:
+                    return new MemorySemantics(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public static MemorySemantics Parse(WordReader reader, uint wordCount)
         {

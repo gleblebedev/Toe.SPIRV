@@ -15,33 +15,95 @@ namespace Toe.SPIRV.Spv
             ReadWrite = 2,
         }
 
-        public class ReadOnly: AccessQualifier
+        #region ReadOnly
+        public static ReadOnlyImpl ReadOnly()
         {
-            public static readonly ReadOnly Instance = new ReadOnly();
+            return ReadOnlyImpl.Instance;
+            
+        }
+
+        public class ReadOnlyImpl: AccessQualifier
+        {
+            public static readonly ReadOnlyImpl Instance = new ReadOnlyImpl();
+        
+            private  ReadOnlyImpl()
+            {
+            }
             public override Enumerant Value => AccessQualifier.Enumerant.ReadOnly;
-            public new static ReadOnly Parse(WordReader reader, uint wordCount)
+            public new static ReadOnlyImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ReadOnlyImpl object.</summary>
+            /// <returns>A string that represents the ReadOnlyImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AccessQualifier.ReadOnly()";
+            }
         }
-        public class WriteOnly: AccessQualifier
+        #endregion //ReadOnly
+
+        #region WriteOnly
+        public static WriteOnlyImpl WriteOnly()
         {
-            public static readonly WriteOnly Instance = new WriteOnly();
+            return WriteOnlyImpl.Instance;
+            
+        }
+
+        public class WriteOnlyImpl: AccessQualifier
+        {
+            public static readonly WriteOnlyImpl Instance = new WriteOnlyImpl();
+        
+            private  WriteOnlyImpl()
+            {
+            }
             public override Enumerant Value => AccessQualifier.Enumerant.WriteOnly;
-            public new static WriteOnly Parse(WordReader reader, uint wordCount)
+            public new static WriteOnlyImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WriteOnlyImpl object.</summary>
+            /// <returns>A string that represents the WriteOnlyImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AccessQualifier.WriteOnly()";
+            }
         }
-        public class ReadWrite: AccessQualifier
+        #endregion //WriteOnly
+
+        #region ReadWrite
+        public static ReadWriteImpl ReadWrite()
         {
-            public static readonly ReadWrite Instance = new ReadWrite();
+            return ReadWriteImpl.Instance;
+            
+        }
+
+        public class ReadWriteImpl: AccessQualifier
+        {
+            public static readonly ReadWriteImpl Instance = new ReadWriteImpl();
+        
+            private  ReadWriteImpl()
+            {
+            }
             public override Enumerant Value => AccessQualifier.Enumerant.ReadWrite;
-            public new static ReadWrite Parse(WordReader reader, uint wordCount)
+            public new static ReadWriteImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ReadWriteImpl object.</summary>
+            /// <returns>A string that represents the ReadWriteImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" AccessQualifier.ReadWrite()";
+            }
         }
+        #endregion //ReadWrite
 
         public abstract Enumerant Value { get; }
 
@@ -51,11 +113,11 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.ReadOnly :
-                    return ReadOnly.Parse(reader, wordCount - 1);
+                    return ReadOnlyImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WriteOnly :
-                    return WriteOnly.Parse(reader, wordCount - 1);
+                    return WriteOnlyImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ReadWrite :
-                    return ReadWrite.Parse(reader, wordCount - 1);
+                    return ReadWriteImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown AccessQualifier "+id);
             }

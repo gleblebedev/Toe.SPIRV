@@ -18,9 +18,56 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static SelectionControl CreateNone()
+        {
+            return new SelectionControl(Enumerant.None)
+            {
+            };
+        }
+
+        public SelectionControl AlsoNone()
+        {
+            Value |= Enumerant.None;
+            return this;
+        }
+
+        public static SelectionControl CreateFlatten()
+        {
+            return new SelectionControl(Enumerant.Flatten)
+            {
+            };
+        }
+
+        public SelectionControl AlsoFlatten()
+        {
+            Value |= Enumerant.Flatten;
+            return this;
+        }
+
+        public static SelectionControl CreateDontFlatten()
+        {
+            return new SelectionControl(Enumerant.DontFlatten)
+            {
+            };
+        }
+
+        public SelectionControl AlsoDontFlatten()
+        {
+            Value |= Enumerant.DontFlatten;
+            return this;
+        }
 
 
+        public static implicit operator SelectionControl(SelectionControl.Enumerant value)
+        {
+            switch (value)
+            {
+                default:
+                    return new SelectionControl(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public static SelectionControl Parse(WordReader reader, uint wordCount)
         {

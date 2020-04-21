@@ -13,24 +13,65 @@ namespace Toe.SPIRV.Spv
             RayQueryCommittedIntersectionKHR = 1,
         }
 
-        public class RayQueryCandidateIntersectionKHR: RayQueryIntersection
+        #region RayQueryCandidateIntersectionKHR
+        public static RayQueryCandidateIntersectionKHRImpl RayQueryCandidateIntersectionKHR()
         {
-            public static readonly RayQueryCandidateIntersectionKHR Instance = new RayQueryCandidateIntersectionKHR();
+            return RayQueryCandidateIntersectionKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCandidateIntersectionKHRImpl: RayQueryIntersection
+        {
+            public static readonly RayQueryCandidateIntersectionKHRImpl Instance = new RayQueryCandidateIntersectionKHRImpl();
+        
+            private  RayQueryCandidateIntersectionKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryIntersection.Enumerant.RayQueryCandidateIntersectionKHR;
-            public new static RayQueryCandidateIntersectionKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCandidateIntersectionKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCandidateIntersectionKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCandidateIntersectionKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryIntersection.RayQueryCandidateIntersectionKHR()";
+            }
         }
-        public class RayQueryCommittedIntersectionKHR: RayQueryIntersection
+        #endregion //RayQueryCandidateIntersectionKHR
+
+        #region RayQueryCommittedIntersectionKHR
+        public static RayQueryCommittedIntersectionKHRImpl RayQueryCommittedIntersectionKHR()
         {
-            public static readonly RayQueryCommittedIntersectionKHR Instance = new RayQueryCommittedIntersectionKHR();
+            return RayQueryCommittedIntersectionKHRImpl.Instance;
+            
+        }
+
+        public class RayQueryCommittedIntersectionKHRImpl: RayQueryIntersection
+        {
+            public static readonly RayQueryCommittedIntersectionKHRImpl Instance = new RayQueryCommittedIntersectionKHRImpl();
+        
+            private  RayQueryCommittedIntersectionKHRImpl()
+            {
+            }
             public override Enumerant Value => RayQueryIntersection.Enumerant.RayQueryCommittedIntersectionKHR;
-            public new static RayQueryCommittedIntersectionKHR Parse(WordReader reader, uint wordCount)
+            public new static RayQueryCommittedIntersectionKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayQueryCommittedIntersectionKHRImpl object.</summary>
+            /// <returns>A string that represents the RayQueryCommittedIntersectionKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" RayQueryIntersection.RayQueryCommittedIntersectionKHR()";
+            }
         }
+        #endregion //RayQueryCommittedIntersectionKHR
 
         public abstract Enumerant Value { get; }
 
@@ -40,9 +81,9 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.RayQueryCandidateIntersectionKHR :
-                    return RayQueryCandidateIntersectionKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCandidateIntersectionKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RayQueryCommittedIntersectionKHR :
-                    return RayQueryCommittedIntersectionKHR.Parse(reader, wordCount - 1);
+                    return RayQueryCommittedIntersectionKHRImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown RayQueryIntersection "+id);
             }

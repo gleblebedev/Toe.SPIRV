@@ -13,6 +13,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ReleaseEvent(Node @event, string debugName = null)
+        {
+            this.Event = @event;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpReleaseEvent;
 
         /// <summary>
@@ -25,7 +31,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node Event { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -59,16 +72,45 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ReleaseEvent WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpReleaseEvent)op, treeBuilder);
         }
 
-        public void SetUp(OpReleaseEvent op, SpirvInstructionTreeBuilder treeBuilder)
+        public ReleaseEvent SetUp(Action<ReleaseEvent> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpReleaseEvent op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Event = treeBuilder.GetNode(op.Event);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ReleaseEvent object.</summary>
+        /// <returns>A string that represents the ReleaseEvent object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ReleaseEvent({Event}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static ReleaseEvent ThenReleaseEvent(this INodeWithNext node, Node @event, string debugName = null)
+        {
+            return node.Then(new ReleaseEvent(@event, debugName));
         }
     }
 }

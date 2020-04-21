@@ -13,19 +13,27 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcImeSetWeightedSadINTEL(SpirvTypeBase resultType, Node packedSadWeights, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.PackedSadWeights = packedSadWeights;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcImeSetWeightedSadINTEL;
 
-
         public Node PackedSadWeights { get; set; }
-        public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Payload { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -53,18 +61,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcImeSetWeightedSadINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcImeSetWeightedSadINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcImeSetWeightedSadINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcImeSetWeightedSadINTEL SetUp(Action<SubgroupAvcImeSetWeightedSadINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcImeSetWeightedSadINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             PackedSadWeights = treeBuilder.GetNode(op.PackedSadWeights);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcImeSetWeightedSadINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcImeSetWeightedSadINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcImeSetWeightedSadINTEL({ResultType}, {PackedSadWeights}, {Payload}, {DebugName})";
         }
     }
 }

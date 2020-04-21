@@ -84,7 +84,7 @@ namespace Toe.SPIRV.Reflection.Types
             var length = instruction.Length.Instruction as OpConstant;
             var lengthType = treeBuilder.ResolveType(length.IdResultType);
 
-            _arrayStride = decorations.FindDecoration<Decoration.ArrayStride>()?.ArrayStrideValue;
+            _arrayStride = decorations.FindDecoration<Decoration.ArrayStrideImpl>()?.ArrayStride;
             ElementType = treeBuilder.ResolveType(instruction.ElementType);
             if (lengthType == SpirvTypeBase.UInt)
             {
@@ -106,7 +106,7 @@ namespace Toe.SPIRV.Reflection.Types
         private IEnumerable<Node> BuildArrayStride()
         {
             if (_arrayStride != null)
-                yield return new Decorate(){Decoration = new Decoration.ArrayStride(){ArrayStrideValue = _arrayStride.Value}, Target = this};
+                yield return new Decorate(){Decoration = Decoration.ArrayStride(_arrayStride.Value), Target = this};
         }
     }
 }

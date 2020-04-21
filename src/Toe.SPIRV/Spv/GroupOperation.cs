@@ -29,69 +29,215 @@ namespace Toe.SPIRV.Spv
             PartitionedExclusiveScanNV = 8,
         }
 
-        public class Reduce: GroupOperation
+        #region Reduce
+        public static ReduceImpl Reduce()
         {
-            public static readonly Reduce Instance = new Reduce();
+            return ReduceImpl.Instance;
+            
+        }
+
+        public class ReduceImpl: GroupOperation
+        {
+            public static readonly ReduceImpl Instance = new ReduceImpl();
+        
+            private  ReduceImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.Reduce;
-            public new static Reduce Parse(WordReader reader, uint wordCount)
+            public new static ReduceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ReduceImpl object.</summary>
+            /// <returns>A string that represents the ReduceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.Reduce()";
+            }
         }
-        public class InclusiveScan: GroupOperation
+        #endregion //Reduce
+
+        #region InclusiveScan
+        public static InclusiveScanImpl InclusiveScan()
         {
-            public static readonly InclusiveScan Instance = new InclusiveScan();
+            return InclusiveScanImpl.Instance;
+            
+        }
+
+        public class InclusiveScanImpl: GroupOperation
+        {
+            public static readonly InclusiveScanImpl Instance = new InclusiveScanImpl();
+        
+            private  InclusiveScanImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.InclusiveScan;
-            public new static InclusiveScan Parse(WordReader reader, uint wordCount)
+            public new static InclusiveScanImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InclusiveScanImpl object.</summary>
+            /// <returns>A string that represents the InclusiveScanImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.InclusiveScan()";
+            }
         }
-        public class ExclusiveScan: GroupOperation
+        #endregion //InclusiveScan
+
+        #region ExclusiveScan
+        public static ExclusiveScanImpl ExclusiveScan()
         {
-            public static readonly ExclusiveScan Instance = new ExclusiveScan();
+            return ExclusiveScanImpl.Instance;
+            
+        }
+
+        public class ExclusiveScanImpl: GroupOperation
+        {
+            public static readonly ExclusiveScanImpl Instance = new ExclusiveScanImpl();
+        
+            private  ExclusiveScanImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.ExclusiveScan;
-            public new static ExclusiveScan Parse(WordReader reader, uint wordCount)
+            public new static ExclusiveScanImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ExclusiveScanImpl object.</summary>
+            /// <returns>A string that represents the ExclusiveScanImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.ExclusiveScan()";
+            }
         }
-        public class ClusteredReduce: GroupOperation
+        #endregion //ExclusiveScan
+
+        #region ClusteredReduce
+        public static ClusteredReduceImpl ClusteredReduce()
         {
-            public static readonly ClusteredReduce Instance = new ClusteredReduce();
+            return ClusteredReduceImpl.Instance;
+            
+        }
+
+        public class ClusteredReduceImpl: GroupOperation
+        {
+            public static readonly ClusteredReduceImpl Instance = new ClusteredReduceImpl();
+        
+            private  ClusteredReduceImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.ClusteredReduce;
-            public new static ClusteredReduce Parse(WordReader reader, uint wordCount)
+            public new static ClusteredReduceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClusteredReduceImpl object.</summary>
+            /// <returns>A string that represents the ClusteredReduceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.ClusteredReduce()";
+            }
         }
-        public class PartitionedReduceNV: GroupOperation
+        #endregion //ClusteredReduce
+
+        #region PartitionedReduceNV
+        public static PartitionedReduceNVImpl PartitionedReduceNV()
         {
-            public static readonly PartitionedReduceNV Instance = new PartitionedReduceNV();
+            return PartitionedReduceNVImpl.Instance;
+            
+        }
+
+        public class PartitionedReduceNVImpl: GroupOperation
+        {
+            public static readonly PartitionedReduceNVImpl Instance = new PartitionedReduceNVImpl();
+        
+            private  PartitionedReduceNVImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.PartitionedReduceNV;
-            public new static PartitionedReduceNV Parse(WordReader reader, uint wordCount)
+            public new static PartitionedReduceNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PartitionedReduceNVImpl object.</summary>
+            /// <returns>A string that represents the PartitionedReduceNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.PartitionedReduceNV()";
+            }
         }
-        public class PartitionedInclusiveScanNV: GroupOperation
+        #endregion //PartitionedReduceNV
+
+        #region PartitionedInclusiveScanNV
+        public static PartitionedInclusiveScanNVImpl PartitionedInclusiveScanNV()
         {
-            public static readonly PartitionedInclusiveScanNV Instance = new PartitionedInclusiveScanNV();
+            return PartitionedInclusiveScanNVImpl.Instance;
+            
+        }
+
+        public class PartitionedInclusiveScanNVImpl: GroupOperation
+        {
+            public static readonly PartitionedInclusiveScanNVImpl Instance = new PartitionedInclusiveScanNVImpl();
+        
+            private  PartitionedInclusiveScanNVImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.PartitionedInclusiveScanNV;
-            public new static PartitionedInclusiveScanNV Parse(WordReader reader, uint wordCount)
+            public new static PartitionedInclusiveScanNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PartitionedInclusiveScanNVImpl object.</summary>
+            /// <returns>A string that represents the PartitionedInclusiveScanNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.PartitionedInclusiveScanNV()";
+            }
         }
-        public class PartitionedExclusiveScanNV: GroupOperation
+        #endregion //PartitionedInclusiveScanNV
+
+        #region PartitionedExclusiveScanNV
+        public static PartitionedExclusiveScanNVImpl PartitionedExclusiveScanNV()
         {
-            public static readonly PartitionedExclusiveScanNV Instance = new PartitionedExclusiveScanNV();
+            return PartitionedExclusiveScanNVImpl.Instance;
+            
+        }
+
+        public class PartitionedExclusiveScanNVImpl: GroupOperation
+        {
+            public static readonly PartitionedExclusiveScanNVImpl Instance = new PartitionedExclusiveScanNVImpl();
+        
+            private  PartitionedExclusiveScanNVImpl()
+            {
+            }
             public override Enumerant Value => GroupOperation.Enumerant.PartitionedExclusiveScanNV;
-            public new static PartitionedExclusiveScanNV Parse(WordReader reader, uint wordCount)
+            public new static PartitionedExclusiveScanNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PartitionedExclusiveScanNVImpl object.</summary>
+            /// <returns>A string that represents the PartitionedExclusiveScanNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" GroupOperation.PartitionedExclusiveScanNV()";
+            }
         }
+        #endregion //PartitionedExclusiveScanNV
 
         public abstract Enumerant Value { get; }
 
@@ -101,19 +247,19 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Reduce :
-                    return Reduce.Parse(reader, wordCount - 1);
+                    return ReduceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InclusiveScan :
-                    return InclusiveScan.Parse(reader, wordCount - 1);
+                    return InclusiveScanImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ExclusiveScan :
-                    return ExclusiveScan.Parse(reader, wordCount - 1);
+                    return ExclusiveScanImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ClusteredReduce :
-                    return ClusteredReduce.Parse(reader, wordCount - 1);
+                    return ClusteredReduceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PartitionedReduceNV :
-                    return PartitionedReduceNV.Parse(reader, wordCount - 1);
+                    return PartitionedReduceNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PartitionedInclusiveScanNV :
-                    return PartitionedInclusiveScanNV.Parse(reader, wordCount - 1);
+                    return PartitionedInclusiveScanNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PartitionedExclusiveScanNV :
-                    return PartitionedExclusiveScanNV.Parse(reader, wordCount - 1);
+                    return PartitionedExclusiveScanNVImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown GroupOperation "+id);
             }

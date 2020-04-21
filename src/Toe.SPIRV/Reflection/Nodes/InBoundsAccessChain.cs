@@ -13,19 +13,27 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public InBoundsAccessChain(SpirvTypeBase resultType, Node @base, IEnumerable<Node> indexes, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Base = @base;
+            if (indexes != null) { foreach (var node in indexes) this.Indexes.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpInBoundsAccessChain;
 
-
         public Node Base { get; set; }
-        public IList<Node> Indexes { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public IList<Node> Indexes { get; private set; } = new PrintableList<Node>();
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -56,18 +64,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public InBoundsAccessChain WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpInBoundsAccessChain)op, treeBuilder);
         }
 
-        public void SetUp(OpInBoundsAccessChain op, SpirvInstructionTreeBuilder treeBuilder)
+        public InBoundsAccessChain SetUp(Action<InBoundsAccessChain> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpInBoundsAccessChain op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Base = treeBuilder.GetNode(op.Base);
             Indexes = treeBuilder.GetNodes(op.Indexes);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the InBoundsAccessChain object.</summary>
+        /// <returns>A string that represents the InBoundsAccessChain object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"InBoundsAccessChain({ResultType}, {Base}, {Indexes}, {DebugName})";
         }
     }
 }

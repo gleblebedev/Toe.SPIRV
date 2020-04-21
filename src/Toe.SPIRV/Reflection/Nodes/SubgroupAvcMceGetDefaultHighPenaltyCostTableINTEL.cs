@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL SetUp(Action<SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL({ResultType}, {DebugName})";
         }
     }
 }

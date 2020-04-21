@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ConvertUToPtr(SpirvTypeBase resultType, Node integerValue, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.IntegerValue = integerValue;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpConvertUToPtr;
 
-
         public Node IntegerValue { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ConvertUToPtr WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpConvertUToPtr)op, treeBuilder);
         }
 
-        public void SetUp(OpConvertUToPtr op, SpirvInstructionTreeBuilder treeBuilder)
+        public ConvertUToPtr SetUp(Action<ConvertUToPtr> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpConvertUToPtr op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             IntegerValue = treeBuilder.GetNode(op.IntegerValue);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ConvertUToPtr object.</summary>
+        /// <returns>A string that represents the ConvertUToPtr object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ConvertUToPtr({ResultType}, {IntegerValue}, {DebugName})";
         }
     }
 }

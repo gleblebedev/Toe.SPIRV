@@ -13,6 +13,34 @@ namespace Toe.SPIRV.Reflection
 {
     public class ShaderReflection
     {
+        private class InterfaceCollector: NodeVisitor
+        {
+            public IList<Variable> Inputs { get; } = new PrintableList<Variable>();
+            public IList<Variable> Outputs { get; } = new PrintableList<Variable>();
+            public IList<Variable> Uniforms { get; } = new PrintableList<Variable>();
+
+            protected override void VisitVariable(Variable node)
+            {
+                switch (node.StorageClass.Value)
+                {
+                    case StorageClass.Enumerant.Input:
+                        Inputs.Add(node);
+                        break;
+                    case StorageClass.Enumerant.Output:
+                        Outputs.Add(node);
+                        break;
+                    case StorageClass.Enumerant.Uniform:
+                        Uniforms.Add(node);
+                        break;
+                }
+
+                base.VisitVariable(node);
+            }
+        }
+        public ShaderReflection()
+        {
+        }
+
         public ShaderReflection(Shader shader)
         {
             var context = new SpirvInstructionTreeBuilder();
@@ -62,7 +90,38 @@ namespace Toe.SPIRV.Reflection
         /// </summary>
         public List<ExecutionMode> ExecutionModeInstructions = new List<ExecutionMode>();
 
-        public Shader Build()
+        public ShaderReflection WithCapability(Spv.Capability capability) { return this.With(new Capability(capability)); }
+
+        public ShaderReflection WithExtension(string name) { return this.With(new Extension(name)); }
+
+        public ShaderReflection WithExtInstImport(string name) { return this.With(new ExtInstImport(name)); }
+
+        public ShaderReflection WithMemoryModel(Spv.AddressingModel addressingModel, Spv.MemoryModel memoryModel) { return this.With(new MemoryModel(addressingModel, memoryModel)); }
+
+        public ShaderReflection WithEntryPoint(Spv.ExecutionModel executionModel, Function value, string name, IEnumerable<Node> @interface) { return this.With(new EntryPoint(executionModel, value, name, @interface)); }
+
+        public ShaderReflection WithEntryPoint(Spv.ExecutionModel executionModel, Function value, string name = null)
+        {
+            var interfaceCollector = new InterfaceCollector();
+            interfaceCollector.Visit(value);
+            return this.With(new EntryPoint(executionModel, value, name ?? value.DebugName ?? "main", interfaceCollector.Inputs.Concat(interfaceCollector.Outputs).Concat(interfaceCollector.Uniforms)));
+        }
+
+        public ShaderReflection WithExecutionMode(Node EntryPoint, Spv.ExecutionMode Mode) { return this.With(new ExecutionMode(EntryPoint, Mode)); }
+
+        public ShaderReflection With(Capability node) { CapabilityInstructions.Add(node); return this; }
+
+        public ShaderReflection With(Extension node) { ExtensionInstructions.Add(node); return this; }
+
+        public ShaderReflection With(ExtInstImport node) { ExtInstImportInstructions.Add(node); return this; }
+
+        public ShaderReflection With(MemoryModel node) { MemoryModel = node; return this; }
+
+        public ShaderReflection With(EntryPoint node) { EntryPointInstructions.Add(node); return this; }
+
+        public ShaderReflection With(ExecutionMode node) { ExecutionModeInstructions.Add(node); return this; }
+
+        public Shader BuildShader()
         {
             var context = new SpirvInstructionsBuilder();
             return context.Build(this);

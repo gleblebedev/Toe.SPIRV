@@ -13,6 +13,19 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public RayQueryInitializeKHR(Node rayQuery, Node accel, Node rayFlags, Node cullMask, Node rayOrigin, Node rayTMin, Node rayDirection, Node rayTMax, string debugName = null)
+        {
+            this.RayQuery = rayQuery;
+            this.Accel = accel;
+            this.RayFlags = rayFlags;
+            this.CullMask = cullMask;
+            this.RayOrigin = rayOrigin;
+            this.RayTMin = rayTMin;
+            this.RayDirection = rayDirection;
+            this.RayTMax = rayTMax;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpRayQueryInitializeKHR;
 
         /// <summary>
@@ -25,14 +38,28 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node RayQuery { get; set; }
+
         public Node Accel { get; set; }
+
         public Node RayFlags { get; set; }
+
         public Node CullMask { get; set; }
+
         public Node RayOrigin { get; set; }
+
         public Node RayTMin { get; set; }
+
         public Node RayDirection { get; set; }
+
         public Node RayTMax { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -73,13 +100,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public RayQueryInitializeKHR WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpRayQueryInitializeKHR)op, treeBuilder);
         }
 
-        public void SetUp(OpRayQueryInitializeKHR op, SpirvInstructionTreeBuilder treeBuilder)
+        public RayQueryInitializeKHR SetUp(Action<RayQueryInitializeKHR> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpRayQueryInitializeKHR op, SpirvInstructionTreeBuilder treeBuilder)
         {
             RayQuery = treeBuilder.GetNode(op.RayQuery);
             Accel = treeBuilder.GetNode(op.Accel);
@@ -90,6 +130,22 @@ namespace Toe.SPIRV.Reflection.Nodes
             RayDirection = treeBuilder.GetNode(op.RayDirection);
             RayTMax = treeBuilder.GetNode(op.RayTMax);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the RayQueryInitializeKHR object.</summary>
+        /// <returns>A string that represents the RayQueryInitializeKHR object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"RayQueryInitializeKHR({RayQuery}, {Accel}, {RayFlags}, {CullMask}, {RayOrigin}, {RayTMin}, {RayDirection}, {RayTMax}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static RayQueryInitializeKHR ThenRayQueryInitializeKHR(this INodeWithNext node, Node rayQuery, Node accel, Node rayFlags, Node cullMask, Node rayOrigin, Node rayTMin, Node rayDirection, Node rayTMax, string debugName = null)
+        {
+            return node.Then(new RayQueryInitializeKHR(rayQuery, accel, rayFlags, cullMask, rayOrigin, rayTMin, rayDirection, rayTMax, debugName));
         }
     }
 }

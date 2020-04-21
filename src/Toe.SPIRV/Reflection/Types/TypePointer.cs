@@ -9,6 +9,11 @@ namespace Toe.SPIRV.Reflection.Types
         {
             
         }
+        public TypePointer(StorageClass storageClass, SpirvTypeBase type)
+        {
+            StorageClass = storageClass;
+            Type = type;
+        }
 
         public override string ToString()
         {

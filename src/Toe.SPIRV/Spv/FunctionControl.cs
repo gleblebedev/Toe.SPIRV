@@ -20,9 +20,82 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static FunctionControl CreateNone()
+        {
+            return new FunctionControl(Enumerant.None)
+            {
+            };
+        }
+
+        public FunctionControl AlsoNone()
+        {
+            Value |= Enumerant.None;
+            return this;
+        }
+
+        public static FunctionControl CreateInline()
+        {
+            return new FunctionControl(Enumerant.Inline)
+            {
+            };
+        }
+
+        public FunctionControl AlsoInline()
+        {
+            Value |= Enumerant.Inline;
+            return this;
+        }
+
+        public static FunctionControl CreateDontInline()
+        {
+            return new FunctionControl(Enumerant.DontInline)
+            {
+            };
+        }
+
+        public FunctionControl AlsoDontInline()
+        {
+            Value |= Enumerant.DontInline;
+            return this;
+        }
+
+        public static FunctionControl CreatePure()
+        {
+            return new FunctionControl(Enumerant.Pure)
+            {
+            };
+        }
+
+        public FunctionControl AlsoPure()
+        {
+            Value |= Enumerant.Pure;
+            return this;
+        }
+
+        public static FunctionControl CreateConst()
+        {
+            return new FunctionControl(Enumerant.Const)
+            {
+            };
+        }
+
+        public FunctionControl AlsoConst()
+        {
+            Value |= Enumerant.Const;
+            return this;
+        }
 
 
+        public static implicit operator FunctionControl(FunctionControl.Enumerant value)
+        {
+            switch (value)
+            {
+                default:
+                    return new FunctionControl(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public static FunctionControl Parse(WordReader reader, uint wordCount)
         {

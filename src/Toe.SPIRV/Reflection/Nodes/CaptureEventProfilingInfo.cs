@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public CaptureEventProfilingInfo(Node @event, Node profilingInfo, Node value, string debugName = null)
+        {
+            this.Event = @event;
+            this.ProfilingInfo = profilingInfo;
+            this.Value = value;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpCaptureEventProfilingInfo;
 
         /// <summary>
@@ -25,9 +33,18 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node Event { get; set; }
+
         public Node ProfilingInfo { get; set; }
+
         public Node Value { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -63,18 +80,47 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public CaptureEventProfilingInfo WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpCaptureEventProfilingInfo)op, treeBuilder);
         }
 
-        public void SetUp(OpCaptureEventProfilingInfo op, SpirvInstructionTreeBuilder treeBuilder)
+        public CaptureEventProfilingInfo SetUp(Action<CaptureEventProfilingInfo> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpCaptureEventProfilingInfo op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Event = treeBuilder.GetNode(op.Event);
             ProfilingInfo = treeBuilder.GetNode(op.ProfilingInfo);
             Value = treeBuilder.GetNode(op.Value);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the CaptureEventProfilingInfo object.</summary>
+        /// <returns>A string that represents the CaptureEventProfilingInfo object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"CaptureEventProfilingInfo({Event}, {ProfilingInfo}, {Value}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static CaptureEventProfilingInfo ThenCaptureEventProfilingInfo(this INodeWithNext node, Node @event, Node profilingInfo, Node value, string debugName = null)
+        {
+            return node.Then(new CaptureEventProfilingInfo(@event, profilingInfo, value, debugName));
         }
     }
 }

@@ -13,21 +13,33 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public BitFieldInsert(SpirvTypeBase resultType, Node @base, Node insert, Node offset, Node count, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Base = @base;
+            this.Insert = insert;
+            this.Offset = offset;
+            this.Count = count;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpBitFieldInsert;
 
-
         public Node Base { get; set; }
-        public Node Insert { get; set; }
-        public Node Offset { get; set; }
-        public Node Count { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Insert { get; set; }
+
+        public Node Offset { get; set; }
+
+        public Node Count { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -57,13 +69,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public BitFieldInsert WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpBitFieldInsert)op, treeBuilder);
         }
 
-        public void SetUp(OpBitFieldInsert op, SpirvInstructionTreeBuilder treeBuilder)
+        public BitFieldInsert SetUp(Action<BitFieldInsert> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpBitFieldInsert op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Base = treeBuilder.GetNode(op.Base);
@@ -71,6 +96,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             Offset = treeBuilder.GetNode(op.Offset);
             Count = treeBuilder.GetNode(op.Count);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the BitFieldInsert object.</summary>
+        /// <returns>A string that represents the BitFieldInsert object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"BitFieldInsert({ResultType}, {Base}, {Insert}, {Offset}, {Count}, {DebugName})";
         }
     }
 }

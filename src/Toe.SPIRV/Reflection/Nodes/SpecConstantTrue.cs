@@ -13,12 +13,15 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SpecConstantTrue(SpirvTypeBase resultType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSpecConstantTrue;
 
-
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -42,16 +45,37 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SpecConstantTrue WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSpecConstantTrue)op, treeBuilder);
         }
 
-        public void SetUp(OpSpecConstantTrue op, SpirvInstructionTreeBuilder treeBuilder)
+        public SpecConstantTrue SetUp(Action<SpecConstantTrue> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSpecConstantTrue op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SpecConstantTrue object.</summary>
+        /// <returns>A string that represents the SpecConstantTrue object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SpecConstantTrue({ResultType}, {DebugName})";
         }
     }
 }

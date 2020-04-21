@@ -290,1059 +290,3515 @@ namespace Toe.SPIRV.Spv
             SMIDNV = 5377,
         }
 
-        public class Position: BuiltIn
+        #region Position
+        public static PositionImpl Position()
         {
-            public static readonly Position Instance = new Position();
+            return PositionImpl.Instance;
+            
+        }
+
+        public class PositionImpl: BuiltIn
+        {
+            public static readonly PositionImpl Instance = new PositionImpl();
+        
+            private  PositionImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.Position;
-            public new static Position Parse(WordReader reader, uint wordCount)
+            public new static PositionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PositionImpl object.</summary>
+            /// <returns>A string that represents the PositionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.Position()";
+            }
         }
-        public class PointSize: BuiltIn
+        #endregion //Position
+
+        #region PointSize
+        public static PointSizeImpl PointSize()
         {
-            public static readonly PointSize Instance = new PointSize();
+            return PointSizeImpl.Instance;
+            
+        }
+
+        public class PointSizeImpl: BuiltIn
+        {
+            public static readonly PointSizeImpl Instance = new PointSizeImpl();
+        
+            private  PointSizeImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PointSize;
-            public new static PointSize Parse(WordReader reader, uint wordCount)
+            public new static PointSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PointSizeImpl object.</summary>
+            /// <returns>A string that represents the PointSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PointSize()";
+            }
         }
-        public class ClipDistance: BuiltIn
+        #endregion //PointSize
+
+        #region ClipDistance
+        public static ClipDistanceImpl ClipDistance()
         {
-            public static readonly ClipDistance Instance = new ClipDistance();
+            return ClipDistanceImpl.Instance;
+            
+        }
+
+        public class ClipDistanceImpl: BuiltIn
+        {
+            public static readonly ClipDistanceImpl Instance = new ClipDistanceImpl();
+        
+            private  ClipDistanceImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ClipDistance;
-            public new static ClipDistance Parse(WordReader reader, uint wordCount)
+            public new static ClipDistanceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClipDistanceImpl object.</summary>
+            /// <returns>A string that represents the ClipDistanceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ClipDistance()";
+            }
         }
-        public class CullDistance: BuiltIn
+        #endregion //ClipDistance
+
+        #region CullDistance
+        public static CullDistanceImpl CullDistance()
         {
-            public static readonly CullDistance Instance = new CullDistance();
+            return CullDistanceImpl.Instance;
+            
+        }
+
+        public class CullDistanceImpl: BuiltIn
+        {
+            public static readonly CullDistanceImpl Instance = new CullDistanceImpl();
+        
+            private  CullDistanceImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.CullDistance;
-            public new static CullDistance Parse(WordReader reader, uint wordCount)
+            public new static CullDistanceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CullDistanceImpl object.</summary>
+            /// <returns>A string that represents the CullDistanceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.CullDistance()";
+            }
         }
-        public class VertexId: BuiltIn
+        #endregion //CullDistance
+
+        #region VertexId
+        public static VertexIdImpl VertexId()
         {
-            public static readonly VertexId Instance = new VertexId();
+            return VertexIdImpl.Instance;
+            
+        }
+
+        public class VertexIdImpl: BuiltIn
+        {
+            public static readonly VertexIdImpl Instance = new VertexIdImpl();
+        
+            private  VertexIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.VertexId;
-            public new static VertexId Parse(WordReader reader, uint wordCount)
+            public new static VertexIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VertexIdImpl object.</summary>
+            /// <returns>A string that represents the VertexIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.VertexId()";
+            }
         }
-        public class InstanceId: BuiltIn
+        #endregion //VertexId
+
+        #region InstanceId
+        public static InstanceIdImpl InstanceId()
         {
-            public static readonly InstanceId Instance = new InstanceId();
+            return InstanceIdImpl.Instance;
+            
+        }
+
+        public class InstanceIdImpl: BuiltIn
+        {
+            public static readonly InstanceIdImpl Instance = new InstanceIdImpl();
+        
+            private  InstanceIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.InstanceId;
-            public new static InstanceId Parse(WordReader reader, uint wordCount)
+            public new static InstanceIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InstanceIdImpl object.</summary>
+            /// <returns>A string that represents the InstanceIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.InstanceId()";
+            }
         }
-        public class PrimitiveId: BuiltIn
+        #endregion //InstanceId
+
+        #region PrimitiveId
+        public static PrimitiveIdImpl PrimitiveId()
         {
-            public static readonly PrimitiveId Instance = new PrimitiveId();
+            return PrimitiveIdImpl.Instance;
+            
+        }
+
+        public class PrimitiveIdImpl: BuiltIn
+        {
+            public static readonly PrimitiveIdImpl Instance = new PrimitiveIdImpl();
+        
+            private  PrimitiveIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PrimitiveId;
-            public new static PrimitiveId Parse(WordReader reader, uint wordCount)
+            public new static PrimitiveIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PrimitiveIdImpl object.</summary>
+            /// <returns>A string that represents the PrimitiveIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PrimitiveId()";
+            }
         }
-        public class InvocationId: BuiltIn
+        #endregion //PrimitiveId
+
+        #region InvocationId
+        public static InvocationIdImpl InvocationId()
         {
-            public static readonly InvocationId Instance = new InvocationId();
+            return InvocationIdImpl.Instance;
+            
+        }
+
+        public class InvocationIdImpl: BuiltIn
+        {
+            public static readonly InvocationIdImpl Instance = new InvocationIdImpl();
+        
+            private  InvocationIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.InvocationId;
-            public new static InvocationId Parse(WordReader reader, uint wordCount)
+            public new static InvocationIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InvocationIdImpl object.</summary>
+            /// <returns>A string that represents the InvocationIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.InvocationId()";
+            }
         }
-        public class Layer: BuiltIn
+        #endregion //InvocationId
+
+        #region Layer
+        public static LayerImpl Layer()
         {
-            public static readonly Layer Instance = new Layer();
+            return LayerImpl.Instance;
+            
+        }
+
+        public class LayerImpl: BuiltIn
+        {
+            public static readonly LayerImpl Instance = new LayerImpl();
+        
+            private  LayerImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.Layer;
-            public new static Layer Parse(WordReader reader, uint wordCount)
+            public new static LayerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LayerImpl object.</summary>
+            /// <returns>A string that represents the LayerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.Layer()";
+            }
         }
-        public class ViewportIndex: BuiltIn
+        #endregion //Layer
+
+        #region ViewportIndex
+        public static ViewportIndexImpl ViewportIndex()
         {
-            public static readonly ViewportIndex Instance = new ViewportIndex();
+            return ViewportIndexImpl.Instance;
+            
+        }
+
+        public class ViewportIndexImpl: BuiltIn
+        {
+            public static readonly ViewportIndexImpl Instance = new ViewportIndexImpl();
+        
+            private  ViewportIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ViewportIndex;
-            public new static ViewportIndex Parse(WordReader reader, uint wordCount)
+            public new static ViewportIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ViewportIndexImpl object.</summary>
+            /// <returns>A string that represents the ViewportIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ViewportIndex()";
+            }
         }
-        public class TessLevelOuter: BuiltIn
+        #endregion //ViewportIndex
+
+        #region TessLevelOuter
+        public static TessLevelOuterImpl TessLevelOuter()
         {
-            public static readonly TessLevelOuter Instance = new TessLevelOuter();
+            return TessLevelOuterImpl.Instance;
+            
+        }
+
+        public class TessLevelOuterImpl: BuiltIn
+        {
+            public static readonly TessLevelOuterImpl Instance = new TessLevelOuterImpl();
+        
+            private  TessLevelOuterImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.TessLevelOuter;
-            public new static TessLevelOuter Parse(WordReader reader, uint wordCount)
+            public new static TessLevelOuterImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessLevelOuterImpl object.</summary>
+            /// <returns>A string that represents the TessLevelOuterImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.TessLevelOuter()";
+            }
         }
-        public class TessLevelInner: BuiltIn
+        #endregion //TessLevelOuter
+
+        #region TessLevelInner
+        public static TessLevelInnerImpl TessLevelInner()
         {
-            public static readonly TessLevelInner Instance = new TessLevelInner();
+            return TessLevelInnerImpl.Instance;
+            
+        }
+
+        public class TessLevelInnerImpl: BuiltIn
+        {
+            public static readonly TessLevelInnerImpl Instance = new TessLevelInnerImpl();
+        
+            private  TessLevelInnerImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.TessLevelInner;
-            public new static TessLevelInner Parse(WordReader reader, uint wordCount)
+            public new static TessLevelInnerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessLevelInnerImpl object.</summary>
+            /// <returns>A string that represents the TessLevelInnerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.TessLevelInner()";
+            }
         }
-        public class TessCoord: BuiltIn
+        #endregion //TessLevelInner
+
+        #region TessCoord
+        public static TessCoordImpl TessCoord()
         {
-            public static readonly TessCoord Instance = new TessCoord();
+            return TessCoordImpl.Instance;
+            
+        }
+
+        public class TessCoordImpl: BuiltIn
+        {
+            public static readonly TessCoordImpl Instance = new TessCoordImpl();
+        
+            private  TessCoordImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.TessCoord;
-            public new static TessCoord Parse(WordReader reader, uint wordCount)
+            public new static TessCoordImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TessCoordImpl object.</summary>
+            /// <returns>A string that represents the TessCoordImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.TessCoord()";
+            }
         }
-        public class PatchVertices: BuiltIn
+        #endregion //TessCoord
+
+        #region PatchVertices
+        public static PatchVerticesImpl PatchVertices()
         {
-            public static readonly PatchVertices Instance = new PatchVertices();
+            return PatchVerticesImpl.Instance;
+            
+        }
+
+        public class PatchVerticesImpl: BuiltIn
+        {
+            public static readonly PatchVerticesImpl Instance = new PatchVerticesImpl();
+        
+            private  PatchVerticesImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PatchVertices;
-            public new static PatchVertices Parse(WordReader reader, uint wordCount)
+            public new static PatchVerticesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PatchVerticesImpl object.</summary>
+            /// <returns>A string that represents the PatchVerticesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PatchVertices()";
+            }
         }
-        public class FragCoord: BuiltIn
+        #endregion //PatchVertices
+
+        #region FragCoord
+        public static FragCoordImpl FragCoord()
         {
-            public static readonly FragCoord Instance = new FragCoord();
+            return FragCoordImpl.Instance;
+            
+        }
+
+        public class FragCoordImpl: BuiltIn
+        {
+            public static readonly FragCoordImpl Instance = new FragCoordImpl();
+        
+            private  FragCoordImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FragCoord;
-            public new static FragCoord Parse(WordReader reader, uint wordCount)
+            public new static FragCoordImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragCoordImpl object.</summary>
+            /// <returns>A string that represents the FragCoordImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FragCoord()";
+            }
         }
-        public class PointCoord: BuiltIn
+        #endregion //FragCoord
+
+        #region PointCoord
+        public static PointCoordImpl PointCoord()
         {
-            public static readonly PointCoord Instance = new PointCoord();
+            return PointCoordImpl.Instance;
+            
+        }
+
+        public class PointCoordImpl: BuiltIn
+        {
+            public static readonly PointCoordImpl Instance = new PointCoordImpl();
+        
+            private  PointCoordImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PointCoord;
-            public new static PointCoord Parse(WordReader reader, uint wordCount)
+            public new static PointCoordImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PointCoordImpl object.</summary>
+            /// <returns>A string that represents the PointCoordImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PointCoord()";
+            }
         }
-        public class FrontFacing: BuiltIn
+        #endregion //PointCoord
+
+        #region FrontFacing
+        public static FrontFacingImpl FrontFacing()
         {
-            public static readonly FrontFacing Instance = new FrontFacing();
+            return FrontFacingImpl.Instance;
+            
+        }
+
+        public class FrontFacingImpl: BuiltIn
+        {
+            public static readonly FrontFacingImpl Instance = new FrontFacingImpl();
+        
+            private  FrontFacingImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FrontFacing;
-            public new static FrontFacing Parse(WordReader reader, uint wordCount)
+            public new static FrontFacingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FrontFacingImpl object.</summary>
+            /// <returns>A string that represents the FrontFacingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FrontFacing()";
+            }
         }
-        public class SampleId: BuiltIn
+        #endregion //FrontFacing
+
+        #region SampleId
+        public static SampleIdImpl SampleId()
         {
-            public static readonly SampleId Instance = new SampleId();
+            return SampleIdImpl.Instance;
+            
+        }
+
+        public class SampleIdImpl: BuiltIn
+        {
+            public static readonly SampleIdImpl Instance = new SampleIdImpl();
+        
+            private  SampleIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SampleId;
-            public new static SampleId Parse(WordReader reader, uint wordCount)
+            public new static SampleIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleIdImpl object.</summary>
+            /// <returns>A string that represents the SampleIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SampleId()";
+            }
         }
-        public class SamplePosition: BuiltIn
+        #endregion //SampleId
+
+        #region SamplePosition
+        public static SamplePositionImpl SamplePosition()
         {
-            public static readonly SamplePosition Instance = new SamplePosition();
+            return SamplePositionImpl.Instance;
+            
+        }
+
+        public class SamplePositionImpl: BuiltIn
+        {
+            public static readonly SamplePositionImpl Instance = new SamplePositionImpl();
+        
+            private  SamplePositionImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SamplePosition;
-            public new static SamplePosition Parse(WordReader reader, uint wordCount)
+            public new static SamplePositionImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SamplePositionImpl object.</summary>
+            /// <returns>A string that represents the SamplePositionImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SamplePosition()";
+            }
         }
-        public class SampleMask: BuiltIn
+        #endregion //SamplePosition
+
+        #region SampleMask
+        public static SampleMaskImpl SampleMask()
         {
-            public static readonly SampleMask Instance = new SampleMask();
+            return SampleMaskImpl.Instance;
+            
+        }
+
+        public class SampleMaskImpl: BuiltIn
+        {
+            public static readonly SampleMaskImpl Instance = new SampleMaskImpl();
+        
+            private  SampleMaskImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SampleMask;
-            public new static SampleMask Parse(WordReader reader, uint wordCount)
+            public new static SampleMaskImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleMaskImpl object.</summary>
+            /// <returns>A string that represents the SampleMaskImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SampleMask()";
+            }
         }
-        public class FragDepth: BuiltIn
+        #endregion //SampleMask
+
+        #region FragDepth
+        public static FragDepthImpl FragDepth()
         {
-            public static readonly FragDepth Instance = new FragDepth();
+            return FragDepthImpl.Instance;
+            
+        }
+
+        public class FragDepthImpl: BuiltIn
+        {
+            public static readonly FragDepthImpl Instance = new FragDepthImpl();
+        
+            private  FragDepthImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FragDepth;
-            public new static FragDepth Parse(WordReader reader, uint wordCount)
+            public new static FragDepthImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragDepthImpl object.</summary>
+            /// <returns>A string that represents the FragDepthImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FragDepth()";
+            }
         }
-        public class HelperInvocation: BuiltIn
+        #endregion //FragDepth
+
+        #region HelperInvocation
+        public static HelperInvocationImpl HelperInvocation()
         {
-            public static readonly HelperInvocation Instance = new HelperInvocation();
+            return HelperInvocationImpl.Instance;
+            
+        }
+
+        public class HelperInvocationImpl: BuiltIn
+        {
+            public static readonly HelperInvocationImpl Instance = new HelperInvocationImpl();
+        
+            private  HelperInvocationImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.HelperInvocation;
-            public new static HelperInvocation Parse(WordReader reader, uint wordCount)
+            public new static HelperInvocationImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HelperInvocationImpl object.</summary>
+            /// <returns>A string that represents the HelperInvocationImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.HelperInvocation()";
+            }
         }
-        public class NumWorkgroups: BuiltIn
+        #endregion //HelperInvocation
+
+        #region NumWorkgroups
+        public static NumWorkgroupsImpl NumWorkgroups()
         {
-            public static readonly NumWorkgroups Instance = new NumWorkgroups();
+            return NumWorkgroupsImpl.Instance;
+            
+        }
+
+        public class NumWorkgroupsImpl: BuiltIn
+        {
+            public static readonly NumWorkgroupsImpl Instance = new NumWorkgroupsImpl();
+        
+            private  NumWorkgroupsImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.NumWorkgroups;
-            public new static NumWorkgroups Parse(WordReader reader, uint wordCount)
+            public new static NumWorkgroupsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NumWorkgroupsImpl object.</summary>
+            /// <returns>A string that represents the NumWorkgroupsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.NumWorkgroups()";
+            }
         }
-        public class WorkgroupSize: BuiltIn
+        #endregion //NumWorkgroups
+
+        #region WorkgroupSize
+        public static WorkgroupSizeImpl WorkgroupSize()
         {
-            public static readonly WorkgroupSize Instance = new WorkgroupSize();
+            return WorkgroupSizeImpl.Instance;
+            
+        }
+
+        public class WorkgroupSizeImpl: BuiltIn
+        {
+            public static readonly WorkgroupSizeImpl Instance = new WorkgroupSizeImpl();
+        
+            private  WorkgroupSizeImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorkgroupSize;
-            public new static WorkgroupSize Parse(WordReader reader, uint wordCount)
+            public new static WorkgroupSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorkgroupSizeImpl object.</summary>
+            /// <returns>A string that represents the WorkgroupSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorkgroupSize()";
+            }
         }
-        public class WorkgroupId: BuiltIn
+        #endregion //WorkgroupSize
+
+        #region WorkgroupId
+        public static WorkgroupIdImpl WorkgroupId()
         {
-            public static readonly WorkgroupId Instance = new WorkgroupId();
+            return WorkgroupIdImpl.Instance;
+            
+        }
+
+        public class WorkgroupIdImpl: BuiltIn
+        {
+            public static readonly WorkgroupIdImpl Instance = new WorkgroupIdImpl();
+        
+            private  WorkgroupIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorkgroupId;
-            public new static WorkgroupId Parse(WordReader reader, uint wordCount)
+            public new static WorkgroupIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorkgroupIdImpl object.</summary>
+            /// <returns>A string that represents the WorkgroupIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorkgroupId()";
+            }
         }
-        public class LocalInvocationId: BuiltIn
+        #endregion //WorkgroupId
+
+        #region LocalInvocationId
+        public static LocalInvocationIdImpl LocalInvocationId()
         {
-            public static readonly LocalInvocationId Instance = new LocalInvocationId();
+            return LocalInvocationIdImpl.Instance;
+            
+        }
+
+        public class LocalInvocationIdImpl: BuiltIn
+        {
+            public static readonly LocalInvocationIdImpl Instance = new LocalInvocationIdImpl();
+        
+            private  LocalInvocationIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LocalInvocationId;
-            public new static LocalInvocationId Parse(WordReader reader, uint wordCount)
+            public new static LocalInvocationIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LocalInvocationIdImpl object.</summary>
+            /// <returns>A string that represents the LocalInvocationIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LocalInvocationId()";
+            }
         }
-        public class GlobalInvocationId: BuiltIn
+        #endregion //LocalInvocationId
+
+        #region GlobalInvocationId
+        public static GlobalInvocationIdImpl GlobalInvocationId()
         {
-            public static readonly GlobalInvocationId Instance = new GlobalInvocationId();
+            return GlobalInvocationIdImpl.Instance;
+            
+        }
+
+        public class GlobalInvocationIdImpl: BuiltIn
+        {
+            public static readonly GlobalInvocationIdImpl Instance = new GlobalInvocationIdImpl();
+        
+            private  GlobalInvocationIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.GlobalInvocationId;
-            public new static GlobalInvocationId Parse(WordReader reader, uint wordCount)
+            public new static GlobalInvocationIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GlobalInvocationIdImpl object.</summary>
+            /// <returns>A string that represents the GlobalInvocationIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.GlobalInvocationId()";
+            }
         }
-        public class LocalInvocationIndex: BuiltIn
+        #endregion //GlobalInvocationId
+
+        #region LocalInvocationIndex
+        public static LocalInvocationIndexImpl LocalInvocationIndex()
         {
-            public static readonly LocalInvocationIndex Instance = new LocalInvocationIndex();
+            return LocalInvocationIndexImpl.Instance;
+            
+        }
+
+        public class LocalInvocationIndexImpl: BuiltIn
+        {
+            public static readonly LocalInvocationIndexImpl Instance = new LocalInvocationIndexImpl();
+        
+            private  LocalInvocationIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LocalInvocationIndex;
-            public new static LocalInvocationIndex Parse(WordReader reader, uint wordCount)
+            public new static LocalInvocationIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LocalInvocationIndexImpl object.</summary>
+            /// <returns>A string that represents the LocalInvocationIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LocalInvocationIndex()";
+            }
         }
-        public class WorkDim: BuiltIn
+        #endregion //LocalInvocationIndex
+
+        #region WorkDim
+        public static WorkDimImpl WorkDim()
         {
-            public static readonly WorkDim Instance = new WorkDim();
+            return WorkDimImpl.Instance;
+            
+        }
+
+        public class WorkDimImpl: BuiltIn
+        {
+            public static readonly WorkDimImpl Instance = new WorkDimImpl();
+        
+            private  WorkDimImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorkDim;
-            public new static WorkDim Parse(WordReader reader, uint wordCount)
+            public new static WorkDimImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorkDimImpl object.</summary>
+            /// <returns>A string that represents the WorkDimImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorkDim()";
+            }
         }
-        public class GlobalSize: BuiltIn
+        #endregion //WorkDim
+
+        #region GlobalSize
+        public static GlobalSizeImpl GlobalSize()
         {
-            public static readonly GlobalSize Instance = new GlobalSize();
+            return GlobalSizeImpl.Instance;
+            
+        }
+
+        public class GlobalSizeImpl: BuiltIn
+        {
+            public static readonly GlobalSizeImpl Instance = new GlobalSizeImpl();
+        
+            private  GlobalSizeImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.GlobalSize;
-            public new static GlobalSize Parse(WordReader reader, uint wordCount)
+            public new static GlobalSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GlobalSizeImpl object.</summary>
+            /// <returns>A string that represents the GlobalSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.GlobalSize()";
+            }
         }
-        public class EnqueuedWorkgroupSize: BuiltIn
+        #endregion //GlobalSize
+
+        #region EnqueuedWorkgroupSize
+        public static EnqueuedWorkgroupSizeImpl EnqueuedWorkgroupSize()
         {
-            public static readonly EnqueuedWorkgroupSize Instance = new EnqueuedWorkgroupSize();
+            return EnqueuedWorkgroupSizeImpl.Instance;
+            
+        }
+
+        public class EnqueuedWorkgroupSizeImpl: BuiltIn
+        {
+            public static readonly EnqueuedWorkgroupSizeImpl Instance = new EnqueuedWorkgroupSizeImpl();
+        
+            private  EnqueuedWorkgroupSizeImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.EnqueuedWorkgroupSize;
-            public new static EnqueuedWorkgroupSize Parse(WordReader reader, uint wordCount)
+            public new static EnqueuedWorkgroupSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the EnqueuedWorkgroupSizeImpl object.</summary>
+            /// <returns>A string that represents the EnqueuedWorkgroupSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.EnqueuedWorkgroupSize()";
+            }
         }
-        public class GlobalOffset: BuiltIn
+        #endregion //EnqueuedWorkgroupSize
+
+        #region GlobalOffset
+        public static GlobalOffsetImpl GlobalOffset()
         {
-            public static readonly GlobalOffset Instance = new GlobalOffset();
+            return GlobalOffsetImpl.Instance;
+            
+        }
+
+        public class GlobalOffsetImpl: BuiltIn
+        {
+            public static readonly GlobalOffsetImpl Instance = new GlobalOffsetImpl();
+        
+            private  GlobalOffsetImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.GlobalOffset;
-            public new static GlobalOffset Parse(WordReader reader, uint wordCount)
+            public new static GlobalOffsetImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GlobalOffsetImpl object.</summary>
+            /// <returns>A string that represents the GlobalOffsetImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.GlobalOffset()";
+            }
         }
-        public class GlobalLinearId: BuiltIn
+        #endregion //GlobalOffset
+
+        #region GlobalLinearId
+        public static GlobalLinearIdImpl GlobalLinearId()
         {
-            public static readonly GlobalLinearId Instance = new GlobalLinearId();
+            return GlobalLinearIdImpl.Instance;
+            
+        }
+
+        public class GlobalLinearIdImpl: BuiltIn
+        {
+            public static readonly GlobalLinearIdImpl Instance = new GlobalLinearIdImpl();
+        
+            private  GlobalLinearIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.GlobalLinearId;
-            public new static GlobalLinearId Parse(WordReader reader, uint wordCount)
+            public new static GlobalLinearIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GlobalLinearIdImpl object.</summary>
+            /// <returns>A string that represents the GlobalLinearIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.GlobalLinearId()";
+            }
         }
-        public class SubgroupSize: BuiltIn
+        #endregion //GlobalLinearId
+
+        #region SubgroupSize
+        public static SubgroupSizeImpl SubgroupSize()
         {
-            public static readonly SubgroupSize Instance = new SubgroupSize();
+            return SubgroupSizeImpl.Instance;
+            
+        }
+
+        public class SubgroupSizeImpl: BuiltIn
+        {
+            public static readonly SubgroupSizeImpl Instance = new SubgroupSizeImpl();
+        
+            private  SubgroupSizeImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupSize;
-            public new static SubgroupSize Parse(WordReader reader, uint wordCount)
+            public new static SubgroupSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupSizeImpl object.</summary>
+            /// <returns>A string that represents the SubgroupSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupSize()";
+            }
         }
-        public class SubgroupMaxSize: BuiltIn
+        #endregion //SubgroupSize
+
+        #region SubgroupMaxSize
+        public static SubgroupMaxSizeImpl SubgroupMaxSize()
         {
-            public static readonly SubgroupMaxSize Instance = new SubgroupMaxSize();
+            return SubgroupMaxSizeImpl.Instance;
+            
+        }
+
+        public class SubgroupMaxSizeImpl: BuiltIn
+        {
+            public static readonly SubgroupMaxSizeImpl Instance = new SubgroupMaxSizeImpl();
+        
+            private  SubgroupMaxSizeImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupMaxSize;
-            public new static SubgroupMaxSize Parse(WordReader reader, uint wordCount)
+            public new static SubgroupMaxSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupMaxSizeImpl object.</summary>
+            /// <returns>A string that represents the SubgroupMaxSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupMaxSize()";
+            }
         }
-        public class NumSubgroups: BuiltIn
+        #endregion //SubgroupMaxSize
+
+        #region NumSubgroups
+        public static NumSubgroupsImpl NumSubgroups()
         {
-            public static readonly NumSubgroups Instance = new NumSubgroups();
+            return NumSubgroupsImpl.Instance;
+            
+        }
+
+        public class NumSubgroupsImpl: BuiltIn
+        {
+            public static readonly NumSubgroupsImpl Instance = new NumSubgroupsImpl();
+        
+            private  NumSubgroupsImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.NumSubgroups;
-            public new static NumSubgroups Parse(WordReader reader, uint wordCount)
+            public new static NumSubgroupsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NumSubgroupsImpl object.</summary>
+            /// <returns>A string that represents the NumSubgroupsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.NumSubgroups()";
+            }
         }
-        public class NumEnqueuedSubgroups: BuiltIn
+        #endregion //NumSubgroups
+
+        #region NumEnqueuedSubgroups
+        public static NumEnqueuedSubgroupsImpl NumEnqueuedSubgroups()
         {
-            public static readonly NumEnqueuedSubgroups Instance = new NumEnqueuedSubgroups();
+            return NumEnqueuedSubgroupsImpl.Instance;
+            
+        }
+
+        public class NumEnqueuedSubgroupsImpl: BuiltIn
+        {
+            public static readonly NumEnqueuedSubgroupsImpl Instance = new NumEnqueuedSubgroupsImpl();
+        
+            private  NumEnqueuedSubgroupsImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.NumEnqueuedSubgroups;
-            public new static NumEnqueuedSubgroups Parse(WordReader reader, uint wordCount)
+            public new static NumEnqueuedSubgroupsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NumEnqueuedSubgroupsImpl object.</summary>
+            /// <returns>A string that represents the NumEnqueuedSubgroupsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.NumEnqueuedSubgroups()";
+            }
         }
-        public class SubgroupId: BuiltIn
+        #endregion //NumEnqueuedSubgroups
+
+        #region SubgroupId
+        public static SubgroupIdImpl SubgroupId()
         {
-            public static readonly SubgroupId Instance = new SubgroupId();
+            return SubgroupIdImpl.Instance;
+            
+        }
+
+        public class SubgroupIdImpl: BuiltIn
+        {
+            public static readonly SubgroupIdImpl Instance = new SubgroupIdImpl();
+        
+            private  SubgroupIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupId;
-            public new static SubgroupId Parse(WordReader reader, uint wordCount)
+            public new static SubgroupIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupIdImpl object.</summary>
+            /// <returns>A string that represents the SubgroupIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupId()";
+            }
         }
-        public class SubgroupLocalInvocationId: BuiltIn
+        #endregion //SubgroupId
+
+        #region SubgroupLocalInvocationId
+        public static SubgroupLocalInvocationIdImpl SubgroupLocalInvocationId()
         {
-            public static readonly SubgroupLocalInvocationId Instance = new SubgroupLocalInvocationId();
+            return SubgroupLocalInvocationIdImpl.Instance;
+            
+        }
+
+        public class SubgroupLocalInvocationIdImpl: BuiltIn
+        {
+            public static readonly SubgroupLocalInvocationIdImpl Instance = new SubgroupLocalInvocationIdImpl();
+        
+            private  SubgroupLocalInvocationIdImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLocalInvocationId;
-            public new static SubgroupLocalInvocationId Parse(WordReader reader, uint wordCount)
+            public new static SubgroupLocalInvocationIdImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupLocalInvocationIdImpl object.</summary>
+            /// <returns>A string that represents the SubgroupLocalInvocationIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupLocalInvocationId()";
+            }
         }
-        public class VertexIndex: BuiltIn
+        #endregion //SubgroupLocalInvocationId
+
+        #region VertexIndex
+        public static VertexIndexImpl VertexIndex()
         {
-            public static readonly VertexIndex Instance = new VertexIndex();
+            return VertexIndexImpl.Instance;
+            
+        }
+
+        public class VertexIndexImpl: BuiltIn
+        {
+            public static readonly VertexIndexImpl Instance = new VertexIndexImpl();
+        
+            private  VertexIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.VertexIndex;
-            public new static VertexIndex Parse(WordReader reader, uint wordCount)
+            public new static VertexIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VertexIndexImpl object.</summary>
+            /// <returns>A string that represents the VertexIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.VertexIndex()";
+            }
         }
-        public class InstanceIndex: BuiltIn
+        #endregion //VertexIndex
+
+        #region InstanceIndex
+        public static InstanceIndexImpl InstanceIndex()
         {
-            public static readonly InstanceIndex Instance = new InstanceIndex();
+            return InstanceIndexImpl.Instance;
+            
+        }
+
+        public class InstanceIndexImpl: BuiltIn
+        {
+            public static readonly InstanceIndexImpl Instance = new InstanceIndexImpl();
+        
+            private  InstanceIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.InstanceIndex;
-            public new static InstanceIndex Parse(WordReader reader, uint wordCount)
+            public new static InstanceIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InstanceIndexImpl object.</summary>
+            /// <returns>A string that represents the InstanceIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.InstanceIndex()";
+            }
         }
-        public class SubgroupEqMask: BuiltIn
+        #endregion //InstanceIndex
+
+        #region SubgroupEqMask
+        public static SubgroupEqMaskImpl SubgroupEqMask()
         {
-            public static readonly SubgroupEqMask Instance = new SubgroupEqMask();
+            return SubgroupEqMaskImpl.Instance;
+            
+        }
+
+        public class SubgroupEqMaskImpl: BuiltIn
+        {
+            public static readonly SubgroupEqMaskImpl Instance = new SubgroupEqMaskImpl();
+        
+            private  SubgroupEqMaskImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupEqMask;
-            public new static SubgroupEqMask Parse(WordReader reader, uint wordCount)
+            public new static SubgroupEqMaskImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupEqMaskImpl object.</summary>
+            /// <returns>A string that represents the SubgroupEqMaskImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupEqMask()";
+            }
         }
-        public class SubgroupGeMask: BuiltIn
+        #endregion //SubgroupEqMask
+
+        #region SubgroupGeMask
+        public static SubgroupGeMaskImpl SubgroupGeMask()
         {
-            public static readonly SubgroupGeMask Instance = new SubgroupGeMask();
+            return SubgroupGeMaskImpl.Instance;
+            
+        }
+
+        public class SubgroupGeMaskImpl: BuiltIn
+        {
+            public static readonly SubgroupGeMaskImpl Instance = new SubgroupGeMaskImpl();
+        
+            private  SubgroupGeMaskImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGeMask;
-            public new static SubgroupGeMask Parse(WordReader reader, uint wordCount)
+            public new static SubgroupGeMaskImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupGeMaskImpl object.</summary>
+            /// <returns>A string that represents the SubgroupGeMaskImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupGeMask()";
+            }
         }
-        public class SubgroupGtMask: BuiltIn
+        #endregion //SubgroupGeMask
+
+        #region SubgroupGtMask
+        public static SubgroupGtMaskImpl SubgroupGtMask()
         {
-            public static readonly SubgroupGtMask Instance = new SubgroupGtMask();
+            return SubgroupGtMaskImpl.Instance;
+            
+        }
+
+        public class SubgroupGtMaskImpl: BuiltIn
+        {
+            public static readonly SubgroupGtMaskImpl Instance = new SubgroupGtMaskImpl();
+        
+            private  SubgroupGtMaskImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGtMask;
-            public new static SubgroupGtMask Parse(WordReader reader, uint wordCount)
+            public new static SubgroupGtMaskImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupGtMaskImpl object.</summary>
+            /// <returns>A string that represents the SubgroupGtMaskImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupGtMask()";
+            }
         }
-        public class SubgroupLeMask: BuiltIn
+        #endregion //SubgroupGtMask
+
+        #region SubgroupLeMask
+        public static SubgroupLeMaskImpl SubgroupLeMask()
         {
-            public static readonly SubgroupLeMask Instance = new SubgroupLeMask();
+            return SubgroupLeMaskImpl.Instance;
+            
+        }
+
+        public class SubgroupLeMaskImpl: BuiltIn
+        {
+            public static readonly SubgroupLeMaskImpl Instance = new SubgroupLeMaskImpl();
+        
+            private  SubgroupLeMaskImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLeMask;
-            public new static SubgroupLeMask Parse(WordReader reader, uint wordCount)
+            public new static SubgroupLeMaskImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupLeMaskImpl object.</summary>
+            /// <returns>A string that represents the SubgroupLeMaskImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupLeMask()";
+            }
         }
-        public class SubgroupLtMask: BuiltIn
+        #endregion //SubgroupLeMask
+
+        #region SubgroupLtMask
+        public static SubgroupLtMaskImpl SubgroupLtMask()
         {
-            public static readonly SubgroupLtMask Instance = new SubgroupLtMask();
+            return SubgroupLtMaskImpl.Instance;
+            
+        }
+
+        public class SubgroupLtMaskImpl: BuiltIn
+        {
+            public static readonly SubgroupLtMaskImpl Instance = new SubgroupLtMaskImpl();
+        
+            private  SubgroupLtMaskImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLtMask;
-            public new static SubgroupLtMask Parse(WordReader reader, uint wordCount)
+            public new static SubgroupLtMaskImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupLtMaskImpl object.</summary>
+            /// <returns>A string that represents the SubgroupLtMaskImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupLtMask()";
+            }
         }
-        public class SubgroupEqMaskKHR: BuiltIn
+        #endregion //SubgroupLtMask
+
+        #region SubgroupEqMaskKHR
+        public static SubgroupEqMaskKHRImpl SubgroupEqMaskKHR()
         {
-            public static readonly SubgroupEqMaskKHR Instance = new SubgroupEqMaskKHR();
+            return SubgroupEqMaskKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupEqMaskKHRImpl: BuiltIn
+        {
+            public static readonly SubgroupEqMaskKHRImpl Instance = new SubgroupEqMaskKHRImpl();
+        
+            private  SubgroupEqMaskKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupEqMaskKHR;
-            public new static SubgroupEqMaskKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupEqMaskKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupEqMaskKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupEqMaskKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupEqMaskKHR()";
+            }
         }
-        public class SubgroupGeMaskKHR: BuiltIn
+        #endregion //SubgroupEqMaskKHR
+
+        #region SubgroupGeMaskKHR
+        public static SubgroupGeMaskKHRImpl SubgroupGeMaskKHR()
         {
-            public static readonly SubgroupGeMaskKHR Instance = new SubgroupGeMaskKHR();
+            return SubgroupGeMaskKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupGeMaskKHRImpl: BuiltIn
+        {
+            public static readonly SubgroupGeMaskKHRImpl Instance = new SubgroupGeMaskKHRImpl();
+        
+            private  SubgroupGeMaskKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGeMaskKHR;
-            public new static SubgroupGeMaskKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupGeMaskKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupGeMaskKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupGeMaskKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupGeMaskKHR()";
+            }
         }
-        public class SubgroupGtMaskKHR: BuiltIn
+        #endregion //SubgroupGeMaskKHR
+
+        #region SubgroupGtMaskKHR
+        public static SubgroupGtMaskKHRImpl SubgroupGtMaskKHR()
         {
-            public static readonly SubgroupGtMaskKHR Instance = new SubgroupGtMaskKHR();
+            return SubgroupGtMaskKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupGtMaskKHRImpl: BuiltIn
+        {
+            public static readonly SubgroupGtMaskKHRImpl Instance = new SubgroupGtMaskKHRImpl();
+        
+            private  SubgroupGtMaskKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupGtMaskKHR;
-            public new static SubgroupGtMaskKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupGtMaskKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupGtMaskKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupGtMaskKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupGtMaskKHR()";
+            }
         }
-        public class SubgroupLeMaskKHR: BuiltIn
+        #endregion //SubgroupGtMaskKHR
+
+        #region SubgroupLeMaskKHR
+        public static SubgroupLeMaskKHRImpl SubgroupLeMaskKHR()
         {
-            public static readonly SubgroupLeMaskKHR Instance = new SubgroupLeMaskKHR();
+            return SubgroupLeMaskKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupLeMaskKHRImpl: BuiltIn
+        {
+            public static readonly SubgroupLeMaskKHRImpl Instance = new SubgroupLeMaskKHRImpl();
+        
+            private  SubgroupLeMaskKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLeMaskKHR;
-            public new static SubgroupLeMaskKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupLeMaskKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupLeMaskKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupLeMaskKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupLeMaskKHR()";
+            }
         }
-        public class SubgroupLtMaskKHR: BuiltIn
+        #endregion //SubgroupLeMaskKHR
+
+        #region SubgroupLtMaskKHR
+        public static SubgroupLtMaskKHRImpl SubgroupLtMaskKHR()
         {
-            public static readonly SubgroupLtMaskKHR Instance = new SubgroupLtMaskKHR();
+            return SubgroupLtMaskKHRImpl.Instance;
+            
+        }
+
+        public class SubgroupLtMaskKHRImpl: BuiltIn
+        {
+            public static readonly SubgroupLtMaskKHRImpl Instance = new SubgroupLtMaskKHRImpl();
+        
+            private  SubgroupLtMaskKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SubgroupLtMaskKHR;
-            public new static SubgroupLtMaskKHR Parse(WordReader reader, uint wordCount)
+            public new static SubgroupLtMaskKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupLtMaskKHRImpl object.</summary>
+            /// <returns>A string that represents the SubgroupLtMaskKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SubgroupLtMaskKHR()";
+            }
         }
-        public class BaseVertex: BuiltIn
+        #endregion //SubgroupLtMaskKHR
+
+        #region BaseVertex
+        public static BaseVertexImpl BaseVertex()
         {
-            public static readonly BaseVertex Instance = new BaseVertex();
+            return BaseVertexImpl.Instance;
+            
+        }
+
+        public class BaseVertexImpl: BuiltIn
+        {
+            public static readonly BaseVertexImpl Instance = new BaseVertexImpl();
+        
+            private  BaseVertexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaseVertex;
-            public new static BaseVertex Parse(WordReader reader, uint wordCount)
+            public new static BaseVertexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaseVertexImpl object.</summary>
+            /// <returns>A string that represents the BaseVertexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaseVertex()";
+            }
         }
-        public class BaseInstance: BuiltIn
+        #endregion //BaseVertex
+
+        #region BaseInstance
+        public static BaseInstanceImpl BaseInstance()
         {
-            public static readonly BaseInstance Instance = new BaseInstance();
+            return BaseInstanceImpl.Instance;
+            
+        }
+
+        public class BaseInstanceImpl: BuiltIn
+        {
+            public static readonly BaseInstanceImpl Instance = new BaseInstanceImpl();
+        
+            private  BaseInstanceImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaseInstance;
-            public new static BaseInstance Parse(WordReader reader, uint wordCount)
+            public new static BaseInstanceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaseInstanceImpl object.</summary>
+            /// <returns>A string that represents the BaseInstanceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaseInstance()";
+            }
         }
-        public class DrawIndex: BuiltIn
+        #endregion //BaseInstance
+
+        #region DrawIndex
+        public static DrawIndexImpl DrawIndex()
         {
-            public static readonly DrawIndex Instance = new DrawIndex();
+            return DrawIndexImpl.Instance;
+            
+        }
+
+        public class DrawIndexImpl: BuiltIn
+        {
+            public static readonly DrawIndexImpl Instance = new DrawIndexImpl();
+        
+            private  DrawIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.DrawIndex;
-            public new static DrawIndex Parse(WordReader reader, uint wordCount)
+            public new static DrawIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DrawIndexImpl object.</summary>
+            /// <returns>A string that represents the DrawIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.DrawIndex()";
+            }
         }
-        public class DeviceIndex: BuiltIn
+        #endregion //DrawIndex
+
+        #region DeviceIndex
+        public static DeviceIndexImpl DeviceIndex()
         {
-            public static readonly DeviceIndex Instance = new DeviceIndex();
+            return DeviceIndexImpl.Instance;
+            
+        }
+
+        public class DeviceIndexImpl: BuiltIn
+        {
+            public static readonly DeviceIndexImpl Instance = new DeviceIndexImpl();
+        
+            private  DeviceIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.DeviceIndex;
-            public new static DeviceIndex Parse(WordReader reader, uint wordCount)
+            public new static DeviceIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DeviceIndexImpl object.</summary>
+            /// <returns>A string that represents the DeviceIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.DeviceIndex()";
+            }
         }
-        public class ViewIndex: BuiltIn
+        #endregion //DeviceIndex
+
+        #region ViewIndex
+        public static ViewIndexImpl ViewIndex()
         {
-            public static readonly ViewIndex Instance = new ViewIndex();
+            return ViewIndexImpl.Instance;
+            
+        }
+
+        public class ViewIndexImpl: BuiltIn
+        {
+            public static readonly ViewIndexImpl Instance = new ViewIndexImpl();
+        
+            private  ViewIndexImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ViewIndex;
-            public new static ViewIndex Parse(WordReader reader, uint wordCount)
+            public new static ViewIndexImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ViewIndexImpl object.</summary>
+            /// <returns>A string that represents the ViewIndexImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ViewIndex()";
+            }
         }
-        public class BaryCoordNoPerspAMD: BuiltIn
+        #endregion //ViewIndex
+
+        #region BaryCoordNoPerspAMD
+        public static BaryCoordNoPerspAMDImpl BaryCoordNoPerspAMD()
         {
-            public static readonly BaryCoordNoPerspAMD Instance = new BaryCoordNoPerspAMD();
+            return BaryCoordNoPerspAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordNoPerspAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordNoPerspAMDImpl Instance = new BaryCoordNoPerspAMDImpl();
+        
+            private  BaryCoordNoPerspAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspAMD;
-            public new static BaryCoordNoPerspAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordNoPerspAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordNoPerspAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordNoPerspAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordNoPerspAMD()";
+            }
         }
-        public class BaryCoordNoPerspCentroidAMD: BuiltIn
+        #endregion //BaryCoordNoPerspAMD
+
+        #region BaryCoordNoPerspCentroidAMD
+        public static BaryCoordNoPerspCentroidAMDImpl BaryCoordNoPerspCentroidAMD()
         {
-            public static readonly BaryCoordNoPerspCentroidAMD Instance = new BaryCoordNoPerspCentroidAMD();
+            return BaryCoordNoPerspCentroidAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordNoPerspCentroidAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordNoPerspCentroidAMDImpl Instance = new BaryCoordNoPerspCentroidAMDImpl();
+        
+            private  BaryCoordNoPerspCentroidAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspCentroidAMD;
-            public new static BaryCoordNoPerspCentroidAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordNoPerspCentroidAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordNoPerspCentroidAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordNoPerspCentroidAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordNoPerspCentroidAMD()";
+            }
         }
-        public class BaryCoordNoPerspSampleAMD: BuiltIn
+        #endregion //BaryCoordNoPerspCentroidAMD
+
+        #region BaryCoordNoPerspSampleAMD
+        public static BaryCoordNoPerspSampleAMDImpl BaryCoordNoPerspSampleAMD()
         {
-            public static readonly BaryCoordNoPerspSampleAMD Instance = new BaryCoordNoPerspSampleAMD();
+            return BaryCoordNoPerspSampleAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordNoPerspSampleAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordNoPerspSampleAMDImpl Instance = new BaryCoordNoPerspSampleAMDImpl();
+        
+            private  BaryCoordNoPerspSampleAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspSampleAMD;
-            public new static BaryCoordNoPerspSampleAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordNoPerspSampleAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordNoPerspSampleAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordNoPerspSampleAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordNoPerspSampleAMD()";
+            }
         }
-        public class BaryCoordSmoothAMD: BuiltIn
+        #endregion //BaryCoordNoPerspSampleAMD
+
+        #region BaryCoordSmoothAMD
+        public static BaryCoordSmoothAMDImpl BaryCoordSmoothAMD()
         {
-            public static readonly BaryCoordSmoothAMD Instance = new BaryCoordSmoothAMD();
+            return BaryCoordSmoothAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordSmoothAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordSmoothAMDImpl Instance = new BaryCoordSmoothAMDImpl();
+        
+            private  BaryCoordSmoothAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordSmoothAMD;
-            public new static BaryCoordSmoothAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordSmoothAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordSmoothAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordSmoothAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordSmoothAMD()";
+            }
         }
-        public class BaryCoordSmoothCentroidAMD: BuiltIn
+        #endregion //BaryCoordSmoothAMD
+
+        #region BaryCoordSmoothCentroidAMD
+        public static BaryCoordSmoothCentroidAMDImpl BaryCoordSmoothCentroidAMD()
         {
-            public static readonly BaryCoordSmoothCentroidAMD Instance = new BaryCoordSmoothCentroidAMD();
+            return BaryCoordSmoothCentroidAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordSmoothCentroidAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordSmoothCentroidAMDImpl Instance = new BaryCoordSmoothCentroidAMDImpl();
+        
+            private  BaryCoordSmoothCentroidAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordSmoothCentroidAMD;
-            public new static BaryCoordSmoothCentroidAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordSmoothCentroidAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordSmoothCentroidAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordSmoothCentroidAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordSmoothCentroidAMD()";
+            }
         }
-        public class BaryCoordSmoothSampleAMD: BuiltIn
+        #endregion //BaryCoordSmoothCentroidAMD
+
+        #region BaryCoordSmoothSampleAMD
+        public static BaryCoordSmoothSampleAMDImpl BaryCoordSmoothSampleAMD()
         {
-            public static readonly BaryCoordSmoothSampleAMD Instance = new BaryCoordSmoothSampleAMD();
+            return BaryCoordSmoothSampleAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordSmoothSampleAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordSmoothSampleAMDImpl Instance = new BaryCoordSmoothSampleAMDImpl();
+        
+            private  BaryCoordSmoothSampleAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordSmoothSampleAMD;
-            public new static BaryCoordSmoothSampleAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordSmoothSampleAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordSmoothSampleAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordSmoothSampleAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordSmoothSampleAMD()";
+            }
         }
-        public class BaryCoordPullModelAMD: BuiltIn
+        #endregion //BaryCoordSmoothSampleAMD
+
+        #region BaryCoordPullModelAMD
+        public static BaryCoordPullModelAMDImpl BaryCoordPullModelAMD()
         {
-            public static readonly BaryCoordPullModelAMD Instance = new BaryCoordPullModelAMD();
+            return BaryCoordPullModelAMDImpl.Instance;
+            
+        }
+
+        public class BaryCoordPullModelAMDImpl: BuiltIn
+        {
+            public static readonly BaryCoordPullModelAMDImpl Instance = new BaryCoordPullModelAMDImpl();
+        
+            private  BaryCoordPullModelAMDImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordPullModelAMD;
-            public new static BaryCoordPullModelAMD Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordPullModelAMDImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordPullModelAMDImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordPullModelAMDImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordPullModelAMD()";
+            }
         }
-        public class FragStencilRefEXT: BuiltIn
+        #endregion //BaryCoordPullModelAMD
+
+        #region FragStencilRefEXT
+        public static FragStencilRefEXTImpl FragStencilRefEXT()
         {
-            public static readonly FragStencilRefEXT Instance = new FragStencilRefEXT();
+            return FragStencilRefEXTImpl.Instance;
+            
+        }
+
+        public class FragStencilRefEXTImpl: BuiltIn
+        {
+            public static readonly FragStencilRefEXTImpl Instance = new FragStencilRefEXTImpl();
+        
+            private  FragStencilRefEXTImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FragStencilRefEXT;
-            public new static FragStencilRefEXT Parse(WordReader reader, uint wordCount)
+            public new static FragStencilRefEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragStencilRefEXTImpl object.</summary>
+            /// <returns>A string that represents the FragStencilRefEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FragStencilRefEXT()";
+            }
         }
-        public class ViewportMaskNV: BuiltIn
+        #endregion //FragStencilRefEXT
+
+        #region ViewportMaskNV
+        public static ViewportMaskNVImpl ViewportMaskNV()
         {
-            public static readonly ViewportMaskNV Instance = new ViewportMaskNV();
+            return ViewportMaskNVImpl.Instance;
+            
+        }
+
+        public class ViewportMaskNVImpl: BuiltIn
+        {
+            public static readonly ViewportMaskNVImpl Instance = new ViewportMaskNVImpl();
+        
+            private  ViewportMaskNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ViewportMaskNV;
-            public new static ViewportMaskNV Parse(WordReader reader, uint wordCount)
+            public new static ViewportMaskNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ViewportMaskNVImpl object.</summary>
+            /// <returns>A string that represents the ViewportMaskNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ViewportMaskNV()";
+            }
         }
-        public class SecondaryPositionNV: BuiltIn
+        #endregion //ViewportMaskNV
+
+        #region SecondaryPositionNV
+        public static SecondaryPositionNVImpl SecondaryPositionNV()
         {
-            public static readonly SecondaryPositionNV Instance = new SecondaryPositionNV();
+            return SecondaryPositionNVImpl.Instance;
+            
+        }
+
+        public class SecondaryPositionNVImpl: BuiltIn
+        {
+            public static readonly SecondaryPositionNVImpl Instance = new SecondaryPositionNVImpl();
+        
+            private  SecondaryPositionNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SecondaryPositionNV;
-            public new static SecondaryPositionNV Parse(WordReader reader, uint wordCount)
+            public new static SecondaryPositionNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SecondaryPositionNVImpl object.</summary>
+            /// <returns>A string that represents the SecondaryPositionNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SecondaryPositionNV()";
+            }
         }
-        public class SecondaryViewportMaskNV: BuiltIn
+        #endregion //SecondaryPositionNV
+
+        #region SecondaryViewportMaskNV
+        public static SecondaryViewportMaskNVImpl SecondaryViewportMaskNV()
         {
-            public static readonly SecondaryViewportMaskNV Instance = new SecondaryViewportMaskNV();
+            return SecondaryViewportMaskNVImpl.Instance;
+            
+        }
+
+        public class SecondaryViewportMaskNVImpl: BuiltIn
+        {
+            public static readonly SecondaryViewportMaskNVImpl Instance = new SecondaryViewportMaskNVImpl();
+        
+            private  SecondaryViewportMaskNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SecondaryViewportMaskNV;
-            public new static SecondaryViewportMaskNV Parse(WordReader reader, uint wordCount)
+            public new static SecondaryViewportMaskNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SecondaryViewportMaskNVImpl object.</summary>
+            /// <returns>A string that represents the SecondaryViewportMaskNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SecondaryViewportMaskNV()";
+            }
         }
-        public class PositionPerViewNV: BuiltIn
+        #endregion //SecondaryViewportMaskNV
+
+        #region PositionPerViewNV
+        public static PositionPerViewNVImpl PositionPerViewNV()
         {
-            public static readonly PositionPerViewNV Instance = new PositionPerViewNV();
+            return PositionPerViewNVImpl.Instance;
+            
+        }
+
+        public class PositionPerViewNVImpl: BuiltIn
+        {
+            public static readonly PositionPerViewNVImpl Instance = new PositionPerViewNVImpl();
+        
+            private  PositionPerViewNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PositionPerViewNV;
-            public new static PositionPerViewNV Parse(WordReader reader, uint wordCount)
+            public new static PositionPerViewNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PositionPerViewNVImpl object.</summary>
+            /// <returns>A string that represents the PositionPerViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PositionPerViewNV()";
+            }
         }
-        public class ViewportMaskPerViewNV: BuiltIn
+        #endregion //PositionPerViewNV
+
+        #region ViewportMaskPerViewNV
+        public static ViewportMaskPerViewNVImpl ViewportMaskPerViewNV()
         {
-            public static readonly ViewportMaskPerViewNV Instance = new ViewportMaskPerViewNV();
+            return ViewportMaskPerViewNVImpl.Instance;
+            
+        }
+
+        public class ViewportMaskPerViewNVImpl: BuiltIn
+        {
+            public static readonly ViewportMaskPerViewNVImpl Instance = new ViewportMaskPerViewNVImpl();
+        
+            private  ViewportMaskPerViewNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ViewportMaskPerViewNV;
-            public new static ViewportMaskPerViewNV Parse(WordReader reader, uint wordCount)
+            public new static ViewportMaskPerViewNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ViewportMaskPerViewNVImpl object.</summary>
+            /// <returns>A string that represents the ViewportMaskPerViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ViewportMaskPerViewNV()";
+            }
         }
-        public class FullyCoveredEXT: BuiltIn
+        #endregion //ViewportMaskPerViewNV
+
+        #region FullyCoveredEXT
+        public static FullyCoveredEXTImpl FullyCoveredEXT()
         {
-            public static readonly FullyCoveredEXT Instance = new FullyCoveredEXT();
+            return FullyCoveredEXTImpl.Instance;
+            
+        }
+
+        public class FullyCoveredEXTImpl: BuiltIn
+        {
+            public static readonly FullyCoveredEXTImpl Instance = new FullyCoveredEXTImpl();
+        
+            private  FullyCoveredEXTImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FullyCoveredEXT;
-            public new static FullyCoveredEXT Parse(WordReader reader, uint wordCount)
+            public new static FullyCoveredEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FullyCoveredEXTImpl object.</summary>
+            /// <returns>A string that represents the FullyCoveredEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FullyCoveredEXT()";
+            }
         }
-        public class TaskCountNV: BuiltIn
+        #endregion //FullyCoveredEXT
+
+        #region TaskCountNV
+        public static TaskCountNVImpl TaskCountNV()
         {
-            public static readonly TaskCountNV Instance = new TaskCountNV();
+            return TaskCountNVImpl.Instance;
+            
+        }
+
+        public class TaskCountNVImpl: BuiltIn
+        {
+            public static readonly TaskCountNVImpl Instance = new TaskCountNVImpl();
+        
+            private  TaskCountNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.TaskCountNV;
-            public new static TaskCountNV Parse(WordReader reader, uint wordCount)
+            public new static TaskCountNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TaskCountNVImpl object.</summary>
+            /// <returns>A string that represents the TaskCountNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.TaskCountNV()";
+            }
         }
-        public class PrimitiveCountNV: BuiltIn
+        #endregion //TaskCountNV
+
+        #region PrimitiveCountNV
+        public static PrimitiveCountNVImpl PrimitiveCountNV()
         {
-            public static readonly PrimitiveCountNV Instance = new PrimitiveCountNV();
+            return PrimitiveCountNVImpl.Instance;
+            
+        }
+
+        public class PrimitiveCountNVImpl: BuiltIn
+        {
+            public static readonly PrimitiveCountNVImpl Instance = new PrimitiveCountNVImpl();
+        
+            private  PrimitiveCountNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PrimitiveCountNV;
-            public new static PrimitiveCountNV Parse(WordReader reader, uint wordCount)
+            public new static PrimitiveCountNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PrimitiveCountNVImpl object.</summary>
+            /// <returns>A string that represents the PrimitiveCountNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PrimitiveCountNV()";
+            }
         }
-        public class PrimitiveIndicesNV: BuiltIn
+        #endregion //PrimitiveCountNV
+
+        #region PrimitiveIndicesNV
+        public static PrimitiveIndicesNVImpl PrimitiveIndicesNV()
         {
-            public static readonly PrimitiveIndicesNV Instance = new PrimitiveIndicesNV();
+            return PrimitiveIndicesNVImpl.Instance;
+            
+        }
+
+        public class PrimitiveIndicesNVImpl: BuiltIn
+        {
+            public static readonly PrimitiveIndicesNVImpl Instance = new PrimitiveIndicesNVImpl();
+        
+            private  PrimitiveIndicesNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.PrimitiveIndicesNV;
-            public new static PrimitiveIndicesNV Parse(WordReader reader, uint wordCount)
+            public new static PrimitiveIndicesNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PrimitiveIndicesNVImpl object.</summary>
+            /// <returns>A string that represents the PrimitiveIndicesNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.PrimitiveIndicesNV()";
+            }
         }
-        public class ClipDistancePerViewNV: BuiltIn
+        #endregion //PrimitiveIndicesNV
+
+        #region ClipDistancePerViewNV
+        public static ClipDistancePerViewNVImpl ClipDistancePerViewNV()
         {
-            public static readonly ClipDistancePerViewNV Instance = new ClipDistancePerViewNV();
+            return ClipDistancePerViewNVImpl.Instance;
+            
+        }
+
+        public class ClipDistancePerViewNVImpl: BuiltIn
+        {
+            public static readonly ClipDistancePerViewNVImpl Instance = new ClipDistancePerViewNVImpl();
+        
+            private  ClipDistancePerViewNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ClipDistancePerViewNV;
-            public new static ClipDistancePerViewNV Parse(WordReader reader, uint wordCount)
+            public new static ClipDistancePerViewNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ClipDistancePerViewNVImpl object.</summary>
+            /// <returns>A string that represents the ClipDistancePerViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ClipDistancePerViewNV()";
+            }
         }
-        public class CullDistancePerViewNV: BuiltIn
+        #endregion //ClipDistancePerViewNV
+
+        #region CullDistancePerViewNV
+        public static CullDistancePerViewNVImpl CullDistancePerViewNV()
         {
-            public static readonly CullDistancePerViewNV Instance = new CullDistancePerViewNV();
+            return CullDistancePerViewNVImpl.Instance;
+            
+        }
+
+        public class CullDistancePerViewNVImpl: BuiltIn
+        {
+            public static readonly CullDistancePerViewNVImpl Instance = new CullDistancePerViewNVImpl();
+        
+            private  CullDistancePerViewNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.CullDistancePerViewNV;
-            public new static CullDistancePerViewNV Parse(WordReader reader, uint wordCount)
+            public new static CullDistancePerViewNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CullDistancePerViewNVImpl object.</summary>
+            /// <returns>A string that represents the CullDistancePerViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.CullDistancePerViewNV()";
+            }
         }
-        public class LayerPerViewNV: BuiltIn
+        #endregion //CullDistancePerViewNV
+
+        #region LayerPerViewNV
+        public static LayerPerViewNVImpl LayerPerViewNV()
         {
-            public static readonly LayerPerViewNV Instance = new LayerPerViewNV();
+            return LayerPerViewNVImpl.Instance;
+            
+        }
+
+        public class LayerPerViewNVImpl: BuiltIn
+        {
+            public static readonly LayerPerViewNVImpl Instance = new LayerPerViewNVImpl();
+        
+            private  LayerPerViewNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LayerPerViewNV;
-            public new static LayerPerViewNV Parse(WordReader reader, uint wordCount)
+            public new static LayerPerViewNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LayerPerViewNVImpl object.</summary>
+            /// <returns>A string that represents the LayerPerViewNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LayerPerViewNV()";
+            }
         }
-        public class MeshViewCountNV: BuiltIn
+        #endregion //LayerPerViewNV
+
+        #region MeshViewCountNV
+        public static MeshViewCountNVImpl MeshViewCountNV()
         {
-            public static readonly MeshViewCountNV Instance = new MeshViewCountNV();
+            return MeshViewCountNVImpl.Instance;
+            
+        }
+
+        public class MeshViewCountNVImpl: BuiltIn
+        {
+            public static readonly MeshViewCountNVImpl Instance = new MeshViewCountNVImpl();
+        
+            private  MeshViewCountNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.MeshViewCountNV;
-            public new static MeshViewCountNV Parse(WordReader reader, uint wordCount)
+            public new static MeshViewCountNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MeshViewCountNVImpl object.</summary>
+            /// <returns>A string that represents the MeshViewCountNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.MeshViewCountNV()";
+            }
         }
-        public class MeshViewIndicesNV: BuiltIn
+        #endregion //MeshViewCountNV
+
+        #region MeshViewIndicesNV
+        public static MeshViewIndicesNVImpl MeshViewIndicesNV()
         {
-            public static readonly MeshViewIndicesNV Instance = new MeshViewIndicesNV();
+            return MeshViewIndicesNVImpl.Instance;
+            
+        }
+
+        public class MeshViewIndicesNVImpl: BuiltIn
+        {
+            public static readonly MeshViewIndicesNVImpl Instance = new MeshViewIndicesNVImpl();
+        
+            private  MeshViewIndicesNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.MeshViewIndicesNV;
-            public new static MeshViewIndicesNV Parse(WordReader reader, uint wordCount)
+            public new static MeshViewIndicesNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the MeshViewIndicesNVImpl object.</summary>
+            /// <returns>A string that represents the MeshViewIndicesNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.MeshViewIndicesNV()";
+            }
         }
-        public class BaryCoordNV: BuiltIn
+        #endregion //MeshViewIndicesNV
+
+        #region BaryCoordNV
+        public static BaryCoordNVImpl BaryCoordNV()
         {
-            public static readonly BaryCoordNV Instance = new BaryCoordNV();
+            return BaryCoordNVImpl.Instance;
+            
+        }
+
+        public class BaryCoordNVImpl: BuiltIn
+        {
+            public static readonly BaryCoordNVImpl Instance = new BaryCoordNVImpl();
+        
+            private  BaryCoordNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNV;
-            public new static BaryCoordNV Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordNVImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordNV()";
+            }
         }
-        public class BaryCoordNoPerspNV: BuiltIn
+        #endregion //BaryCoordNV
+
+        #region BaryCoordNoPerspNV
+        public static BaryCoordNoPerspNVImpl BaryCoordNoPerspNV()
         {
-            public static readonly BaryCoordNoPerspNV Instance = new BaryCoordNoPerspNV();
+            return BaryCoordNoPerspNVImpl.Instance;
+            
+        }
+
+        public class BaryCoordNoPerspNVImpl: BuiltIn
+        {
+            public static readonly BaryCoordNoPerspNVImpl Instance = new BaryCoordNoPerspNVImpl();
+        
+            private  BaryCoordNoPerspNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.BaryCoordNoPerspNV;
-            public new static BaryCoordNoPerspNV Parse(WordReader reader, uint wordCount)
+            public new static BaryCoordNoPerspNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BaryCoordNoPerspNVImpl object.</summary>
+            /// <returns>A string that represents the BaryCoordNoPerspNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.BaryCoordNoPerspNV()";
+            }
         }
-        public class FragSizeEXT: BuiltIn
+        #endregion //BaryCoordNoPerspNV
+
+        #region FragSizeEXT
+        public static FragSizeEXTImpl FragSizeEXT()
         {
-            public static readonly FragSizeEXT Instance = new FragSizeEXT();
+            return FragSizeEXTImpl.Instance;
+            
+        }
+
+        public class FragSizeEXTImpl: BuiltIn
+        {
+            public static readonly FragSizeEXTImpl Instance = new FragSizeEXTImpl();
+        
+            private  FragSizeEXTImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FragSizeEXT;
-            public new static FragSizeEXT Parse(WordReader reader, uint wordCount)
+            public new static FragSizeEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragSizeEXTImpl object.</summary>
+            /// <returns>A string that represents the FragSizeEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FragSizeEXT()";
+            }
         }
-        public class FragmentSizeNV: BuiltIn
+        #endregion //FragSizeEXT
+
+        #region FragmentSizeNV
+        public static FragmentSizeNVImpl FragmentSizeNV()
         {
-            public static readonly FragmentSizeNV Instance = new FragmentSizeNV();
+            return FragmentSizeNVImpl.Instance;
+            
+        }
+
+        public class FragmentSizeNVImpl: BuiltIn
+        {
+            public static readonly FragmentSizeNVImpl Instance = new FragmentSizeNVImpl();
+        
+            private  FragmentSizeNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FragmentSizeNV;
-            public new static FragmentSizeNV Parse(WordReader reader, uint wordCount)
+            public new static FragmentSizeNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragmentSizeNVImpl object.</summary>
+            /// <returns>A string that represents the FragmentSizeNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FragmentSizeNV()";
+            }
         }
-        public class FragInvocationCountEXT: BuiltIn
+        #endregion //FragmentSizeNV
+
+        #region FragInvocationCountEXT
+        public static FragInvocationCountEXTImpl FragInvocationCountEXT()
         {
-            public static readonly FragInvocationCountEXT Instance = new FragInvocationCountEXT();
+            return FragInvocationCountEXTImpl.Instance;
+            
+        }
+
+        public class FragInvocationCountEXTImpl: BuiltIn
+        {
+            public static readonly FragInvocationCountEXTImpl Instance = new FragInvocationCountEXTImpl();
+        
+            private  FragInvocationCountEXTImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.FragInvocationCountEXT;
-            public new static FragInvocationCountEXT Parse(WordReader reader, uint wordCount)
+            public new static FragInvocationCountEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FragInvocationCountEXTImpl object.</summary>
+            /// <returns>A string that represents the FragInvocationCountEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.FragInvocationCountEXT()";
+            }
         }
-        public class InvocationsPerPixelNV: BuiltIn
+        #endregion //FragInvocationCountEXT
+
+        #region InvocationsPerPixelNV
+        public static InvocationsPerPixelNVImpl InvocationsPerPixelNV()
         {
-            public static readonly InvocationsPerPixelNV Instance = new InvocationsPerPixelNV();
+            return InvocationsPerPixelNVImpl.Instance;
+            
+        }
+
+        public class InvocationsPerPixelNVImpl: BuiltIn
+        {
+            public static readonly InvocationsPerPixelNVImpl Instance = new InvocationsPerPixelNVImpl();
+        
+            private  InvocationsPerPixelNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.InvocationsPerPixelNV;
-            public new static InvocationsPerPixelNV Parse(WordReader reader, uint wordCount)
+            public new static InvocationsPerPixelNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InvocationsPerPixelNVImpl object.</summary>
+            /// <returns>A string that represents the InvocationsPerPixelNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.InvocationsPerPixelNV()";
+            }
         }
-        public class LaunchIdNV: BuiltIn
+        #endregion //InvocationsPerPixelNV
+
+        #region LaunchIdNV
+        public static LaunchIdNVImpl LaunchIdNV()
         {
-            public static readonly LaunchIdNV Instance = new LaunchIdNV();
+            return LaunchIdNVImpl.Instance;
+            
+        }
+
+        public class LaunchIdNVImpl: BuiltIn
+        {
+            public static readonly LaunchIdNVImpl Instance = new LaunchIdNVImpl();
+        
+            private  LaunchIdNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LaunchIdNV;
-            public new static LaunchIdNV Parse(WordReader reader, uint wordCount)
+            public new static LaunchIdNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LaunchIdNVImpl object.</summary>
+            /// <returns>A string that represents the LaunchIdNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LaunchIdNV()";
+            }
         }
-        public class LaunchIdKHR: BuiltIn
+        #endregion //LaunchIdNV
+
+        #region LaunchIdKHR
+        public static LaunchIdKHRImpl LaunchIdKHR()
         {
-            public static readonly LaunchIdKHR Instance = new LaunchIdKHR();
+            return LaunchIdKHRImpl.Instance;
+            
+        }
+
+        public class LaunchIdKHRImpl: BuiltIn
+        {
+            public static readonly LaunchIdKHRImpl Instance = new LaunchIdKHRImpl();
+        
+            private  LaunchIdKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LaunchIdKHR;
-            public new static LaunchIdKHR Parse(WordReader reader, uint wordCount)
+            public new static LaunchIdKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LaunchIdKHRImpl object.</summary>
+            /// <returns>A string that represents the LaunchIdKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LaunchIdKHR()";
+            }
         }
-        public class LaunchSizeNV: BuiltIn
+        #endregion //LaunchIdKHR
+
+        #region LaunchSizeNV
+        public static LaunchSizeNVImpl LaunchSizeNV()
         {
-            public static readonly LaunchSizeNV Instance = new LaunchSizeNV();
+            return LaunchSizeNVImpl.Instance;
+            
+        }
+
+        public class LaunchSizeNVImpl: BuiltIn
+        {
+            public static readonly LaunchSizeNVImpl Instance = new LaunchSizeNVImpl();
+        
+            private  LaunchSizeNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LaunchSizeNV;
-            public new static LaunchSizeNV Parse(WordReader reader, uint wordCount)
+            public new static LaunchSizeNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LaunchSizeNVImpl object.</summary>
+            /// <returns>A string that represents the LaunchSizeNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LaunchSizeNV()";
+            }
         }
-        public class LaunchSizeKHR: BuiltIn
+        #endregion //LaunchSizeNV
+
+        #region LaunchSizeKHR
+        public static LaunchSizeKHRImpl LaunchSizeKHR()
         {
-            public static readonly LaunchSizeKHR Instance = new LaunchSizeKHR();
+            return LaunchSizeKHRImpl.Instance;
+            
+        }
+
+        public class LaunchSizeKHRImpl: BuiltIn
+        {
+            public static readonly LaunchSizeKHRImpl Instance = new LaunchSizeKHRImpl();
+        
+            private  LaunchSizeKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.LaunchSizeKHR;
-            public new static LaunchSizeKHR Parse(WordReader reader, uint wordCount)
+            public new static LaunchSizeKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LaunchSizeKHRImpl object.</summary>
+            /// <returns>A string that represents the LaunchSizeKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.LaunchSizeKHR()";
+            }
         }
-        public class WorldRayOriginNV: BuiltIn
+        #endregion //LaunchSizeKHR
+
+        #region WorldRayOriginNV
+        public static WorldRayOriginNVImpl WorldRayOriginNV()
         {
-            public static readonly WorldRayOriginNV Instance = new WorldRayOriginNV();
+            return WorldRayOriginNVImpl.Instance;
+            
+        }
+
+        public class WorldRayOriginNVImpl: BuiltIn
+        {
+            public static readonly WorldRayOriginNVImpl Instance = new WorldRayOriginNVImpl();
+        
+            private  WorldRayOriginNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayOriginNV;
-            public new static WorldRayOriginNV Parse(WordReader reader, uint wordCount)
+            public new static WorldRayOriginNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorldRayOriginNVImpl object.</summary>
+            /// <returns>A string that represents the WorldRayOriginNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorldRayOriginNV()";
+            }
         }
-        public class WorldRayOriginKHR: BuiltIn
+        #endregion //WorldRayOriginNV
+
+        #region WorldRayOriginKHR
+        public static WorldRayOriginKHRImpl WorldRayOriginKHR()
         {
-            public static readonly WorldRayOriginKHR Instance = new WorldRayOriginKHR();
+            return WorldRayOriginKHRImpl.Instance;
+            
+        }
+
+        public class WorldRayOriginKHRImpl: BuiltIn
+        {
+            public static readonly WorldRayOriginKHRImpl Instance = new WorldRayOriginKHRImpl();
+        
+            private  WorldRayOriginKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayOriginKHR;
-            public new static WorldRayOriginKHR Parse(WordReader reader, uint wordCount)
+            public new static WorldRayOriginKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorldRayOriginKHRImpl object.</summary>
+            /// <returns>A string that represents the WorldRayOriginKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorldRayOriginKHR()";
+            }
         }
-        public class WorldRayDirectionNV: BuiltIn
+        #endregion //WorldRayOriginKHR
+
+        #region WorldRayDirectionNV
+        public static WorldRayDirectionNVImpl WorldRayDirectionNV()
         {
-            public static readonly WorldRayDirectionNV Instance = new WorldRayDirectionNV();
+            return WorldRayDirectionNVImpl.Instance;
+            
+        }
+
+        public class WorldRayDirectionNVImpl: BuiltIn
+        {
+            public static readonly WorldRayDirectionNVImpl Instance = new WorldRayDirectionNVImpl();
+        
+            private  WorldRayDirectionNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayDirectionNV;
-            public new static WorldRayDirectionNV Parse(WordReader reader, uint wordCount)
+            public new static WorldRayDirectionNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorldRayDirectionNVImpl object.</summary>
+            /// <returns>A string that represents the WorldRayDirectionNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorldRayDirectionNV()";
+            }
         }
-        public class WorldRayDirectionKHR: BuiltIn
+        #endregion //WorldRayDirectionNV
+
+        #region WorldRayDirectionKHR
+        public static WorldRayDirectionKHRImpl WorldRayDirectionKHR()
         {
-            public static readonly WorldRayDirectionKHR Instance = new WorldRayDirectionKHR();
+            return WorldRayDirectionKHRImpl.Instance;
+            
+        }
+
+        public class WorldRayDirectionKHRImpl: BuiltIn
+        {
+            public static readonly WorldRayDirectionKHRImpl Instance = new WorldRayDirectionKHRImpl();
+        
+            private  WorldRayDirectionKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorldRayDirectionKHR;
-            public new static WorldRayDirectionKHR Parse(WordReader reader, uint wordCount)
+            public new static WorldRayDirectionKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorldRayDirectionKHRImpl object.</summary>
+            /// <returns>A string that represents the WorldRayDirectionKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorldRayDirectionKHR()";
+            }
         }
-        public class ObjectRayOriginNV: BuiltIn
+        #endregion //WorldRayDirectionKHR
+
+        #region ObjectRayOriginNV
+        public static ObjectRayOriginNVImpl ObjectRayOriginNV()
         {
-            public static readonly ObjectRayOriginNV Instance = new ObjectRayOriginNV();
+            return ObjectRayOriginNVImpl.Instance;
+            
+        }
+
+        public class ObjectRayOriginNVImpl: BuiltIn
+        {
+            public static readonly ObjectRayOriginNVImpl Instance = new ObjectRayOriginNVImpl();
+        
+            private  ObjectRayOriginNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayOriginNV;
-            public new static ObjectRayOriginNV Parse(WordReader reader, uint wordCount)
+            public new static ObjectRayOriginNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ObjectRayOriginNVImpl object.</summary>
+            /// <returns>A string that represents the ObjectRayOriginNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ObjectRayOriginNV()";
+            }
         }
-        public class ObjectRayOriginKHR: BuiltIn
+        #endregion //ObjectRayOriginNV
+
+        #region ObjectRayOriginKHR
+        public static ObjectRayOriginKHRImpl ObjectRayOriginKHR()
         {
-            public static readonly ObjectRayOriginKHR Instance = new ObjectRayOriginKHR();
+            return ObjectRayOriginKHRImpl.Instance;
+            
+        }
+
+        public class ObjectRayOriginKHRImpl: BuiltIn
+        {
+            public static readonly ObjectRayOriginKHRImpl Instance = new ObjectRayOriginKHRImpl();
+        
+            private  ObjectRayOriginKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayOriginKHR;
-            public new static ObjectRayOriginKHR Parse(WordReader reader, uint wordCount)
+            public new static ObjectRayOriginKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ObjectRayOriginKHRImpl object.</summary>
+            /// <returns>A string that represents the ObjectRayOriginKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ObjectRayOriginKHR()";
+            }
         }
-        public class ObjectRayDirectionNV: BuiltIn
+        #endregion //ObjectRayOriginKHR
+
+        #region ObjectRayDirectionNV
+        public static ObjectRayDirectionNVImpl ObjectRayDirectionNV()
         {
-            public static readonly ObjectRayDirectionNV Instance = new ObjectRayDirectionNV();
+            return ObjectRayDirectionNVImpl.Instance;
+            
+        }
+
+        public class ObjectRayDirectionNVImpl: BuiltIn
+        {
+            public static readonly ObjectRayDirectionNVImpl Instance = new ObjectRayDirectionNVImpl();
+        
+            private  ObjectRayDirectionNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayDirectionNV;
-            public new static ObjectRayDirectionNV Parse(WordReader reader, uint wordCount)
+            public new static ObjectRayDirectionNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ObjectRayDirectionNVImpl object.</summary>
+            /// <returns>A string that represents the ObjectRayDirectionNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ObjectRayDirectionNV()";
+            }
         }
-        public class ObjectRayDirectionKHR: BuiltIn
+        #endregion //ObjectRayDirectionNV
+
+        #region ObjectRayDirectionKHR
+        public static ObjectRayDirectionKHRImpl ObjectRayDirectionKHR()
         {
-            public static readonly ObjectRayDirectionKHR Instance = new ObjectRayDirectionKHR();
+            return ObjectRayDirectionKHRImpl.Instance;
+            
+        }
+
+        public class ObjectRayDirectionKHRImpl: BuiltIn
+        {
+            public static readonly ObjectRayDirectionKHRImpl Instance = new ObjectRayDirectionKHRImpl();
+        
+            private  ObjectRayDirectionKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ObjectRayDirectionKHR;
-            public new static ObjectRayDirectionKHR Parse(WordReader reader, uint wordCount)
+            public new static ObjectRayDirectionKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ObjectRayDirectionKHRImpl object.</summary>
+            /// <returns>A string that represents the ObjectRayDirectionKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ObjectRayDirectionKHR()";
+            }
         }
-        public class RayTminNV: BuiltIn
+        #endregion //ObjectRayDirectionKHR
+
+        #region RayTminNV
+        public static RayTminNVImpl RayTminNV()
         {
-            public static readonly RayTminNV Instance = new RayTminNV();
+            return RayTminNVImpl.Instance;
+            
+        }
+
+        public class RayTminNVImpl: BuiltIn
+        {
+            public static readonly RayTminNVImpl Instance = new RayTminNVImpl();
+        
+            private  RayTminNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.RayTminNV;
-            public new static RayTminNV Parse(WordReader reader, uint wordCount)
+            public new static RayTminNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTminNVImpl object.</summary>
+            /// <returns>A string that represents the RayTminNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.RayTminNV()";
+            }
         }
-        public class RayTminKHR: BuiltIn
+        #endregion //RayTminNV
+
+        #region RayTminKHR
+        public static RayTminKHRImpl RayTminKHR()
         {
-            public static readonly RayTminKHR Instance = new RayTminKHR();
+            return RayTminKHRImpl.Instance;
+            
+        }
+
+        public class RayTminKHRImpl: BuiltIn
+        {
+            public static readonly RayTminKHRImpl Instance = new RayTminKHRImpl();
+        
+            private  RayTminKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.RayTminKHR;
-            public new static RayTminKHR Parse(WordReader reader, uint wordCount)
+            public new static RayTminKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTminKHRImpl object.</summary>
+            /// <returns>A string that represents the RayTminKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.RayTminKHR()";
+            }
         }
-        public class RayTmaxNV: BuiltIn
+        #endregion //RayTminKHR
+
+        #region RayTmaxNV
+        public static RayTmaxNVImpl RayTmaxNV()
         {
-            public static readonly RayTmaxNV Instance = new RayTmaxNV();
+            return RayTmaxNVImpl.Instance;
+            
+        }
+
+        public class RayTmaxNVImpl: BuiltIn
+        {
+            public static readonly RayTmaxNVImpl Instance = new RayTmaxNVImpl();
+        
+            private  RayTmaxNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.RayTmaxNV;
-            public new static RayTmaxNV Parse(WordReader reader, uint wordCount)
+            public new static RayTmaxNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTmaxNVImpl object.</summary>
+            /// <returns>A string that represents the RayTmaxNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.RayTmaxNV()";
+            }
         }
-        public class RayTmaxKHR: BuiltIn
+        #endregion //RayTmaxNV
+
+        #region RayTmaxKHR
+        public static RayTmaxKHRImpl RayTmaxKHR()
         {
-            public static readonly RayTmaxKHR Instance = new RayTmaxKHR();
+            return RayTmaxKHRImpl.Instance;
+            
+        }
+
+        public class RayTmaxKHRImpl: BuiltIn
+        {
+            public static readonly RayTmaxKHRImpl Instance = new RayTmaxKHRImpl();
+        
+            private  RayTmaxKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.RayTmaxKHR;
-            public new static RayTmaxKHR Parse(WordReader reader, uint wordCount)
+            public new static RayTmaxKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayTmaxKHRImpl object.</summary>
+            /// <returns>A string that represents the RayTmaxKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.RayTmaxKHR()";
+            }
         }
-        public class InstanceCustomIndexNV: BuiltIn
+        #endregion //RayTmaxKHR
+
+        #region InstanceCustomIndexNV
+        public static InstanceCustomIndexNVImpl InstanceCustomIndexNV()
         {
-            public static readonly InstanceCustomIndexNV Instance = new InstanceCustomIndexNV();
+            return InstanceCustomIndexNVImpl.Instance;
+            
+        }
+
+        public class InstanceCustomIndexNVImpl: BuiltIn
+        {
+            public static readonly InstanceCustomIndexNVImpl Instance = new InstanceCustomIndexNVImpl();
+        
+            private  InstanceCustomIndexNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.InstanceCustomIndexNV;
-            public new static InstanceCustomIndexNV Parse(WordReader reader, uint wordCount)
+            public new static InstanceCustomIndexNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InstanceCustomIndexNVImpl object.</summary>
+            /// <returns>A string that represents the InstanceCustomIndexNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.InstanceCustomIndexNV()";
+            }
         }
-        public class InstanceCustomIndexKHR: BuiltIn
+        #endregion //InstanceCustomIndexNV
+
+        #region InstanceCustomIndexKHR
+        public static InstanceCustomIndexKHRImpl InstanceCustomIndexKHR()
         {
-            public static readonly InstanceCustomIndexKHR Instance = new InstanceCustomIndexKHR();
+            return InstanceCustomIndexKHRImpl.Instance;
+            
+        }
+
+        public class InstanceCustomIndexKHRImpl: BuiltIn
+        {
+            public static readonly InstanceCustomIndexKHRImpl Instance = new InstanceCustomIndexKHRImpl();
+        
+            private  InstanceCustomIndexKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.InstanceCustomIndexKHR;
-            public new static InstanceCustomIndexKHR Parse(WordReader reader, uint wordCount)
+            public new static InstanceCustomIndexKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InstanceCustomIndexKHRImpl object.</summary>
+            /// <returns>A string that represents the InstanceCustomIndexKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.InstanceCustomIndexKHR()";
+            }
         }
-        public class ObjectToWorldNV: BuiltIn
+        #endregion //InstanceCustomIndexKHR
+
+        #region ObjectToWorldNV
+        public static ObjectToWorldNVImpl ObjectToWorldNV()
         {
-            public static readonly ObjectToWorldNV Instance = new ObjectToWorldNV();
+            return ObjectToWorldNVImpl.Instance;
+            
+        }
+
+        public class ObjectToWorldNVImpl: BuiltIn
+        {
+            public static readonly ObjectToWorldNVImpl Instance = new ObjectToWorldNVImpl();
+        
+            private  ObjectToWorldNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ObjectToWorldNV;
-            public new static ObjectToWorldNV Parse(WordReader reader, uint wordCount)
+            public new static ObjectToWorldNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ObjectToWorldNVImpl object.</summary>
+            /// <returns>A string that represents the ObjectToWorldNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ObjectToWorldNV()";
+            }
         }
-        public class ObjectToWorldKHR: BuiltIn
+        #endregion //ObjectToWorldNV
+
+        #region ObjectToWorldKHR
+        public static ObjectToWorldKHRImpl ObjectToWorldKHR()
         {
-            public static readonly ObjectToWorldKHR Instance = new ObjectToWorldKHR();
+            return ObjectToWorldKHRImpl.Instance;
+            
+        }
+
+        public class ObjectToWorldKHRImpl: BuiltIn
+        {
+            public static readonly ObjectToWorldKHRImpl Instance = new ObjectToWorldKHRImpl();
+        
+            private  ObjectToWorldKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.ObjectToWorldKHR;
-            public new static ObjectToWorldKHR Parse(WordReader reader, uint wordCount)
+            public new static ObjectToWorldKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ObjectToWorldKHRImpl object.</summary>
+            /// <returns>A string that represents the ObjectToWorldKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.ObjectToWorldKHR()";
+            }
         }
-        public class WorldToObjectNV: BuiltIn
+        #endregion //ObjectToWorldKHR
+
+        #region WorldToObjectNV
+        public static WorldToObjectNVImpl WorldToObjectNV()
         {
-            public static readonly WorldToObjectNV Instance = new WorldToObjectNV();
+            return WorldToObjectNVImpl.Instance;
+            
+        }
+
+        public class WorldToObjectNVImpl: BuiltIn
+        {
+            public static readonly WorldToObjectNVImpl Instance = new WorldToObjectNVImpl();
+        
+            private  WorldToObjectNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorldToObjectNV;
-            public new static WorldToObjectNV Parse(WordReader reader, uint wordCount)
+            public new static WorldToObjectNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorldToObjectNVImpl object.</summary>
+            /// <returns>A string that represents the WorldToObjectNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorldToObjectNV()";
+            }
         }
-        public class WorldToObjectKHR: BuiltIn
+        #endregion //WorldToObjectNV
+
+        #region WorldToObjectKHR
+        public static WorldToObjectKHRImpl WorldToObjectKHR()
         {
-            public static readonly WorldToObjectKHR Instance = new WorldToObjectKHR();
+            return WorldToObjectKHRImpl.Instance;
+            
+        }
+
+        public class WorldToObjectKHRImpl: BuiltIn
+        {
+            public static readonly WorldToObjectKHRImpl Instance = new WorldToObjectKHRImpl();
+        
+            private  WorldToObjectKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WorldToObjectKHR;
-            public new static WorldToObjectKHR Parse(WordReader reader, uint wordCount)
+            public new static WorldToObjectKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorldToObjectKHRImpl object.</summary>
+            /// <returns>A string that represents the WorldToObjectKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WorldToObjectKHR()";
+            }
         }
-        public class HitTNV: BuiltIn
+        #endregion //WorldToObjectKHR
+
+        #region HitTNV
+        public static HitTNVImpl HitTNV()
         {
-            public static readonly HitTNV Instance = new HitTNV();
+            return HitTNVImpl.Instance;
+            
+        }
+
+        public class HitTNVImpl: BuiltIn
+        {
+            public static readonly HitTNVImpl Instance = new HitTNVImpl();
+        
+            private  HitTNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.HitTNV;
-            public new static HitTNV Parse(WordReader reader, uint wordCount)
+            public new static HitTNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HitTNVImpl object.</summary>
+            /// <returns>A string that represents the HitTNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.HitTNV()";
+            }
         }
-        public class HitTKHR: BuiltIn
+        #endregion //HitTNV
+
+        #region HitTKHR
+        public static HitTKHRImpl HitTKHR()
         {
-            public static readonly HitTKHR Instance = new HitTKHR();
+            return HitTKHRImpl.Instance;
+            
+        }
+
+        public class HitTKHRImpl: BuiltIn
+        {
+            public static readonly HitTKHRImpl Instance = new HitTKHRImpl();
+        
+            private  HitTKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.HitTKHR;
-            public new static HitTKHR Parse(WordReader reader, uint wordCount)
+            public new static HitTKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HitTKHRImpl object.</summary>
+            /// <returns>A string that represents the HitTKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.HitTKHR()";
+            }
         }
-        public class HitKindNV: BuiltIn
+        #endregion //HitTKHR
+
+        #region HitKindNV
+        public static HitKindNVImpl HitKindNV()
         {
-            public static readonly HitKindNV Instance = new HitKindNV();
+            return HitKindNVImpl.Instance;
+            
+        }
+
+        public class HitKindNVImpl: BuiltIn
+        {
+            public static readonly HitKindNVImpl Instance = new HitKindNVImpl();
+        
+            private  HitKindNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.HitKindNV;
-            public new static HitKindNV Parse(WordReader reader, uint wordCount)
+            public new static HitKindNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HitKindNVImpl object.</summary>
+            /// <returns>A string that represents the HitKindNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.HitKindNV()";
+            }
         }
-        public class HitKindKHR: BuiltIn
+        #endregion //HitKindNV
+
+        #region HitKindKHR
+        public static HitKindKHRImpl HitKindKHR()
         {
-            public static readonly HitKindKHR Instance = new HitKindKHR();
+            return HitKindKHRImpl.Instance;
+            
+        }
+
+        public class HitKindKHRImpl: BuiltIn
+        {
+            public static readonly HitKindKHRImpl Instance = new HitKindKHRImpl();
+        
+            private  HitKindKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.HitKindKHR;
-            public new static HitKindKHR Parse(WordReader reader, uint wordCount)
+            public new static HitKindKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HitKindKHRImpl object.</summary>
+            /// <returns>A string that represents the HitKindKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.HitKindKHR()";
+            }
         }
-        public class IncomingRayFlagsNV: BuiltIn
+        #endregion //HitKindKHR
+
+        #region IncomingRayFlagsNV
+        public static IncomingRayFlagsNVImpl IncomingRayFlagsNV()
         {
-            public static readonly IncomingRayFlagsNV Instance = new IncomingRayFlagsNV();
+            return IncomingRayFlagsNVImpl.Instance;
+            
+        }
+
+        public class IncomingRayFlagsNVImpl: BuiltIn
+        {
+            public static readonly IncomingRayFlagsNVImpl Instance = new IncomingRayFlagsNVImpl();
+        
+            private  IncomingRayFlagsNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.IncomingRayFlagsNV;
-            public new static IncomingRayFlagsNV Parse(WordReader reader, uint wordCount)
+            public new static IncomingRayFlagsNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IncomingRayFlagsNVImpl object.</summary>
+            /// <returns>A string that represents the IncomingRayFlagsNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.IncomingRayFlagsNV()";
+            }
         }
-        public class IncomingRayFlagsKHR: BuiltIn
+        #endregion //IncomingRayFlagsNV
+
+        #region IncomingRayFlagsKHR
+        public static IncomingRayFlagsKHRImpl IncomingRayFlagsKHR()
         {
-            public static readonly IncomingRayFlagsKHR Instance = new IncomingRayFlagsKHR();
+            return IncomingRayFlagsKHRImpl.Instance;
+            
+        }
+
+        public class IncomingRayFlagsKHRImpl: BuiltIn
+        {
+            public static readonly IncomingRayFlagsKHRImpl Instance = new IncomingRayFlagsKHRImpl();
+        
+            private  IncomingRayFlagsKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.IncomingRayFlagsKHR;
-            public new static IncomingRayFlagsKHR Parse(WordReader reader, uint wordCount)
+            public new static IncomingRayFlagsKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IncomingRayFlagsKHRImpl object.</summary>
+            /// <returns>A string that represents the IncomingRayFlagsKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.IncomingRayFlagsKHR()";
+            }
         }
-        public class RayGeometryIndexKHR: BuiltIn
+        #endregion //IncomingRayFlagsKHR
+
+        #region RayGeometryIndexKHR
+        public static RayGeometryIndexKHRImpl RayGeometryIndexKHR()
         {
-            public static readonly RayGeometryIndexKHR Instance = new RayGeometryIndexKHR();
+            return RayGeometryIndexKHRImpl.Instance;
+            
+        }
+
+        public class RayGeometryIndexKHRImpl: BuiltIn
+        {
+            public static readonly RayGeometryIndexKHRImpl Instance = new RayGeometryIndexKHRImpl();
+        
+            private  RayGeometryIndexKHRImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.RayGeometryIndexKHR;
-            public new static RayGeometryIndexKHR Parse(WordReader reader, uint wordCount)
+            public new static RayGeometryIndexKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RayGeometryIndexKHRImpl object.</summary>
+            /// <returns>A string that represents the RayGeometryIndexKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.RayGeometryIndexKHR()";
+            }
         }
-        public class WarpsPerSMNV: BuiltIn
+        #endregion //RayGeometryIndexKHR
+
+        #region WarpsPerSMNV
+        public static WarpsPerSMNVImpl WarpsPerSMNV()
         {
-            public static readonly WarpsPerSMNV Instance = new WarpsPerSMNV();
+            return WarpsPerSMNVImpl.Instance;
+            
+        }
+
+        public class WarpsPerSMNVImpl: BuiltIn
+        {
+            public static readonly WarpsPerSMNVImpl Instance = new WarpsPerSMNVImpl();
+        
+            private  WarpsPerSMNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WarpsPerSMNV;
-            public new static WarpsPerSMNV Parse(WordReader reader, uint wordCount)
+            public new static WarpsPerSMNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WarpsPerSMNVImpl object.</summary>
+            /// <returns>A string that represents the WarpsPerSMNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WarpsPerSMNV()";
+            }
         }
-        public class SMCountNV: BuiltIn
+        #endregion //WarpsPerSMNV
+
+        #region SMCountNV
+        public static SMCountNVImpl SMCountNV()
         {
-            public static readonly SMCountNV Instance = new SMCountNV();
+            return SMCountNVImpl.Instance;
+            
+        }
+
+        public class SMCountNVImpl: BuiltIn
+        {
+            public static readonly SMCountNVImpl Instance = new SMCountNVImpl();
+        
+            private  SMCountNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SMCountNV;
-            public new static SMCountNV Parse(WordReader reader, uint wordCount)
+            public new static SMCountNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SMCountNVImpl object.</summary>
+            /// <returns>A string that represents the SMCountNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SMCountNV()";
+            }
         }
-        public class WarpIDNV: BuiltIn
+        #endregion //SMCountNV
+
+        #region WarpIDNV
+        public static WarpIDNVImpl WarpIDNV()
         {
-            public static readonly WarpIDNV Instance = new WarpIDNV();
+            return WarpIDNVImpl.Instance;
+            
+        }
+
+        public class WarpIDNVImpl: BuiltIn
+        {
+            public static readonly WarpIDNVImpl Instance = new WarpIDNVImpl();
+        
+            private  WarpIDNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.WarpIDNV;
-            public new static WarpIDNV Parse(WordReader reader, uint wordCount)
+            public new static WarpIDNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WarpIDNVImpl object.</summary>
+            /// <returns>A string that represents the WarpIDNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.WarpIDNV()";
+            }
         }
-        public class SMIDNV: BuiltIn
+        #endregion //WarpIDNV
+
+        #region SMIDNV
+        public static SMIDNVImpl SMIDNV()
         {
-            public static readonly SMIDNV Instance = new SMIDNV();
+            return SMIDNVImpl.Instance;
+            
+        }
+
+        public class SMIDNVImpl: BuiltIn
+        {
+            public static readonly SMIDNVImpl Instance = new SMIDNVImpl();
+        
+            private  SMIDNVImpl()
+            {
+            }
             public override Enumerant Value => BuiltIn.Enumerant.SMIDNV;
-            public new static SMIDNV Parse(WordReader reader, uint wordCount)
+            public new static SMIDNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SMIDNVImpl object.</summary>
+            /// <returns>A string that represents the SMIDNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" BuiltIn.SMIDNV()";
+            }
         }
+        #endregion //SMIDNV
 
         public abstract Enumerant Value { get; }
 
@@ -1352,97 +3808,97 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Position :
-                    return Position.Parse(reader, wordCount - 1);
+                    return PositionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PointSize :
-                    return PointSize.Parse(reader, wordCount - 1);
+                    return PointSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ClipDistance :
-                    return ClipDistance.Parse(reader, wordCount - 1);
+                    return ClipDistanceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CullDistance :
-                    return CullDistance.Parse(reader, wordCount - 1);
+                    return CullDistanceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VertexId :
-                    return VertexId.Parse(reader, wordCount - 1);
+                    return VertexIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InstanceId :
-                    return InstanceId.Parse(reader, wordCount - 1);
+                    return InstanceIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PrimitiveId :
-                    return PrimitiveId.Parse(reader, wordCount - 1);
+                    return PrimitiveIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InvocationId :
-                    return InvocationId.Parse(reader, wordCount - 1);
+                    return InvocationIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Layer :
-                    return Layer.Parse(reader, wordCount - 1);
+                    return LayerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ViewportIndex :
-                    return ViewportIndex.Parse(reader, wordCount - 1);
+                    return ViewportIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TessLevelOuter :
-                    return TessLevelOuter.Parse(reader, wordCount - 1);
+                    return TessLevelOuterImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TessLevelInner :
-                    return TessLevelInner.Parse(reader, wordCount - 1);
+                    return TessLevelInnerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TessCoord :
-                    return TessCoord.Parse(reader, wordCount - 1);
+                    return TessCoordImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PatchVertices :
-                    return PatchVertices.Parse(reader, wordCount - 1);
+                    return PatchVerticesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragCoord :
-                    return FragCoord.Parse(reader, wordCount - 1);
+                    return FragCoordImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PointCoord :
-                    return PointCoord.Parse(reader, wordCount - 1);
+                    return PointCoordImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FrontFacing :
-                    return FrontFacing.Parse(reader, wordCount - 1);
+                    return FrontFacingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleId :
-                    return SampleId.Parse(reader, wordCount - 1);
+                    return SampleIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SamplePosition :
-                    return SamplePosition.Parse(reader, wordCount - 1);
+                    return SamplePositionImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleMask :
-                    return SampleMask.Parse(reader, wordCount - 1);
+                    return SampleMaskImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragDepth :
-                    return FragDepth.Parse(reader, wordCount - 1);
+                    return FragDepthImpl.Parse(reader, wordCount - 1);
                 case Enumerant.HelperInvocation :
-                    return HelperInvocation.Parse(reader, wordCount - 1);
+                    return HelperInvocationImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NumWorkgroups :
-                    return NumWorkgroups.Parse(reader, wordCount - 1);
+                    return NumWorkgroupsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WorkgroupSize :
-                    return WorkgroupSize.Parse(reader, wordCount - 1);
+                    return WorkgroupSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WorkgroupId :
-                    return WorkgroupId.Parse(reader, wordCount - 1);
+                    return WorkgroupIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LocalInvocationId :
-                    return LocalInvocationId.Parse(reader, wordCount - 1);
+                    return LocalInvocationIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GlobalInvocationId :
-                    return GlobalInvocationId.Parse(reader, wordCount - 1);
+                    return GlobalInvocationIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LocalInvocationIndex :
-                    return LocalInvocationIndex.Parse(reader, wordCount - 1);
+                    return LocalInvocationIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WorkDim :
-                    return WorkDim.Parse(reader, wordCount - 1);
+                    return WorkDimImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GlobalSize :
-                    return GlobalSize.Parse(reader, wordCount - 1);
+                    return GlobalSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.EnqueuedWorkgroupSize :
-                    return EnqueuedWorkgroupSize.Parse(reader, wordCount - 1);
+                    return EnqueuedWorkgroupSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GlobalOffset :
-                    return GlobalOffset.Parse(reader, wordCount - 1);
+                    return GlobalOffsetImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GlobalLinearId :
-                    return GlobalLinearId.Parse(reader, wordCount - 1);
+                    return GlobalLinearIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupSize :
-                    return SubgroupSize.Parse(reader, wordCount - 1);
+                    return SubgroupSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupMaxSize :
-                    return SubgroupMaxSize.Parse(reader, wordCount - 1);
+                    return SubgroupMaxSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NumSubgroups :
-                    return NumSubgroups.Parse(reader, wordCount - 1);
+                    return NumSubgroupsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NumEnqueuedSubgroups :
-                    return NumEnqueuedSubgroups.Parse(reader, wordCount - 1);
+                    return NumEnqueuedSubgroupsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupId :
-                    return SubgroupId.Parse(reader, wordCount - 1);
+                    return SubgroupIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupLocalInvocationId :
-                    return SubgroupLocalInvocationId.Parse(reader, wordCount - 1);
+                    return SubgroupLocalInvocationIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VertexIndex :
-                    return VertexIndex.Parse(reader, wordCount - 1);
+                    return VertexIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InstanceIndex :
-                    return InstanceIndex.Parse(reader, wordCount - 1);
+                    return InstanceIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupEqMask :
-                    return SubgroupEqMask.Parse(reader, wordCount - 1);
+                    return SubgroupEqMaskImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupGeMask :
-                    return SubgroupGeMask.Parse(reader, wordCount - 1);
+                    return SubgroupGeMaskImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupGtMask :
-                    return SubgroupGtMask.Parse(reader, wordCount - 1);
+                    return SubgroupGtMaskImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupLeMask :
-                    return SubgroupLeMask.Parse(reader, wordCount - 1);
+                    return SubgroupLeMaskImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupLtMask :
-                    return SubgroupLtMask.Parse(reader, wordCount - 1);
+                    return SubgroupLtMaskImpl.Parse(reader, wordCount - 1);
                 //SubgroupEqMaskKHR has the same id as another value in enum.
                 //case Enumerant.SubgroupEqMaskKHR :
                 //    return SubgroupEqMaskKHR.Parse(reader, wordCount - 1);
@@ -1459,153 +3915,153 @@ namespace Toe.SPIRV.Spv
                 //case Enumerant.SubgroupLtMaskKHR :
                 //    return SubgroupLtMaskKHR.Parse(reader, wordCount - 1);
                 case Enumerant.BaseVertex :
-                    return BaseVertex.Parse(reader, wordCount - 1);
+                    return BaseVertexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaseInstance :
-                    return BaseInstance.Parse(reader, wordCount - 1);
+                    return BaseInstanceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DrawIndex :
-                    return DrawIndex.Parse(reader, wordCount - 1);
+                    return DrawIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DeviceIndex :
-                    return DeviceIndex.Parse(reader, wordCount - 1);
+                    return DeviceIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ViewIndex :
-                    return ViewIndex.Parse(reader, wordCount - 1);
+                    return ViewIndexImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordNoPerspAMD :
-                    return BaryCoordNoPerspAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordNoPerspAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordNoPerspCentroidAMD :
-                    return BaryCoordNoPerspCentroidAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordNoPerspCentroidAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordNoPerspSampleAMD :
-                    return BaryCoordNoPerspSampleAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordNoPerspSampleAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordSmoothAMD :
-                    return BaryCoordSmoothAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordSmoothAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordSmoothCentroidAMD :
-                    return BaryCoordSmoothCentroidAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordSmoothCentroidAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordSmoothSampleAMD :
-                    return BaryCoordSmoothSampleAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordSmoothSampleAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordPullModelAMD :
-                    return BaryCoordPullModelAMD.Parse(reader, wordCount - 1);
+                    return BaryCoordPullModelAMDImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragStencilRefEXT :
-                    return FragStencilRefEXT.Parse(reader, wordCount - 1);
+                    return FragStencilRefEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ViewportMaskNV :
-                    return ViewportMaskNV.Parse(reader, wordCount - 1);
+                    return ViewportMaskNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SecondaryPositionNV :
-                    return SecondaryPositionNV.Parse(reader, wordCount - 1);
+                    return SecondaryPositionNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SecondaryViewportMaskNV :
-                    return SecondaryViewportMaskNV.Parse(reader, wordCount - 1);
+                    return SecondaryViewportMaskNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PositionPerViewNV :
-                    return PositionPerViewNV.Parse(reader, wordCount - 1);
+                    return PositionPerViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ViewportMaskPerViewNV :
-                    return ViewportMaskPerViewNV.Parse(reader, wordCount - 1);
+                    return ViewportMaskPerViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FullyCoveredEXT :
-                    return FullyCoveredEXT.Parse(reader, wordCount - 1);
+                    return FullyCoveredEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.TaskCountNV :
-                    return TaskCountNV.Parse(reader, wordCount - 1);
+                    return TaskCountNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PrimitiveCountNV :
-                    return PrimitiveCountNV.Parse(reader, wordCount - 1);
+                    return PrimitiveCountNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PrimitiveIndicesNV :
-                    return PrimitiveIndicesNV.Parse(reader, wordCount - 1);
+                    return PrimitiveIndicesNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ClipDistancePerViewNV :
-                    return ClipDistancePerViewNV.Parse(reader, wordCount - 1);
+                    return ClipDistancePerViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.CullDistancePerViewNV :
-                    return CullDistancePerViewNV.Parse(reader, wordCount - 1);
+                    return CullDistancePerViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LayerPerViewNV :
-                    return LayerPerViewNV.Parse(reader, wordCount - 1);
+                    return LayerPerViewNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MeshViewCountNV :
-                    return MeshViewCountNV.Parse(reader, wordCount - 1);
+                    return MeshViewCountNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.MeshViewIndicesNV :
-                    return MeshViewIndicesNV.Parse(reader, wordCount - 1);
+                    return MeshViewIndicesNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordNV :
-                    return BaryCoordNV.Parse(reader, wordCount - 1);
+                    return BaryCoordNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BaryCoordNoPerspNV :
-                    return BaryCoordNoPerspNV.Parse(reader, wordCount - 1);
+                    return BaryCoordNoPerspNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.FragSizeEXT :
-                    return FragSizeEXT.Parse(reader, wordCount - 1);
+                    return FragSizeEXTImpl.Parse(reader, wordCount - 1);
                 //FragmentSizeNV has the same id as another value in enum.
                 //case Enumerant.FragmentSizeNV :
                 //    return FragmentSizeNV.Parse(reader, wordCount - 1);
                 case Enumerant.FragInvocationCountEXT :
-                    return FragInvocationCountEXT.Parse(reader, wordCount - 1);
+                    return FragInvocationCountEXTImpl.Parse(reader, wordCount - 1);
                 //InvocationsPerPixelNV has the same id as another value in enum.
                 //case Enumerant.InvocationsPerPixelNV :
                 //    return InvocationsPerPixelNV.Parse(reader, wordCount - 1);
                 case Enumerant.LaunchIdNV :
-                    return LaunchIdNV.Parse(reader, wordCount - 1);
+                    return LaunchIdNVImpl.Parse(reader, wordCount - 1);
                 //LaunchIdKHR has the same id as another value in enum.
                 //case Enumerant.LaunchIdKHR :
                 //    return LaunchIdKHR.Parse(reader, wordCount - 1);
                 case Enumerant.LaunchSizeNV :
-                    return LaunchSizeNV.Parse(reader, wordCount - 1);
+                    return LaunchSizeNVImpl.Parse(reader, wordCount - 1);
                 //LaunchSizeKHR has the same id as another value in enum.
                 //case Enumerant.LaunchSizeKHR :
                 //    return LaunchSizeKHR.Parse(reader, wordCount - 1);
                 case Enumerant.WorldRayOriginNV :
-                    return WorldRayOriginNV.Parse(reader, wordCount - 1);
+                    return WorldRayOriginNVImpl.Parse(reader, wordCount - 1);
                 //WorldRayOriginKHR has the same id as another value in enum.
                 //case Enumerant.WorldRayOriginKHR :
                 //    return WorldRayOriginKHR.Parse(reader, wordCount - 1);
                 case Enumerant.WorldRayDirectionNV :
-                    return WorldRayDirectionNV.Parse(reader, wordCount - 1);
+                    return WorldRayDirectionNVImpl.Parse(reader, wordCount - 1);
                 //WorldRayDirectionKHR has the same id as another value in enum.
                 //case Enumerant.WorldRayDirectionKHR :
                 //    return WorldRayDirectionKHR.Parse(reader, wordCount - 1);
                 case Enumerant.ObjectRayOriginNV :
-                    return ObjectRayOriginNV.Parse(reader, wordCount - 1);
+                    return ObjectRayOriginNVImpl.Parse(reader, wordCount - 1);
                 //ObjectRayOriginKHR has the same id as another value in enum.
                 //case Enumerant.ObjectRayOriginKHR :
                 //    return ObjectRayOriginKHR.Parse(reader, wordCount - 1);
                 case Enumerant.ObjectRayDirectionNV :
-                    return ObjectRayDirectionNV.Parse(reader, wordCount - 1);
+                    return ObjectRayDirectionNVImpl.Parse(reader, wordCount - 1);
                 //ObjectRayDirectionKHR has the same id as another value in enum.
                 //case Enumerant.ObjectRayDirectionKHR :
                 //    return ObjectRayDirectionKHR.Parse(reader, wordCount - 1);
                 case Enumerant.RayTminNV :
-                    return RayTminNV.Parse(reader, wordCount - 1);
+                    return RayTminNVImpl.Parse(reader, wordCount - 1);
                 //RayTminKHR has the same id as another value in enum.
                 //case Enumerant.RayTminKHR :
                 //    return RayTminKHR.Parse(reader, wordCount - 1);
                 case Enumerant.RayTmaxNV :
-                    return RayTmaxNV.Parse(reader, wordCount - 1);
+                    return RayTmaxNVImpl.Parse(reader, wordCount - 1);
                 //RayTmaxKHR has the same id as another value in enum.
                 //case Enumerant.RayTmaxKHR :
                 //    return RayTmaxKHR.Parse(reader, wordCount - 1);
                 case Enumerant.InstanceCustomIndexNV :
-                    return InstanceCustomIndexNV.Parse(reader, wordCount - 1);
+                    return InstanceCustomIndexNVImpl.Parse(reader, wordCount - 1);
                 //InstanceCustomIndexKHR has the same id as another value in enum.
                 //case Enumerant.InstanceCustomIndexKHR :
                 //    return InstanceCustomIndexKHR.Parse(reader, wordCount - 1);
                 case Enumerant.ObjectToWorldNV :
-                    return ObjectToWorldNV.Parse(reader, wordCount - 1);
+                    return ObjectToWorldNVImpl.Parse(reader, wordCount - 1);
                 //ObjectToWorldKHR has the same id as another value in enum.
                 //case Enumerant.ObjectToWorldKHR :
                 //    return ObjectToWorldKHR.Parse(reader, wordCount - 1);
                 case Enumerant.WorldToObjectNV :
-                    return WorldToObjectNV.Parse(reader, wordCount - 1);
+                    return WorldToObjectNVImpl.Parse(reader, wordCount - 1);
                 //WorldToObjectKHR has the same id as another value in enum.
                 //case Enumerant.WorldToObjectKHR :
                 //    return WorldToObjectKHR.Parse(reader, wordCount - 1);
                 case Enumerant.HitTNV :
-                    return HitTNV.Parse(reader, wordCount - 1);
+                    return HitTNVImpl.Parse(reader, wordCount - 1);
                 //HitTKHR has the same id as another value in enum.
                 //case Enumerant.HitTKHR :
                 //    return HitTKHR.Parse(reader, wordCount - 1);
                 case Enumerant.HitKindNV :
-                    return HitKindNV.Parse(reader, wordCount - 1);
+                    return HitKindNVImpl.Parse(reader, wordCount - 1);
                 //HitKindKHR has the same id as another value in enum.
                 //case Enumerant.HitKindKHR :
                 //    return HitKindKHR.Parse(reader, wordCount - 1);
                 case Enumerant.IncomingRayFlagsNV :
-                    return IncomingRayFlagsNV.Parse(reader, wordCount - 1);
+                    return IncomingRayFlagsNVImpl.Parse(reader, wordCount - 1);
                 //IncomingRayFlagsKHR has the same id as another value in enum.
                 //case Enumerant.IncomingRayFlagsKHR :
                 //    return IncomingRayFlagsKHR.Parse(reader, wordCount - 1);
                 case Enumerant.RayGeometryIndexKHR :
-                    return RayGeometryIndexKHR.Parse(reader, wordCount - 1);
+                    return RayGeometryIndexKHRImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WarpsPerSMNV :
-                    return WarpsPerSMNV.Parse(reader, wordCount - 1);
+                    return WarpsPerSMNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SMCountNV :
-                    return SMCountNV.Parse(reader, wordCount - 1);
+                    return SMCountNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.WarpIDNV :
-                    return WarpIDNV.Parse(reader, wordCount - 1);
+                    return WarpIDNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SMIDNV :
-                    return SMIDNV.Parse(reader, wordCount - 1);
+                    return SMIDNVImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown BuiltIn "+id);
             }

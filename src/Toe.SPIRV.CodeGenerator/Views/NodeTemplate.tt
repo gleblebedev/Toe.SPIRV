@@ -18,13 +18,41 @@ namespace Toe.SPIRV.Reflection.Nodes
         public <#= name #>()
         {
         }
+<#
+{
+#>
+
+        public <#= name #>(<#= string.Join(", ", _operands.Concat(new KeyValuePair<string, string>("debugName","string")).Select(_=>$"{_.Value} {ViewUtils.ToVarName(_.Key)}")) #> = null)
+        {
+<#
+foreach (var op in _operands)
+{
+    if (op.Value.StartsWith("IList<") || op.Value.StartsWith("IEnumerable<"))
+    {
+#>
+            if (<#=ViewUtils.ToVarName(op.Key)#> != null) { foreach (var node in <#=ViewUtils.ToVarName(op.Key)#>) this.<#=op.Key#>.Add(node); }
+<#
+    }
+    else
+    {
+#>
+            this.<#=op.Key#> = <#=ViewUtils.ToVarName(op.Key)#>;
+<#
+    }
+}
+#>
+            DebugName = debugName;
+        }
+<#
+}
+#>
 
         public override Op OpCode => Op.<#= _instruction.Name #>;
-
 <# 
 if (_instruction.HasDefaultExit)
 {
 #>
+
         /// <summary>
         /// Next operation in sequence
         /// </summary>
@@ -34,61 +62,62 @@ if (_instruction.HasDefaultExit)
         {
             return Next;
         }
+
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 <# 
 }
-#>
-
-<# 
 foreach (var op in _instruction.Operands)
 {
     switch (op.Class)
     {
         case SpirvOperandClassification.Type:
 #>
+
         public SpirvTypeBase <#=op.Name#> { get; set; }
 <# 
             break;
         case SpirvOperandClassification.Exit:
         case SpirvOperandClassification.Input:
 #>
+
         public <#=GetNodeType(op)#> <#=op.Name#> { get; set; }
 <# 
             break;
         case SpirvOperandClassification.RepeatedInput:
 #>
-        public IList<Node> <#=op.Name#> { get; set; }
+
+        public IList<<#=GetNodeType(op)#>> <#=op.Name#> { get; private set; } = new PrintableList<<#=GetNodeType(op)#>>();
 <# 
             break;
         default:
-        if (op.Quantifier == SpirvOperandQuantifier.Repeated)
-        {
+            if (op.Quantifier == SpirvOperandQuantifier.Repeated)
+            {
 #>
-        public <#=GetPropertyType(op)#> <#=op.Name#> { get; } = new <#=GetPropertyType(op).Replace("IList<","List<")#>();
+
+        public <#=GetPropertyType(op)#> <#=op.Name#> { get; private set; } = new <#=GetPropertyType(op).Replace("IList<","List<")#>();
 <#
-        }
-        else
-        {
+            }
+            else
+            {
 #>
+
         public <#=GetPropertyType(op)#> <#=op.Name#> { get; set; }
 <#
-        }            break;
+            }
+            break;
     }
 }
 
 if (_instruction.IdResultType != null)
 {
 #>
+
         public SpirvTypeBase ResultType { get; set; }
 
-<# 
-    if (_instruction.IdResult != null)
-    {
-#>
-        public bool RelaxedPrecision { get; set; }
-
-<# 
-    }
-#>
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
@@ -99,6 +128,7 @@ if (_instruction.IdResultType != null)
 if (_instruction.Operands.Any(op=>op.Class == SpirvOperandClassification.Input || op.Class == SpirvOperandClassification.RepeatedInput))
 {
 #>
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -185,13 +215,26 @@ foreach (var op in _instruction.Operands)
                 yield break;
             }
         }
+
+        public <#= name #> WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((<#= opname #>)op, treeBuilder);
         }
 
-        public void SetUp(<#= opname #> op, SpirvInstructionTreeBuilder treeBuilder)
+        public <#= name #> SetUp(Action<<#= name #>> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(<#= opname #> op, SpirvInstructionTreeBuilder treeBuilder)
         {
 <# 
 if (_instruction.IdResultType != null)
@@ -240,5 +283,59 @@ foreach (var op in _instruction.Operands)
 #>
             SetUpDecorations(op, treeBuilder);
         }
+
+        /// <summary>Returns a string that represents the <#= name #> object.</summary>
+        /// <returns>A string that represents the <#= name #> object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"<#= name #>(<#= string.Join(", ", _operands.Concat(new KeyValuePair<string, string>("DebugName","string")).Select(_=>$"{{{_.Key}}}")) #>)";
+        }
     }
+<# 
+if (_instruction.HasDefaultEnter)
+{
+#>
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static <#= name #> Then<#= name #>(this INodeWithNext node<#
+foreach (var op in _instruction.Operands)
+{
+    this.Write(", ");
+    switch (op.Class)
+    {
+        case SpirvOperandClassification.Type:
+            this.Write($"SpirvTypeBase {ViewUtils.ToVarName(op.Name)}");
+            break;
+        case SpirvOperandClassification.Exit:
+        case SpirvOperandClassification.Input:
+            this.Write($"{GetNodeType(op)} {ViewUtils.ToVarName(op.Name)}");
+            break;
+        case SpirvOperandClassification.RepeatedInput:
+            this.Write($"IEnumerable<{GetNodeType(op)}> {ViewUtils.ToVarName(op.Name)}");
+            break;
+        default:
+            this.Write($"{GetPropertyType(op)} {ViewUtils.ToVarName(op.Name)}");
+            break;
+    }
+}
+#>, string debugName = null)
+        {
+            return node.Then(new <#= name #>(<#
+{
+    var sep = "";
+    foreach (var op in _instruction.Operands)
+    {
+        this.Write(sep); sep = ", ";
+        this.Write(ViewUtils.ToVarName(op.Name));
+    }
+    this.Write($"{sep}debugName");
+}
+#>));
+        }
+    }
+<# 
+}
+#>
 }

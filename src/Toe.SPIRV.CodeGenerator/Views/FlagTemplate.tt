@@ -35,9 +35,72 @@ namespace Toe.SPIRV.Spv
         {
             Value = value;
         }
+<#
+        foreach (var kv in _operand.Enumerants)
+        {
+            var paramId = ViewUtils.GetParameterId(_operand, kv.enumerant);
+            var parameters = kv.parameters ?? new List<Parameter>();
+            bool addIndex = (parameters.Count != 1);
+            var parameterKv = parameters.Select((parameter,index)=>new KeyValuePair<string,string>(addIndex?(paramId+(index+1)):paramId, ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(parameter.kind))));
+#>
 
-        public Enumerant Value { get; }
+        public static <#= _operand.Name #> Create<#=paramId#>(<# Write(string.Join(", ", parameterKv.Select(parameter=>$"{parameter.Value} {ViewUtils.ToVarName(parameter.Key)}"))); #>)
+        {
+            return new <#= _operand.Name #>(Enumerant.<#=paramId#>)
+            {
+<#
+        foreach (var parameter in parameterKv)
+        {
+#>
+                <#= parameter.Key #> = <#= ViewUtils.ToVarName(parameter.Key) #>,
+<#
+        }
+#>
+            };
+        }
 
+        public <#= _operand.Name #> Also<#=paramId#>(<# Write(string.Join(", ", parameterKv.Select(parameter=>$"{parameter.Value} {ViewUtils.ToVarName(parameter.Key)}"))); #>)
+        {
+            Value |= Enumerant.<#=paramId#>;
+<#
+        foreach (var parameter in parameterKv)
+        {
+#>
+            this.<#= parameter.Key #> = <#= ViewUtils.ToVarName(parameter.Key) #>;
+<#
+        }
+#>
+            return this;
+        }
+<#
+        }
+#>
+
+
+        public static implicit operator <#= _operand.Name #>(<#= _operand.Name #>.Enumerant value)
+        {
+            switch (value)
+            {
+<#
+        var visitedOperands = new HashSet<object>();
+        foreach (var kv in _operand.Enumerants)
+        {
+            if (!visitedOperands.Add(kv.value)) continue;
+            if (kv.parameters != null && kv.parameters.Count > 0)
+            {
+                var enName = ViewUtils.GetParameterId(_operand, kv.enumerant);
+#>
+                case Enumerant.<#=enName#>: throw new InvalidOperationException("Can't cast <#=enName#> because it requires additional arguments.");
+<#
+            }
+        }
+#>
+                default:
+                    return new <#= _operand.Name #>(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 <#
         foreach (var kv in _operand.Enumerants)
         {
@@ -49,13 +112,13 @@ namespace Toe.SPIRV.Spv
                 {
                 var paramName = enName; if (addIndex) paramName += (i+1);
 #>
+
         public <#=ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(kv.parameters[i].kind)) #> <#=paramName #> { get; set; }
 <#
                 }
             }
         }
 #>
-
 
         public static <#= _operand.Name #> Parse(WordReader reader, uint wordCount)
         {

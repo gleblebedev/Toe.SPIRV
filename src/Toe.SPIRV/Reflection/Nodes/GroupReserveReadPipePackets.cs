@@ -13,22 +13,36 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public GroupReserveReadPipePackets(SpirvTypeBase resultType, uint execution, Node pipe, Node numPackets, Node packetSize, Node packetAlignment, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Execution = execution;
+            this.Pipe = pipe;
+            this.NumPackets = numPackets;
+            this.PacketSize = packetSize;
+            this.PacketAlignment = packetAlignment;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpGroupReserveReadPipePackets;
 
-
         public uint Execution { get; set; }
-        public Node Pipe { get; set; }
-        public Node NumPackets { get; set; }
-        public Node PacketSize { get; set; }
-        public Node PacketAlignment { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Pipe { get; set; }
+
+        public Node NumPackets { get; set; }
+
+        public Node PacketSize { get; set; }
+
+        public Node PacketAlignment { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -58,13 +72,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public GroupReserveReadPipePackets WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpGroupReserveReadPipePackets)op, treeBuilder);
         }
 
-        public void SetUp(OpGroupReserveReadPipePackets op, SpirvInstructionTreeBuilder treeBuilder)
+        public GroupReserveReadPipePackets SetUp(Action<GroupReserveReadPipePackets> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpGroupReserveReadPipePackets op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Execution = op.Execution;
@@ -73,6 +100,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             PacketSize = treeBuilder.GetNode(op.PacketSize);
             PacketAlignment = treeBuilder.GetNode(op.PacketAlignment);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the GroupReserveReadPipePackets object.</summary>
+        /// <returns>A string that represents the GroupReserveReadPipePackets object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"GroupReserveReadPipePackets({ResultType}, {Execution}, {Pipe}, {NumPackets}, {PacketSize}, {PacketAlignment}, {DebugName})";
         }
     }
 }

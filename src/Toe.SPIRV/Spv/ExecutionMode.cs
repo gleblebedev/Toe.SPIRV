@@ -123,14 +123,29 @@ namespace Toe.SPIRV.Spv
             ShadingRateInterlockUnorderedEXT = 5371,
         }
 
-        public class Invocations: ExecutionMode
+        #region Invocations
+        public static InvocationsImpl Invocations(uint numberofInvocations)
         {
+            return new InvocationsImpl(numberofInvocations);
+            
+        }
+
+        public class InvocationsImpl: ExecutionMode
+        {
+            public InvocationsImpl()
+            {
+            }
+
+            public InvocationsImpl(uint numberofInvocations)
+            {
+                this.NumberofInvocations = numberofInvocations;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Invocations;
             public uint NumberofInvocations { get; set; }
-            public new static Invocations Parse(WordReader reader, uint wordCount)
+            public new static InvocationsImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new Invocations();
+                var res = new InvocationsImpl();
                 res.NumberofInvocations = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -146,152 +161,494 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 NumberofInvocations.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the InvocationsImpl object.</summary>
+            /// <returns>A string that represents the InvocationsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Invocations({NumberofInvocations})";
+            }
         }
-        public class SpacingEqual: ExecutionMode
+        #endregion //Invocations
+
+        #region SpacingEqual
+        public static SpacingEqualImpl SpacingEqual()
         {
-            public static readonly SpacingEqual Instance = new SpacingEqual();
+            return SpacingEqualImpl.Instance;
+            
+        }
+
+        public class SpacingEqualImpl: ExecutionMode
+        {
+            public static readonly SpacingEqualImpl Instance = new SpacingEqualImpl();
+        
+            private  SpacingEqualImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SpacingEqual;
-            public new static SpacingEqual Parse(WordReader reader, uint wordCount)
+            public new static SpacingEqualImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SpacingEqualImpl object.</summary>
+            /// <returns>A string that represents the SpacingEqualImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SpacingEqual()";
+            }
         }
-        public class SpacingFractionalEven: ExecutionMode
+        #endregion //SpacingEqual
+
+        #region SpacingFractionalEven
+        public static SpacingFractionalEvenImpl SpacingFractionalEven()
         {
-            public static readonly SpacingFractionalEven Instance = new SpacingFractionalEven();
+            return SpacingFractionalEvenImpl.Instance;
+            
+        }
+
+        public class SpacingFractionalEvenImpl: ExecutionMode
+        {
+            public static readonly SpacingFractionalEvenImpl Instance = new SpacingFractionalEvenImpl();
+        
+            private  SpacingFractionalEvenImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SpacingFractionalEven;
-            public new static SpacingFractionalEven Parse(WordReader reader, uint wordCount)
+            public new static SpacingFractionalEvenImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SpacingFractionalEvenImpl object.</summary>
+            /// <returns>A string that represents the SpacingFractionalEvenImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SpacingFractionalEven()";
+            }
         }
-        public class SpacingFractionalOdd: ExecutionMode
+        #endregion //SpacingFractionalEven
+
+        #region SpacingFractionalOdd
+        public static SpacingFractionalOddImpl SpacingFractionalOdd()
         {
-            public static readonly SpacingFractionalOdd Instance = new SpacingFractionalOdd();
+            return SpacingFractionalOddImpl.Instance;
+            
+        }
+
+        public class SpacingFractionalOddImpl: ExecutionMode
+        {
+            public static readonly SpacingFractionalOddImpl Instance = new SpacingFractionalOddImpl();
+        
+            private  SpacingFractionalOddImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SpacingFractionalOdd;
-            public new static SpacingFractionalOdd Parse(WordReader reader, uint wordCount)
+            public new static SpacingFractionalOddImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SpacingFractionalOddImpl object.</summary>
+            /// <returns>A string that represents the SpacingFractionalOddImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SpacingFractionalOdd()";
+            }
         }
-        public class VertexOrderCw: ExecutionMode
+        #endregion //SpacingFractionalOdd
+
+        #region VertexOrderCw
+        public static VertexOrderCwImpl VertexOrderCw()
         {
-            public static readonly VertexOrderCw Instance = new VertexOrderCw();
+            return VertexOrderCwImpl.Instance;
+            
+        }
+
+        public class VertexOrderCwImpl: ExecutionMode
+        {
+            public static readonly VertexOrderCwImpl Instance = new VertexOrderCwImpl();
+        
+            private  VertexOrderCwImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.VertexOrderCw;
-            public new static VertexOrderCw Parse(WordReader reader, uint wordCount)
+            public new static VertexOrderCwImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VertexOrderCwImpl object.</summary>
+            /// <returns>A string that represents the VertexOrderCwImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.VertexOrderCw()";
+            }
         }
-        public class VertexOrderCcw: ExecutionMode
+        #endregion //VertexOrderCw
+
+        #region VertexOrderCcw
+        public static VertexOrderCcwImpl VertexOrderCcw()
         {
-            public static readonly VertexOrderCcw Instance = new VertexOrderCcw();
+            return VertexOrderCcwImpl.Instance;
+            
+        }
+
+        public class VertexOrderCcwImpl: ExecutionMode
+        {
+            public static readonly VertexOrderCcwImpl Instance = new VertexOrderCcwImpl();
+        
+            private  VertexOrderCcwImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.VertexOrderCcw;
-            public new static VertexOrderCcw Parse(WordReader reader, uint wordCount)
+            public new static VertexOrderCcwImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the VertexOrderCcwImpl object.</summary>
+            /// <returns>A string that represents the VertexOrderCcwImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.VertexOrderCcw()";
+            }
         }
-        public class PixelCenterInteger: ExecutionMode
+        #endregion //VertexOrderCcw
+
+        #region PixelCenterInteger
+        public static PixelCenterIntegerImpl PixelCenterInteger()
         {
-            public static readonly PixelCenterInteger Instance = new PixelCenterInteger();
+            return PixelCenterIntegerImpl.Instance;
+            
+        }
+
+        public class PixelCenterIntegerImpl: ExecutionMode
+        {
+            public static readonly PixelCenterIntegerImpl Instance = new PixelCenterIntegerImpl();
+        
+            private  PixelCenterIntegerImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.PixelCenterInteger;
-            public new static PixelCenterInteger Parse(WordReader reader, uint wordCount)
+            public new static PixelCenterIntegerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PixelCenterIntegerImpl object.</summary>
+            /// <returns>A string that represents the PixelCenterIntegerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.PixelCenterInteger()";
+            }
         }
-        public class OriginUpperLeft: ExecutionMode
+        #endregion //PixelCenterInteger
+
+        #region OriginUpperLeft
+        public static OriginUpperLeftImpl OriginUpperLeft()
         {
-            public static readonly OriginUpperLeft Instance = new OriginUpperLeft();
+            return OriginUpperLeftImpl.Instance;
+            
+        }
+
+        public class OriginUpperLeftImpl: ExecutionMode
+        {
+            public static readonly OriginUpperLeftImpl Instance = new OriginUpperLeftImpl();
+        
+            private  OriginUpperLeftImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OriginUpperLeft;
-            public new static OriginUpperLeft Parse(WordReader reader, uint wordCount)
+            public new static OriginUpperLeftImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OriginUpperLeftImpl object.</summary>
+            /// <returns>A string that represents the OriginUpperLeftImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OriginUpperLeft()";
+            }
         }
-        public class OriginLowerLeft: ExecutionMode
+        #endregion //OriginUpperLeft
+
+        #region OriginLowerLeft
+        public static OriginLowerLeftImpl OriginLowerLeft()
         {
-            public static readonly OriginLowerLeft Instance = new OriginLowerLeft();
+            return OriginLowerLeftImpl.Instance;
+            
+        }
+
+        public class OriginLowerLeftImpl: ExecutionMode
+        {
+            public static readonly OriginLowerLeftImpl Instance = new OriginLowerLeftImpl();
+        
+            private  OriginLowerLeftImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OriginLowerLeft;
-            public new static OriginLowerLeft Parse(WordReader reader, uint wordCount)
+            public new static OriginLowerLeftImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OriginLowerLeftImpl object.</summary>
+            /// <returns>A string that represents the OriginLowerLeftImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OriginLowerLeft()";
+            }
         }
-        public class EarlyFragmentTests: ExecutionMode
+        #endregion //OriginLowerLeft
+
+        #region EarlyFragmentTests
+        public static EarlyFragmentTestsImpl EarlyFragmentTests()
         {
-            public static readonly EarlyFragmentTests Instance = new EarlyFragmentTests();
+            return EarlyFragmentTestsImpl.Instance;
+            
+        }
+
+        public class EarlyFragmentTestsImpl: ExecutionMode
+        {
+            public static readonly EarlyFragmentTestsImpl Instance = new EarlyFragmentTestsImpl();
+        
+            private  EarlyFragmentTestsImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.EarlyFragmentTests;
-            public new static EarlyFragmentTests Parse(WordReader reader, uint wordCount)
+            public new static EarlyFragmentTestsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the EarlyFragmentTestsImpl object.</summary>
+            /// <returns>A string that represents the EarlyFragmentTestsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.EarlyFragmentTests()";
+            }
         }
-        public class PointMode: ExecutionMode
+        #endregion //EarlyFragmentTests
+
+        #region PointMode
+        public static PointModeImpl PointMode()
         {
-            public static readonly PointMode Instance = new PointMode();
+            return PointModeImpl.Instance;
+            
+        }
+
+        public class PointModeImpl: ExecutionMode
+        {
+            public static readonly PointModeImpl Instance = new PointModeImpl();
+        
+            private  PointModeImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.PointMode;
-            public new static PointMode Parse(WordReader reader, uint wordCount)
+            public new static PointModeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PointModeImpl object.</summary>
+            /// <returns>A string that represents the PointModeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.PointMode()";
+            }
         }
-        public class Xfb: ExecutionMode
+        #endregion //PointMode
+
+        #region Xfb
+        public static XfbImpl Xfb()
         {
-            public static readonly Xfb Instance = new Xfb();
+            return XfbImpl.Instance;
+            
+        }
+
+        public class XfbImpl: ExecutionMode
+        {
+            public static readonly XfbImpl Instance = new XfbImpl();
+        
+            private  XfbImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Xfb;
-            public new static Xfb Parse(WordReader reader, uint wordCount)
+            public new static XfbImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the XfbImpl object.</summary>
+            /// <returns>A string that represents the XfbImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Xfb()";
+            }
         }
-        public class DepthReplacing: ExecutionMode
+        #endregion //Xfb
+
+        #region DepthReplacing
+        public static DepthReplacingImpl DepthReplacing()
         {
-            public static readonly DepthReplacing Instance = new DepthReplacing();
+            return DepthReplacingImpl.Instance;
+            
+        }
+
+        public class DepthReplacingImpl: ExecutionMode
+        {
+            public static readonly DepthReplacingImpl Instance = new DepthReplacingImpl();
+        
+            private  DepthReplacingImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DepthReplacing;
-            public new static DepthReplacing Parse(WordReader reader, uint wordCount)
+            public new static DepthReplacingImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DepthReplacingImpl object.</summary>
+            /// <returns>A string that represents the DepthReplacingImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DepthReplacing()";
+            }
         }
-        public class DepthGreater: ExecutionMode
+        #endregion //DepthReplacing
+
+        #region DepthGreater
+        public static DepthGreaterImpl DepthGreater()
         {
-            public static readonly DepthGreater Instance = new DepthGreater();
+            return DepthGreaterImpl.Instance;
+            
+        }
+
+        public class DepthGreaterImpl: ExecutionMode
+        {
+            public static readonly DepthGreaterImpl Instance = new DepthGreaterImpl();
+        
+            private  DepthGreaterImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DepthGreater;
-            public new static DepthGreater Parse(WordReader reader, uint wordCount)
+            public new static DepthGreaterImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DepthGreaterImpl object.</summary>
+            /// <returns>A string that represents the DepthGreaterImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DepthGreater()";
+            }
         }
-        public class DepthLess: ExecutionMode
+        #endregion //DepthGreater
+
+        #region DepthLess
+        public static DepthLessImpl DepthLess()
         {
-            public static readonly DepthLess Instance = new DepthLess();
+            return DepthLessImpl.Instance;
+            
+        }
+
+        public class DepthLessImpl: ExecutionMode
+        {
+            public static readonly DepthLessImpl Instance = new DepthLessImpl();
+        
+            private  DepthLessImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DepthLess;
-            public new static DepthLess Parse(WordReader reader, uint wordCount)
+            public new static DepthLessImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DepthLessImpl object.</summary>
+            /// <returns>A string that represents the DepthLessImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DepthLess()";
+            }
         }
-        public class DepthUnchanged: ExecutionMode
+        #endregion //DepthLess
+
+        #region DepthUnchanged
+        public static DepthUnchangedImpl DepthUnchanged()
         {
-            public static readonly DepthUnchanged Instance = new DepthUnchanged();
+            return DepthUnchangedImpl.Instance;
+            
+        }
+
+        public class DepthUnchangedImpl: ExecutionMode
+        {
+            public static readonly DepthUnchangedImpl Instance = new DepthUnchangedImpl();
+        
+            private  DepthUnchangedImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DepthUnchanged;
-            public new static DepthUnchanged Parse(WordReader reader, uint wordCount)
+            public new static DepthUnchangedImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DepthUnchangedImpl object.</summary>
+            /// <returns>A string that represents the DepthUnchangedImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DepthUnchanged()";
+            }
         }
-        public class LocalSize: ExecutionMode
+        #endregion //DepthUnchanged
+
+        #region LocalSize
+        public static LocalSizeImpl LocalSize(uint xsize, uint ysize, uint zsize)
         {
+            return new LocalSizeImpl(xsize, ysize, zsize);
+            
+        }
+
+        public class LocalSizeImpl: ExecutionMode
+        {
+            public LocalSizeImpl()
+            {
+            }
+
+            public LocalSizeImpl(uint xsize, uint ysize, uint zsize)
+            {
+                this.xsize = xsize;
+                this.ysize = ysize;
+                this.zsize = zsize;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.LocalSize;
             public uint xsize { get; set; }
             public uint ysize { get; set; }
             public uint zsize { get; set; }
-            public new static LocalSize Parse(WordReader reader, uint wordCount)
+            public new static LocalSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new LocalSize();
+                var res = new LocalSizeImpl();
                 res.xsize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 res.ysize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 res.zsize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
@@ -313,17 +670,44 @@ namespace Toe.SPIRV.Spv
                 ysize.Write(writer);
                 zsize.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the LocalSizeImpl object.</summary>
+            /// <returns>A string that represents the LocalSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.LocalSize({xsize}, {ysize}, {zsize})";
+            }
         }
-        public class LocalSizeHint: ExecutionMode
+        #endregion //LocalSize
+
+        #region LocalSizeHint
+        public static LocalSizeHintImpl LocalSizeHint(uint xsize, uint ysize, uint zsize)
         {
+            return new LocalSizeHintImpl(xsize, ysize, zsize);
+            
+        }
+
+        public class LocalSizeHintImpl: ExecutionMode
+        {
+            public LocalSizeHintImpl()
+            {
+            }
+
+            public LocalSizeHintImpl(uint xsize, uint ysize, uint zsize)
+            {
+                this.xsize = xsize;
+                this.ysize = ysize;
+                this.zsize = zsize;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.LocalSizeHint;
             public uint xsize { get; set; }
             public uint ysize { get; set; }
             public uint zsize { get; set; }
-            public new static LocalSizeHint Parse(WordReader reader, uint wordCount)
+            public new static LocalSizeHintImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new LocalSizeHint();
+                var res = new LocalSizeHintImpl();
                 res.xsize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 res.ysize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 res.zsize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
@@ -345,78 +729,250 @@ namespace Toe.SPIRV.Spv
                 ysize.Write(writer);
                 zsize.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the LocalSizeHintImpl object.</summary>
+            /// <returns>A string that represents the LocalSizeHintImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.LocalSizeHint({xsize}, {ysize}, {zsize})";
+            }
         }
-        public class InputPoints: ExecutionMode
+        #endregion //LocalSizeHint
+
+        #region InputPoints
+        public static InputPointsImpl InputPoints()
         {
-            public static readonly InputPoints Instance = new InputPoints();
+            return InputPointsImpl.Instance;
+            
+        }
+
+        public class InputPointsImpl: ExecutionMode
+        {
+            public static readonly InputPointsImpl Instance = new InputPointsImpl();
+        
+            private  InputPointsImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.InputPoints;
-            public new static InputPoints Parse(WordReader reader, uint wordCount)
+            public new static InputPointsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputPointsImpl object.</summary>
+            /// <returns>A string that represents the InputPointsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.InputPoints()";
+            }
         }
-        public class InputLines: ExecutionMode
+        #endregion //InputPoints
+
+        #region InputLines
+        public static InputLinesImpl InputLines()
         {
-            public static readonly InputLines Instance = new InputLines();
+            return InputLinesImpl.Instance;
+            
+        }
+
+        public class InputLinesImpl: ExecutionMode
+        {
+            public static readonly InputLinesImpl Instance = new InputLinesImpl();
+        
+            private  InputLinesImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.InputLines;
-            public new static InputLines Parse(WordReader reader, uint wordCount)
+            public new static InputLinesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputLinesImpl object.</summary>
+            /// <returns>A string that represents the InputLinesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.InputLines()";
+            }
         }
-        public class InputLinesAdjacency: ExecutionMode
+        #endregion //InputLines
+
+        #region InputLinesAdjacency
+        public static InputLinesAdjacencyImpl InputLinesAdjacency()
         {
-            public static readonly InputLinesAdjacency Instance = new InputLinesAdjacency();
+            return InputLinesAdjacencyImpl.Instance;
+            
+        }
+
+        public class InputLinesAdjacencyImpl: ExecutionMode
+        {
+            public static readonly InputLinesAdjacencyImpl Instance = new InputLinesAdjacencyImpl();
+        
+            private  InputLinesAdjacencyImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.InputLinesAdjacency;
-            public new static InputLinesAdjacency Parse(WordReader reader, uint wordCount)
+            public new static InputLinesAdjacencyImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputLinesAdjacencyImpl object.</summary>
+            /// <returns>A string that represents the InputLinesAdjacencyImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.InputLinesAdjacency()";
+            }
         }
-        public class Triangles: ExecutionMode
+        #endregion //InputLinesAdjacency
+
+        #region Triangles
+        public static TrianglesImpl Triangles()
         {
-            public static readonly Triangles Instance = new Triangles();
+            return TrianglesImpl.Instance;
+            
+        }
+
+        public class TrianglesImpl: ExecutionMode
+        {
+            public static readonly TrianglesImpl Instance = new TrianglesImpl();
+        
+            private  TrianglesImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Triangles;
-            public new static Triangles Parse(WordReader reader, uint wordCount)
+            public new static TrianglesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the TrianglesImpl object.</summary>
+            /// <returns>A string that represents the TrianglesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Triangles()";
+            }
         }
-        public class InputTrianglesAdjacency: ExecutionMode
+        #endregion //Triangles
+
+        #region InputTrianglesAdjacency
+        public static InputTrianglesAdjacencyImpl InputTrianglesAdjacency()
         {
-            public static readonly InputTrianglesAdjacency Instance = new InputTrianglesAdjacency();
+            return InputTrianglesAdjacencyImpl.Instance;
+            
+        }
+
+        public class InputTrianglesAdjacencyImpl: ExecutionMode
+        {
+            public static readonly InputTrianglesAdjacencyImpl Instance = new InputTrianglesAdjacencyImpl();
+        
+            private  InputTrianglesAdjacencyImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.InputTrianglesAdjacency;
-            public new static InputTrianglesAdjacency Parse(WordReader reader, uint wordCount)
+            public new static InputTrianglesAdjacencyImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InputTrianglesAdjacencyImpl object.</summary>
+            /// <returns>A string that represents the InputTrianglesAdjacencyImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.InputTrianglesAdjacency()";
+            }
         }
-        public class Quads: ExecutionMode
+        #endregion //InputTrianglesAdjacency
+
+        #region Quads
+        public static QuadsImpl Quads()
         {
-            public static readonly Quads Instance = new Quads();
+            return QuadsImpl.Instance;
+            
+        }
+
+        public class QuadsImpl: ExecutionMode
+        {
+            public static readonly QuadsImpl Instance = new QuadsImpl();
+        
+            private  QuadsImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Quads;
-            public new static Quads Parse(WordReader reader, uint wordCount)
+            public new static QuadsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the QuadsImpl object.</summary>
+            /// <returns>A string that represents the QuadsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Quads()";
+            }
         }
-        public class Isolines: ExecutionMode
+        #endregion //Quads
+
+        #region Isolines
+        public static IsolinesImpl Isolines()
         {
-            public static readonly Isolines Instance = new Isolines();
+            return IsolinesImpl.Instance;
+            
+        }
+
+        public class IsolinesImpl: ExecutionMode
+        {
+            public static readonly IsolinesImpl Instance = new IsolinesImpl();
+        
+            private  IsolinesImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Isolines;
-            public new static Isolines Parse(WordReader reader, uint wordCount)
+            public new static IsolinesImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IsolinesImpl object.</summary>
+            /// <returns>A string that represents the IsolinesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Isolines()";
+            }
         }
-        public class OutputVertices: ExecutionMode
+        #endregion //Isolines
+
+        #region OutputVertices
+        public static OutputVerticesImpl OutputVertices(uint vertexcount)
         {
+            return new OutputVerticesImpl(vertexcount);
+            
+        }
+
+        public class OutputVerticesImpl: ExecutionMode
+        {
+            public OutputVerticesImpl()
+            {
+            }
+
+            public OutputVerticesImpl(uint vertexcount)
+            {
+                this.Vertexcount = vertexcount;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputVertices;
             public uint Vertexcount { get; set; }
-            public new static OutputVertices Parse(WordReader reader, uint wordCount)
+            public new static OutputVerticesImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new OutputVertices();
+                var res = new OutputVerticesImpl();
                 res.Vertexcount = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -432,42 +988,130 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Vertexcount.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the OutputVerticesImpl object.</summary>
+            /// <returns>A string that represents the OutputVerticesImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputVertices({Vertexcount})";
+            }
         }
-        public class OutputPoints: ExecutionMode
+        #endregion //OutputVertices
+
+        #region OutputPoints
+        public static OutputPointsImpl OutputPoints()
         {
-            public static readonly OutputPoints Instance = new OutputPoints();
+            return OutputPointsImpl.Instance;
+            
+        }
+
+        public class OutputPointsImpl: ExecutionMode
+        {
+            public static readonly OutputPointsImpl Instance = new OutputPointsImpl();
+        
+            private  OutputPointsImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputPoints;
-            public new static OutputPoints Parse(WordReader reader, uint wordCount)
+            public new static OutputPointsImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OutputPointsImpl object.</summary>
+            /// <returns>A string that represents the OutputPointsImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputPoints()";
+            }
         }
-        public class OutputLineStrip: ExecutionMode
+        #endregion //OutputPoints
+
+        #region OutputLineStrip
+        public static OutputLineStripImpl OutputLineStrip()
         {
-            public static readonly OutputLineStrip Instance = new OutputLineStrip();
+            return OutputLineStripImpl.Instance;
+            
+        }
+
+        public class OutputLineStripImpl: ExecutionMode
+        {
+            public static readonly OutputLineStripImpl Instance = new OutputLineStripImpl();
+        
+            private  OutputLineStripImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputLineStrip;
-            public new static OutputLineStrip Parse(WordReader reader, uint wordCount)
+            public new static OutputLineStripImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OutputLineStripImpl object.</summary>
+            /// <returns>A string that represents the OutputLineStripImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputLineStrip()";
+            }
         }
-        public class OutputTriangleStrip: ExecutionMode
+        #endregion //OutputLineStrip
+
+        #region OutputTriangleStrip
+        public static OutputTriangleStripImpl OutputTriangleStrip()
         {
-            public static readonly OutputTriangleStrip Instance = new OutputTriangleStrip();
+            return OutputTriangleStripImpl.Instance;
+            
+        }
+
+        public class OutputTriangleStripImpl: ExecutionMode
+        {
+            public static readonly OutputTriangleStripImpl Instance = new OutputTriangleStripImpl();
+        
+            private  OutputTriangleStripImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputTriangleStrip;
-            public new static OutputTriangleStrip Parse(WordReader reader, uint wordCount)
+            public new static OutputTriangleStripImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OutputTriangleStripImpl object.</summary>
+            /// <returns>A string that represents the OutputTriangleStripImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputTriangleStrip()";
+            }
         }
-        public class VecTypeHint: ExecutionMode
+        #endregion //OutputTriangleStrip
+
+        #region VecTypeHint
+        public static VecTypeHintImpl VecTypeHint(uint vectortype)
         {
+            return new VecTypeHintImpl(vectortype);
+            
+        }
+
+        public class VecTypeHintImpl: ExecutionMode
+        {
+            public VecTypeHintImpl()
+            {
+            }
+
+            public VecTypeHintImpl(uint vectortype)
+            {
+                this.Vectortype = vectortype;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.VecTypeHint;
             public uint Vectortype { get; set; }
-            public new static VecTypeHint Parse(WordReader reader, uint wordCount)
+            public new static VecTypeHintImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new VecTypeHint();
+                var res = new VecTypeHintImpl();
                 res.Vectortype = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -483,90 +1127,228 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Vectortype.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the VecTypeHintImpl object.</summary>
+            /// <returns>A string that represents the VecTypeHintImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.VecTypeHint({Vectortype})";
+            }
         }
-        public class ContractionOff: ExecutionMode
+        #endregion //VecTypeHint
+
+        #region ContractionOff
+        public static ContractionOffImpl ContractionOff()
         {
-            public static readonly ContractionOff Instance = new ContractionOff();
+            return ContractionOffImpl.Instance;
+            
+        }
+
+        public class ContractionOffImpl: ExecutionMode
+        {
+            public static readonly ContractionOffImpl Instance = new ContractionOffImpl();
+        
+            private  ContractionOffImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.ContractionOff;
-            public new static ContractionOff Parse(WordReader reader, uint wordCount)
+            public new static ContractionOffImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ContractionOffImpl object.</summary>
+            /// <returns>A string that represents the ContractionOffImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.ContractionOff()";
+            }
         }
-        public class Initializer: ExecutionMode
+        #endregion //ContractionOff
+
+        #region Initializer
+        public static InitializerImpl Initializer()
         {
-            public static readonly Initializer Instance = new Initializer();
+            return InitializerImpl.Instance;
+            
+        }
+
+        public class InitializerImpl: ExecutionMode
+        {
+            public static readonly InitializerImpl Instance = new InitializerImpl();
+        
+            private  InitializerImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Initializer;
-            public new static Initializer Parse(WordReader reader, uint wordCount)
+            public new static InitializerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InitializerImpl object.</summary>
+            /// <returns>A string that represents the InitializerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Initializer()";
+            }
         }
-        public class Finalizer: ExecutionMode
+        #endregion //Initializer
+
+        #region Finalizer
+        public static FinalizerImpl Finalizer()
         {
-            public static readonly Finalizer Instance = new Finalizer();
+            return FinalizerImpl.Instance;
+            
+        }
+
+        public class FinalizerImpl: ExecutionMode
+        {
+            public static readonly FinalizerImpl Instance = new FinalizerImpl();
+        
+            private  FinalizerImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.Finalizer;
-            public new static Finalizer Parse(WordReader reader, uint wordCount)
+            public new static FinalizerImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the FinalizerImpl object.</summary>
+            /// <returns>A string that represents the FinalizerImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.Finalizer()";
+            }
         }
-        public class SubgroupSize: ExecutionMode
+        #endregion //Finalizer
+
+        #region SubgroupSize
+        public static SubgroupSizeImpl SubgroupSize(uint subgroupSize)
         {
+            return new SubgroupSizeImpl(subgroupSize);
+            
+        }
+
+        public class SubgroupSizeImpl: ExecutionMode
+        {
+            public SubgroupSizeImpl()
+            {
+            }
+
+            public SubgroupSizeImpl(uint subgroupSize)
+            {
+                this.SubgroupSize = subgroupSize;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SubgroupSize;
-            public uint SubgroupSizeValue { get; set; }
-            public new static SubgroupSize Parse(WordReader reader, uint wordCount)
+            public new uint SubgroupSize { get; set; }
+            public new static SubgroupSizeImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new SubgroupSize();
-                res.SubgroupSizeValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new SubgroupSizeImpl();
+                res.SubgroupSize = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += SubgroupSizeValue.GetWordCount();
+                wordCount += SubgroupSize.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                SubgroupSizeValue.Write(writer);
+                SubgroupSize.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the SubgroupSizeImpl object.</summary>
+            /// <returns>A string that represents the SubgroupSizeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SubgroupSize({SubgroupSize})";
             }
         }
-        public class SubgroupsPerWorkgroup: ExecutionMode
+        #endregion //SubgroupSize
+
+        #region SubgroupsPerWorkgroup
+        public static SubgroupsPerWorkgroupImpl SubgroupsPerWorkgroup(uint subgroupsPerWorkgroup)
         {
+            return new SubgroupsPerWorkgroupImpl(subgroupsPerWorkgroup);
+            
+        }
+
+        public class SubgroupsPerWorkgroupImpl: ExecutionMode
+        {
+            public SubgroupsPerWorkgroupImpl()
+            {
+            }
+
+            public SubgroupsPerWorkgroupImpl(uint subgroupsPerWorkgroup)
+            {
+                this.SubgroupsPerWorkgroup = subgroupsPerWorkgroup;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SubgroupsPerWorkgroup;
-            public uint SubgroupsPerWorkgroupValue { get; set; }
-            public new static SubgroupsPerWorkgroup Parse(WordReader reader, uint wordCount)
+            public new uint SubgroupsPerWorkgroup { get; set; }
+            public new static SubgroupsPerWorkgroupImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new SubgroupsPerWorkgroup();
-                res.SubgroupsPerWorkgroupValue = Spv.LiteralInteger.Parse(reader, end-reader.Position);
+                var res = new SubgroupsPerWorkgroupImpl();
+                res.SubgroupsPerWorkgroup = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
             public override uint GetWordCount()
             {
                 uint wordCount = base.GetWordCount();
-                wordCount += SubgroupsPerWorkgroupValue.GetWordCount();
+                wordCount += SubgroupsPerWorkgroup.GetWordCount();
                 return wordCount;
             }
 
             public override void Write(WordWriter writer)
             {
                 base.Write(writer);
-                SubgroupsPerWorkgroupValue.Write(writer);
+                SubgroupsPerWorkgroup.Write(writer);
+            }
+
+            /// <summary>Returns a string that represents the SubgroupsPerWorkgroupImpl object.</summary>
+            /// <returns>A string that represents the SubgroupsPerWorkgroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SubgroupsPerWorkgroup({SubgroupsPerWorkgroup})";
             }
         }
-        public class SubgroupsPerWorkgroupId: ExecutionMode
+        #endregion //SubgroupsPerWorkgroup
+
+        #region SubgroupsPerWorkgroupId
+        public static SubgroupsPerWorkgroupIdImpl SubgroupsPerWorkgroupId(Spv.IdRef subgroupsPerWorkgroup)
         {
+            return new SubgroupsPerWorkgroupIdImpl(subgroupsPerWorkgroup);
+            
+        }
+
+        public class SubgroupsPerWorkgroupIdImpl: ExecutionMode
+        {
+            public SubgroupsPerWorkgroupIdImpl()
+            {
+            }
+
+            public SubgroupsPerWorkgroupIdImpl(Spv.IdRef subgroupsPerWorkgroup)
+            {
+                this.SubgroupsPerWorkgroup = subgroupsPerWorkgroup;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SubgroupsPerWorkgroupId;
             public Spv.IdRef SubgroupsPerWorkgroup { get; set; }
-            public new static SubgroupsPerWorkgroupId Parse(WordReader reader, uint wordCount)
+            public new static SubgroupsPerWorkgroupIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new SubgroupsPerWorkgroupId();
+                var res = new SubgroupsPerWorkgroupIdImpl();
                 res.SubgroupsPerWorkgroup = Spv.IdRef.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -582,17 +1364,44 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 SubgroupsPerWorkgroup.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the SubgroupsPerWorkgroupIdImpl object.</summary>
+            /// <returns>A string that represents the SubgroupsPerWorkgroupIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SubgroupsPerWorkgroupId({SubgroupsPerWorkgroup})";
+            }
         }
-        public class LocalSizeId: ExecutionMode
+        #endregion //SubgroupsPerWorkgroupId
+
+        #region LocalSizeId
+        public static LocalSizeIdImpl LocalSizeId(Spv.IdRef xsize, Spv.IdRef ysize, Spv.IdRef zsize)
         {
+            return new LocalSizeIdImpl(xsize, ysize, zsize);
+            
+        }
+
+        public class LocalSizeIdImpl: ExecutionMode
+        {
+            public LocalSizeIdImpl()
+            {
+            }
+
+            public LocalSizeIdImpl(Spv.IdRef xsize, Spv.IdRef ysize, Spv.IdRef zsize)
+            {
+                this.xsize = xsize;
+                this.ysize = ysize;
+                this.zsize = zsize;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.LocalSizeId;
             public Spv.IdRef xsize { get; set; }
             public Spv.IdRef ysize { get; set; }
             public Spv.IdRef zsize { get; set; }
-            public new static LocalSizeId Parse(WordReader reader, uint wordCount)
+            public new static LocalSizeIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new LocalSizeId();
+                var res = new LocalSizeIdImpl();
                 res.xsize = Spv.IdRef.Parse(reader, end-reader.Position);
                 res.ysize = Spv.IdRef.Parse(reader, end-reader.Position);
                 res.zsize = Spv.IdRef.Parse(reader, end-reader.Position);
@@ -614,15 +1423,40 @@ namespace Toe.SPIRV.Spv
                 ysize.Write(writer);
                 zsize.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the LocalSizeIdImpl object.</summary>
+            /// <returns>A string that represents the LocalSizeIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.LocalSizeId({xsize}, {ysize}, {zsize})";
+            }
         }
-        public class LocalSizeHintId: ExecutionMode
+        #endregion //LocalSizeId
+
+        #region LocalSizeHintId
+        public static LocalSizeHintIdImpl LocalSizeHintId(Spv.IdRef localSizeHint)
         {
+            return new LocalSizeHintIdImpl(localSizeHint);
+            
+        }
+
+        public class LocalSizeHintIdImpl: ExecutionMode
+        {
+            public LocalSizeHintIdImpl()
+            {
+            }
+
+            public LocalSizeHintIdImpl(Spv.IdRef localSizeHint)
+            {
+                this.LocalSizeHint = localSizeHint;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.LocalSizeHintId;
             public Spv.IdRef LocalSizeHint { get; set; }
-            public new static LocalSizeHintId Parse(WordReader reader, uint wordCount)
+            public new static LocalSizeHintIdImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new LocalSizeHintId();
+                var res = new LocalSizeHintIdImpl();
                 res.LocalSizeHint = Spv.IdRef.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -638,24 +1472,70 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 LocalSizeHint.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the LocalSizeHintIdImpl object.</summary>
+            /// <returns>A string that represents the LocalSizeHintIdImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.LocalSizeHintId({LocalSizeHint})";
+            }
         }
-        public class PostDepthCoverage: ExecutionMode
+        #endregion //LocalSizeHintId
+
+        #region PostDepthCoverage
+        public static PostDepthCoverageImpl PostDepthCoverage()
         {
-            public static readonly PostDepthCoverage Instance = new PostDepthCoverage();
+            return PostDepthCoverageImpl.Instance;
+            
+        }
+
+        public class PostDepthCoverageImpl: ExecutionMode
+        {
+            public static readonly PostDepthCoverageImpl Instance = new PostDepthCoverageImpl();
+        
+            private  PostDepthCoverageImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.PostDepthCoverage;
-            public new static PostDepthCoverage Parse(WordReader reader, uint wordCount)
+            public new static PostDepthCoverageImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PostDepthCoverageImpl object.</summary>
+            /// <returns>A string that represents the PostDepthCoverageImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.PostDepthCoverage()";
+            }
         }
-        public class DenormPreserve: ExecutionMode
+        #endregion //PostDepthCoverage
+
+        #region DenormPreserve
+        public static DenormPreserveImpl DenormPreserve(uint targetWidth)
         {
+            return new DenormPreserveImpl(targetWidth);
+            
+        }
+
+        public class DenormPreserveImpl: ExecutionMode
+        {
+            public DenormPreserveImpl()
+            {
+            }
+
+            public DenormPreserveImpl(uint targetWidth)
+            {
+                this.TargetWidth = targetWidth;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DenormPreserve;
             public uint TargetWidth { get; set; }
-            public new static DenormPreserve Parse(WordReader reader, uint wordCount)
+            public new static DenormPreserveImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new DenormPreserve();
+                var res = new DenormPreserveImpl();
                 res.TargetWidth = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -671,15 +1551,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 TargetWidth.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the DenormPreserveImpl object.</summary>
+            /// <returns>A string that represents the DenormPreserveImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DenormPreserve({TargetWidth})";
+            }
         }
-        public class DenormFlushToZero: ExecutionMode
+        #endregion //DenormPreserve
+
+        #region DenormFlushToZero
+        public static DenormFlushToZeroImpl DenormFlushToZero(uint targetWidth)
         {
+            return new DenormFlushToZeroImpl(targetWidth);
+            
+        }
+
+        public class DenormFlushToZeroImpl: ExecutionMode
+        {
+            public DenormFlushToZeroImpl()
+            {
+            }
+
+            public DenormFlushToZeroImpl(uint targetWidth)
+            {
+                this.TargetWidth = targetWidth;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DenormFlushToZero;
             public uint TargetWidth { get; set; }
-            public new static DenormFlushToZero Parse(WordReader reader, uint wordCount)
+            public new static DenormFlushToZeroImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new DenormFlushToZero();
+                var res = new DenormFlushToZeroImpl();
                 res.TargetWidth = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -695,15 +1600,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 TargetWidth.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the DenormFlushToZeroImpl object.</summary>
+            /// <returns>A string that represents the DenormFlushToZeroImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DenormFlushToZero({TargetWidth})";
+            }
         }
-        public class SignedZeroInfNanPreserve: ExecutionMode
+        #endregion //DenormFlushToZero
+
+        #region SignedZeroInfNanPreserve
+        public static SignedZeroInfNanPreserveImpl SignedZeroInfNanPreserve(uint targetWidth)
         {
+            return new SignedZeroInfNanPreserveImpl(targetWidth);
+            
+        }
+
+        public class SignedZeroInfNanPreserveImpl: ExecutionMode
+        {
+            public SignedZeroInfNanPreserveImpl()
+            {
+            }
+
+            public SignedZeroInfNanPreserveImpl(uint targetWidth)
+            {
+                this.TargetWidth = targetWidth;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SignedZeroInfNanPreserve;
             public uint TargetWidth { get; set; }
-            public new static SignedZeroInfNanPreserve Parse(WordReader reader, uint wordCount)
+            public new static SignedZeroInfNanPreserveImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new SignedZeroInfNanPreserve();
+                var res = new SignedZeroInfNanPreserveImpl();
                 res.TargetWidth = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -719,15 +1649,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 TargetWidth.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the SignedZeroInfNanPreserveImpl object.</summary>
+            /// <returns>A string that represents the SignedZeroInfNanPreserveImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SignedZeroInfNanPreserve({TargetWidth})";
+            }
         }
-        public class RoundingModeRTE: ExecutionMode
+        #endregion //SignedZeroInfNanPreserve
+
+        #region RoundingModeRTE
+        public static RoundingModeRTEImpl RoundingModeRTE(uint targetWidth)
         {
+            return new RoundingModeRTEImpl(targetWidth);
+            
+        }
+
+        public class RoundingModeRTEImpl: ExecutionMode
+        {
+            public RoundingModeRTEImpl()
+            {
+            }
+
+            public RoundingModeRTEImpl(uint targetWidth)
+            {
+                this.TargetWidth = targetWidth;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.RoundingModeRTE;
             public uint TargetWidth { get; set; }
-            public new static RoundingModeRTE Parse(WordReader reader, uint wordCount)
+            public new static RoundingModeRTEImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new RoundingModeRTE();
+                var res = new RoundingModeRTEImpl();
                 res.TargetWidth = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -743,15 +1698,40 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 TargetWidth.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the RoundingModeRTEImpl object.</summary>
+            /// <returns>A string that represents the RoundingModeRTEImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.RoundingModeRTE({TargetWidth})";
+            }
         }
-        public class RoundingModeRTZ: ExecutionMode
+        #endregion //RoundingModeRTE
+
+        #region RoundingModeRTZ
+        public static RoundingModeRTZImpl RoundingModeRTZ(uint targetWidth)
         {
+            return new RoundingModeRTZImpl(targetWidth);
+            
+        }
+
+        public class RoundingModeRTZImpl: ExecutionMode
+        {
+            public RoundingModeRTZImpl()
+            {
+            }
+
+            public RoundingModeRTZImpl(uint targetWidth)
+            {
+                this.TargetWidth = targetWidth;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.RoundingModeRTZ;
             public uint TargetWidth { get; set; }
-            public new static RoundingModeRTZ Parse(WordReader reader, uint wordCount)
+            public new static RoundingModeRTZImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new RoundingModeRTZ();
+                var res = new RoundingModeRTZImpl();
                 res.TargetWidth = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -767,33 +1747,100 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 TargetWidth.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the RoundingModeRTZImpl object.</summary>
+            /// <returns>A string that represents the RoundingModeRTZImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.RoundingModeRTZ({TargetWidth})";
+            }
         }
-        public class StencilRefReplacingEXT: ExecutionMode
+        #endregion //RoundingModeRTZ
+
+        #region StencilRefReplacingEXT
+        public static StencilRefReplacingEXTImpl StencilRefReplacingEXT()
         {
-            public static readonly StencilRefReplacingEXT Instance = new StencilRefReplacingEXT();
+            return StencilRefReplacingEXTImpl.Instance;
+            
+        }
+
+        public class StencilRefReplacingEXTImpl: ExecutionMode
+        {
+            public static readonly StencilRefReplacingEXTImpl Instance = new StencilRefReplacingEXTImpl();
+        
+            private  StencilRefReplacingEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.StencilRefReplacingEXT;
-            public new static StencilRefReplacingEXT Parse(WordReader reader, uint wordCount)
+            public new static StencilRefReplacingEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the StencilRefReplacingEXTImpl object.</summary>
+            /// <returns>A string that represents the StencilRefReplacingEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.StencilRefReplacingEXT()";
+            }
         }
-        public class OutputLinesNV: ExecutionMode
+        #endregion //StencilRefReplacingEXT
+
+        #region OutputLinesNV
+        public static OutputLinesNVImpl OutputLinesNV()
         {
-            public static readonly OutputLinesNV Instance = new OutputLinesNV();
+            return OutputLinesNVImpl.Instance;
+            
+        }
+
+        public class OutputLinesNVImpl: ExecutionMode
+        {
+            public static readonly OutputLinesNVImpl Instance = new OutputLinesNVImpl();
+        
+            private  OutputLinesNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputLinesNV;
-            public new static OutputLinesNV Parse(WordReader reader, uint wordCount)
+            public new static OutputLinesNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OutputLinesNVImpl object.</summary>
+            /// <returns>A string that represents the OutputLinesNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputLinesNV()";
+            }
         }
-        public class OutputPrimitivesNV: ExecutionMode
+        #endregion //OutputLinesNV
+
+        #region OutputPrimitivesNV
+        public static OutputPrimitivesNVImpl OutputPrimitivesNV(uint primitivecount)
         {
+            return new OutputPrimitivesNVImpl(primitivecount);
+            
+        }
+
+        public class OutputPrimitivesNVImpl: ExecutionMode
+        {
+            public OutputPrimitivesNVImpl()
+            {
+            }
+
+            public OutputPrimitivesNVImpl(uint primitivecount)
+            {
+                this.Primitivecount = primitivecount;
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputPrimitivesNV;
             public uint Primitivecount { get; set; }
-            public new static OutputPrimitivesNV Parse(WordReader reader, uint wordCount)
+            public new static OutputPrimitivesNVImpl Parse(WordReader reader, uint wordCount)
             {
                 var end = reader.Position+wordCount;
-                var res = new OutputPrimitivesNV();
+                var res = new OutputPrimitivesNVImpl();
                 res.Primitivecount = Spv.LiteralInteger.Parse(reader, end-reader.Position);
                 return res;
             }
@@ -809,88 +1856,286 @@ namespace Toe.SPIRV.Spv
                 base.Write(writer);
                 Primitivecount.Write(writer);
             }
+
+            /// <summary>Returns a string that represents the OutputPrimitivesNVImpl object.</summary>
+            /// <returns>A string that represents the OutputPrimitivesNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputPrimitivesNV({Primitivecount})";
+            }
         }
-        public class DerivativeGroupQuadsNV: ExecutionMode
+        #endregion //OutputPrimitivesNV
+
+        #region DerivativeGroupQuadsNV
+        public static DerivativeGroupQuadsNVImpl DerivativeGroupQuadsNV()
         {
-            public static readonly DerivativeGroupQuadsNV Instance = new DerivativeGroupQuadsNV();
+            return DerivativeGroupQuadsNVImpl.Instance;
+            
+        }
+
+        public class DerivativeGroupQuadsNVImpl: ExecutionMode
+        {
+            public static readonly DerivativeGroupQuadsNVImpl Instance = new DerivativeGroupQuadsNVImpl();
+        
+            private  DerivativeGroupQuadsNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DerivativeGroupQuadsNV;
-            public new static DerivativeGroupQuadsNV Parse(WordReader reader, uint wordCount)
+            public new static DerivativeGroupQuadsNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DerivativeGroupQuadsNVImpl object.</summary>
+            /// <returns>A string that represents the DerivativeGroupQuadsNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DerivativeGroupQuadsNV()";
+            }
         }
-        public class DerivativeGroupLinearNV: ExecutionMode
+        #endregion //DerivativeGroupQuadsNV
+
+        #region DerivativeGroupLinearNV
+        public static DerivativeGroupLinearNVImpl DerivativeGroupLinearNV()
         {
-            public static readonly DerivativeGroupLinearNV Instance = new DerivativeGroupLinearNV();
+            return DerivativeGroupLinearNVImpl.Instance;
+            
+        }
+
+        public class DerivativeGroupLinearNVImpl: ExecutionMode
+        {
+            public static readonly DerivativeGroupLinearNVImpl Instance = new DerivativeGroupLinearNVImpl();
+        
+            private  DerivativeGroupLinearNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.DerivativeGroupLinearNV;
-            public new static DerivativeGroupLinearNV Parse(WordReader reader, uint wordCount)
+            public new static DerivativeGroupLinearNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DerivativeGroupLinearNVImpl object.</summary>
+            /// <returns>A string that represents the DerivativeGroupLinearNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.DerivativeGroupLinearNV()";
+            }
         }
-        public class OutputTrianglesNV: ExecutionMode
+        #endregion //DerivativeGroupLinearNV
+
+        #region OutputTrianglesNV
+        public static OutputTrianglesNVImpl OutputTrianglesNV()
         {
-            public static readonly OutputTrianglesNV Instance = new OutputTrianglesNV();
+            return OutputTrianglesNVImpl.Instance;
+            
+        }
+
+        public class OutputTrianglesNVImpl: ExecutionMode
+        {
+            public static readonly OutputTrianglesNVImpl Instance = new OutputTrianglesNVImpl();
+        
+            private  OutputTrianglesNVImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.OutputTrianglesNV;
-            public new static OutputTrianglesNV Parse(WordReader reader, uint wordCount)
+            public new static OutputTrianglesNVImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OutputTrianglesNVImpl object.</summary>
+            /// <returns>A string that represents the OutputTrianglesNVImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.OutputTrianglesNV()";
+            }
         }
-        public class PixelInterlockOrderedEXT: ExecutionMode
+        #endregion //OutputTrianglesNV
+
+        #region PixelInterlockOrderedEXT
+        public static PixelInterlockOrderedEXTImpl PixelInterlockOrderedEXT()
         {
-            public static readonly PixelInterlockOrderedEXT Instance = new PixelInterlockOrderedEXT();
+            return PixelInterlockOrderedEXTImpl.Instance;
+            
+        }
+
+        public class PixelInterlockOrderedEXTImpl: ExecutionMode
+        {
+            public static readonly PixelInterlockOrderedEXTImpl Instance = new PixelInterlockOrderedEXTImpl();
+        
+            private  PixelInterlockOrderedEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.PixelInterlockOrderedEXT;
-            public new static PixelInterlockOrderedEXT Parse(WordReader reader, uint wordCount)
+            public new static PixelInterlockOrderedEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PixelInterlockOrderedEXTImpl object.</summary>
+            /// <returns>A string that represents the PixelInterlockOrderedEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.PixelInterlockOrderedEXT()";
+            }
         }
-        public class PixelInterlockUnorderedEXT: ExecutionMode
+        #endregion //PixelInterlockOrderedEXT
+
+        #region PixelInterlockUnorderedEXT
+        public static PixelInterlockUnorderedEXTImpl PixelInterlockUnorderedEXT()
         {
-            public static readonly PixelInterlockUnorderedEXT Instance = new PixelInterlockUnorderedEXT();
+            return PixelInterlockUnorderedEXTImpl.Instance;
+            
+        }
+
+        public class PixelInterlockUnorderedEXTImpl: ExecutionMode
+        {
+            public static readonly PixelInterlockUnorderedEXTImpl Instance = new PixelInterlockUnorderedEXTImpl();
+        
+            private  PixelInterlockUnorderedEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.PixelInterlockUnorderedEXT;
-            public new static PixelInterlockUnorderedEXT Parse(WordReader reader, uint wordCount)
+            public new static PixelInterlockUnorderedEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the PixelInterlockUnorderedEXTImpl object.</summary>
+            /// <returns>A string that represents the PixelInterlockUnorderedEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.PixelInterlockUnorderedEXT()";
+            }
         }
-        public class SampleInterlockOrderedEXT: ExecutionMode
+        #endregion //PixelInterlockUnorderedEXT
+
+        #region SampleInterlockOrderedEXT
+        public static SampleInterlockOrderedEXTImpl SampleInterlockOrderedEXT()
         {
-            public static readonly SampleInterlockOrderedEXT Instance = new SampleInterlockOrderedEXT();
+            return SampleInterlockOrderedEXTImpl.Instance;
+            
+        }
+
+        public class SampleInterlockOrderedEXTImpl: ExecutionMode
+        {
+            public static readonly SampleInterlockOrderedEXTImpl Instance = new SampleInterlockOrderedEXTImpl();
+        
+            private  SampleInterlockOrderedEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SampleInterlockOrderedEXT;
-            public new static SampleInterlockOrderedEXT Parse(WordReader reader, uint wordCount)
+            public new static SampleInterlockOrderedEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleInterlockOrderedEXTImpl object.</summary>
+            /// <returns>A string that represents the SampleInterlockOrderedEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SampleInterlockOrderedEXT()";
+            }
         }
-        public class SampleInterlockUnorderedEXT: ExecutionMode
+        #endregion //SampleInterlockOrderedEXT
+
+        #region SampleInterlockUnorderedEXT
+        public static SampleInterlockUnorderedEXTImpl SampleInterlockUnorderedEXT()
         {
-            public static readonly SampleInterlockUnorderedEXT Instance = new SampleInterlockUnorderedEXT();
+            return SampleInterlockUnorderedEXTImpl.Instance;
+            
+        }
+
+        public class SampleInterlockUnorderedEXTImpl: ExecutionMode
+        {
+            public static readonly SampleInterlockUnorderedEXTImpl Instance = new SampleInterlockUnorderedEXTImpl();
+        
+            private  SampleInterlockUnorderedEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.SampleInterlockUnorderedEXT;
-            public new static SampleInterlockUnorderedEXT Parse(WordReader reader, uint wordCount)
+            public new static SampleInterlockUnorderedEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SampleInterlockUnorderedEXTImpl object.</summary>
+            /// <returns>A string that represents the SampleInterlockUnorderedEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.SampleInterlockUnorderedEXT()";
+            }
         }
-        public class ShadingRateInterlockOrderedEXT: ExecutionMode
+        #endregion //SampleInterlockUnorderedEXT
+
+        #region ShadingRateInterlockOrderedEXT
+        public static ShadingRateInterlockOrderedEXTImpl ShadingRateInterlockOrderedEXT()
         {
-            public static readonly ShadingRateInterlockOrderedEXT Instance = new ShadingRateInterlockOrderedEXT();
+            return ShadingRateInterlockOrderedEXTImpl.Instance;
+            
+        }
+
+        public class ShadingRateInterlockOrderedEXTImpl: ExecutionMode
+        {
+            public static readonly ShadingRateInterlockOrderedEXTImpl Instance = new ShadingRateInterlockOrderedEXTImpl();
+        
+            private  ShadingRateInterlockOrderedEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.ShadingRateInterlockOrderedEXT;
-            public new static ShadingRateInterlockOrderedEXT Parse(WordReader reader, uint wordCount)
+            public new static ShadingRateInterlockOrderedEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShadingRateInterlockOrderedEXTImpl object.</summary>
+            /// <returns>A string that represents the ShadingRateInterlockOrderedEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.ShadingRateInterlockOrderedEXT()";
+            }
         }
-        public class ShadingRateInterlockUnorderedEXT: ExecutionMode
+        #endregion //ShadingRateInterlockOrderedEXT
+
+        #region ShadingRateInterlockUnorderedEXT
+        public static ShadingRateInterlockUnorderedEXTImpl ShadingRateInterlockUnorderedEXT()
         {
-            public static readonly ShadingRateInterlockUnorderedEXT Instance = new ShadingRateInterlockUnorderedEXT();
+            return ShadingRateInterlockUnorderedEXTImpl.Instance;
+            
+        }
+
+        public class ShadingRateInterlockUnorderedEXTImpl: ExecutionMode
+        {
+            public static readonly ShadingRateInterlockUnorderedEXTImpl Instance = new ShadingRateInterlockUnorderedEXTImpl();
+        
+            private  ShadingRateInterlockUnorderedEXTImpl()
+            {
+            }
             public override Enumerant Value => ExecutionMode.Enumerant.ShadingRateInterlockUnorderedEXT;
-            public new static ShadingRateInterlockUnorderedEXT Parse(WordReader reader, uint wordCount)
+            public new static ShadingRateInterlockUnorderedEXTImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShadingRateInterlockUnorderedEXTImpl object.</summary>
+            /// <returns>A string that represents the ShadingRateInterlockUnorderedEXTImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ExecutionMode.ShadingRateInterlockUnorderedEXT()";
+            }
         }
+        #endregion //ShadingRateInterlockUnorderedEXT
 
         public abstract Enumerant Value { get; }
 
@@ -900,117 +2145,117 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Invocations :
-                    return Invocations.Parse(reader, wordCount - 1);
+                    return InvocationsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SpacingEqual :
-                    return SpacingEqual.Parse(reader, wordCount - 1);
+                    return SpacingEqualImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SpacingFractionalEven :
-                    return SpacingFractionalEven.Parse(reader, wordCount - 1);
+                    return SpacingFractionalEvenImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SpacingFractionalOdd :
-                    return SpacingFractionalOdd.Parse(reader, wordCount - 1);
+                    return SpacingFractionalOddImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VertexOrderCw :
-                    return VertexOrderCw.Parse(reader, wordCount - 1);
+                    return VertexOrderCwImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VertexOrderCcw :
-                    return VertexOrderCcw.Parse(reader, wordCount - 1);
+                    return VertexOrderCcwImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PixelCenterInteger :
-                    return PixelCenterInteger.Parse(reader, wordCount - 1);
+                    return PixelCenterIntegerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OriginUpperLeft :
-                    return OriginUpperLeft.Parse(reader, wordCount - 1);
+                    return OriginUpperLeftImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OriginLowerLeft :
-                    return OriginLowerLeft.Parse(reader, wordCount - 1);
+                    return OriginLowerLeftImpl.Parse(reader, wordCount - 1);
                 case Enumerant.EarlyFragmentTests :
-                    return EarlyFragmentTests.Parse(reader, wordCount - 1);
+                    return EarlyFragmentTestsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PointMode :
-                    return PointMode.Parse(reader, wordCount - 1);
+                    return PointModeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Xfb :
-                    return Xfb.Parse(reader, wordCount - 1);
+                    return XfbImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DepthReplacing :
-                    return DepthReplacing.Parse(reader, wordCount - 1);
+                    return DepthReplacingImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DepthGreater :
-                    return DepthGreater.Parse(reader, wordCount - 1);
+                    return DepthGreaterImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DepthLess :
-                    return DepthLess.Parse(reader, wordCount - 1);
+                    return DepthLessImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DepthUnchanged :
-                    return DepthUnchanged.Parse(reader, wordCount - 1);
+                    return DepthUnchangedImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LocalSize :
-                    return LocalSize.Parse(reader, wordCount - 1);
+                    return LocalSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LocalSizeHint :
-                    return LocalSizeHint.Parse(reader, wordCount - 1);
+                    return LocalSizeHintImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InputPoints :
-                    return InputPoints.Parse(reader, wordCount - 1);
+                    return InputPointsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InputLines :
-                    return InputLines.Parse(reader, wordCount - 1);
+                    return InputLinesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InputLinesAdjacency :
-                    return InputLinesAdjacency.Parse(reader, wordCount - 1);
+                    return InputLinesAdjacencyImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Triangles :
-                    return Triangles.Parse(reader, wordCount - 1);
+                    return TrianglesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.InputTrianglesAdjacency :
-                    return InputTrianglesAdjacency.Parse(reader, wordCount - 1);
+                    return InputTrianglesAdjacencyImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Quads :
-                    return Quads.Parse(reader, wordCount - 1);
+                    return QuadsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Isolines :
-                    return Isolines.Parse(reader, wordCount - 1);
+                    return IsolinesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputVertices :
-                    return OutputVertices.Parse(reader, wordCount - 1);
+                    return OutputVerticesImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputPoints :
-                    return OutputPoints.Parse(reader, wordCount - 1);
+                    return OutputPointsImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputLineStrip :
-                    return OutputLineStrip.Parse(reader, wordCount - 1);
+                    return OutputLineStripImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputTriangleStrip :
-                    return OutputTriangleStrip.Parse(reader, wordCount - 1);
+                    return OutputTriangleStripImpl.Parse(reader, wordCount - 1);
                 case Enumerant.VecTypeHint :
-                    return VecTypeHint.Parse(reader, wordCount - 1);
+                    return VecTypeHintImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ContractionOff :
-                    return ContractionOff.Parse(reader, wordCount - 1);
+                    return ContractionOffImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Initializer :
-                    return Initializer.Parse(reader, wordCount - 1);
+                    return InitializerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Finalizer :
-                    return Finalizer.Parse(reader, wordCount - 1);
+                    return FinalizerImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupSize :
-                    return SubgroupSize.Parse(reader, wordCount - 1);
+                    return SubgroupSizeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupsPerWorkgroup :
-                    return SubgroupsPerWorkgroup.Parse(reader, wordCount - 1);
+                    return SubgroupsPerWorkgroupImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubgroupsPerWorkgroupId :
-                    return SubgroupsPerWorkgroupId.Parse(reader, wordCount - 1);
+                    return SubgroupsPerWorkgroupIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LocalSizeId :
-                    return LocalSizeId.Parse(reader, wordCount - 1);
+                    return LocalSizeIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.LocalSizeHintId :
-                    return LocalSizeHintId.Parse(reader, wordCount - 1);
+                    return LocalSizeHintIdImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PostDepthCoverage :
-                    return PostDepthCoverage.Parse(reader, wordCount - 1);
+                    return PostDepthCoverageImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DenormPreserve :
-                    return DenormPreserve.Parse(reader, wordCount - 1);
+                    return DenormPreserveImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DenormFlushToZero :
-                    return DenormFlushToZero.Parse(reader, wordCount - 1);
+                    return DenormFlushToZeroImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SignedZeroInfNanPreserve :
-                    return SignedZeroInfNanPreserve.Parse(reader, wordCount - 1);
+                    return SignedZeroInfNanPreserveImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RoundingModeRTE :
-                    return RoundingModeRTE.Parse(reader, wordCount - 1);
+                    return RoundingModeRTEImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RoundingModeRTZ :
-                    return RoundingModeRTZ.Parse(reader, wordCount - 1);
+                    return RoundingModeRTZImpl.Parse(reader, wordCount - 1);
                 case Enumerant.StencilRefReplacingEXT :
-                    return StencilRefReplacingEXT.Parse(reader, wordCount - 1);
+                    return StencilRefReplacingEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputLinesNV :
-                    return OutputLinesNV.Parse(reader, wordCount - 1);
+                    return OutputLinesNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputPrimitivesNV :
-                    return OutputPrimitivesNV.Parse(reader, wordCount - 1);
+                    return OutputPrimitivesNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DerivativeGroupQuadsNV :
-                    return DerivativeGroupQuadsNV.Parse(reader, wordCount - 1);
+                    return DerivativeGroupQuadsNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DerivativeGroupLinearNV :
-                    return DerivativeGroupLinearNV.Parse(reader, wordCount - 1);
+                    return DerivativeGroupLinearNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OutputTrianglesNV :
-                    return OutputTrianglesNV.Parse(reader, wordCount - 1);
+                    return OutputTrianglesNVImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PixelInterlockOrderedEXT :
-                    return PixelInterlockOrderedEXT.Parse(reader, wordCount - 1);
+                    return PixelInterlockOrderedEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.PixelInterlockUnorderedEXT :
-                    return PixelInterlockUnorderedEXT.Parse(reader, wordCount - 1);
+                    return PixelInterlockUnorderedEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleInterlockOrderedEXT :
-                    return SampleInterlockOrderedEXT.Parse(reader, wordCount - 1);
+                    return SampleInterlockOrderedEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SampleInterlockUnorderedEXT :
-                    return SampleInterlockUnorderedEXT.Parse(reader, wordCount - 1);
+                    return SampleInterlockUnorderedEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShadingRateInterlockOrderedEXT :
-                    return ShadingRateInterlockOrderedEXT.Parse(reader, wordCount - 1);
+                    return ShadingRateInterlockOrderedEXTImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ShadingRateInterlockUnorderedEXT :
-                    return ShadingRateInterlockUnorderedEXT.Parse(reader, wordCount - 1);
+                    return ShadingRateInterlockUnorderedEXTImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown ExecutionMode "+id);
             }

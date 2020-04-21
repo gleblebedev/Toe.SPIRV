@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcSicGetIpeChromaModeINTEL(SpirvTypeBase resultType, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcSicGetIpeChromaModeINTEL;
 
-
         public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcSicGetIpeChromaModeINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcSicGetIpeChromaModeINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcSicGetIpeChromaModeINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcSicGetIpeChromaModeINTEL SetUp(Action<SubgroupAvcSicGetIpeChromaModeINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcSicGetIpeChromaModeINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcSicGetIpeChromaModeINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcSicGetIpeChromaModeINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcSicGetIpeChromaModeINTEL({ResultType}, {Payload}, {DebugName})";
         }
     }
 }

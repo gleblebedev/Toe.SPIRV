@@ -13,24 +13,65 @@ namespace Toe.SPIRV.Spv
             Linear = 1,
         }
 
-        public class Nearest: SamplerFilterMode
+        #region Nearest
+        public static NearestImpl Nearest()
         {
-            public static readonly Nearest Instance = new Nearest();
+            return NearestImpl.Instance;
+            
+        }
+
+        public class NearestImpl: SamplerFilterMode
+        {
+            public static readonly NearestImpl Instance = new NearestImpl();
+        
+            private  NearestImpl()
+            {
+            }
             public override Enumerant Value => SamplerFilterMode.Enumerant.Nearest;
-            public new static Nearest Parse(WordReader reader, uint wordCount)
+            public new static NearestImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NearestImpl object.</summary>
+            /// <returns>A string that represents the NearestImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerFilterMode.Nearest()";
+            }
         }
-        public class Linear: SamplerFilterMode
+        #endregion //Nearest
+
+        #region Linear
+        public static LinearImpl Linear()
         {
-            public static readonly Linear Instance = new Linear();
+            return LinearImpl.Instance;
+            
+        }
+
+        public class LinearImpl: SamplerFilterMode
+        {
+            public static readonly LinearImpl Instance = new LinearImpl();
+        
+            private  LinearImpl()
+            {
+            }
             public override Enumerant Value => SamplerFilterMode.Enumerant.Linear;
-            public new static Linear Parse(WordReader reader, uint wordCount)
+            public new static LinearImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LinearImpl object.</summary>
+            /// <returns>A string that represents the LinearImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SamplerFilterMode.Linear()";
+            }
         }
+        #endregion //Linear
 
         public abstract Enumerant Value { get; }
 
@@ -40,9 +81,9 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Nearest :
-                    return Nearest.Parse(reader, wordCount - 1);
+                    return NearestImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Linear :
-                    return Linear.Parse(reader, wordCount - 1);
+                    return LinearImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown SamplerFilterMode "+id);
             }

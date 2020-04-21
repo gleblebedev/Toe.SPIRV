@@ -13,6 +13,13 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupBlockWriteINTEL(Node ptr, Node data, string debugName = null)
+        {
+            this.Ptr = ptr;
+            this.Data = data;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupBlockWriteINTEL;
 
         /// <summary>
@@ -25,8 +32,16 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node Ptr { get; set; }
+
         public Node Data { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -61,17 +76,46 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupBlockWriteINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupBlockWriteINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupBlockWriteINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupBlockWriteINTEL SetUp(Action<SubgroupBlockWriteINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupBlockWriteINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Ptr = treeBuilder.GetNode(op.Ptr);
             Data = treeBuilder.GetNode(op.Data);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupBlockWriteINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupBlockWriteINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupBlockWriteINTEL({Ptr}, {Data}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static SubgroupBlockWriteINTEL ThenSubgroupBlockWriteINTEL(this INodeWithNext node, Node ptr, Node data, string debugName = null)
+        {
+            return node.Then(new SubgroupBlockWriteINTEL(ptr, data, debugName));
         }
     }
 }

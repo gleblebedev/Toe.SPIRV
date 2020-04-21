@@ -46,9 +46,160 @@ namespace Toe.SPIRV.Spv
             Value = value;
         }
 
-        public Enumerant Value { get; }
+        public static RayFlags CreateNoneKHR()
+        {
+            return new RayFlags(Enumerant.NoneKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoNoneKHR()
+        {
+            Value |= Enumerant.NoneKHR;
+            return this;
+        }
+
+        public static RayFlags CreateOpaqueKHR()
+        {
+            return new RayFlags(Enumerant.OpaqueKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoOpaqueKHR()
+        {
+            Value |= Enumerant.OpaqueKHR;
+            return this;
+        }
+
+        public static RayFlags CreateNoOpaqueKHR()
+        {
+            return new RayFlags(Enumerant.NoOpaqueKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoNoOpaqueKHR()
+        {
+            Value |= Enumerant.NoOpaqueKHR;
+            return this;
+        }
+
+        public static RayFlags CreateTerminateOnFirstHitKHR()
+        {
+            return new RayFlags(Enumerant.TerminateOnFirstHitKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoTerminateOnFirstHitKHR()
+        {
+            Value |= Enumerant.TerminateOnFirstHitKHR;
+            return this;
+        }
+
+        public static RayFlags CreateSkipClosestHitShaderKHR()
+        {
+            return new RayFlags(Enumerant.SkipClosestHitShaderKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoSkipClosestHitShaderKHR()
+        {
+            Value |= Enumerant.SkipClosestHitShaderKHR;
+            return this;
+        }
+
+        public static RayFlags CreateCullBackFacingTrianglesKHR()
+        {
+            return new RayFlags(Enumerant.CullBackFacingTrianglesKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoCullBackFacingTrianglesKHR()
+        {
+            Value |= Enumerant.CullBackFacingTrianglesKHR;
+            return this;
+        }
+
+        public static RayFlags CreateCullFrontFacingTrianglesKHR()
+        {
+            return new RayFlags(Enumerant.CullFrontFacingTrianglesKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoCullFrontFacingTrianglesKHR()
+        {
+            Value |= Enumerant.CullFrontFacingTrianglesKHR;
+            return this;
+        }
+
+        public static RayFlags CreateCullOpaqueKHR()
+        {
+            return new RayFlags(Enumerant.CullOpaqueKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoCullOpaqueKHR()
+        {
+            Value |= Enumerant.CullOpaqueKHR;
+            return this;
+        }
+
+        public static RayFlags CreateCullNoOpaqueKHR()
+        {
+            return new RayFlags(Enumerant.CullNoOpaqueKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoCullNoOpaqueKHR()
+        {
+            Value |= Enumerant.CullNoOpaqueKHR;
+            return this;
+        }
+
+        public static RayFlags CreateSkipTrianglesKHR()
+        {
+            return new RayFlags(Enumerant.SkipTrianglesKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoSkipTrianglesKHR()
+        {
+            Value |= Enumerant.SkipTrianglesKHR;
+            return this;
+        }
+
+        public static RayFlags CreateSkipAABBsKHR()
+        {
+            return new RayFlags(Enumerant.SkipAABBsKHR)
+            {
+            };
+        }
+
+        public RayFlags AlsoSkipAABBsKHR()
+        {
+            Value |= Enumerant.SkipAABBsKHR;
+            return this;
+        }
 
 
+        public static implicit operator RayFlags(RayFlags.Enumerant value)
+        {
+            switch (value)
+            {
+                default:
+                    return new RayFlags(value);
+            }
+        }
+
+        public Enumerant Value { get; private set; }
 
         public static RayFlags Parse(WordReader reader, uint wordCount)
         {

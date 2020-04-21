@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public MemoryNamedBarrier(Node namedBarrier, uint memory, uint semantics, string debugName = null)
+        {
+            this.NamedBarrier = namedBarrier;
+            this.Memory = memory;
+            this.Semantics = semantics;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpMemoryNamedBarrier;
 
         /// <summary>
@@ -25,9 +33,18 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node NamedBarrier { get; set; }
+
         public uint Memory { get; set; }
+
         public uint Semantics { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -61,18 +78,47 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public MemoryNamedBarrier WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpMemoryNamedBarrier)op, treeBuilder);
         }
 
-        public void SetUp(OpMemoryNamedBarrier op, SpirvInstructionTreeBuilder treeBuilder)
+        public MemoryNamedBarrier SetUp(Action<MemoryNamedBarrier> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpMemoryNamedBarrier op, SpirvInstructionTreeBuilder treeBuilder)
         {
             NamedBarrier = treeBuilder.GetNode(op.NamedBarrier);
             Memory = op.Memory;
             Semantics = op.Semantics;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the MemoryNamedBarrier object.</summary>
+        /// <returns>A string that represents the MemoryNamedBarrier object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"MemoryNamedBarrier({NamedBarrier}, {Memory}, {Semantics}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static MemoryNamedBarrier ThenMemoryNamedBarrier(this INodeWithNext node, Node namedBarrier, uint memory, uint semantics, string debugName = null)
+        {
+            return node.Then(new MemoryNamedBarrier(namedBarrier, memory, semantics, debugName));
         }
     }
 }

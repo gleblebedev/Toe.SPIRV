@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public Function(SpirvTypeBase resultType, Spv.FunctionControl functionControl, SpirvTypeBase functionType, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.FunctionControl = functionControl;
+            this.FunctionType = functionType;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpFunction;
 
         /// <summary>
@@ -25,11 +33,17 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public Spv.FunctionControl FunctionControl { get; set; }
-        public SpirvTypeBase FunctionType { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
-        public bool RelaxedPrecision { get; set; }
+        public Spv.FunctionControl FunctionControl { get; set; }
+
+        public SpirvTypeBase FunctionType { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
@@ -54,18 +68,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public Function WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpFunction)op, treeBuilder);
         }
 
-        public void SetUp(OpFunction op, SpirvInstructionTreeBuilder treeBuilder)
+        public Function SetUp(Action<Function> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpFunction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             FunctionControl = op.FunctionControl;
             FunctionType = treeBuilder.ResolveType(op.FunctionType);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the Function object.</summary>
+        /// <returns>A string that represents the Function object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"Function({ResultType}, {FunctionControl}, {FunctionType}, {DebugName})";
         }
     }
 }

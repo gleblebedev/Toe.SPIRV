@@ -20,78 +20,245 @@ namespace Toe.SPIRV.Spv
             ShaderCallKHR = 6,
         }
 
-        public class CrossDevice: Scope
+        #region CrossDevice
+        public static CrossDeviceImpl CrossDevice()
         {
-            public static readonly CrossDevice Instance = new CrossDevice();
+            return CrossDeviceImpl.Instance;
+            
+        }
+
+        public class CrossDeviceImpl: Scope
+        {
+            public static readonly CrossDeviceImpl Instance = new CrossDeviceImpl();
+        
+            private  CrossDeviceImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.CrossDevice;
-            public new static CrossDevice Parse(WordReader reader, uint wordCount)
+            public new static CrossDeviceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CrossDeviceImpl object.</summary>
+            /// <returns>A string that represents the CrossDeviceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.CrossDevice()";
+            }
         }
-        public class Device: Scope
+        #endregion //CrossDevice
+
+        #region Device
+        public static DeviceImpl Device()
         {
-            public static readonly Device Instance = new Device();
+            return DeviceImpl.Instance;
+            
+        }
+
+        public class DeviceImpl: Scope
+        {
+            public static readonly DeviceImpl Instance = new DeviceImpl();
+        
+            private  DeviceImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.Device;
-            public new static Device Parse(WordReader reader, uint wordCount)
+            public new static DeviceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DeviceImpl object.</summary>
+            /// <returns>A string that represents the DeviceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.Device()";
+            }
         }
-        public class Workgroup: Scope
+        #endregion //Device
+
+        #region Workgroup
+        public static WorkgroupImpl Workgroup()
         {
-            public static readonly Workgroup Instance = new Workgroup();
+            return WorkgroupImpl.Instance;
+            
+        }
+
+        public class WorkgroupImpl: Scope
+        {
+            public static readonly WorkgroupImpl Instance = new WorkgroupImpl();
+        
+            private  WorkgroupImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.Workgroup;
-            public new static Workgroup Parse(WordReader reader, uint wordCount)
+            public new static WorkgroupImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the WorkgroupImpl object.</summary>
+            /// <returns>A string that represents the WorkgroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.Workgroup()";
+            }
         }
-        public class Subgroup: Scope
+        #endregion //Workgroup
+
+        #region Subgroup
+        public static SubgroupImpl Subgroup()
         {
-            public static readonly Subgroup Instance = new Subgroup();
+            return SubgroupImpl.Instance;
+            
+        }
+
+        public class SubgroupImpl: Scope
+        {
+            public static readonly SubgroupImpl Instance = new SubgroupImpl();
+        
+            private  SubgroupImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.Subgroup;
-            public new static Subgroup Parse(WordReader reader, uint wordCount)
+            public new static SubgroupImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubgroupImpl object.</summary>
+            /// <returns>A string that represents the SubgroupImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.Subgroup()";
+            }
         }
-        public class Invocation: Scope
+        #endregion //Subgroup
+
+        #region Invocation
+        public static InvocationImpl Invocation()
         {
-            public static readonly Invocation Instance = new Invocation();
+            return InvocationImpl.Instance;
+            
+        }
+
+        public class InvocationImpl: Scope
+        {
+            public static readonly InvocationImpl Instance = new InvocationImpl();
+        
+            private  InvocationImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.Invocation;
-            public new static Invocation Parse(WordReader reader, uint wordCount)
+            public new static InvocationImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the InvocationImpl object.</summary>
+            /// <returns>A string that represents the InvocationImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.Invocation()";
+            }
         }
-        public class QueueFamily: Scope
+        #endregion //Invocation
+
+        #region QueueFamily
+        public static QueueFamilyImpl QueueFamily()
         {
-            public static readonly QueueFamily Instance = new QueueFamily();
+            return QueueFamilyImpl.Instance;
+            
+        }
+
+        public class QueueFamilyImpl: Scope
+        {
+            public static readonly QueueFamilyImpl Instance = new QueueFamilyImpl();
+        
+            private  QueueFamilyImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.QueueFamily;
-            public new static QueueFamily Parse(WordReader reader, uint wordCount)
+            public new static QueueFamilyImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the QueueFamilyImpl object.</summary>
+            /// <returns>A string that represents the QueueFamilyImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.QueueFamily()";
+            }
         }
-        public class QueueFamilyKHR: Scope
+        #endregion //QueueFamily
+
+        #region QueueFamilyKHR
+        public static QueueFamilyKHRImpl QueueFamilyKHR()
         {
-            public static readonly QueueFamilyKHR Instance = new QueueFamilyKHR();
+            return QueueFamilyKHRImpl.Instance;
+            
+        }
+
+        public class QueueFamilyKHRImpl: Scope
+        {
+            public static readonly QueueFamilyKHRImpl Instance = new QueueFamilyKHRImpl();
+        
+            private  QueueFamilyKHRImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.QueueFamilyKHR;
-            public new static QueueFamilyKHR Parse(WordReader reader, uint wordCount)
+            public new static QueueFamilyKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the QueueFamilyKHRImpl object.</summary>
+            /// <returns>A string that represents the QueueFamilyKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.QueueFamilyKHR()";
+            }
         }
-        public class ShaderCallKHR: Scope
+        #endregion //QueueFamilyKHR
+
+        #region ShaderCallKHR
+        public static ShaderCallKHRImpl ShaderCallKHR()
         {
-            public static readonly ShaderCallKHR Instance = new ShaderCallKHR();
+            return ShaderCallKHRImpl.Instance;
+            
+        }
+
+        public class ShaderCallKHRImpl: Scope
+        {
+            public static readonly ShaderCallKHRImpl Instance = new ShaderCallKHRImpl();
+        
+            private  ShaderCallKHRImpl()
+            {
+            }
             public override Enumerant Value => Scope.Enumerant.ShaderCallKHR;
-            public new static ShaderCallKHR Parse(WordReader reader, uint wordCount)
+            public new static ShaderCallKHRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ShaderCallKHRImpl object.</summary>
+            /// <returns>A string that represents the ShaderCallKHRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Scope.ShaderCallKHR()";
+            }
         }
+        #endregion //ShaderCallKHR
 
         public abstract Enumerant Value { get; }
 
@@ -101,22 +268,22 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.CrossDevice :
-                    return CrossDevice.Parse(reader, wordCount - 1);
+                    return CrossDeviceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Device :
-                    return Device.Parse(reader, wordCount - 1);
+                    return DeviceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Workgroup :
-                    return Workgroup.Parse(reader, wordCount - 1);
+                    return WorkgroupImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Subgroup :
-                    return Subgroup.Parse(reader, wordCount - 1);
+                    return SubgroupImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Invocation :
-                    return Invocation.Parse(reader, wordCount - 1);
+                    return InvocationImpl.Parse(reader, wordCount - 1);
                 case Enumerant.QueueFamily :
-                    return QueueFamily.Parse(reader, wordCount - 1);
+                    return QueueFamilyImpl.Parse(reader, wordCount - 1);
                 //QueueFamilyKHR has the same id as another value in enum.
                 //case Enumerant.QueueFamilyKHR :
                 //    return QueueFamilyKHR.Parse(reader, wordCount - 1);
                 case Enumerant.ShaderCallKHR :
-                    return ShaderCallKHR.Parse(reader, wordCount - 1);
+                    return ShaderCallKHRImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown Scope "+id);
             }

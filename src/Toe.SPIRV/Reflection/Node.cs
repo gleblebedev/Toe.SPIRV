@@ -90,7 +90,7 @@ namespace Toe.SPIRV.Reflection
             AddDecoration(decoration);
         }
 
-        public virtual void AddDecoration(Decoration decoration)
+        protected virtual void AddDecoration(Decoration decoration)
         {
             if (_decorations == null)
             {

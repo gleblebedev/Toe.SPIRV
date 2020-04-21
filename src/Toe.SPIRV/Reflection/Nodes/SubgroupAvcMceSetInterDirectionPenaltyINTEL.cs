@@ -13,19 +13,27 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcMceSetInterDirectionPenaltyINTEL(SpirvTypeBase resultType, Node directionCost, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.DirectionCost = directionCost;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcMceSetInterDirectionPenaltyINTEL;
 
-
         public Node DirectionCost { get; set; }
-        public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Payload { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -53,18 +61,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcMceSetInterDirectionPenaltyINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcMceSetInterDirectionPenaltyINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcMceSetInterDirectionPenaltyINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcMceSetInterDirectionPenaltyINTEL SetUp(Action<SubgroupAvcMceSetInterDirectionPenaltyINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcMceSetInterDirectionPenaltyINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             DirectionCost = treeBuilder.GetNode(op.DirectionCost);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcMceSetInterDirectionPenaltyINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcMceSetInterDirectionPenaltyINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcMceSetInterDirectionPenaltyINTEL({ResultType}, {DirectionCost}, {Payload}, {DebugName})";
         }
     }
 }

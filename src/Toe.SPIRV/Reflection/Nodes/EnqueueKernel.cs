@@ -13,28 +13,54 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public EnqueueKernel(SpirvTypeBase resultType, Node queue, Node flags, Node nDRange, Node numEvents, Node waitEvents, Node retEvent, Node invoke, Node param, Node paramSize, Node paramAlign, IEnumerable<Node> localSize, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Queue = queue;
+            this.Flags = flags;
+            this.NDRange = nDRange;
+            this.NumEvents = numEvents;
+            this.WaitEvents = waitEvents;
+            this.RetEvent = retEvent;
+            this.Invoke = invoke;
+            this.Param = param;
+            this.ParamSize = paramSize;
+            this.ParamAlign = paramAlign;
+            if (localSize != null) { foreach (var node in localSize) this.LocalSize.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpEnqueueKernel;
 
-
         public Node Queue { get; set; }
-        public Node Flags { get; set; }
-        public Node NDRange { get; set; }
-        public Node NumEvents { get; set; }
-        public Node WaitEvents { get; set; }
-        public Node RetEvent { get; set; }
-        public Node Invoke { get; set; }
-        public Node Param { get; set; }
-        public Node ParamSize { get; set; }
-        public Node ParamAlign { get; set; }
-        public IList<Node> LocalSize { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Flags { get; set; }
+
+        public Node NDRange { get; set; }
+
+        public Node NumEvents { get; set; }
+
+        public Node WaitEvents { get; set; }
+
+        public Node RetEvent { get; set; }
+
+        public Node Invoke { get; set; }
+
+        public Node Param { get; set; }
+
+        public Node ParamSize { get; set; }
+
+        public Node ParamAlign { get; set; }
+
+        public IList<Node> LocalSize { get; private set; } = new PrintableList<Node>();
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -74,13 +100,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public EnqueueKernel WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpEnqueueKernel)op, treeBuilder);
         }
 
-        public void SetUp(OpEnqueueKernel op, SpirvInstructionTreeBuilder treeBuilder)
+        public EnqueueKernel SetUp(Action<EnqueueKernel> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpEnqueueKernel op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Queue = treeBuilder.GetNode(op.Queue);
@@ -95,6 +134,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             ParamAlign = treeBuilder.GetNode(op.ParamAlign);
             LocalSize = treeBuilder.GetNodes(op.LocalSize);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the EnqueueKernel object.</summary>
+        /// <returns>A string that represents the EnqueueKernel object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"EnqueueKernel({ResultType}, {Queue}, {Flags}, {NDRange}, {NumEvents}, {WaitEvents}, {RetEvent}, {Invoke}, {Param}, {ParamSize}, {ParamAlign}, {LocalSize}, {DebugName})";
         }
     }
 }

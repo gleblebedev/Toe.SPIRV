@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Toe.SPIRV.Instructions;
 using Toe.SPIRV.Reflection.Operands;
 using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
@@ -11,14 +8,44 @@ namespace Toe.SPIRV.Reflection.Nodes
 {
     public partial class Constant
     {
-        public Constant(SpirvTypeBase type, NumberLiteral value)
+        public Constant(NumberLiteral value, string debugName = null):this(value.Type,value, debugName)
         {
-            ResultType = type;
-            Value = value;
         }
     }
+
+    public partial class Variable
+    {
+        public static Variable gl_VertexIndex()
+        {
+            return new Variable(SpirvTypeBase.Int.MakePointer(StorageClass.Input()), StorageClass.Input(), null, "gl_VertexIndex")
+                .WithDecoration(Decoration.BuiltIn(BuiltIn.VertexIndex()));
+        }
+    }
+
+    public partial class ConstantComposite
+    {
+        public ConstantComposite(SpirvTypeBase returnType, params Node[] constituents):this(returnType, constituents, null)
+        {
+        }
+    }
+
+    public partial class FunctionCall
+    {
+        public FunctionCall(Function function, IEnumerable<Node> arguments, string debugName = null)
+            : this(function.ResultType, function, arguments, debugName)
+        {
+        }
+
+    }
+
     public partial class Function
     {
+        public Function(Spv.FunctionControl functionControl, TypeFunction functionType, string debugName = null)
+        :this(functionType.ReturnType, functionControl, functionType, debugName)
+        {
+        }
+
+
         public IList<FunctionParameter> Parameters { get; } = new List<FunctionParameter>();
 
         public override IEnumerable<NodePinWithConnection> InputPins
@@ -36,7 +63,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
     public partial class MemoryModel
     {
-        public static readonly MemoryModel GLSL450 = new MemoryModel(){AddressingModel = new AddressingModel.Logical(), Value = new Spv.MemoryModel.GLSL450() };
+        public static readonly MemoryModel GLSL450 = new MemoryModel(){AddressingModel = Spv.AddressingModel.Logical(), Value = Spv.MemoryModel.GLSL450() };
     }
 
     public partial class Variable
@@ -47,18 +74,18 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public uint? Location { get; set; }
 
-        public override void AddDecoration(Decoration decoration)
+        protected override void AddDecoration(Decoration decoration)
         {
             switch (decoration.Value)
             {
                 case Decoration.Enumerant.Location:
-                    Location = ((Decoration.Location)decoration).LocationValue;
+                    Location = ((Decoration.LocationImpl)decoration).Location;
                     return;
                 case Decoration.Enumerant.DescriptorSet:
-                    DescriptorSet = ((Decoration.DescriptorSet)decoration).DescriptorSetValue;
+                    DescriptorSet = ((Decoration.DescriptorSetImpl)decoration).DescriptorSet;
                     return;
                 case Decoration.Enumerant.Binding:
-                    BindingPoint = ((Decoration.Binding)decoration).BindingPoint;
+                    BindingPoint = ((Decoration.BindingImpl)decoration).BindingPoint;
                     return;
             }
             base.AddDecoration(decoration);
@@ -93,7 +120,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             if (BindingPoint != null)
             {
-                yield return new Decorate(){Target = this, Decoration = new Decoration.Binding() {BindingPoint = BindingPoint.Value}};
+                yield return new Decorate(){Target = this, Decoration = Decoration.Binding(BindingPoint.Value)};
             }
         }
 
@@ -101,7 +128,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             if (DescriptorSet != null)
             {
-                yield return new Decorate() { Target = this, Decoration = new Decoration.DescriptorSet() {DescriptorSetValue = DescriptorSet.Value} };
+                yield return new Decorate() { Target = this, Decoration = Decoration.DescriptorSet(DescriptorSet.Value) };
             }
         }
 
@@ -109,7 +136,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
             if (Location != null)
             {
-                yield return new Decorate() { Target = this, Decoration = new Decoration.Location() {LocationValue = Location.Value} };
+                yield return new Decorate() { Target = this, Decoration = Decoration.Location(Location.Value) };
             }
         }
     }

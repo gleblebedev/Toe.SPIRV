@@ -13,21 +13,33 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupImageMediaBlockReadINTEL(SpirvTypeBase resultType, Node image, Node coordinate, Node width, Node height, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Image = image;
+            this.Coordinate = coordinate;
+            this.Width = width;
+            this.Height = height;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupImageMediaBlockReadINTEL;
 
-
         public Node Image { get; set; }
-        public Node Coordinate { get; set; }
-        public Node Width { get; set; }
-        public Node Height { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Coordinate { get; set; }
+
+        public Node Width { get; set; }
+
+        public Node Height { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -57,13 +69,26 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupImageMediaBlockReadINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupImageMediaBlockReadINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupImageMediaBlockReadINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupImageMediaBlockReadINTEL SetUp(Action<SubgroupImageMediaBlockReadINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupImageMediaBlockReadINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Image = treeBuilder.GetNode(op.Image);
@@ -71,6 +96,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             Width = treeBuilder.GetNode(op.Width);
             Height = treeBuilder.GetNode(op.Height);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupImageMediaBlockReadINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupImageMediaBlockReadINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupImageMediaBlockReadINTEL({ResultType}, {Image}, {Coordinate}, {Width}, {Height}, {DebugName})";
         }
     }
 }

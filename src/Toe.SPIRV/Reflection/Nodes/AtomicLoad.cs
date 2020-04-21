@@ -13,20 +13,30 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public AtomicLoad(SpirvTypeBase resultType, Node pointer, uint memory, uint semantics, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Pointer = pointer;
+            this.Memory = memory;
+            this.Semantics = semantics;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpAtomicLoad;
 
-
         public Node Pointer { get; set; }
-        public uint Memory { get; set; }
-        public uint Semantics { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public uint Memory { get; set; }
+
+        public uint Semantics { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -53,19 +63,40 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public AtomicLoad WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpAtomicLoad)op, treeBuilder);
         }
 
-        public void SetUp(OpAtomicLoad op, SpirvInstructionTreeBuilder treeBuilder)
+        public AtomicLoad SetUp(Action<AtomicLoad> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpAtomicLoad op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pointer = treeBuilder.GetNode(op.Pointer);
             Memory = op.Memory;
             Semantics = op.Semantics;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the AtomicLoad object.</summary>
+        /// <returns>A string that represents the AtomicLoad object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"AtomicLoad({ResultType}, {Pointer}, {Memory}, {Semantics}, {DebugName})";
         }
     }
 }

@@ -13,6 +13,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ModuleProcessed(string process, string debugName = null)
+        {
+            this.Process = process;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpModuleProcessed;
 
         /// <summary>
@@ -23,6 +29,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         public override ExecutableNode GetNext()
         {
             return Next;
+        }
+
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
         }
 
         public string Process { get; set; }
@@ -51,16 +63,45 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ModuleProcessed WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpModuleProcessed)op, treeBuilder);
         }
 
-        public void SetUp(OpModuleProcessed op, SpirvInstructionTreeBuilder treeBuilder)
+        public ModuleProcessed SetUp(Action<ModuleProcessed> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpModuleProcessed op, SpirvInstructionTreeBuilder treeBuilder)
         {
             Process = op.Process;
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ModuleProcessed object.</summary>
+        /// <returns>A string that represents the ModuleProcessed object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ModuleProcessed({Process}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static ModuleProcessed ThenModuleProcessed(this INodeWithNext node, string process, string debugName = null)
+        {
+            return node.Then(new ModuleProcessed(process, debugName));
         }
     }
 }

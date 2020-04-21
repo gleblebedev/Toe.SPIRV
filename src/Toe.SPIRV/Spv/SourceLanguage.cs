@@ -15,60 +15,185 @@ namespace Toe.SPIRV.Spv
             HLSL = 5,
         }
 
-        public class Unknown: SourceLanguage
+        #region Unknown
+        public static UnknownImpl Unknown()
         {
-            public static readonly Unknown Instance = new Unknown();
+            return UnknownImpl.Instance;
+            
+        }
+
+        public class UnknownImpl: SourceLanguage
+        {
+            public static readonly UnknownImpl Instance = new UnknownImpl();
+        
+            private  UnknownImpl()
+            {
+            }
             public override Enumerant Value => SourceLanguage.Enumerant.Unknown;
-            public new static Unknown Parse(WordReader reader, uint wordCount)
+            public new static UnknownImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the UnknownImpl object.</summary>
+            /// <returns>A string that represents the UnknownImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SourceLanguage.Unknown()";
+            }
         }
-        public class ESSL: SourceLanguage
+        #endregion //Unknown
+
+        #region ESSL
+        public static ESSLImpl ESSL()
         {
-            public static readonly ESSL Instance = new ESSL();
+            return ESSLImpl.Instance;
+            
+        }
+
+        public class ESSLImpl: SourceLanguage
+        {
+            public static readonly ESSLImpl Instance = new ESSLImpl();
+        
+            private  ESSLImpl()
+            {
+            }
             public override Enumerant Value => SourceLanguage.Enumerant.ESSL;
-            public new static ESSL Parse(WordReader reader, uint wordCount)
+            public new static ESSLImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ESSLImpl object.</summary>
+            /// <returns>A string that represents the ESSLImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SourceLanguage.ESSL()";
+            }
         }
-        public class GLSL: SourceLanguage
+        #endregion //ESSL
+
+        #region GLSL
+        public static GLSLImpl GLSL()
         {
-            public static readonly GLSL Instance = new GLSL();
+            return GLSLImpl.Instance;
+            
+        }
+
+        public class GLSLImpl: SourceLanguage
+        {
+            public static readonly GLSLImpl Instance = new GLSLImpl();
+        
+            private  GLSLImpl()
+            {
+            }
             public override Enumerant Value => SourceLanguage.Enumerant.GLSL;
-            public new static GLSL Parse(WordReader reader, uint wordCount)
+            public new static GLSLImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the GLSLImpl object.</summary>
+            /// <returns>A string that represents the GLSLImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SourceLanguage.GLSL()";
+            }
         }
-        public class OpenCL_C: SourceLanguage
+        #endregion //GLSL
+
+        #region OpenCL_C
+        public static OpenCL_CImpl OpenCL_C()
         {
-            public static readonly OpenCL_C Instance = new OpenCL_C();
+            return OpenCL_CImpl.Instance;
+            
+        }
+
+        public class OpenCL_CImpl: SourceLanguage
+        {
+            public static readonly OpenCL_CImpl Instance = new OpenCL_CImpl();
+        
+            private  OpenCL_CImpl()
+            {
+            }
             public override Enumerant Value => SourceLanguage.Enumerant.OpenCL_C;
-            public new static OpenCL_C Parse(WordReader reader, uint wordCount)
+            public new static OpenCL_CImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OpenCL_CImpl object.</summary>
+            /// <returns>A string that represents the OpenCL_CImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SourceLanguage.OpenCL_C()";
+            }
         }
-        public class OpenCL_CPP: SourceLanguage
+        #endregion //OpenCL_C
+
+        #region OpenCL_CPP
+        public static OpenCL_CPPImpl OpenCL_CPP()
         {
-            public static readonly OpenCL_CPP Instance = new OpenCL_CPP();
+            return OpenCL_CPPImpl.Instance;
+            
+        }
+
+        public class OpenCL_CPPImpl: SourceLanguage
+        {
+            public static readonly OpenCL_CPPImpl Instance = new OpenCL_CPPImpl();
+        
+            private  OpenCL_CPPImpl()
+            {
+            }
             public override Enumerant Value => SourceLanguage.Enumerant.OpenCL_CPP;
-            public new static OpenCL_CPP Parse(WordReader reader, uint wordCount)
+            public new static OpenCL_CPPImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the OpenCL_CPPImpl object.</summary>
+            /// <returns>A string that represents the OpenCL_CPPImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SourceLanguage.OpenCL_CPP()";
+            }
         }
-        public class HLSL: SourceLanguage
+        #endregion //OpenCL_CPP
+
+        #region HLSL
+        public static HLSLImpl HLSL()
         {
-            public static readonly HLSL Instance = new HLSL();
+            return HLSLImpl.Instance;
+            
+        }
+
+        public class HLSLImpl: SourceLanguage
+        {
+            public static readonly HLSLImpl Instance = new HLSLImpl();
+        
+            private  HLSLImpl()
+            {
+            }
             public override Enumerant Value => SourceLanguage.Enumerant.HLSL;
-            public new static HLSL Parse(WordReader reader, uint wordCount)
+            public new static HLSLImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the HLSLImpl object.</summary>
+            /// <returns>A string that represents the HLSLImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" SourceLanguage.HLSL()";
+            }
         }
+        #endregion //HLSL
 
         public abstract Enumerant Value { get; }
 
@@ -78,17 +203,17 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Unknown :
-                    return Unknown.Parse(reader, wordCount - 1);
+                    return UnknownImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ESSL :
-                    return ESSL.Parse(reader, wordCount - 1);
+                    return ESSLImpl.Parse(reader, wordCount - 1);
                 case Enumerant.GLSL :
-                    return GLSL.Parse(reader, wordCount - 1);
+                    return GLSLImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OpenCL_C :
-                    return OpenCL_C.Parse(reader, wordCount - 1);
+                    return OpenCL_CImpl.Parse(reader, wordCount - 1);
                 case Enumerant.OpenCL_CPP :
-                    return OpenCL_CPP.Parse(reader, wordCount - 1);
+                    return OpenCL_CPPImpl.Parse(reader, wordCount - 1);
                 case Enumerant.HLSL :
-                    return HLSL.Parse(reader, wordCount - 1);
+                    return HLSLImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown SourceLanguage "+id);
             }

@@ -13,19 +13,27 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public RayQueryGetIntersectionObjectRayOriginKHR(SpirvTypeBase resultType, Node rayQuery, Node intersection, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.RayQuery = rayQuery;
+            this.Intersection = intersection;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpRayQueryGetIntersectionObjectRayOriginKHR;
 
-
         public Node RayQuery { get; set; }
-        public Node Intersection { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Intersection { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -53,18 +61,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public RayQueryGetIntersectionObjectRayOriginKHR WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpRayQueryGetIntersectionObjectRayOriginKHR)op, treeBuilder);
         }
 
-        public void SetUp(OpRayQueryGetIntersectionObjectRayOriginKHR op, SpirvInstructionTreeBuilder treeBuilder)
+        public RayQueryGetIntersectionObjectRayOriginKHR SetUp(Action<RayQueryGetIntersectionObjectRayOriginKHR> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpRayQueryGetIntersectionObjectRayOriginKHR op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             RayQuery = treeBuilder.GetNode(op.RayQuery);
             Intersection = treeBuilder.GetNode(op.Intersection);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the RayQueryGetIntersectionObjectRayOriginKHR object.</summary>
+        /// <returns>A string that represents the RayQueryGetIntersectionObjectRayOriginKHR object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"RayQueryGetIntersectionObjectRayOriginKHR({ResultType}, {RayQuery}, {Intersection}, {DebugName})";
         }
     }
 }

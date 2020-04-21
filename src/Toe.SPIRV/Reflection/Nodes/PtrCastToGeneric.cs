@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public PtrCastToGeneric(SpirvTypeBase resultType, Node pointer, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Pointer = pointer;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpPtrCastToGeneric;
 
-
         public Node Pointer { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public PtrCastToGeneric WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpPtrCastToGeneric)op, treeBuilder);
         }
 
-        public void SetUp(OpPtrCastToGeneric op, SpirvInstructionTreeBuilder treeBuilder)
+        public PtrCastToGeneric SetUp(Action<PtrCastToGeneric> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpPtrCastToGeneric op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Pointer = treeBuilder.GetNode(op.Pointer);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the PtrCastToGeneric object.</summary>
+        /// <returns>A string that represents the PtrCastToGeneric object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"PtrCastToGeneric({ResultType}, {Pointer}, {DebugName})";
         }
     }
 }

@@ -13,19 +13,27 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(SpirvTypeBase resultType, Node packedShapePenalty, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.PackedShapePenalty = packedShapePenalty;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL;
 
-
         public Node PackedShapePenalty { get; set; }
-        public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Payload { get; set; }
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -53,18 +61,39 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcSicSetIntraLumaShapePenaltyINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcSicSetIntraLumaShapePenaltyINTEL SetUp(Action<SubgroupAvcSicSetIntraLumaShapePenaltyINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             PackedShapePenalty = treeBuilder.GetNode(op.PackedShapePenalty);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcSicSetIntraLumaShapePenaltyINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcSicSetIntraLumaShapePenaltyINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcSicSetIntraLumaShapePenaltyINTEL({ResultType}, {PackedShapePenalty}, {Payload}, {DebugName})";
         }
     }
 }

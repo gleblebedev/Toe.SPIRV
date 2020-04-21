@@ -13,9 +13,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public Unreachable(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpUnreachable;
-
-
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -40,15 +43,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public Unreachable WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpUnreachable)op, treeBuilder);
         }
 
-        public void SetUp(OpUnreachable op, SpirvInstructionTreeBuilder treeBuilder)
+        public Unreachable SetUp(Action<Unreachable> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpUnreachable op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the Unreachable object.</summary>
+        /// <returns>A string that represents the Unreachable object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"Unreachable({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static Unreachable ThenUnreachable(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new Unreachable(debugName));
         }
     }
 }

@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public SubgroupAvcRefSetBidirectionalMixDisableINTEL(SpirvTypeBase resultType, Node payload, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Payload = payload;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpSubgroupAvcRefSetBidirectionalMixDisableINTEL;
 
-
         public Node Payload { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public SubgroupAvcRefSetBidirectionalMixDisableINTEL WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpSubgroupAvcRefSetBidirectionalMixDisableINTEL)op, treeBuilder);
         }
 
-        public void SetUp(OpSubgroupAvcRefSetBidirectionalMixDisableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
+        public SubgroupAvcRefSetBidirectionalMixDisableINTEL SetUp(Action<SubgroupAvcRefSetBidirectionalMixDisableINTEL> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpSubgroupAvcRefSetBidirectionalMixDisableINTEL op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Payload = treeBuilder.GetNode(op.Payload);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the SubgroupAvcRefSetBidirectionalMixDisableINTEL object.</summary>
+        /// <returns>A string that represents the SubgroupAvcRefSetBidirectionalMixDisableINTEL object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"SubgroupAvcRefSetBidirectionalMixDisableINTEL({ResultType}, {Payload}, {DebugName})";
         }
     }
 }

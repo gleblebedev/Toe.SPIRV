@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public ImageQueryOrder(SpirvTypeBase resultType, Node image, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Image = image;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpImageQueryOrder;
 
-
         public Node Image { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -51,17 +57,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public ImageQueryOrder WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpImageQueryOrder)op, treeBuilder);
         }
 
-        public void SetUp(OpImageQueryOrder op, SpirvInstructionTreeBuilder treeBuilder)
+        public ImageQueryOrder SetUp(Action<ImageQueryOrder> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpImageQueryOrder op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Image = treeBuilder.GetNode(op.Image);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the ImageQueryOrder object.</summary>
+        /// <returns>A string that represents the ImageQueryOrder object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"ImageQueryOrder({ResultType}, {Image}, {DebugName})";
         }
     }
 }

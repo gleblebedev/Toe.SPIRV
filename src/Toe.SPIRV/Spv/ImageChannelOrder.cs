@@ -49,186 +49,605 @@ namespace Toe.SPIRV.Spv
             ABGR = 19,
         }
 
-        public class R: ImageChannelOrder
+        #region R
+        public static RImpl R()
         {
-            public static readonly R Instance = new R();
+            return RImpl.Instance;
+            
+        }
+
+        public class RImpl: ImageChannelOrder
+        {
+            public static readonly RImpl Instance = new RImpl();
+        
+            private  RImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.R;
-            public new static R Parse(WordReader reader, uint wordCount)
+            public new static RImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RImpl object.</summary>
+            /// <returns>A string that represents the RImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.R()";
+            }
         }
-        public class A: ImageChannelOrder
+        #endregion //R
+
+        #region A
+        public static AImpl A()
         {
-            public static readonly A Instance = new A();
+            return AImpl.Instance;
+            
+        }
+
+        public class AImpl: ImageChannelOrder
+        {
+            public static readonly AImpl Instance = new AImpl();
+        
+            private  AImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.A;
-            public new static A Parse(WordReader reader, uint wordCount)
+            public new static AImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the AImpl object.</summary>
+            /// <returns>A string that represents the AImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.A()";
+            }
         }
-        public class RG: ImageChannelOrder
+        #endregion //A
+
+        #region RG
+        public static RGImpl RG()
         {
-            public static readonly RG Instance = new RG();
+            return RGImpl.Instance;
+            
+        }
+
+        public class RGImpl: ImageChannelOrder
+        {
+            public static readonly RGImpl Instance = new RGImpl();
+        
+            private  RGImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.RG;
-            public new static RG Parse(WordReader reader, uint wordCount)
+            public new static RGImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RGImpl object.</summary>
+            /// <returns>A string that represents the RGImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.RG()";
+            }
         }
-        public class RA: ImageChannelOrder
+        #endregion //RG
+
+        #region RA
+        public static RAImpl RA()
         {
-            public static readonly RA Instance = new RA();
+            return RAImpl.Instance;
+            
+        }
+
+        public class RAImpl: ImageChannelOrder
+        {
+            public static readonly RAImpl Instance = new RAImpl();
+        
+            private  RAImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.RA;
-            public new static RA Parse(WordReader reader, uint wordCount)
+            public new static RAImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RAImpl object.</summary>
+            /// <returns>A string that represents the RAImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.RA()";
+            }
         }
-        public class RGB: ImageChannelOrder
+        #endregion //RA
+
+        #region RGB
+        public static RGBImpl RGB()
         {
-            public static readonly RGB Instance = new RGB();
+            return RGBImpl.Instance;
+            
+        }
+
+        public class RGBImpl: ImageChannelOrder
+        {
+            public static readonly RGBImpl Instance = new RGBImpl();
+        
+            private  RGBImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGB;
-            public new static RGB Parse(WordReader reader, uint wordCount)
+            public new static RGBImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RGBImpl object.</summary>
+            /// <returns>A string that represents the RGBImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.RGB()";
+            }
         }
-        public class RGBA: ImageChannelOrder
+        #endregion //RGB
+
+        #region RGBA
+        public static RGBAImpl RGBA()
         {
-            public static readonly RGBA Instance = new RGBA();
+            return RGBAImpl.Instance;
+            
+        }
+
+        public class RGBAImpl: ImageChannelOrder
+        {
+            public static readonly RGBAImpl Instance = new RGBAImpl();
+        
+            private  RGBAImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGBA;
-            public new static RGBA Parse(WordReader reader, uint wordCount)
+            public new static RGBAImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RGBAImpl object.</summary>
+            /// <returns>A string that represents the RGBAImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.RGBA()";
+            }
         }
-        public class BGRA: ImageChannelOrder
+        #endregion //RGBA
+
+        #region BGRA
+        public static BGRAImpl BGRA()
         {
-            public static readonly BGRA Instance = new BGRA();
+            return BGRAImpl.Instance;
+            
+        }
+
+        public class BGRAImpl: ImageChannelOrder
+        {
+            public static readonly BGRAImpl Instance = new BGRAImpl();
+        
+            private  BGRAImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.BGRA;
-            public new static BGRA Parse(WordReader reader, uint wordCount)
+            public new static BGRAImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BGRAImpl object.</summary>
+            /// <returns>A string that represents the BGRAImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.BGRA()";
+            }
         }
-        public class ARGB: ImageChannelOrder
+        #endregion //BGRA
+
+        #region ARGB
+        public static ARGBImpl ARGB()
         {
-            public static readonly ARGB Instance = new ARGB();
+            return ARGBImpl.Instance;
+            
+        }
+
+        public class ARGBImpl: ImageChannelOrder
+        {
+            public static readonly ARGBImpl Instance = new ARGBImpl();
+        
+            private  ARGBImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.ARGB;
-            public new static ARGB Parse(WordReader reader, uint wordCount)
+            public new static ARGBImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ARGBImpl object.</summary>
+            /// <returns>A string that represents the ARGBImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.ARGB()";
+            }
         }
-        public class Intensity: ImageChannelOrder
+        #endregion //ARGB
+
+        #region Intensity
+        public static IntensityImpl Intensity()
         {
-            public static readonly Intensity Instance = new Intensity();
+            return IntensityImpl.Instance;
+            
+        }
+
+        public class IntensityImpl: ImageChannelOrder
+        {
+            public static readonly IntensityImpl Instance = new IntensityImpl();
+        
+            private  IntensityImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.Intensity;
-            public new static Intensity Parse(WordReader reader, uint wordCount)
+            public new static IntensityImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the IntensityImpl object.</summary>
+            /// <returns>A string that represents the IntensityImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.Intensity()";
+            }
         }
-        public class Luminance: ImageChannelOrder
+        #endregion //Intensity
+
+        #region Luminance
+        public static LuminanceImpl Luminance()
         {
-            public static readonly Luminance Instance = new Luminance();
+            return LuminanceImpl.Instance;
+            
+        }
+
+        public class LuminanceImpl: ImageChannelOrder
+        {
+            public static readonly LuminanceImpl Instance = new LuminanceImpl();
+        
+            private  LuminanceImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.Luminance;
-            public new static Luminance Parse(WordReader reader, uint wordCount)
+            public new static LuminanceImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the LuminanceImpl object.</summary>
+            /// <returns>A string that represents the LuminanceImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.Luminance()";
+            }
         }
-        public class Rx: ImageChannelOrder
+        #endregion //Luminance
+
+        #region Rx
+        public static RxImpl Rx()
         {
-            public static readonly Rx Instance = new Rx();
+            return RxImpl.Instance;
+            
+        }
+
+        public class RxImpl: ImageChannelOrder
+        {
+            public static readonly RxImpl Instance = new RxImpl();
+        
+            private  RxImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.Rx;
-            public new static Rx Parse(WordReader reader, uint wordCount)
+            public new static RxImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RxImpl object.</summary>
+            /// <returns>A string that represents the RxImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.Rx()";
+            }
         }
-        public class RGx: ImageChannelOrder
+        #endregion //Rx
+
+        #region RGx
+        public static RGxImpl RGx()
         {
-            public static readonly RGx Instance = new RGx();
+            return RGxImpl.Instance;
+            
+        }
+
+        public class RGxImpl: ImageChannelOrder
+        {
+            public static readonly RGxImpl Instance = new RGxImpl();
+        
+            private  RGxImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGx;
-            public new static RGx Parse(WordReader reader, uint wordCount)
+            public new static RGxImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RGxImpl object.</summary>
+            /// <returns>A string that represents the RGxImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.RGx()";
+            }
         }
-        public class RGBx: ImageChannelOrder
+        #endregion //RGx
+
+        #region RGBx
+        public static RGBxImpl RGBx()
         {
-            public static readonly RGBx Instance = new RGBx();
+            return RGBxImpl.Instance;
+            
+        }
+
+        public class RGBxImpl: ImageChannelOrder
+        {
+            public static readonly RGBxImpl Instance = new RGBxImpl();
+        
+            private  RGBxImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.RGBx;
-            public new static RGBx Parse(WordReader reader, uint wordCount)
+            public new static RGBxImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RGBxImpl object.</summary>
+            /// <returns>A string that represents the RGBxImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.RGBx()";
+            }
         }
-        public class Depth: ImageChannelOrder
+        #endregion //RGBx
+
+        #region Depth
+        public static DepthImpl Depth()
         {
-            public static readonly Depth Instance = new Depth();
+            return DepthImpl.Instance;
+            
+        }
+
+        public class DepthImpl: ImageChannelOrder
+        {
+            public static readonly DepthImpl Instance = new DepthImpl();
+        
+            private  DepthImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.Depth;
-            public new static Depth Parse(WordReader reader, uint wordCount)
+            public new static DepthImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DepthImpl object.</summary>
+            /// <returns>A string that represents the DepthImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.Depth()";
+            }
         }
-        public class DepthStencil: ImageChannelOrder
+        #endregion //Depth
+
+        #region DepthStencil
+        public static DepthStencilImpl DepthStencil()
         {
-            public static readonly DepthStencil Instance = new DepthStencil();
+            return DepthStencilImpl.Instance;
+            
+        }
+
+        public class DepthStencilImpl: ImageChannelOrder
+        {
+            public static readonly DepthStencilImpl Instance = new DepthStencilImpl();
+        
+            private  DepthStencilImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.DepthStencil;
-            public new static DepthStencil Parse(WordReader reader, uint wordCount)
+            public new static DepthStencilImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the DepthStencilImpl object.</summary>
+            /// <returns>A string that represents the DepthStencilImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.DepthStencil()";
+            }
         }
-        public class sRGB: ImageChannelOrder
+        #endregion //DepthStencil
+
+        #region sRGB
+        public static sRGBImpl sRGB()
         {
-            public static readonly sRGB Instance = new sRGB();
+            return sRGBImpl.Instance;
+            
+        }
+
+        public class sRGBImpl: ImageChannelOrder
+        {
+            public static readonly sRGBImpl Instance = new sRGBImpl();
+        
+            private  sRGBImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.sRGB;
-            public new static sRGB Parse(WordReader reader, uint wordCount)
+            public new static sRGBImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the sRGBImpl object.</summary>
+            /// <returns>A string that represents the sRGBImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.sRGB()";
+            }
         }
-        public class sRGBx: ImageChannelOrder
+        #endregion //sRGB
+
+        #region sRGBx
+        public static sRGBxImpl sRGBx()
         {
-            public static readonly sRGBx Instance = new sRGBx();
+            return sRGBxImpl.Instance;
+            
+        }
+
+        public class sRGBxImpl: ImageChannelOrder
+        {
+            public static readonly sRGBxImpl Instance = new sRGBxImpl();
+        
+            private  sRGBxImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.sRGBx;
-            public new static sRGBx Parse(WordReader reader, uint wordCount)
+            public new static sRGBxImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the sRGBxImpl object.</summary>
+            /// <returns>A string that represents the sRGBxImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.sRGBx()";
+            }
         }
-        public class sRGBA: ImageChannelOrder
+        #endregion //sRGBx
+
+        #region sRGBA
+        public static sRGBAImpl sRGBA()
         {
-            public static readonly sRGBA Instance = new sRGBA();
+            return sRGBAImpl.Instance;
+            
+        }
+
+        public class sRGBAImpl: ImageChannelOrder
+        {
+            public static readonly sRGBAImpl Instance = new sRGBAImpl();
+        
+            private  sRGBAImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.sRGBA;
-            public new static sRGBA Parse(WordReader reader, uint wordCount)
+            public new static sRGBAImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the sRGBAImpl object.</summary>
+            /// <returns>A string that represents the sRGBAImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.sRGBA()";
+            }
         }
-        public class sBGRA: ImageChannelOrder
+        #endregion //sRGBA
+
+        #region sBGRA
+        public static sBGRAImpl sBGRA()
         {
-            public static readonly sBGRA Instance = new sBGRA();
+            return sBGRAImpl.Instance;
+            
+        }
+
+        public class sBGRAImpl: ImageChannelOrder
+        {
+            public static readonly sBGRAImpl Instance = new sBGRAImpl();
+        
+            private  sBGRAImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.sBGRA;
-            public new static sBGRA Parse(WordReader reader, uint wordCount)
+            public new static sBGRAImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the sBGRAImpl object.</summary>
+            /// <returns>A string that represents the sBGRAImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.sBGRA()";
+            }
         }
-        public class ABGR: ImageChannelOrder
+        #endregion //sBGRA
+
+        #region ABGR
+        public static ABGRImpl ABGR()
         {
-            public static readonly ABGR Instance = new ABGR();
+            return ABGRImpl.Instance;
+            
+        }
+
+        public class ABGRImpl: ImageChannelOrder
+        {
+            public static readonly ABGRImpl Instance = new ABGRImpl();
+        
+            private  ABGRImpl()
+            {
+            }
             public override Enumerant Value => ImageChannelOrder.Enumerant.ABGR;
-            public new static ABGR Parse(WordReader reader, uint wordCount)
+            public new static ABGRImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ABGRImpl object.</summary>
+            /// <returns>A string that represents the ABGRImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" ImageChannelOrder.ABGR()";
+            }
         }
+        #endregion //ABGR
 
         public abstract Enumerant Value { get; }
 
@@ -238,45 +657,45 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.R :
-                    return R.Parse(reader, wordCount - 1);
+                    return RImpl.Parse(reader, wordCount - 1);
                 case Enumerant.A :
-                    return A.Parse(reader, wordCount - 1);
+                    return AImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RG :
-                    return RG.Parse(reader, wordCount - 1);
+                    return RGImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RA :
-                    return RA.Parse(reader, wordCount - 1);
+                    return RAImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RGB :
-                    return RGB.Parse(reader, wordCount - 1);
+                    return RGBImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RGBA :
-                    return RGBA.Parse(reader, wordCount - 1);
+                    return RGBAImpl.Parse(reader, wordCount - 1);
                 case Enumerant.BGRA :
-                    return BGRA.Parse(reader, wordCount - 1);
+                    return BGRAImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ARGB :
-                    return ARGB.Parse(reader, wordCount - 1);
+                    return ARGBImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Intensity :
-                    return Intensity.Parse(reader, wordCount - 1);
+                    return IntensityImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Luminance :
-                    return Luminance.Parse(reader, wordCount - 1);
+                    return LuminanceImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Rx :
-                    return Rx.Parse(reader, wordCount - 1);
+                    return RxImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RGx :
-                    return RGx.Parse(reader, wordCount - 1);
+                    return RGxImpl.Parse(reader, wordCount - 1);
                 case Enumerant.RGBx :
-                    return RGBx.Parse(reader, wordCount - 1);
+                    return RGBxImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Depth :
-                    return Depth.Parse(reader, wordCount - 1);
+                    return DepthImpl.Parse(reader, wordCount - 1);
                 case Enumerant.DepthStencil :
-                    return DepthStencil.Parse(reader, wordCount - 1);
+                    return DepthStencilImpl.Parse(reader, wordCount - 1);
                 case Enumerant.sRGB :
-                    return sRGB.Parse(reader, wordCount - 1);
+                    return sRGBImpl.Parse(reader, wordCount - 1);
                 case Enumerant.sRGBx :
-                    return sRGBx.Parse(reader, wordCount - 1);
+                    return sRGBxImpl.Parse(reader, wordCount - 1);
                 case Enumerant.sRGBA :
-                    return sRGBA.Parse(reader, wordCount - 1);
+                    return sRGBAImpl.Parse(reader, wordCount - 1);
                 case Enumerant.sBGRA :
-                    return sBGRA.Parse(reader, wordCount - 1);
+                    return sBGRAImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ABGR :
-                    return ABGR.Parse(reader, wordCount - 1);
+                    return ABGRImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown ImageChannelOrder "+id);
             }

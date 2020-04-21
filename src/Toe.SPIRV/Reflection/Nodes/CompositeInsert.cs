@@ -13,20 +13,30 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public CompositeInsert(SpirvTypeBase resultType, Node @object, Node composite, IList<uint> indexes, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Object = @object;
+            this.Composite = composite;
+            if (indexes != null) { foreach (var node in indexes) this.Indexes.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpCompositeInsert;
 
-
         public Node Object { get; set; }
-        public Node Composite { get; set; }
-        public IList<uint> Indexes { get; } = new List<uint>();
-        public SpirvTypeBase ResultType { get; set; }
 
-        public bool RelaxedPrecision { get; set; }
+        public Node Composite { get; set; }
+
+        public IList<uint> Indexes { get; private set; } = new List<uint>();
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -54,19 +64,40 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public CompositeInsert WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpCompositeInsert)op, treeBuilder);
         }
 
-        public void SetUp(OpCompositeInsert op, SpirvInstructionTreeBuilder treeBuilder)
+        public CompositeInsert SetUp(Action<CompositeInsert> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpCompositeInsert op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Object = treeBuilder.GetNode(op.Object);
             Composite = treeBuilder.GetNode(op.Composite);
             foreach (var item in op.Indexes) { Indexes.Add(treeBuilder.Parse(item)); }
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the CompositeInsert object.</summary>
+        /// <returns>A string that represents the CompositeInsert object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"CompositeInsert({ResultType}, {Object}, {Composite}, {Indexes}, {DebugName})";
         }
     }
 }

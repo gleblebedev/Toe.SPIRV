@@ -13,6 +13,11 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public TerminateRayNV(string debugName = null)
+        {
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpTerminateRayNV;
 
         /// <summary>
@@ -25,6 +30,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
         public override IEnumerable<NodePin> OutputPins
         {
@@ -50,15 +60,44 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public TerminateRayNV WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpTerminateRayNV)op, treeBuilder);
         }
 
-        public void SetUp(OpTerminateRayNV op, SpirvInstructionTreeBuilder treeBuilder)
+        public TerminateRayNV SetUp(Action<TerminateRayNV> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpTerminateRayNV op, SpirvInstructionTreeBuilder treeBuilder)
         {
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the TerminateRayNV object.</summary>
+        /// <returns>A string that represents the TerminateRayNV object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"TerminateRayNV({DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static TerminateRayNV ThenTerminateRayNV(this INodeWithNext node, string debugName = null)
+        {
+            return node.Then(new TerminateRayNV(debugName));
         }
     }
 }

@@ -28,69 +28,215 @@ namespace Toe.SPIRV.Spv
             SubpassData = 6,
         }
 
-        public class Dim1D: Dim
+        #region Dim1D
+        public static Dim1DImpl Dim1D()
         {
-            public static readonly Dim1D Instance = new Dim1D();
+            return Dim1DImpl.Instance;
+            
+        }
+
+        public class Dim1DImpl: Dim
+        {
+            public static readonly Dim1DImpl Instance = new Dim1DImpl();
+        
+            private  Dim1DImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.Dim1D;
-            public new static Dim1D Parse(WordReader reader, uint wordCount)
+            public new static Dim1DImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Dim1DImpl object.</summary>
+            /// <returns>A string that represents the Dim1DImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.Dim1D()";
+            }
         }
-        public class Dim2D: Dim
+        #endregion //Dim1D
+
+        #region Dim2D
+        public static Dim2DImpl Dim2D()
         {
-            public static readonly Dim2D Instance = new Dim2D();
+            return Dim2DImpl.Instance;
+            
+        }
+
+        public class Dim2DImpl: Dim
+        {
+            public static readonly Dim2DImpl Instance = new Dim2DImpl();
+        
+            private  Dim2DImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.Dim2D;
-            public new static Dim2D Parse(WordReader reader, uint wordCount)
+            public new static Dim2DImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Dim2DImpl object.</summary>
+            /// <returns>A string that represents the Dim2DImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.Dim2D()";
+            }
         }
-        public class Dim3D: Dim
+        #endregion //Dim2D
+
+        #region Dim3D
+        public static Dim3DImpl Dim3D()
         {
-            public static readonly Dim3D Instance = new Dim3D();
+            return Dim3DImpl.Instance;
+            
+        }
+
+        public class Dim3DImpl: Dim
+        {
+            public static readonly Dim3DImpl Instance = new Dim3DImpl();
+        
+            private  Dim3DImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.Dim3D;
-            public new static Dim3D Parse(WordReader reader, uint wordCount)
+            public new static Dim3DImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the Dim3DImpl object.</summary>
+            /// <returns>A string that represents the Dim3DImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.Dim3D()";
+            }
         }
-        public class Cube: Dim
+        #endregion //Dim3D
+
+        #region Cube
+        public static CubeImpl Cube()
         {
-            public static readonly Cube Instance = new Cube();
+            return CubeImpl.Instance;
+            
+        }
+
+        public class CubeImpl: Dim
+        {
+            public static readonly CubeImpl Instance = new CubeImpl();
+        
+            private  CubeImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.Cube;
-            public new static Cube Parse(WordReader reader, uint wordCount)
+            public new static CubeImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the CubeImpl object.</summary>
+            /// <returns>A string that represents the CubeImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.Cube()";
+            }
         }
-        public class Rect: Dim
+        #endregion //Cube
+
+        #region Rect
+        public static RectImpl Rect()
         {
-            public static readonly Rect Instance = new Rect();
+            return RectImpl.Instance;
+            
+        }
+
+        public class RectImpl: Dim
+        {
+            public static readonly RectImpl Instance = new RectImpl();
+        
+            private  RectImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.Rect;
-            public new static Rect Parse(WordReader reader, uint wordCount)
+            public new static RectImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the RectImpl object.</summary>
+            /// <returns>A string that represents the RectImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.Rect()";
+            }
         }
-        public class Buffer: Dim
+        #endregion //Rect
+
+        #region Buffer
+        public static BufferImpl Buffer()
         {
-            public static readonly Buffer Instance = new Buffer();
+            return BufferImpl.Instance;
+            
+        }
+
+        public class BufferImpl: Dim
+        {
+            public static readonly BufferImpl Instance = new BufferImpl();
+        
+            private  BufferImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.Buffer;
-            public new static Buffer Parse(WordReader reader, uint wordCount)
+            public new static BufferImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the BufferImpl object.</summary>
+            /// <returns>A string that represents the BufferImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.Buffer()";
+            }
         }
-        public class SubpassData: Dim
+        #endregion //Buffer
+
+        #region SubpassData
+        public static SubpassDataImpl SubpassData()
         {
-            public static readonly SubpassData Instance = new SubpassData();
+            return SubpassDataImpl.Instance;
+            
+        }
+
+        public class SubpassDataImpl: Dim
+        {
+            public static readonly SubpassDataImpl Instance = new SubpassDataImpl();
+        
+            private  SubpassDataImpl()
+            {
+            }
             public override Enumerant Value => Dim.Enumerant.SubpassData;
-            public new static SubpassData Parse(WordReader reader, uint wordCount)
+            public new static SubpassDataImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SubpassDataImpl object.</summary>
+            /// <returns>A string that represents the SubpassDataImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" Dim.SubpassData()";
+            }
         }
+        #endregion //SubpassData
 
         public abstract Enumerant Value { get; }
 
@@ -100,19 +246,19 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Dim1D :
-                    return Dim1D.Parse(reader, wordCount - 1);
+                    return Dim1DImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Dim2D :
-                    return Dim2D.Parse(reader, wordCount - 1);
+                    return Dim2DImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Dim3D :
-                    return Dim3D.Parse(reader, wordCount - 1);
+                    return Dim3DImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Cube :
-                    return Cube.Parse(reader, wordCount - 1);
+                    return CubeImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Rect :
-                    return Rect.Parse(reader, wordCount - 1);
+                    return RectImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Buffer :
-                    return Buffer.Parse(reader, wordCount - 1);
+                    return BufferImpl.Parse(reader, wordCount - 1);
                 case Enumerant.SubpassData :
-                    return SubpassData.Parse(reader, wordCount - 1);
+                    return SubpassDataImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown Dim "+id);
             }

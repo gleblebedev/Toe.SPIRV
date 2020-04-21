@@ -96,10 +96,222 @@ namespace Toe.SPIRV.CodeGenerator.Views
             
             #line default
             #line hidden
-            this.Write("(Enumerant value)\r\n        {\r\n            Value = value;\r\n        }\r\n\r\n        pu" +
-                    "blic Enumerant Value { get; }\r\n\r\n");
+            this.Write("(Enumerant value)\r\n        {\r\n            Value = value;\r\n        }\r\n");
             
-            #line 41 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 38 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        foreach (var kv in _operand.Enumerants)
+        {
+            var paramId = ViewUtils.GetParameterId(_operand, kv.enumerant);
+            var parameters = kv.parameters ?? new List<Parameter>();
+            bool addIndex = (parameters.Count != 1);
+            var parameterKv = parameters.Select((parameter,index)=>new KeyValuePair<string,string>(addIndex?(paramId+(index+1)):paramId, ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(parameter.kind))));
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        public static ");
+            
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" Create");
+            
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(paramId));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 47 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+ Write(string.Join(", ", parameterKv.Select(parameter=>$"{parameter.Value} {ViewUtils.ToVarName(parameter.Key)}"))); 
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            return new ");
+            
+            #line 49 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write("(Enumerant.");
+            
+            #line 49 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(paramId));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n            {\r\n");
+            
+            #line 51 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        foreach (var parameter in parameterKv)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("                ");
+            
+            #line 55 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(parameter.Key));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 55 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.ToVarName(parameter.Key)));
+            
+            #line default
+            #line hidden
+            this.Write(",\r\n");
+            
+            #line 56 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("            };\r\n        }\r\n\r\n        public ");
+            
+            #line 62 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" Also");
+            
+            #line 62 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(paramId));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 62 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+ Write(string.Join(", ", parameterKv.Select(parameter=>$"{parameter.Value} {ViewUtils.ToVarName(parameter.Key)}"))); 
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n        {\r\n            Value |= Enumerant.");
+            
+            #line 64 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(paramId));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 65 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        foreach (var parameter in parameterKv)
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("            this.");
+            
+            #line 69 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(parameter.Key));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 69 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.ToVarName(parameter.Key)));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 70 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("            return this;\r\n        }\r\n");
+            
+            #line 75 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\n        public static implicit operator ");
+            
+            #line 80 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 80 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write(".Enumerant value)\r\n        {\r\n            switch (value)\r\n            {\r\n");
+            
+            #line 84 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+        var visitedOperands = new HashSet<object>();
+        foreach (var kv in _operand.Enumerants)
+        {
+            if (!visitedOperands.Add(kv.value)) continue;
+            if (kv.parameters != null && kv.parameters.Count > 0)
+            {
+                var enName = ViewUtils.GetParameterId(_operand, kv.enumerant);
+
+            
+            #line default
+            #line hidden
+            this.Write("                case Enumerant.");
+            
+            #line 93 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(enName));
+            
+            #line default
+            #line hidden
+            this.Write(": throw new InvalidOperationException(\"Can\'t cast ");
+            
+            #line 93 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(enName));
+            
+            #line default
+            #line hidden
+            this.Write(" because it requires additional arguments.\");\r\n");
+            
+            #line 94 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+
+            }
+        }
+
+            
+            #line default
+            #line hidden
+            this.Write("                default:\r\n                    return new ");
+            
+            #line 99 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
+            
+            #line default
+            #line hidden
+            this.Write("(value);\r\n            }\r\n        }\r\n\r\n        public Enumerant Value { get; priva" +
+                    "te set; }\r\n");
+            
+            #line 104 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
         foreach (var kv in _operand.Enumerants)
         {
@@ -114,23 +326,23 @@ namespace Toe.SPIRV.CodeGenerator.Views
             
             #line default
             #line hidden
-            this.Write("        public ");
+            this.Write("\r\n        public ");
             
-            #line 52 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 116 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ViewUtils.GetTypeName(System.Enum.Parse<SpirvOperandKind>(kv.parameters[i].kind))));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 52 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 116 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramName));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n");
             
-            #line 53 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 117 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 }
             }
@@ -139,9 +351,9 @@ namespace Toe.SPIRV.CodeGenerator.Views
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n        public static ");
+            this.Write("\r\n        public static ");
             
-            #line 60 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 123 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
             
             #line default
@@ -150,14 +362,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     "r.Position+wordCount;\r\n            var id = (Enumerant) reader.ReadWord();\r\n    " +
                     "        var value = new ");
             
-            #line 64 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 127 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
             
             #line default
             #line hidden
             this.Write("(id);\r\n");
             
-            #line 65 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 128 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
         foreach (var kv in _operand.Enumerants)
         {
@@ -171,21 +383,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            if (Enumerant.");
             
-            #line 73 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 136 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enName));
             
             #line default
             #line hidden
             this.Write(" == (id & Enumerant.");
             
-            #line 73 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 136 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enName));
             
             #line default
             #line hidden
             this.Write("))\r\n            {\r\n");
             
-            #line 75 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 138 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 for (int i=0; i<kv.parameters.Count; ++i)
                 {
@@ -196,21 +408,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("                value.");
             
-            #line 80 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 143 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramName));
             
             #line default
             #line hidden
             this.Write(" = Spv.");
             
-            #line 80 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 143 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(kv.parameters[i].kind));
             
             #line default
             #line hidden
             this.Write(".Parse(reader, wordCount - 1);\r\n");
             
-            #line 81 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 144 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 }
 
@@ -219,7 +431,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            }\r\n");
             
-            #line 85 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 148 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
             }
         }
@@ -230,7 +442,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             this.Write("            value.PostParse(reader, wordCount - 1);\r\n            return value;\r\n " +
                     "       }\r\n\r\n        public static ");
             
-            #line 93 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 156 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
             
             #line default
@@ -239,7 +451,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     "dCount == 0) return null;\r\n            return Parse(reader, wordCount);\r\n       " +
                     " }\r\n\r\n        public static IList<");
             
-            #line 99 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 162 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
             
             #line default
@@ -247,7 +459,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             this.Write("> ParseCollection(WordReader reader, uint wordCount)\r\n        {\r\n            var " +
                     "end = reader.Position + wordCount;\r\n            var res = new PrintableList<");
             
-            #line 102 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 165 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_operand.Name));
             
             #line default
@@ -270,7 +482,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             uint wordCount = 1;
 ");
             
-            #line 118 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 181 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
         foreach (var kv in _operand.Enumerants)
         {
@@ -284,21 +496,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            if (Enumerant.");
             
-            #line 126 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 189 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enName));
             
             #line default
             #line hidden
             this.Write(" == (Value & Enumerant.");
             
-            #line 126 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 189 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enName));
             
             #line default
             #line hidden
             this.Write("))\r\n            {\r\n");
             
-            #line 128 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 191 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 for (int i=0; i<kv.parameters.Count; ++i)
                 {
@@ -309,14 +521,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("                wordCount += ");
             
-            #line 133 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 196 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramName));
             
             #line default
             #line hidden
             this.Write(".GetWordCount();\r\n");
             
-            #line 134 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 197 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 }
 
@@ -325,7 +537,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            }\r\n");
             
-            #line 138 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 201 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
             }
         }
@@ -336,7 +548,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             this.Write("            return wordCount;\r\n        }\r\n\r\n        public void Write(WordWriter " +
                     "writer)\r\n        {\r\n             writer.WriteWord((uint)Value);\r\n");
             
-            #line 148 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 211 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
         foreach (var kv in _operand.Enumerants)
         {
@@ -350,21 +562,21 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            if (Enumerant.");
             
-            #line 156 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 219 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enName));
             
             #line default
             #line hidden
             this.Write(" == (Value & Enumerant.");
             
-            #line 156 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 219 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enName));
             
             #line default
             #line hidden
             this.Write("))\r\n            {\r\n");
             
-            #line 158 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 221 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 for (int i=0; i<kv.parameters.Count; ++i)
                 {
@@ -375,14 +587,14 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("                ");
             
-            #line 163 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 226 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(paramName));
             
             #line default
             #line hidden
             this.Write(".Write(writer);\r\n");
             
-            #line 164 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 227 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
                 }
 
@@ -391,7 +603,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
             #line hidden
             this.Write("            }\r\n");
             
-            #line 168 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
+            #line 231 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\FlagTemplate.tt"
 
             }
         }

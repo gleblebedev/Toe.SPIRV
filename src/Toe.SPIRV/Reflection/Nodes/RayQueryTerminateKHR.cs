@@ -13,6 +13,12 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public RayQueryTerminateKHR(Node rayQuery, string debugName = null)
+        {
+            this.RayQuery = rayQuery;
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpRayQueryTerminateKHR;
 
         /// <summary>
@@ -25,7 +31,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
+
         public Node RayQuery { get; set; }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -59,16 +72,45 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public RayQueryTerminateKHR WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpRayQueryTerminateKHR)op, treeBuilder);
         }
 
-        public void SetUp(OpRayQueryTerminateKHR op, SpirvInstructionTreeBuilder treeBuilder)
+        public RayQueryTerminateKHR SetUp(Action<RayQueryTerminateKHR> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpRayQueryTerminateKHR op, SpirvInstructionTreeBuilder treeBuilder)
         {
             RayQuery = treeBuilder.GetNode(op.RayQuery);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the RayQueryTerminateKHR object.</summary>
+        /// <returns>A string that represents the RayQueryTerminateKHR object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"RayQueryTerminateKHR({RayQuery}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static RayQueryTerminateKHR ThenRayQueryTerminateKHR(this INodeWithNext node, Node rayQuery, string debugName = null)
+        {
+            return node.Then(new RayQueryTerminateKHR(rayQuery, debugName));
         }
     }
 }

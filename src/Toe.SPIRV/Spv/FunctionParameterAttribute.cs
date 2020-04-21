@@ -25,78 +25,245 @@ namespace Toe.SPIRV.Spv
             NoReadWrite = 7,
         }
 
-        public class Zext: FunctionParameterAttribute
+        #region Zext
+        public static ZextImpl Zext()
         {
-            public static readonly Zext Instance = new Zext();
+            return ZextImpl.Instance;
+            
+        }
+
+        public class ZextImpl: FunctionParameterAttribute
+        {
+            public static readonly ZextImpl Instance = new ZextImpl();
+        
+            private  ZextImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.Zext;
-            public new static Zext Parse(WordReader reader, uint wordCount)
+            public new static ZextImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ZextImpl object.</summary>
+            /// <returns>A string that represents the ZextImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.Zext()";
+            }
         }
-        public class Sext: FunctionParameterAttribute
+        #endregion //Zext
+
+        #region Sext
+        public static SextImpl Sext()
         {
-            public static readonly Sext Instance = new Sext();
+            return SextImpl.Instance;
+            
+        }
+
+        public class SextImpl: FunctionParameterAttribute
+        {
+            public static readonly SextImpl Instance = new SextImpl();
+        
+            private  SextImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.Sext;
-            public new static Sext Parse(WordReader reader, uint wordCount)
+            public new static SextImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SextImpl object.</summary>
+            /// <returns>A string that represents the SextImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.Sext()";
+            }
         }
-        public class ByVal: FunctionParameterAttribute
+        #endregion //Sext
+
+        #region ByVal
+        public static ByValImpl ByVal()
         {
-            public static readonly ByVal Instance = new ByVal();
+            return ByValImpl.Instance;
+            
+        }
+
+        public class ByValImpl: FunctionParameterAttribute
+        {
+            public static readonly ByValImpl Instance = new ByValImpl();
+        
+            private  ByValImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.ByVal;
-            public new static ByVal Parse(WordReader reader, uint wordCount)
+            public new static ByValImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the ByValImpl object.</summary>
+            /// <returns>A string that represents the ByValImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.ByVal()";
+            }
         }
-        public class Sret: FunctionParameterAttribute
+        #endregion //ByVal
+
+        #region Sret
+        public static SretImpl Sret()
         {
-            public static readonly Sret Instance = new Sret();
+            return SretImpl.Instance;
+            
+        }
+
+        public class SretImpl: FunctionParameterAttribute
+        {
+            public static readonly SretImpl Instance = new SretImpl();
+        
+            private  SretImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.Sret;
-            public new static Sret Parse(WordReader reader, uint wordCount)
+            public new static SretImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the SretImpl object.</summary>
+            /// <returns>A string that represents the SretImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.Sret()";
+            }
         }
-        public class NoAlias: FunctionParameterAttribute
+        #endregion //Sret
+
+        #region NoAlias
+        public static NoAliasImpl NoAlias()
         {
-            public static readonly NoAlias Instance = new NoAlias();
+            return NoAliasImpl.Instance;
+            
+        }
+
+        public class NoAliasImpl: FunctionParameterAttribute
+        {
+            public static readonly NoAliasImpl Instance = new NoAliasImpl();
+        
+            private  NoAliasImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoAlias;
-            public new static NoAlias Parse(WordReader reader, uint wordCount)
+            public new static NoAliasImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoAliasImpl object.</summary>
+            /// <returns>A string that represents the NoAliasImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.NoAlias()";
+            }
         }
-        public class NoCapture: FunctionParameterAttribute
+        #endregion //NoAlias
+
+        #region NoCapture
+        public static NoCaptureImpl NoCapture()
         {
-            public static readonly NoCapture Instance = new NoCapture();
+            return NoCaptureImpl.Instance;
+            
+        }
+
+        public class NoCaptureImpl: FunctionParameterAttribute
+        {
+            public static readonly NoCaptureImpl Instance = new NoCaptureImpl();
+        
+            private  NoCaptureImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoCapture;
-            public new static NoCapture Parse(WordReader reader, uint wordCount)
+            public new static NoCaptureImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoCaptureImpl object.</summary>
+            /// <returns>A string that represents the NoCaptureImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.NoCapture()";
+            }
         }
-        public class NoWrite: FunctionParameterAttribute
+        #endregion //NoCapture
+
+        #region NoWrite
+        public static NoWriteImpl NoWrite()
         {
-            public static readonly NoWrite Instance = new NoWrite();
+            return NoWriteImpl.Instance;
+            
+        }
+
+        public class NoWriteImpl: FunctionParameterAttribute
+        {
+            public static readonly NoWriteImpl Instance = new NoWriteImpl();
+        
+            private  NoWriteImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoWrite;
-            public new static NoWrite Parse(WordReader reader, uint wordCount)
+            public new static NoWriteImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoWriteImpl object.</summary>
+            /// <returns>A string that represents the NoWriteImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.NoWrite()";
+            }
         }
-        public class NoReadWrite: FunctionParameterAttribute
+        #endregion //NoWrite
+
+        #region NoReadWrite
+        public static NoReadWriteImpl NoReadWrite()
         {
-            public static readonly NoReadWrite Instance = new NoReadWrite();
+            return NoReadWriteImpl.Instance;
+            
+        }
+
+        public class NoReadWriteImpl: FunctionParameterAttribute
+        {
+            public static readonly NoReadWriteImpl Instance = new NoReadWriteImpl();
+        
+            private  NoReadWriteImpl()
+            {
+            }
             public override Enumerant Value => FunctionParameterAttribute.Enumerant.NoReadWrite;
-            public new static NoReadWrite Parse(WordReader reader, uint wordCount)
+            public new static NoReadWriteImpl Parse(WordReader reader, uint wordCount)
             {
                 return Instance;
             }
+
+            /// <summary>Returns a string that represents the NoReadWriteImpl object.</summary>
+            /// <returns>A string that represents the NoReadWriteImpl object.</returns>
+            /// <filterpriority>2</filterpriority>
+            public override string ToString()
+            {
+                return $" FunctionParameterAttribute.NoReadWrite()";
+            }
         }
+        #endregion //NoReadWrite
 
         public abstract Enumerant Value { get; }
 
@@ -106,21 +273,21 @@ namespace Toe.SPIRV.Spv
             switch (id)
             {
                 case Enumerant.Zext :
-                    return Zext.Parse(reader, wordCount - 1);
+                    return ZextImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Sext :
-                    return Sext.Parse(reader, wordCount - 1);
+                    return SextImpl.Parse(reader, wordCount - 1);
                 case Enumerant.ByVal :
-                    return ByVal.Parse(reader, wordCount - 1);
+                    return ByValImpl.Parse(reader, wordCount - 1);
                 case Enumerant.Sret :
-                    return Sret.Parse(reader, wordCount - 1);
+                    return SretImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoAlias :
-                    return NoAlias.Parse(reader, wordCount - 1);
+                    return NoAliasImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoCapture :
-                    return NoCapture.Parse(reader, wordCount - 1);
+                    return NoCaptureImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoWrite :
-                    return NoWrite.Parse(reader, wordCount - 1);
+                    return NoWriteImpl.Parse(reader, wordCount - 1);
                 case Enumerant.NoReadWrite :
-                    return NoReadWrite.Parse(reader, wordCount - 1);
+                    return NoReadWriteImpl.Parse(reader, wordCount - 1);
                 default:
                     throw new IndexOutOfRangeException("Unknown FunctionParameterAttribute "+id);
             }

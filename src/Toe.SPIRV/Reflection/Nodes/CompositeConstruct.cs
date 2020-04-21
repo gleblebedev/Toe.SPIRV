@@ -13,18 +13,24 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public CompositeConstruct(SpirvTypeBase resultType, IEnumerable<Node> constituents, string debugName = null)
+        {
+            this.ResultType = resultType;
+            if (constituents != null) { foreach (var node in constituents) this.Constituents.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpCompositeConstruct;
 
+        public IList<Node> Constituents { get; private set; } = new PrintableList<Node>();
 
-        public IList<Node> Constituents { get; set; }
         public SpirvTypeBase ResultType { get; set; }
-
-        public bool RelaxedPrecision { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -54,17 +60,38 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public CompositeConstruct WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpCompositeConstruct)op, treeBuilder);
         }
 
-        public void SetUp(OpCompositeConstruct op, SpirvInstructionTreeBuilder treeBuilder)
+        public CompositeConstruct SetUp(Action<CompositeConstruct> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpCompositeConstruct op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Constituents = treeBuilder.GetNodes(op.Constituents);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the CompositeConstruct object.</summary>
+        /// <returns>A string that represents the CompositeConstruct object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"CompositeConstruct({ResultType}, {Constituents}, {DebugName})";
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Toe.SPIRV.UnitTests
         {
             var instructions = Shader.Parse(vertexShader);
             var reflection = new ShaderReflection(instructions);
-            var shader = reflection.Build();
+            var shader = reflection.BuildShader();
             var generatedBytecode = shader.Build();
             return generatedBytecode;
         }

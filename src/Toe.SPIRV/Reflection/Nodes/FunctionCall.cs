@@ -13,6 +13,14 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
+        public FunctionCall(SpirvTypeBase resultType, Function function, IEnumerable<Node> arguments, string debugName = null)
+        {
+            this.ResultType = resultType;
+            this.Function = function;
+            if (arguments != null) { foreach (var node in arguments) this.Arguments.Add(node); }
+            DebugName = debugName;
+        }
+
         public override Op OpCode => Op.OpFunctionCall;
 
         /// <summary>
@@ -25,16 +33,23 @@ namespace Toe.SPIRV.Reflection.Nodes
             return Next;
         }
 
-        public Function Function { get; set; }
-        public IList<Node> Arguments { get; set; }
-        public SpirvTypeBase ResultType { get; set; }
+        public T Then<T>(T node) where T: ExecutableNode
+        {
+            Next = node;
+            return node;
+        }
 
-        public bool RelaxedPrecision { get; set; }
+        public Function Function { get; set; }
+
+        public IList<Node> Arguments { get; private set; } = new PrintableList<Node>();
+
+        public SpirvTypeBase ResultType { get; set; }
 
         public override SpirvTypeBase GetResultType()
         {
             return ResultType;
         }
+
         public override IEnumerable<NodePinWithConnection> InputPins
         {
             get
@@ -73,18 +88,47 @@ namespace Toe.SPIRV.Reflection.Nodes
                 yield break;
             }
         }
+
+        public FunctionCall WithDecoration(Spv.Decoration decoration)
+        {
+            AddDecoration(decoration);
+            return this;
+        }
+
         public override void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
         {
             base.SetUp(op, treeBuilder);
             SetUp((OpFunctionCall)op, treeBuilder);
         }
 
-        public void SetUp(OpFunctionCall op, SpirvInstructionTreeBuilder treeBuilder)
+        public FunctionCall SetUp(Action<FunctionCall> setup)
+        {
+            setup(this);
+            return this;
+        }
+
+        private void SetUp(OpFunctionCall op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
             Function = (Function)treeBuilder.GetNode(op.Function);
             Arguments = treeBuilder.GetNodes(op.Arguments);
             SetUpDecorations(op, treeBuilder);
+        }
+
+        /// <summary>Returns a string that represents the FunctionCall object.</summary>
+        /// <returns>A string that represents the FunctionCall object.</returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return $"FunctionCall({ResultType}, {Function}, {Arguments}, {DebugName})";
+        }
+    }
+
+    public static partial class INodeWithNextExtensionMethods
+    {
+        public static FunctionCall ThenFunctionCall(this INodeWithNext node, Function function, IEnumerable<Node> arguments, string debugName = null)
+        {
+            return node.Then(new FunctionCall(function, arguments, debugName));
         }
     }
 }
