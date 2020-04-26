@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Toe.SPIRV.Reflection;
 using Toe.SPIRV.Spv;
 
 namespace Toe.SPIRV.Instructions
 {
+    public partial class OpSpecConstantOp
+    {
+    }
+
     public partial class OpTypeArray
     {
         public override uint SizeInWords => ((TypeInstruction) ElementType.Instruction).SizeInWords *

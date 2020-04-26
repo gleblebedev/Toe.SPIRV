@@ -571,7 +571,7 @@ namespace Toe.SPIRV.Instructions
             var wordCount = (opCode >> 16) & 0x0FFFF;
             var end = pos + wordCount;
             var instruction = Create(op);
-            instruction.Parse(reader, wordCount);
+            instruction.Parse(reader, end);
             if (reader.Position != end) throw new FormatException();
 
             return instruction;

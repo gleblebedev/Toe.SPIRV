@@ -427,6 +427,31 @@ namespace Toe.SPIRV.Reflection
         {
             return Register(base.VisitConstantTrue(node), _typeInstructions);
         }
+        protected override OpSpecConstantFalse VisitSpecConstantFalse(SpecConstantFalse node)
+        {
+            return Register(base.VisitSpecConstantFalse(node), _typeInstructions);
+        }
+
+
+        protected override OpSpecConstant VisitSpecConstant(SpecConstant node)
+        {
+            return Register(base.VisitSpecConstant(node), _typeInstructions);
+        }
+
+        protected override OpSpecConstantComposite VisitSpecConstantComposite(SpecConstantComposite node)
+        {
+            return Register(base.VisitSpecConstantComposite(node), _typeInstructions);
+        }
+
+        protected override OpSpecConstantTrue VisitSpecConstantTrue(SpecConstantTrue node)
+        {
+            return Register(base.VisitSpecConstantTrue(node), _typeInstructions);
+        }
+
+        protected override OpSpecConstantOp VisitSpecConstantOp(SpecConstantOp node)
+        {
+            return Register(base.VisitSpecConstantOp(node), _typeInstructions);
+        }
 
         protected override OpTypeBool VisitTypeBool(TypeBool node)
         {

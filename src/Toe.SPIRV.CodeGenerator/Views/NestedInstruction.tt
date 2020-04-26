@@ -1,0 +1,95 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using Toe.SPIRV.Instructions;
+using Toe.SPIRV.Reflection;
+using Toe.SPIRV.Reflection.Nodes;
+
+namespace Toe.SPIRV.Spv
+{
+    public class NestedInstruction
+    {
+        private readonly Instruction _instruction;
+
+        public NestedInstruction(Instruction instruction)
+        {
+            _instruction = instruction;
+        }
+
+        public NestedInstruction(Node node, SpirvInstructionsBuilderBase builder)
+        {
+            switch (node.OpCode)
+            {
+<#
+foreach (var instruction in _instructions)
+{
+#>
+                case Op.<#=instruction.Name#>:
+                {
+                    var n = (<#=instruction.Name.Substring(2)#>) node;
+                    var instruction = new <#=instruction.Name#>();
+                    _instruction = instruction;
+<#
+foreach (var op in instruction.Operands)
+{
+#>
+                    instruction.<#=op.Name#> = builder.Visit(n.<#=op.Name#>);
+<#
+}
+#>
+                    break;
+                }
+<#
+}
+#>
+                default:
+                    throw new NotImplementedException(node.OpCode +" is not implemented yet.");
+            }
+        }
+
+        public Instruction Instruction => _instruction;
+
+        public uint GetWordCount()
+        {
+            uint wordCount = 1;
+            switch (_instruction.OpCode)
+            {
+<#
+foreach (var instruction in _instructions)
+{
+#>
+                case Op.<#=instruction.Name#>:
+                {
+                    var i = (<#=instruction.Name#>) _instruction;
+<#
+foreach (var op in instruction.Operands)
+{
+#>
+                    wordCount += i.<#=op.Name#>.GetWordCount();
+<#
+}
+#>
+                    return wordCount;
+                }
+<#
+}
+#>
+            }
+            throw new NotImplementedException(_instruction.OpCode+" nested instruction not implemented.");
+        }
+
+        public void Write(WordWriter writer)
+        {
+            writer.WriteWord((uint)_instruction.OpCode);
+            _instruction.WriteOperands(writer);
+        }
+
+        public override string ToString()
+        {
+            return _instruction.ToString();
+        }
+    }
+}

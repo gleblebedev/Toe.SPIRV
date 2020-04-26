@@ -96,6 +96,7 @@ namespace Toe.SPIRV.UnitTests
                 var shaderBytes = CompileToBytecode(vertexShaderCode, ShaderStages.Vertex);
                 var instructions = Shader.Parse(shaderBytes);
                 var generatedBytecode = instructions.Build();
+                var i2 = Shader.Parse(generatedBytecode);
 
                 //Assert.AreEqual(shaderBytes.Length, generatedBytecode.Length);
                 for (var index = 16; index < shaderBytes.Length; index++)

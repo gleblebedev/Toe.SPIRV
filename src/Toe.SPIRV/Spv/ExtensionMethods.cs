@@ -11,6 +11,11 @@ namespace Toe.SPIRV.Spv
             return 1;
         }
 
+        public static uint GetWordCount(this Op value)
+        {
+            return 1;
+        }
+
         public static uint GetWordCount(this IList<uint> value)
         {
             return (uint)value.Count;
@@ -47,7 +52,12 @@ namespace Toe.SPIRV.Spv
         {
             writer.WriteWord(value);
         }
-        
+
+        public static void Write(this Op value, WordWriter writer)
+        {
+            writer.WriteWord((uint)value);
+        }
+
         public static void Write(this IList<uint> value, WordWriter writer)
         {
             foreach (var item in value)

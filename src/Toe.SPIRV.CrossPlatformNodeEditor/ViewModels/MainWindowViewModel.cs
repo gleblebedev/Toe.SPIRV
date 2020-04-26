@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Toe.Scripting;
-using Toe.Scripting.Avalonia.ViewModels;
+﻿using Toe.Scripting.Avalonia.ViewModels;
 using Toe.SPIRV.NodeEditor;
 using Toe.SPIRV.Reflection;
 using Veldrid;

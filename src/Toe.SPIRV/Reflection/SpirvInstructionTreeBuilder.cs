@@ -310,7 +310,7 @@ namespace Toe.SPIRV.Reflection
         }
 
 
-        private Node ParseNode(Instruction op)
+        public Node ParseNode(Instruction op)
         {
             //Skip source code line references
             if (op.OpCode == Op.OpLine)
@@ -345,6 +345,13 @@ namespace Toe.SPIRV.Reflection
         public PairNodeLiteralInteger Parse(PairIdRefLiteralInteger item)
         {
             return new PairNodeLiteralInteger(_nodeMap[item.IdRef], item.LiteralInteger);
+        }
+
+        public NestedNode Parse(NestedInstruction instruction)
+        {
+            var node = NodeFactory.Create(instruction.Instruction.OpCode);
+            node.SetUp(instruction.Instruction, this);
+            return new NestedNode(node);
         }
     }
 }

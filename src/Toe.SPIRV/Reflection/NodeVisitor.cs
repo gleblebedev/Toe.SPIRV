@@ -25,6 +25,11 @@ namespace Toe.SPIRV.Reflection
                 _nodesToVisit.Enqueue(node);
         }
 
+        protected virtual void ScheduleVisit(NestedNode node)
+        {
+            _nodesToVisit.Enqueue(node.Node);
+        }
+
         protected virtual void ScheduleVisit(IEnumerable<Node> nodes)
         {
             foreach (var node in nodes)
@@ -850,6 +855,7 @@ namespace Toe.SPIRV.Reflection
 
         protected virtual void VisitSpecConstantOp(SpecConstantOp node)
         {
+            ScheduleVisit(node.Opcode);
         }
 
         protected virtual void VisitFunction(Function node)

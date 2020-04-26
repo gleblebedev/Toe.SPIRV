@@ -271,6 +271,12 @@ foreach (var op in _instruction.Operands)
             foreach (var item in op.<#=op.Name#>) { <#=op.Name#>.Add(treeBuilder.Parse(item)); }
 <#
             }
+            else if (op.Kind == SpirvOperandKind.LiteralSpecConstantOpInteger)
+            {
+#>
+            <#=op.Name#> = treeBuilder.Parse(op.<#=op.Name#>);
+<#
+            }
             else
             {
 #>

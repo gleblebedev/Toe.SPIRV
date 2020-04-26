@@ -6,6 +6,15 @@ using Toe.SPIRV.CodeGenerator.Model.Grammar;
 
 namespace Toe.SPIRV.CodeGenerator.Views
 {
+    public partial class NestedInstruction
+    {
+        private readonly IList<SpirvInstruction> _instructions;
+
+        public NestedInstruction(IEnumerable<SpirvInstruction> instructions)
+        {
+            _instructions = instructions.ToList();
+        }
+    }
     public partial class TypeTemplate
     {
         private SpirvInstruction _instruction;
@@ -133,7 +142,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
                     if (op.Kind == SpirvOperandKind.LiteralExtInstInteger)
                         return "uint";
                     if (op.Kind == SpirvOperandKind.LiteralSpecConstantOpInteger)
-                        return "uint";
+                        return "NestedNode";
                     if (op.Kind == SpirvOperandKind.LiteralInteger)
                         return "uint";
                     if (op.Kind == SpirvOperandKind.LiteralString)
@@ -214,6 +223,8 @@ namespace Toe.SPIRV.CodeGenerator.Views
             {
                 if (type == "uint")
                     return "uint?";
+                if (type == "Spv.Op")
+                    return "Spv.Op?";
                 return type;
             }
             if (operand.Quantifier == SpirvOperandQuantifier.Repeated)

@@ -14,7 +14,7 @@ namespace Toe.SPIRV.Reflection
 
         protected readonly Dictionary<Node, Instruction> _instructionMap = new Dictionary<Node, Instruction>();
 
-        protected virtual Instruction Visit(Node node)
+        internal virtual Instruction Visit(Node node)
         {
             if (node == null) return null;
             if (_instructionMap.TryGetValue(node, out var instruction)) return instruction;
@@ -590,7 +590,12 @@ namespace Toe.SPIRV.Reflection
             return instruction;
         }
 
-        protected virtual IList<uint> Visit(IList<uint> instructions)
+        protected virtual NestedInstruction Visit(NestedNode instruction)
+        {
+            return new NestedInstruction(instruction.Node, this);
+        }
+
+        internal virtual IList<uint> Visit(IList<uint> instructions)
         {
             return instructions;
         }
@@ -622,7 +627,7 @@ namespace Toe.SPIRV.Reflection
             return instruction;
         }
 
-        protected virtual IList<IdRef> Visit(IList<Node> instructions)
+        internal virtual IList<IdRef> Visit(IList<Node> instructions)
         {
             if (instructions == null)
                 return null;

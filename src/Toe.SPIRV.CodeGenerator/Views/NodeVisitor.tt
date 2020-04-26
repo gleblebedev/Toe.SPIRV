@@ -31,6 +31,11 @@ namespace Toe.SPIRV.Reflection
                 _nodesToVisit.Enqueue(node);
         }
 
+        protected virtual void ScheduleVisit(NestedNode node)
+        {
+            _nodesToVisit.Enqueue(node.Node);
+        }
+
         protected virtual void ScheduleVisit(IEnumerable<Node> nodes)
         {
             foreach (var node in nodes)
@@ -104,6 +109,7 @@ foreach (var operand in instruction.Operands)
         case SpirvOperandKind.PairLiteralIntegerIdRef:
         case SpirvOperandKind.PairIdRefIdRef:
         case SpirvOperandKind.PairIdRefLiteralInteger:
+        case SpirvOperandKind.LiteralSpecConstantOpInteger:
         {
 #>
             ScheduleVisit(node.<#=operand.Name#>);

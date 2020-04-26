@@ -6,6 +6,10 @@ namespace Toe.SPIRV
 {
     public class InstructionRegistry
     {
+        public InstructionRegistry()
+        {
+            
+        }
         private readonly Dictionary<uint, InstructionWithId> _instructions = new Dictionary<uint, InstructionWithId>();
 
         public InstructionWithId this[uint id]
@@ -25,6 +29,13 @@ namespace Toe.SPIRV
             if (instruction.IdResult == 0)
                 throw new ArgumentException("Instruction should have not zeo IdResult");
             _instructions.Add(instruction.IdResult, instruction);
+        }
+
+        public bool Remove(InstructionWithId instruction)
+        {
+            if (instruction.IdResult == 0)
+                throw new ArgumentException("Instruction should have not zeo IdResult");
+            return _instructions.Remove(instruction.IdResult);
         }
     }
 }

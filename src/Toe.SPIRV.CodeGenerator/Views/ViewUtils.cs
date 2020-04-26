@@ -63,8 +63,9 @@ namespace Toe.SPIRV.CodeGenerator.Views
             {
                 case SpirvOperandKind.LiteralExtInstInteger:
                 case SpirvOperandKind.LiteralInteger:
-                case SpirvOperandKind.LiteralSpecConstantOpInteger:
                     return "uint";
+                case SpirvOperandKind.LiteralSpecConstantOpInteger:
+                    return "Spv.NestedInstruction";
                 case SpirvOperandKind.LiteralString:
                     return "string";
                 default:

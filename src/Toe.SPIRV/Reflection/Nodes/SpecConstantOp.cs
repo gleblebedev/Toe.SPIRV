@@ -13,7 +13,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         {
         }
 
-        public SpecConstantOp(SpirvTypeBase resultType, uint opcode, string debugName = null)
+        public SpecConstantOp(SpirvTypeBase resultType, NestedNode opcode, string debugName = null)
         {
             this.ResultType = resultType;
             this.Opcode = opcode;
@@ -22,7 +22,7 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public override Op OpCode => Op.OpSpecConstantOp;
 
-        public uint Opcode { get; set; }
+        public NestedNode Opcode { get; set; }
 
         public SpirvTypeBase ResultType { get; set; }
 
@@ -70,7 +70,7 @@ namespace Toe.SPIRV.Reflection.Nodes
         private void SetUp(OpSpecConstantOp op, SpirvInstructionTreeBuilder treeBuilder)
         {
             ResultType = treeBuilder.ResolveType(op.IdResultType);
-            Opcode = op.Opcode;
+            Opcode = treeBuilder.Parse(op.Opcode);
             SetUpDecorations(op, treeBuilder);
         }
 

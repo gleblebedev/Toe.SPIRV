@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using CommandLine;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
 using Toe.SPIRV.CodeGenerator.Views;
@@ -41,6 +43,73 @@ namespace Toe.SPIRV.CodeGenerator
                     }
                 }
             }
+
+            {
+                var text = new NestedInstruction(_grammar.Instructions.Select(_=>_.Value).Where(_=>_nestedInstructions.Contains(_.Name))).TransformText();
+                Utils.SaveText(Path.Combine(options.Output, "NestedInstruction.cs"), text);
+            }
         }
+
+        static HashSet<string> _nestedInstructions = new HashSet<string>(new string[] {
+            "OpAccessChain",
+            "OpInBoundsAccessChain",
+            "OpBitcast",
+            "OpBitwiseOr",
+            "OpBitwiseXor",
+            "OpBitwiseAnd",
+            "OpConvertFToS",
+            "OpConvertSToF",
+            "OpConvertFToU",
+            "OpConvertUToF",
+            "OpConvertPtrToU",
+            "OpConvertUToPtr",
+            "OpFAdd",
+            "OpFSub",
+            "OpFMul",
+            "OpFDiv",
+            "OpFNegate",
+            "OpFRem",
+            "OpFMod",
+            "OpGenericCastToPtr",
+            "OpPtrCastToGeneric",
+            "OpIAdd",
+            "OpISub",
+            "OpIEqual",
+            "OpINotEqual",
+            "OpIMul",
+            "OpUDiv",
+            "OpSDiv",
+            "OpUMod",
+            "OpSRem",
+            "OpSMod",
+            "OpLogicalEqual",
+            "OpLogicalNotEqual",
+            "OpLogicalOr",
+            "OpLogicalAnd",
+            "OpLogicalNot,",
+            "OpPtrAccessChain",
+            "OpInBoundsPtrAccessChain",
+            "OpQuantizeToF16",
+            "OpSConvert",
+            "OpFConvert",
+            "OpSNegate",
+            "OpNot",
+            "OpSelect",
+            "OpShiftRightLogical",
+            "OpShiftRightArithmetic",
+            "OpShiftLeftLogical",
+            "OpUConvert",
+            "OpUGreaterThan",
+            "OpSGreaterThan",
+            "OpUGreaterThanEqual",
+            "OpSGreaterThanEqual",
+            "OpULessThan",
+            "OpSLessThan",
+            "OpULessThanEqual",
+            "OpSLessThanEqual",
+            "OpVectorShuffle",
+            "OpCompositeExtract",
+            "OpCompositeInsert"
+        });
     }
 }

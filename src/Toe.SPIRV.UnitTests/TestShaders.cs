@@ -176,6 +176,45 @@ void main()
 }",
                 emptyFragmentShader,
             };
+            // ----------------------------------------
+            // Push constant
+            yield return new[]
+            {
+                @"
+#version 450
+layout(push_constant) uniform Data
+{
+    int Attr;
+} push_const;
+
+vec4 MakeVec4(int x)
+{
+    return vec4(x);
+}
+void main()
+{
+    gl_Position = MakeVec4(push_const.Attr);
+}",
+                emptyFragmentShader,
+            };
+            // ----------------------------------------
+            // Constant
+            yield return new[]
+            {
+                @"
+#version 450
+layout(constant_id = 100) const bool Attr = true;
+
+vec4 MakeVec4(int x)
+{
+    return vec4(x);
+}
+void main()
+{
+    gl_Position = MakeVec4(Attr?1:-1);
+}",
+                emptyFragmentShader,
+            };
         }
     }
 }

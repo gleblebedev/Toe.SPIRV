@@ -49,6 +49,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>LiteralTemplate.cs</LastGenOutput>
     </None>
+    <None Update="Views\NestedInstruction.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>NestedInstruction.cs</LastGenOutput>
+    </None>
     <None Update="Views\NodeTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NodeTemplate.cs</LastGenOutput>
@@ -106,6 +110,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>LiteralTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NestedInstruction.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NestedInstruction.tt</DependentUpon>
     </Compile>
     <Compile Update="Views\NodeTemplate.cs">
       <DesignTime>True</DesignTime>
