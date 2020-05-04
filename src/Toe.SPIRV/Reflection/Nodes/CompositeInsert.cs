@@ -37,32 +37,10 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Object), Object);
-                yield return CreateInputPin(nameof(Composite), Composite);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return Object;
+                yield return Composite;
         }
 
         public CompositeInsert WithDecoration(Spv.Decoration decoration)

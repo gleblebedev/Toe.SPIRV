@@ -32,39 +32,9 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public IList<uint> Branchweights { get; private set; } = new List<uint>();
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Condition), Condition);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin(nameof(TrueLabel), TrueLabel);
-                yield return CreateExitPin(nameof(FalseLabel), FalseLabel);
-                yield break;
-            }
+                yield return Condition;
         }
 
         public BranchConditional WithDecoration(Spv.Decoration decoration)

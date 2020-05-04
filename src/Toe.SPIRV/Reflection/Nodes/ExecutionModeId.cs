@@ -42,38 +42,9 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Spv.ExecutionMode Mode { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(EntryPoint), EntryPoint);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return EntryPoint;
         }
 
         public ExecutionModeId WithDecoration(Spv.Decoration decoration)

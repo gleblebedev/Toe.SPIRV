@@ -26,34 +26,13 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public IList<Node> Targets { get; private set; } = new PrintableList<Node>();
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(DecorationGroup), DecorationGroup);
+                yield return DecorationGroup;
                 for (var index = 0; index < Targets.Count; index++)
                 {
-                    yield return CreateInputPin(nameof(Targets) + index, Targets[index]);
+                    yield return Targets[index];
                 }
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
         }
 
         public GroupDecorate WithDecoration(Spv.Decoration decoration)

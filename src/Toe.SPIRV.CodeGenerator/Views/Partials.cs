@@ -162,6 +162,41 @@ namespace Toe.SPIRV.CodeGenerator.Views
         {
             _grammar = grammar;
         }
+
+        private string GetNodeCategory(SpirvInstruction instruction)
+        {
+            /*
+            Unknown,
+            Function,
+            Converter,
+            Procedure,
+            Event,
+            Parameter,
+            Value,
+            Result
+            */
+            if (instruction.Name == "OpConstant")
+            {
+                return "Value";
+            }
+            if (instruction.Name == "OpReturn" || instruction.Name == "OpReturnValue")
+            {
+                return "Result";
+            }
+            if (instruction.Name == "OpFunctionParameter" || instruction.Name == "OpVariable")
+            {
+                return "Parameter";
+            }
+            if (instruction.HasDefaultExit)
+            {
+                return "Procedure";
+            }
+            if (instruction.IdResultType != null)
+            {
+                return "Function";
+            }
+            return "Unknown";
+        }
     }
 
     public partial class SpirvInstructionsBuilderTemplate

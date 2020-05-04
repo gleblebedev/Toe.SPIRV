@@ -288,9 +288,8 @@ namespace Toe.SPIRV.Reflection
                 case Op.OpVariable:
                     return null;
             }
-            foreach (var input in node.InputPins)
+            foreach (var inputNode in node.GetInputNodes())
             {
-                var inputNode = input.ConnectedPin?.Node;
                 if (inputNode != null)
                 {
                     if (!visitedNodes.Contains(inputNode))

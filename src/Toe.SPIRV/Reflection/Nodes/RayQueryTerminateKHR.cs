@@ -39,38 +39,9 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Node RayQuery { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(RayQuery), RayQuery);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return RayQuery;
         }
 
         public RayQueryTerminateKHR WithDecoration(Spv.Decoration decoration)

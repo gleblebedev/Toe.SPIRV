@@ -37,33 +37,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(GlobalWorkSize), GlobalWorkSize);
-                yield return CreateInputPin(nameof(LocalWorkSize), LocalWorkSize);
-                yield return CreateInputPin(nameof(GlobalWorkOffset), GlobalWorkOffset);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return GlobalWorkSize;
+                yield return LocalWorkSize;
+                yield return GlobalWorkOffset;
         }
 
         public BuildNDRange WithDecoration(Spv.Decoration decoration)

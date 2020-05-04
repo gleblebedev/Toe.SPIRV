@@ -23,31 +23,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Label TargetLabel { get; set; }
 
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin(nameof(TargetLabel), TargetLabel);
-                yield break;
-            }
-        }
-
         public Branch WithDecoration(Spv.Decoration decoration)
         {
             AddDecoration(decoration);

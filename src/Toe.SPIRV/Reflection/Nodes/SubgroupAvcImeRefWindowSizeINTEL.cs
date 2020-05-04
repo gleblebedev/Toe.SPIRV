@@ -34,32 +34,10 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SearchWindowConfig), SearchWindowConfig);
-                yield return CreateInputPin(nameof(DualRef), DualRef);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return SearchWindowConfig;
+                yield return DualRef;
         }
 
         public SubgroupAvcImeRefWindowSizeINTEL WithDecoration(Spv.Decoration decoration)

@@ -47,18 +47,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
 
         public IList<FunctionParameter> Parameters { get; } = new List<FunctionParameter>();
-
-        public override IEnumerable<NodePinWithConnection> InputPins
-        {
-            get
-            {
-                int index = 0;
-                foreach (var parameter in Parameters)
-                {
-                    yield return new NodePinWithConnection(this, "parameter"+index, parameter.ResultType, parameter.OutputPins.First());
-                }
-            }
-        }
     }
 
     public partial class MemoryModel

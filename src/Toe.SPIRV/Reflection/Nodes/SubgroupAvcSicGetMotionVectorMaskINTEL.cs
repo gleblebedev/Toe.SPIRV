@@ -34,32 +34,10 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SkipBlockPartitionType), SkipBlockPartitionType);
-                yield return CreateInputPin(nameof(Direction), Direction);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return SkipBlockPartitionType;
+                yield return Direction;
         }
 
         public SubgroupAvcSicGetMotionVectorMaskINTEL WithDecoration(Spv.Decoration decoration)

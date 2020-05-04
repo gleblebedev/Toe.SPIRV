@@ -42,39 +42,10 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Node Status { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Event), Event);
-                yield return CreateInputPin(nameof(Status), Status);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return Event;
+                yield return Status;
         }
 
         public SetUserEventStatus WithDecoration(Spv.Decoration decoration)

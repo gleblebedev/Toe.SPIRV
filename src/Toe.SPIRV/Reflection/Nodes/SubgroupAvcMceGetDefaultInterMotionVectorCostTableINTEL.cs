@@ -34,32 +34,10 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SliceType), SliceType);
-                yield return CreateInputPin(nameof(Qp), Qp);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return SliceType;
+                yield return Qp;
         }
 
         public SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL WithDecoration(Spv.Decoration decoration)

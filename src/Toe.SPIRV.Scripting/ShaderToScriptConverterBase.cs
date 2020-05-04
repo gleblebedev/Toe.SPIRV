@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Toe.Scripting;
 using Toe.SPIRV.Reflection;
-using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Nodes=Toe.SPIRV.Reflection.Nodes;
 
@@ -542,3106 +543,4414 @@ namespace Toe.SPIRV
 
         protected virtual ScriptNode VisitNop(Nodes.Nop node)
         {
-            var scriptNode = CreateNode(node, "OpNop", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpNop", "OpNop", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUndef(Nodes.Undef node)
         {
-            var scriptNode = CreateNode(node, "OpUndef", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUndef", "OpUndef", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSourceContinued(Nodes.SourceContinued node)
         {
-            var scriptNode = CreateNode(node, "OpSourceContinued", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSourceContinued", "OpSourceContinued", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSource(Nodes.Source node)
         {
-            var scriptNode = CreateNode(node, "OpSource", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSource", "OpSource", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.File), GetTypeName(node.File?.GetResultType()), GetOutputConnection(node.File)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSourceExtension(Nodes.SourceExtension node)
         {
-            var scriptNode = CreateNode(node, "OpSourceExtension", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSourceExtension", "OpSourceExtension", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitName(Nodes.Name node)
         {
-            var scriptNode = CreateNode(node, "OpName", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpName", "OpName", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Target), GetTypeName(node.Target?.GetResultType()), GetOutputConnection(node.Target)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMemberName(Nodes.MemberName node)
         {
-            var scriptNode = CreateNode(node, "OpMemberName", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMemberName", "OpMemberName", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitString(Nodes.String node)
         {
-            var scriptNode = CreateNode(node, "OpString", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpString", "OpString", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLine(Nodes.Line node)
         {
-            var scriptNode = CreateNode(node, "OpLine", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLine", "OpLine", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.File), GetTypeName(node.File?.GetResultType()), GetOutputConnection(node.File)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitExtension(Nodes.Extension node)
         {
-            var scriptNode = CreateNode(node, "OpExtension", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpExtension", "OpExtension", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitExtInstImport(Nodes.ExtInstImport node)
         {
-            var scriptNode = CreateNode(node, "OpExtInstImport", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpExtInstImport", "OpExtInstImport", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitExtInst(Nodes.ExtInst node)
         {
-            var scriptNode = CreateNode(node, "OpExtInst", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpExtInst", "OpExtInst", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Set), GetTypeName(node.Set?.GetResultType()), GetOutputConnection(node.Set)));
+            if (node.Operands != null)
+            {
+                for (var index = 0; index < node.Operands.Count; index++)
+                {
+                    var item = node.Operands[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Operands{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMemoryModel(Nodes.MemoryModel node)
         {
-            var scriptNode = CreateNode(node, "OpMemoryModel", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMemoryModel", "OpMemoryModel", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEntryPoint(Nodes.EntryPoint node)
         {
-            var scriptNode = CreateNode(node, "OpEntryPoint", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEntryPoint", "OpEntryPoint", false, null, NodeCategory.Unknown, null);
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.Value),null, GetExitConnection(node.Value)));
+            if (node.Interface != null)
+            {
+                for (var index = 0; index < node.Interface.Count; index++)
+                {
+                    var item = node.Interface[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Interface{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitExecutionMode(Nodes.ExecutionMode node)
         {
-            var scriptNode = CreateNode(node, "OpExecutionMode", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpExecutionMode", "OpExecutionMode", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.EntryPoint), GetTypeName(node.EntryPoint?.GetResultType()), GetOutputConnection(node.EntryPoint)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCapability(Nodes.Capability node)
         {
-            var scriptNode = CreateNode(node, "OpCapability", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCapability", "OpCapability", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstantTrue(Nodes.ConstantTrue node)
         {
-            var scriptNode = CreateNode(node, "OpConstantTrue", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstantTrue", "OpConstantTrue", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstantFalse(Nodes.ConstantFalse node)
         {
-            var scriptNode = CreateNode(node, "OpConstantFalse", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstantFalse", "OpConstantFalse", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstant(Nodes.Constant node)
         {
-            var scriptNode = CreateNode(node, "OpConstant", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstant", "OpConstant", false, GetTypeName(node.ResultType), NodeCategory.Value, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstantComposite(Nodes.ConstantComposite node)
         {
-            var scriptNode = CreateNode(node, "OpConstantComposite", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstantComposite", "OpConstantComposite", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            if (node.Constituents != null)
+            {
+                for (var index = 0; index < node.Constituents.Count; index++)
+                {
+                    var item = node.Constituents[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Constituents{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstantSampler(Nodes.ConstantSampler node)
         {
-            var scriptNode = CreateNode(node, "OpConstantSampler", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstantSampler", "OpConstantSampler", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstantNull(Nodes.ConstantNull node)
         {
-            var scriptNode = CreateNode(node, "OpConstantNull", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstantNull", "OpConstantNull", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSpecConstantTrue(Nodes.SpecConstantTrue node)
         {
-            var scriptNode = CreateNode(node, "OpSpecConstantTrue", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSpecConstantTrue", "OpSpecConstantTrue", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSpecConstantFalse(Nodes.SpecConstantFalse node)
         {
-            var scriptNode = CreateNode(node, "OpSpecConstantFalse", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSpecConstantFalse", "OpSpecConstantFalse", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSpecConstant(Nodes.SpecConstant node)
         {
-            var scriptNode = CreateNode(node, "OpSpecConstant", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSpecConstant", "OpSpecConstant", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSpecConstantComposite(Nodes.SpecConstantComposite node)
         {
-            var scriptNode = CreateNode(node, "OpSpecConstantComposite", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSpecConstantComposite", "OpSpecConstantComposite", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            if (node.Constituents != null)
+            {
+                for (var index = 0; index < node.Constituents.Count; index++)
+                {
+                    var item = node.Constituents[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Constituents{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSpecConstantOp(Nodes.SpecConstantOp node)
         {
-            var scriptNode = CreateNode(node, "OpSpecConstantOp", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSpecConstantOp", "OpSpecConstantOp", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFunction(Nodes.Function node)
         {
-            var scriptNode = CreateNode(node, "OpFunction", false, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFunction", "OpFunction", false, GetTypeName(node.ResultType), NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFunctionParameter(Nodes.FunctionParameter node)
         {
-            var scriptNode = CreateNode(node, "OpFunctionParameter", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFunctionParameter", "OpFunctionParameter", false, GetTypeName(node.ResultType), NodeCategory.Parameter, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFunctionEnd(Nodes.FunctionEnd node)
         {
-            var scriptNode = CreateNode(node, "OpFunctionEnd", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFunctionEnd", "OpFunctionEnd", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFunctionCall(Nodes.FunctionCall node)
         {
-            var scriptNode = CreateNode(node, "OpFunctionCall", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFunctionCall", "OpFunctionCall", true, GetTypeName(node.ResultType), NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Function), GetTypeName(node.Function?.GetResultType()), GetOutputConnection(node.Function)));
+            if (node.Arguments != null)
+            {
+                for (var index = 0; index < node.Arguments.Count; index++)
+                {
+                    var item = node.Arguments[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Arguments{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVariable(Nodes.Variable node)
         {
-            var scriptNode = CreateNode(node, "OpVariable", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVariable", "OpVariable", false, GetTypeName(node.ResultType), NodeCategory.Parameter, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Initializer), GetTypeName(node.Initializer?.GetResultType()), GetOutputConnection(node.Initializer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageTexelPointer(Nodes.ImageTexelPointer node)
         {
-            var scriptNode = CreateNode(node, "OpImageTexelPointer", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageTexelPointer", "OpImageTexelPointer", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Sample), GetTypeName(node.Sample?.GetResultType()), GetOutputConnection(node.Sample)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLoad(Nodes.Load node)
         {
-            var scriptNode = CreateNode(node, "OpLoad", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLoad", "OpLoad", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitStore(Nodes.Store node)
         {
-            var scriptNode = CreateNode(node, "OpStore", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpStore", "OpStore", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Object), GetTypeName(node.Object?.GetResultType()), GetOutputConnection(node.Object)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCopyMemory(Nodes.CopyMemory node)
         {
-            var scriptNode = CreateNode(node, "OpCopyMemory", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCopyMemory", "OpCopyMemory", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Target), GetTypeName(node.Target?.GetResultType()), GetOutputConnection(node.Target)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Source), GetTypeName(node.Source?.GetResultType()), GetOutputConnection(node.Source)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCopyMemorySized(Nodes.CopyMemorySized node)
         {
-            var scriptNode = CreateNode(node, "OpCopyMemorySized", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCopyMemorySized", "OpCopyMemorySized", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Target), GetTypeName(node.Target?.GetResultType()), GetOutputConnection(node.Target)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Source), GetTypeName(node.Source?.GetResultType()), GetOutputConnection(node.Source)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Size), GetTypeName(node.Size?.GetResultType()), GetOutputConnection(node.Size)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAccessChain(Nodes.AccessChain node)
         {
-            var scriptNode = CreateNode(node, "OpAccessChain", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAccessChain", "OpAccessChain", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            if (node.Indexes != null)
+            {
+                for (var index = 0; index < node.Indexes.Count; index++)
+                {
+                    var item = node.Indexes[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Indexes{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitInBoundsAccessChain(Nodes.InBoundsAccessChain node)
         {
-            var scriptNode = CreateNode(node, "OpInBoundsAccessChain", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpInBoundsAccessChain", "OpInBoundsAccessChain", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            if (node.Indexes != null)
+            {
+                for (var index = 0; index < node.Indexes.Count; index++)
+                {
+                    var item = node.Indexes[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Indexes{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitPtrAccessChain(Nodes.PtrAccessChain node)
         {
-            var scriptNode = CreateNode(node, "OpPtrAccessChain", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpPtrAccessChain", "OpPtrAccessChain", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Element), GetTypeName(node.Element?.GetResultType()), GetOutputConnection(node.Element)));
+            if (node.Indexes != null)
+            {
+                for (var index = 0; index < node.Indexes.Count; index++)
+                {
+                    var item = node.Indexes[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Indexes{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitArrayLength(Nodes.ArrayLength node)
         {
-            var scriptNode = CreateNode(node, "OpArrayLength", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpArrayLength", "OpArrayLength", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Structure), GetTypeName(node.Structure?.GetResultType()), GetOutputConnection(node.Structure)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGenericPtrMemSemantics(Nodes.GenericPtrMemSemantics node)
         {
-            var scriptNode = CreateNode(node, "OpGenericPtrMemSemantics", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGenericPtrMemSemantics", "OpGenericPtrMemSemantics", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitInBoundsPtrAccessChain(Nodes.InBoundsPtrAccessChain node)
         {
-            var scriptNode = CreateNode(node, "OpInBoundsPtrAccessChain", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpInBoundsPtrAccessChain", "OpInBoundsPtrAccessChain", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Element), GetTypeName(node.Element?.GetResultType()), GetOutputConnection(node.Element)));
+            if (node.Indexes != null)
+            {
+                for (var index = 0; index < node.Indexes.Count; index++)
+                {
+                    var item = node.Indexes[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Indexes{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDecorate(Nodes.Decorate node)
         {
-            var scriptNode = CreateNode(node, "OpDecorate", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDecorate", "OpDecorate", false, null, NodeCategory.Unknown, null);
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.Target),null, GetExitConnection(node.Target)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMemberDecorate(Nodes.MemberDecorate node)
         {
-            var scriptNode = CreateNode(node, "OpMemberDecorate", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMemberDecorate", "OpMemberDecorate", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDecorationGroup(Nodes.DecorationGroup node)
         {
-            var scriptNode = CreateNode(node, "OpDecorationGroup", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDecorationGroup", "OpDecorationGroup", false, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupDecorate(Nodes.GroupDecorate node)
         {
-            var scriptNode = CreateNode(node, "OpGroupDecorate", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupDecorate", "OpGroupDecorate", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.DecorationGroup), GetTypeName(node.DecorationGroup?.GetResultType()), GetOutputConnection(node.DecorationGroup)));
+            if (node.Targets != null)
+            {
+                for (var index = 0; index < node.Targets.Count; index++)
+                {
+                    var item = node.Targets[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Targets{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupMemberDecorate(Nodes.GroupMemberDecorate node)
         {
-            var scriptNode = CreateNode(node, "OpGroupMemberDecorate", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupMemberDecorate", "OpGroupMemberDecorate", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.DecorationGroup), GetTypeName(node.DecorationGroup?.GetResultType()), GetOutputConnection(node.DecorationGroup)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVectorExtractDynamic(Nodes.VectorExtractDynamic node)
         {
-            var scriptNode = CreateNode(node, "OpVectorExtractDynamic", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVectorExtractDynamic", "OpVectorExtractDynamic", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVectorInsertDynamic(Nodes.VectorInsertDynamic node)
         {
-            var scriptNode = CreateNode(node, "OpVectorInsertDynamic", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVectorInsertDynamic", "OpVectorInsertDynamic", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Component), GetTypeName(node.Component?.GetResultType()), GetOutputConnection(node.Component)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVectorShuffle(Nodes.VectorShuffle node)
         {
-            var scriptNode = CreateNode(node, "OpVectorShuffle", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVectorShuffle", "OpVectorShuffle", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector1), GetTypeName(node.Vector1?.GetResultType()), GetOutputConnection(node.Vector1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector2), GetTypeName(node.Vector2?.GetResultType()), GetOutputConnection(node.Vector2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCompositeConstruct(Nodes.CompositeConstruct node)
         {
-            var scriptNode = CreateNode(node, "OpCompositeConstruct", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCompositeConstruct", "OpCompositeConstruct", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            if (node.Constituents != null)
+            {
+                for (var index = 0; index < node.Constituents.Count; index++)
+                {
+                    var item = node.Constituents[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "Constituents{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCompositeExtract(Nodes.CompositeExtract node)
         {
-            var scriptNode = CreateNode(node, "OpCompositeExtract", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCompositeExtract", "OpCompositeExtract", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Composite), GetTypeName(node.Composite?.GetResultType()), GetOutputConnection(node.Composite)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCompositeInsert(Nodes.CompositeInsert node)
         {
-            var scriptNode = CreateNode(node, "OpCompositeInsert", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCompositeInsert", "OpCompositeInsert", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Object), GetTypeName(node.Object?.GetResultType()), GetOutputConnection(node.Object)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Composite), GetTypeName(node.Composite?.GetResultType()), GetOutputConnection(node.Composite)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCopyObject(Nodes.CopyObject node)
         {
-            var scriptNode = CreateNode(node, "OpCopyObject", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCopyObject", "OpCopyObject", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitTranspose(Nodes.Transpose node)
         {
-            var scriptNode = CreateNode(node, "OpTranspose", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpTranspose", "OpTranspose", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Matrix), GetTypeName(node.Matrix?.GetResultType()), GetOutputConnection(node.Matrix)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSampledImage(Nodes.SampledImage node)
         {
-            var scriptNode = CreateNode(node, "OpSampledImage", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSampledImage", "OpSampledImage", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Sampler), GetTypeName(node.Sampler?.GetResultType()), GetOutputConnection(node.Sampler)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleImplicitLod(Nodes.ImageSampleImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleImplicitLod", "OpImageSampleImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleExplicitLod(Nodes.ImageSampleExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleExplicitLod", "OpImageSampleExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleDrefImplicitLod(Nodes.ImageSampleDrefImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleDrefImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleDrefImplicitLod", "OpImageSampleDrefImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleDrefExplicitLod(Nodes.ImageSampleDrefExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleDrefExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleDrefExplicitLod", "OpImageSampleDrefExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleProjImplicitLod(Nodes.ImageSampleProjImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleProjImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleProjImplicitLod", "OpImageSampleProjImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleProjExplicitLod(Nodes.ImageSampleProjExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleProjExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleProjExplicitLod", "OpImageSampleProjExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleProjDrefImplicitLod(Nodes.ImageSampleProjDrefImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleProjDrefImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleProjDrefImplicitLod", "OpImageSampleProjDrefImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleProjDrefExplicitLod(Nodes.ImageSampleProjDrefExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleProjDrefExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleProjDrefExplicitLod", "OpImageSampleProjDrefExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageFetch(Nodes.ImageFetch node)
         {
-            var scriptNode = CreateNode(node, "OpImageFetch", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageFetch", "OpImageFetch", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageGather(Nodes.ImageGather node)
         {
-            var scriptNode = CreateNode(node, "OpImageGather", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageGather", "OpImageGather", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Component), GetTypeName(node.Component?.GetResultType()), GetOutputConnection(node.Component)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageDrefGather(Nodes.ImageDrefGather node)
         {
-            var scriptNode = CreateNode(node, "OpImageDrefGather", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageDrefGather", "OpImageDrefGather", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageRead(Nodes.ImageRead node)
         {
-            var scriptNode = CreateNode(node, "OpImageRead", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageRead", "OpImageRead", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageWrite(Nodes.ImageWrite node)
         {
-            var scriptNode = CreateNode(node, "OpImageWrite", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageWrite", "OpImageWrite", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Texel), GetTypeName(node.Texel?.GetResultType()), GetOutputConnection(node.Texel)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImage(Nodes.Image node)
         {
-            var scriptNode = CreateNode(node, "OpImage", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImage", "OpImage", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQueryFormat(Nodes.ImageQueryFormat node)
         {
-            var scriptNode = CreateNode(node, "OpImageQueryFormat", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQueryFormat", "OpImageQueryFormat", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQueryOrder(Nodes.ImageQueryOrder node)
         {
-            var scriptNode = CreateNode(node, "OpImageQueryOrder", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQueryOrder", "OpImageQueryOrder", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQuerySizeLod(Nodes.ImageQuerySizeLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageQuerySizeLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQuerySizeLod", "OpImageQuerySizeLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LevelofDetail), GetTypeName(node.LevelofDetail?.GetResultType()), GetOutputConnection(node.LevelofDetail)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQuerySize(Nodes.ImageQuerySize node)
         {
-            var scriptNode = CreateNode(node, "OpImageQuerySize", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQuerySize", "OpImageQuerySize", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQueryLod(Nodes.ImageQueryLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageQueryLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQueryLod", "OpImageQueryLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQueryLevels(Nodes.ImageQueryLevels node)
         {
-            var scriptNode = CreateNode(node, "OpImageQueryLevels", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQueryLevels", "OpImageQueryLevels", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageQuerySamples(Nodes.ImageQuerySamples node)
         {
-            var scriptNode = CreateNode(node, "OpImageQuerySamples", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageQuerySamples", "OpImageQuerySamples", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConvertFToU(Nodes.ConvertFToU node)
         {
-            var scriptNode = CreateNode(node, "OpConvertFToU", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConvertFToU", "OpConvertFToU", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FloatValue), GetTypeName(node.FloatValue?.GetResultType()), GetOutputConnection(node.FloatValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConvertFToS(Nodes.ConvertFToS node)
         {
-            var scriptNode = CreateNode(node, "OpConvertFToS", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConvertFToS", "OpConvertFToS", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FloatValue), GetTypeName(node.FloatValue?.GetResultType()), GetOutputConnection(node.FloatValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConvertSToF(Nodes.ConvertSToF node)
         {
-            var scriptNode = CreateNode(node, "OpConvertSToF", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConvertSToF", "OpConvertSToF", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SignedValue), GetTypeName(node.SignedValue?.GetResultType()), GetOutputConnection(node.SignedValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConvertUToF(Nodes.ConvertUToF node)
         {
-            var scriptNode = CreateNode(node, "OpConvertUToF", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConvertUToF", "OpConvertUToF", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UnsignedValue), GetTypeName(node.UnsignedValue?.GetResultType()), GetOutputConnection(node.UnsignedValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUConvert(Nodes.UConvert node)
         {
-            var scriptNode = CreateNode(node, "OpUConvert", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUConvert", "OpUConvert", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UnsignedValue), GetTypeName(node.UnsignedValue?.GetResultType()), GetOutputConnection(node.UnsignedValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSConvert(Nodes.SConvert node)
         {
-            var scriptNode = CreateNode(node, "OpSConvert", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSConvert", "OpSConvert", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SignedValue), GetTypeName(node.SignedValue?.GetResultType()), GetOutputConnection(node.SignedValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFConvert(Nodes.FConvert node)
         {
-            var scriptNode = CreateNode(node, "OpFConvert", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFConvert", "OpFConvert", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FloatValue), GetTypeName(node.FloatValue?.GetResultType()), GetOutputConnection(node.FloatValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitQuantizeToF16(Nodes.QuantizeToF16 node)
         {
-            var scriptNode = CreateNode(node, "OpQuantizeToF16", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpQuantizeToF16", "OpQuantizeToF16", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConvertPtrToU(Nodes.ConvertPtrToU node)
         {
-            var scriptNode = CreateNode(node, "OpConvertPtrToU", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConvertPtrToU", "OpConvertPtrToU", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSatConvertSToU(Nodes.SatConvertSToU node)
         {
-            var scriptNode = CreateNode(node, "OpSatConvertSToU", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSatConvertSToU", "OpSatConvertSToU", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SignedValue), GetTypeName(node.SignedValue?.GetResultType()), GetOutputConnection(node.SignedValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSatConvertUToS(Nodes.SatConvertUToS node)
         {
-            var scriptNode = CreateNode(node, "OpSatConvertUToS", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSatConvertUToS", "OpSatConvertUToS", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UnsignedValue), GetTypeName(node.UnsignedValue?.GetResultType()), GetOutputConnection(node.UnsignedValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConvertUToPtr(Nodes.ConvertUToPtr node)
         {
-            var scriptNode = CreateNode(node, "OpConvertUToPtr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConvertUToPtr", "OpConvertUToPtr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.IntegerValue), GetTypeName(node.IntegerValue?.GetResultType()), GetOutputConnection(node.IntegerValue)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitPtrCastToGeneric(Nodes.PtrCastToGeneric node)
         {
-            var scriptNode = CreateNode(node, "OpPtrCastToGeneric", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpPtrCastToGeneric", "OpPtrCastToGeneric", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGenericCastToPtr(Nodes.GenericCastToPtr node)
         {
-            var scriptNode = CreateNode(node, "OpGenericCastToPtr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGenericCastToPtr", "OpGenericCastToPtr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGenericCastToPtrExplicit(Nodes.GenericCastToPtrExplicit node)
         {
-            var scriptNode = CreateNode(node, "OpGenericCastToPtrExplicit", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGenericCastToPtrExplicit", "OpGenericCastToPtrExplicit", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitcast(Nodes.Bitcast node)
         {
-            var scriptNode = CreateNode(node, "OpBitcast", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitcast", "OpBitcast", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSNegate(Nodes.SNegate node)
         {
-            var scriptNode = CreateNode(node, "OpSNegate", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSNegate", "OpSNegate", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFNegate(Nodes.FNegate node)
         {
-            var scriptNode = CreateNode(node, "OpFNegate", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFNegate", "OpFNegate", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIAdd(Nodes.IAdd node)
         {
-            var scriptNode = CreateNode(node, "OpIAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIAdd", "OpIAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFAdd(Nodes.FAdd node)
         {
-            var scriptNode = CreateNode(node, "OpFAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFAdd", "OpFAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitISub(Nodes.ISub node)
         {
-            var scriptNode = CreateNode(node, "OpISub", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpISub", "OpISub", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFSub(Nodes.FSub node)
         {
-            var scriptNode = CreateNode(node, "OpFSub", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFSub", "OpFSub", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIMul(Nodes.IMul node)
         {
-            var scriptNode = CreateNode(node, "OpIMul", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIMul", "OpIMul", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFMul(Nodes.FMul node)
         {
-            var scriptNode = CreateNode(node, "OpFMul", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFMul", "OpFMul", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUDiv(Nodes.UDiv node)
         {
-            var scriptNode = CreateNode(node, "OpUDiv", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUDiv", "OpUDiv", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSDiv(Nodes.SDiv node)
         {
-            var scriptNode = CreateNode(node, "OpSDiv", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSDiv", "OpSDiv", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFDiv(Nodes.FDiv node)
         {
-            var scriptNode = CreateNode(node, "OpFDiv", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFDiv", "OpFDiv", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUMod(Nodes.UMod node)
         {
-            var scriptNode = CreateNode(node, "OpUMod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUMod", "OpUMod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSRem(Nodes.SRem node)
         {
-            var scriptNode = CreateNode(node, "OpSRem", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSRem", "OpSRem", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSMod(Nodes.SMod node)
         {
-            var scriptNode = CreateNode(node, "OpSMod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSMod", "OpSMod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFRem(Nodes.FRem node)
         {
-            var scriptNode = CreateNode(node, "OpFRem", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFRem", "OpFRem", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFMod(Nodes.FMod node)
         {
-            var scriptNode = CreateNode(node, "OpFMod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFMod", "OpFMod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVectorTimesScalar(Nodes.VectorTimesScalar node)
         {
-            var scriptNode = CreateNode(node, "OpVectorTimesScalar", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVectorTimesScalar", "OpVectorTimesScalar", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Scalar), GetTypeName(node.Scalar?.GetResultType()), GetOutputConnection(node.Scalar)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMatrixTimesScalar(Nodes.MatrixTimesScalar node)
         {
-            var scriptNode = CreateNode(node, "OpMatrixTimesScalar", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMatrixTimesScalar", "OpMatrixTimesScalar", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Matrix), GetTypeName(node.Matrix?.GetResultType()), GetOutputConnection(node.Matrix)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Scalar), GetTypeName(node.Scalar?.GetResultType()), GetOutputConnection(node.Scalar)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVectorTimesMatrix(Nodes.VectorTimesMatrix node)
         {
-            var scriptNode = CreateNode(node, "OpVectorTimesMatrix", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVectorTimesMatrix", "OpVectorTimesMatrix", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Matrix), GetTypeName(node.Matrix?.GetResultType()), GetOutputConnection(node.Matrix)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMatrixTimesVector(Nodes.MatrixTimesVector node)
         {
-            var scriptNode = CreateNode(node, "OpMatrixTimesVector", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMatrixTimesVector", "OpMatrixTimesVector", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Matrix), GetTypeName(node.Matrix?.GetResultType()), GetOutputConnection(node.Matrix)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMatrixTimesMatrix(Nodes.MatrixTimesMatrix node)
         {
-            var scriptNode = CreateNode(node, "OpMatrixTimesMatrix", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMatrixTimesMatrix", "OpMatrixTimesMatrix", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LeftMatrix), GetTypeName(node.LeftMatrix?.GetResultType()), GetOutputConnection(node.LeftMatrix)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RightMatrix), GetTypeName(node.RightMatrix?.GetResultType()), GetOutputConnection(node.RightMatrix)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitOuterProduct(Nodes.OuterProduct node)
         {
-            var scriptNode = CreateNode(node, "OpOuterProduct", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpOuterProduct", "OpOuterProduct", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector1), GetTypeName(node.Vector1?.GetResultType()), GetOutputConnection(node.Vector1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector2), GetTypeName(node.Vector2?.GetResultType()), GetOutputConnection(node.Vector2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDot(Nodes.Dot node)
         {
-            var scriptNode = CreateNode(node, "OpDot", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDot", "OpDot", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector1), GetTypeName(node.Vector1?.GetResultType()), GetOutputConnection(node.Vector1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector2), GetTypeName(node.Vector2?.GetResultType()), GetOutputConnection(node.Vector2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIAddCarry(Nodes.IAddCarry node)
         {
-            var scriptNode = CreateNode(node, "OpIAddCarry", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIAddCarry", "OpIAddCarry", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitISubBorrow(Nodes.ISubBorrow node)
         {
-            var scriptNode = CreateNode(node, "OpISubBorrow", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpISubBorrow", "OpISubBorrow", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUMulExtended(Nodes.UMulExtended node)
         {
-            var scriptNode = CreateNode(node, "OpUMulExtended", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUMulExtended", "OpUMulExtended", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSMulExtended(Nodes.SMulExtended node)
         {
-            var scriptNode = CreateNode(node, "OpSMulExtended", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSMulExtended", "OpSMulExtended", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAny(Nodes.Any node)
         {
-            var scriptNode = CreateNode(node, "OpAny", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAny", "OpAny", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAll(Nodes.All node)
         {
-            var scriptNode = CreateNode(node, "OpAll", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAll", "OpAll", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Vector), GetTypeName(node.Vector?.GetResultType()), GetOutputConnection(node.Vector)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsNan(Nodes.IsNan node)
         {
-            var scriptNode = CreateNode(node, "OpIsNan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsNan", "OpIsNan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsInf(Nodes.IsInf node)
         {
-            var scriptNode = CreateNode(node, "OpIsInf", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsInf", "OpIsInf", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsFinite(Nodes.IsFinite node)
         {
-            var scriptNode = CreateNode(node, "OpIsFinite", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsFinite", "OpIsFinite", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsNormal(Nodes.IsNormal node)
         {
-            var scriptNode = CreateNode(node, "OpIsNormal", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsNormal", "OpIsNormal", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSignBitSet(Nodes.SignBitSet node)
         {
-            var scriptNode = CreateNode(node, "OpSignBitSet", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSignBitSet", "OpSignBitSet", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLessOrGreater(Nodes.LessOrGreater node)
         {
-            var scriptNode = CreateNode(node, "OpLessOrGreater", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLessOrGreater", "OpLessOrGreater", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.y), GetTypeName(node.y?.GetResultType()), GetOutputConnection(node.y)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitOrdered(Nodes.Ordered node)
         {
-            var scriptNode = CreateNode(node, "OpOrdered", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpOrdered", "OpOrdered", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.y), GetTypeName(node.y?.GetResultType()), GetOutputConnection(node.y)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUnordered(Nodes.Unordered node)
         {
-            var scriptNode = CreateNode(node, "OpUnordered", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUnordered", "OpUnordered", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.x), GetTypeName(node.x?.GetResultType()), GetOutputConnection(node.x)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.y), GetTypeName(node.y?.GetResultType()), GetOutputConnection(node.y)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLogicalEqual(Nodes.LogicalEqual node)
         {
-            var scriptNode = CreateNode(node, "OpLogicalEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLogicalEqual", "OpLogicalEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLogicalNotEqual(Nodes.LogicalNotEqual node)
         {
-            var scriptNode = CreateNode(node, "OpLogicalNotEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLogicalNotEqual", "OpLogicalNotEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLogicalOr(Nodes.LogicalOr node)
         {
-            var scriptNode = CreateNode(node, "OpLogicalOr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLogicalOr", "OpLogicalOr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLogicalAnd(Nodes.LogicalAnd node)
         {
-            var scriptNode = CreateNode(node, "OpLogicalAnd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLogicalAnd", "OpLogicalAnd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLogicalNot(Nodes.LogicalNot node)
         {
-            var scriptNode = CreateNode(node, "OpLogicalNot", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLogicalNot", "OpLogicalNot", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSelect(Nodes.Select node)
         {
-            var scriptNode = CreateNode(node, "OpSelect", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSelect", "OpSelect", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Condition), GetTypeName(node.Condition?.GetResultType()), GetOutputConnection(node.Condition)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Object1), GetTypeName(node.Object1?.GetResultType()), GetOutputConnection(node.Object1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Object2), GetTypeName(node.Object2?.GetResultType()), GetOutputConnection(node.Object2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIEqual(Nodes.IEqual node)
         {
-            var scriptNode = CreateNode(node, "OpIEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIEqual", "OpIEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitINotEqual(Nodes.INotEqual node)
         {
-            var scriptNode = CreateNode(node, "OpINotEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpINotEqual", "OpINotEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUGreaterThan(Nodes.UGreaterThan node)
         {
-            var scriptNode = CreateNode(node, "OpUGreaterThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUGreaterThan", "OpUGreaterThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSGreaterThan(Nodes.SGreaterThan node)
         {
-            var scriptNode = CreateNode(node, "OpSGreaterThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSGreaterThan", "OpSGreaterThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUGreaterThanEqual(Nodes.UGreaterThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpUGreaterThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUGreaterThanEqual", "OpUGreaterThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSGreaterThanEqual(Nodes.SGreaterThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpSGreaterThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSGreaterThanEqual", "OpSGreaterThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitULessThan(Nodes.ULessThan node)
         {
-            var scriptNode = CreateNode(node, "OpULessThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpULessThan", "OpULessThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSLessThan(Nodes.SLessThan node)
         {
-            var scriptNode = CreateNode(node, "OpSLessThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSLessThan", "OpSLessThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitULessThanEqual(Nodes.ULessThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpULessThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpULessThanEqual", "OpULessThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSLessThanEqual(Nodes.SLessThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpSLessThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSLessThanEqual", "OpSLessThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFOrdEqual(Nodes.FOrdEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFOrdEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFOrdEqual", "OpFOrdEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFUnordEqual(Nodes.FUnordEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFUnordEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFUnordEqual", "OpFUnordEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFOrdNotEqual(Nodes.FOrdNotEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFOrdNotEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFOrdNotEqual", "OpFOrdNotEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFUnordNotEqual(Nodes.FUnordNotEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFUnordNotEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFUnordNotEqual", "OpFUnordNotEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFOrdLessThan(Nodes.FOrdLessThan node)
         {
-            var scriptNode = CreateNode(node, "OpFOrdLessThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFOrdLessThan", "OpFOrdLessThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFUnordLessThan(Nodes.FUnordLessThan node)
         {
-            var scriptNode = CreateNode(node, "OpFUnordLessThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFUnordLessThan", "OpFUnordLessThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFOrdGreaterThan(Nodes.FOrdGreaterThan node)
         {
-            var scriptNode = CreateNode(node, "OpFOrdGreaterThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFOrdGreaterThan", "OpFOrdGreaterThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFUnordGreaterThan(Nodes.FUnordGreaterThan node)
         {
-            var scriptNode = CreateNode(node, "OpFUnordGreaterThan", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFUnordGreaterThan", "OpFUnordGreaterThan", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFOrdLessThanEqual(Nodes.FOrdLessThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFOrdLessThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFOrdLessThanEqual", "OpFOrdLessThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFUnordLessThanEqual(Nodes.FUnordLessThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFUnordLessThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFUnordLessThanEqual", "OpFUnordLessThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFOrdGreaterThanEqual(Nodes.FOrdGreaterThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFOrdGreaterThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFOrdGreaterThanEqual", "OpFOrdGreaterThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFUnordGreaterThanEqual(Nodes.FUnordGreaterThanEqual node)
         {
-            var scriptNode = CreateNode(node, "OpFUnordGreaterThanEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFUnordGreaterThanEqual", "OpFUnordGreaterThanEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitShiftRightLogical(Nodes.ShiftRightLogical node)
         {
-            var scriptNode = CreateNode(node, "OpShiftRightLogical", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpShiftRightLogical", "OpShiftRightLogical", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Shift), GetTypeName(node.Shift?.GetResultType()), GetOutputConnection(node.Shift)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitShiftRightArithmetic(Nodes.ShiftRightArithmetic node)
         {
-            var scriptNode = CreateNode(node, "OpShiftRightArithmetic", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpShiftRightArithmetic", "OpShiftRightArithmetic", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Shift), GetTypeName(node.Shift?.GetResultType()), GetOutputConnection(node.Shift)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitShiftLeftLogical(Nodes.ShiftLeftLogical node)
         {
-            var scriptNode = CreateNode(node, "OpShiftLeftLogical", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpShiftLeftLogical", "OpShiftLeftLogical", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Shift), GetTypeName(node.Shift?.GetResultType()), GetOutputConnection(node.Shift)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitwiseOr(Nodes.BitwiseOr node)
         {
-            var scriptNode = CreateNode(node, "OpBitwiseOr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitwiseOr", "OpBitwiseOr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitwiseXor(Nodes.BitwiseXor node)
         {
-            var scriptNode = CreateNode(node, "OpBitwiseXor", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitwiseXor", "OpBitwiseXor", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitwiseAnd(Nodes.BitwiseAnd node)
         {
-            var scriptNode = CreateNode(node, "OpBitwiseAnd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitwiseAnd", "OpBitwiseAnd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitNot(Nodes.Not node)
         {
-            var scriptNode = CreateNode(node, "OpNot", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpNot", "OpNot", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitFieldInsert(Nodes.BitFieldInsert node)
         {
-            var scriptNode = CreateNode(node, "OpBitFieldInsert", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitFieldInsert", "OpBitFieldInsert", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Insert), GetTypeName(node.Insert?.GetResultType()), GetOutputConnection(node.Insert)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Offset), GetTypeName(node.Offset?.GetResultType()), GetOutputConnection(node.Offset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Count), GetTypeName(node.Count?.GetResultType()), GetOutputConnection(node.Count)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitFieldSExtract(Nodes.BitFieldSExtract node)
         {
-            var scriptNode = CreateNode(node, "OpBitFieldSExtract", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitFieldSExtract", "OpBitFieldSExtract", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Offset), GetTypeName(node.Offset?.GetResultType()), GetOutputConnection(node.Offset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Count), GetTypeName(node.Count?.GetResultType()), GetOutputConnection(node.Count)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitFieldUExtract(Nodes.BitFieldUExtract node)
         {
-            var scriptNode = CreateNode(node, "OpBitFieldUExtract", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitFieldUExtract", "OpBitFieldUExtract", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Offset), GetTypeName(node.Offset?.GetResultType()), GetOutputConnection(node.Offset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Count), GetTypeName(node.Count?.GetResultType()), GetOutputConnection(node.Count)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitReverse(Nodes.BitReverse node)
         {
-            var scriptNode = CreateNode(node, "OpBitReverse", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitReverse", "OpBitReverse", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBitCount(Nodes.BitCount node)
         {
-            var scriptNode = CreateNode(node, "OpBitCount", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBitCount", "OpBitCount", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Base), GetTypeName(node.Base?.GetResultType()), GetOutputConnection(node.Base)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDPdx(Nodes.DPdx node)
         {
-            var scriptNode = CreateNode(node, "OpDPdx", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDPdx", "OpDPdx", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDPdy(Nodes.DPdy node)
         {
-            var scriptNode = CreateNode(node, "OpDPdy", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDPdy", "OpDPdy", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFwidth(Nodes.Fwidth node)
         {
-            var scriptNode = CreateNode(node, "OpFwidth", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFwidth", "OpFwidth", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDPdxFine(Nodes.DPdxFine node)
         {
-            var scriptNode = CreateNode(node, "OpDPdxFine", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDPdxFine", "OpDPdxFine", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDPdyFine(Nodes.DPdyFine node)
         {
-            var scriptNode = CreateNode(node, "OpDPdyFine", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDPdyFine", "OpDPdyFine", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFwidthFine(Nodes.FwidthFine node)
         {
-            var scriptNode = CreateNode(node, "OpFwidthFine", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFwidthFine", "OpFwidthFine", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDPdxCoarse(Nodes.DPdxCoarse node)
         {
-            var scriptNode = CreateNode(node, "OpDPdxCoarse", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDPdxCoarse", "OpDPdxCoarse", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDPdyCoarse(Nodes.DPdyCoarse node)
         {
-            var scriptNode = CreateNode(node, "OpDPdyCoarse", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDPdyCoarse", "OpDPdyCoarse", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFwidthCoarse(Nodes.FwidthCoarse node)
         {
-            var scriptNode = CreateNode(node, "OpFwidthCoarse", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFwidthCoarse", "OpFwidthCoarse", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.P), GetTypeName(node.P?.GetResultType()), GetOutputConnection(node.P)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEmitVertex(Nodes.EmitVertex node)
         {
-            var scriptNode = CreateNode(node, "OpEmitVertex", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEmitVertex", "OpEmitVertex", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEndPrimitive(Nodes.EndPrimitive node)
         {
-            var scriptNode = CreateNode(node, "OpEndPrimitive", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEndPrimitive", "OpEndPrimitive", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEmitStreamVertex(Nodes.EmitStreamVertex node)
         {
-            var scriptNode = CreateNode(node, "OpEmitStreamVertex", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEmitStreamVertex", "OpEmitStreamVertex", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Stream), GetTypeName(node.Stream?.GetResultType()), GetOutputConnection(node.Stream)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEndStreamPrimitive(Nodes.EndStreamPrimitive node)
         {
-            var scriptNode = CreateNode(node, "OpEndStreamPrimitive", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEndStreamPrimitive", "OpEndStreamPrimitive", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Stream), GetTypeName(node.Stream?.GetResultType()), GetOutputConnection(node.Stream)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitControlBarrier(Nodes.ControlBarrier node)
         {
-            var scriptNode = CreateNode(node, "OpControlBarrier", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpControlBarrier", "OpControlBarrier", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMemoryBarrier(Nodes.MemoryBarrier node)
         {
-            var scriptNode = CreateNode(node, "OpMemoryBarrier", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMemoryBarrier", "OpMemoryBarrier", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicLoad(Nodes.AtomicLoad node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicLoad", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicLoad", "OpAtomicLoad", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicStore(Nodes.AtomicStore node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicStore", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicStore", "OpAtomicStore", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicExchange(Nodes.AtomicExchange node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicExchange", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicExchange", "OpAtomicExchange", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicCompareExchange(Nodes.AtomicCompareExchange node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicCompareExchange", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicCompareExchange", "OpAtomicCompareExchange", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Comparator), GetTypeName(node.Comparator?.GetResultType()), GetOutputConnection(node.Comparator)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicCompareExchangeWeak(Nodes.AtomicCompareExchangeWeak node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicCompareExchangeWeak", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicCompareExchangeWeak", "OpAtomicCompareExchangeWeak", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Comparator), GetTypeName(node.Comparator?.GetResultType()), GetOutputConnection(node.Comparator)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicIIncrement(Nodes.AtomicIIncrement node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicIIncrement", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicIIncrement", "OpAtomicIIncrement", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicIDecrement(Nodes.AtomicIDecrement node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicIDecrement", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicIDecrement", "OpAtomicIDecrement", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicIAdd(Nodes.AtomicIAdd node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicIAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicIAdd", "OpAtomicIAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicISub(Nodes.AtomicISub node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicISub", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicISub", "OpAtomicISub", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicSMin(Nodes.AtomicSMin node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicSMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicSMin", "OpAtomicSMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicUMin(Nodes.AtomicUMin node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicUMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicUMin", "OpAtomicUMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicSMax(Nodes.AtomicSMax node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicSMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicSMax", "OpAtomicSMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicUMax(Nodes.AtomicUMax node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicUMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicUMax", "OpAtomicUMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicAnd(Nodes.AtomicAnd node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicAnd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicAnd", "OpAtomicAnd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicOr(Nodes.AtomicOr node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicOr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicOr", "OpAtomicOr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicXor(Nodes.AtomicXor node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicXor", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicXor", "OpAtomicXor", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitPhi(Nodes.Phi node)
         {
-            var scriptNode = CreateNode(node, "OpPhi", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpPhi", "OpPhi", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLoopMerge(Nodes.LoopMerge node)
         {
-            var scriptNode = CreateNode(node, "OpLoopMerge", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLoopMerge", "OpLoopMerge", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.MergeBlock),null, GetExitConnection(node.MergeBlock)));
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.ContinueTarget),null, GetExitConnection(node.ContinueTarget)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSelectionMerge(Nodes.SelectionMerge node)
         {
-            var scriptNode = CreateNode(node, "OpSelectionMerge", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSelectionMerge", "OpSelectionMerge", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.MergeBlock),null, GetExitConnection(node.MergeBlock)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLabel(Nodes.Label node)
         {
-            var scriptNode = CreateNode(node, "OpLabel", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLabel", "OpLabel", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBranch(Nodes.Branch node)
         {
-            var scriptNode = CreateNode(node, "OpBranch", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBranch", "OpBranch", true, null, NodeCategory.Unknown, null);
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.TargetLabel),null, GetExitConnection(node.TargetLabel)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBranchConditional(Nodes.BranchConditional node)
         {
-            var scriptNode = CreateNode(node, "OpBranchConditional", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBranchConditional", "OpBranchConditional", true, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Condition), GetTypeName(node.Condition?.GetResultType()), GetOutputConnection(node.Condition)));
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.TrueLabel),null, GetExitConnection(node.TrueLabel)));
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.FalseLabel),null, GetExitConnection(node.FalseLabel)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSwitch(Nodes.Switch node)
         {
-            var scriptNode = CreateNode(node, "OpSwitch", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSwitch", "OpSwitch", true, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Selector), GetTypeName(node.Selector?.GetResultType()), GetOutputConnection(node.Selector)));
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.Default),null, GetExitConnection(node.Default)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitKill(Nodes.Kill node)
         {
-            var scriptNode = CreateNode(node, "OpKill", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpKill", "OpKill", true, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReturn(Nodes.Return node)
         {
-            var scriptNode = CreateNode(node, "OpReturn", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReturn", "OpReturn", true, null, NodeCategory.Result, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReturnValue(Nodes.ReturnValue node)
         {
-            var scriptNode = CreateNode(node, "OpReturnValue", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReturnValue", "OpReturnValue", true, null, NodeCategory.Result, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUnreachable(Nodes.Unreachable node)
         {
-            var scriptNode = CreateNode(node, "OpUnreachable", true, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUnreachable", "OpUnreachable", true, null, NodeCategory.Unknown, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLifetimeStart(Nodes.LifetimeStart node)
         {
-            var scriptNode = CreateNode(node, "OpLifetimeStart", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLifetimeStart", "OpLifetimeStart", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitLifetimeStop(Nodes.LifetimeStop node)
         {
-            var scriptNode = CreateNode(node, "OpLifetimeStop", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpLifetimeStop", "OpLifetimeStop", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupAsyncCopy(Nodes.GroupAsyncCopy node)
         {
-            var scriptNode = CreateNode(node, "OpGroupAsyncCopy", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupAsyncCopy", "OpGroupAsyncCopy", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Destination), GetTypeName(node.Destination?.GetResultType()), GetOutputConnection(node.Destination)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Source), GetTypeName(node.Source?.GetResultType()), GetOutputConnection(node.Source)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumElements), GetTypeName(node.NumElements?.GetResultType()), GetOutputConnection(node.NumElements)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Stride), GetTypeName(node.Stride?.GetResultType()), GetOutputConnection(node.Stride)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Event), GetTypeName(node.Event?.GetResultType()), GetOutputConnection(node.Event)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupWaitEvents(Nodes.GroupWaitEvents node)
         {
-            var scriptNode = CreateNode(node, "OpGroupWaitEvents", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupWaitEvents", "OpGroupWaitEvents", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumEvents), GetTypeName(node.NumEvents?.GetResultType()), GetOutputConnection(node.NumEvents)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.EventsList), GetTypeName(node.EventsList?.GetResultType()), GetOutputConnection(node.EventsList)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupAll(Nodes.GroupAll node)
         {
-            var scriptNode = CreateNode(node, "OpGroupAll", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupAll", "OpGroupAll", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupAny(Nodes.GroupAny node)
         {
-            var scriptNode = CreateNode(node, "OpGroupAny", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupAny", "OpGroupAny", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupBroadcast(Nodes.GroupBroadcast node)
         {
-            var scriptNode = CreateNode(node, "OpGroupBroadcast", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupBroadcast", "OpGroupBroadcast", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LocalId), GetTypeName(node.LocalId?.GetResultType()), GetOutputConnection(node.LocalId)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupIAdd(Nodes.GroupIAdd node)
         {
-            var scriptNode = CreateNode(node, "OpGroupIAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupIAdd", "OpGroupIAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupFAdd(Nodes.GroupFAdd node)
         {
-            var scriptNode = CreateNode(node, "OpGroupFAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupFAdd", "OpGroupFAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupFMin(Nodes.GroupFMin node)
         {
-            var scriptNode = CreateNode(node, "OpGroupFMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupFMin", "OpGroupFMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupUMin(Nodes.GroupUMin node)
         {
-            var scriptNode = CreateNode(node, "OpGroupUMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupUMin", "OpGroupUMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupSMin(Nodes.GroupSMin node)
         {
-            var scriptNode = CreateNode(node, "OpGroupSMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupSMin", "OpGroupSMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupFMax(Nodes.GroupFMax node)
         {
-            var scriptNode = CreateNode(node, "OpGroupFMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupFMax", "OpGroupFMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupUMax(Nodes.GroupUMax node)
         {
-            var scriptNode = CreateNode(node, "OpGroupUMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupUMax", "OpGroupUMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupSMax(Nodes.GroupSMax node)
         {
-            var scriptNode = CreateNode(node, "OpGroupSMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupSMax", "OpGroupSMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReadPipe(Nodes.ReadPipe node)
         {
-            var scriptNode = CreateNode(node, "OpReadPipe", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReadPipe", "OpReadPipe", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitWritePipe(Nodes.WritePipe node)
         {
-            var scriptNode = CreateNode(node, "OpWritePipe", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpWritePipe", "OpWritePipe", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReservedReadPipe(Nodes.ReservedReadPipe node)
         {
-            var scriptNode = CreateNode(node, "OpReservedReadPipe", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReservedReadPipe", "OpReservedReadPipe", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReservedWritePipe(Nodes.ReservedWritePipe node)
         {
-            var scriptNode = CreateNode(node, "OpReservedWritePipe", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReservedWritePipe", "OpReservedWritePipe", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReserveReadPipePackets(Nodes.ReserveReadPipePackets node)
         {
-            var scriptNode = CreateNode(node, "OpReserveReadPipePackets", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReserveReadPipePackets", "OpReserveReadPipePackets", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumPackets), GetTypeName(node.NumPackets?.GetResultType()), GetOutputConnection(node.NumPackets)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReserveWritePipePackets(Nodes.ReserveWritePipePackets node)
         {
-            var scriptNode = CreateNode(node, "OpReserveWritePipePackets", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReserveWritePipePackets", "OpReserveWritePipePackets", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumPackets), GetTypeName(node.NumPackets?.GetResultType()), GetOutputConnection(node.NumPackets)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCommitReadPipe(Nodes.CommitReadPipe node)
         {
-            var scriptNode = CreateNode(node, "OpCommitReadPipe", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCommitReadPipe", "OpCommitReadPipe", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCommitWritePipe(Nodes.CommitWritePipe node)
         {
-            var scriptNode = CreateNode(node, "OpCommitWritePipe", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCommitWritePipe", "OpCommitWritePipe", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsValidReserveId(Nodes.IsValidReserveId node)
         {
-            var scriptNode = CreateNode(node, "OpIsValidReserveId", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsValidReserveId", "OpIsValidReserveId", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetNumPipePackets(Nodes.GetNumPipePackets node)
         {
-            var scriptNode = CreateNode(node, "OpGetNumPipePackets", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetNumPipePackets", "OpGetNumPipePackets", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetMaxPipePackets(Nodes.GetMaxPipePackets node)
         {
-            var scriptNode = CreateNode(node, "OpGetMaxPipePackets", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetMaxPipePackets", "OpGetMaxPipePackets", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupReserveReadPipePackets(Nodes.GroupReserveReadPipePackets node)
         {
-            var scriptNode = CreateNode(node, "OpGroupReserveReadPipePackets", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupReserveReadPipePackets", "OpGroupReserveReadPipePackets", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumPackets), GetTypeName(node.NumPackets?.GetResultType()), GetOutputConnection(node.NumPackets)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupReserveWritePipePackets(Nodes.GroupReserveWritePipePackets node)
         {
-            var scriptNode = CreateNode(node, "OpGroupReserveWritePipePackets", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupReserveWritePipePackets", "OpGroupReserveWritePipePackets", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumPackets), GetTypeName(node.NumPackets?.GetResultType()), GetOutputConnection(node.NumPackets)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupCommitReadPipe(Nodes.GroupCommitReadPipe node)
         {
-            var scriptNode = CreateNode(node, "OpGroupCommitReadPipe", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupCommitReadPipe", "OpGroupCommitReadPipe", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupCommitWritePipe(Nodes.GroupCommitWritePipe node)
         {
-            var scriptNode = CreateNode(node, "OpGroupCommitWritePipe", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupCommitWritePipe", "OpGroupCommitWritePipe", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pipe), GetTypeName(node.Pipe?.GetResultType()), GetOutputConnection(node.Pipe)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReserveId), GetTypeName(node.ReserveId?.GetResultType()), GetOutputConnection(node.ReserveId)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketSize), GetTypeName(node.PacketSize?.GetResultType()), GetOutputConnection(node.PacketSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PacketAlignment), GetTypeName(node.PacketAlignment?.GetResultType()), GetOutputConnection(node.PacketAlignment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEnqueueMarker(Nodes.EnqueueMarker node)
         {
-            var scriptNode = CreateNode(node, "OpEnqueueMarker", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEnqueueMarker", "OpEnqueueMarker", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Queue), GetTypeName(node.Queue?.GetResultType()), GetOutputConnection(node.Queue)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumEvents), GetTypeName(node.NumEvents?.GetResultType()), GetOutputConnection(node.NumEvents)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.WaitEvents), GetTypeName(node.WaitEvents?.GetResultType()), GetOutputConnection(node.WaitEvents)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RetEvent), GetTypeName(node.RetEvent?.GetResultType()), GetOutputConnection(node.RetEvent)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEnqueueKernel(Nodes.EnqueueKernel node)
         {
-            var scriptNode = CreateNode(node, "OpEnqueueKernel", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEnqueueKernel", "OpEnqueueKernel", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Queue), GetTypeName(node.Queue?.GetResultType()), GetOutputConnection(node.Queue)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Flags), GetTypeName(node.Flags?.GetResultType()), GetOutputConnection(node.Flags)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NDRange), GetTypeName(node.NDRange?.GetResultType()), GetOutputConnection(node.NDRange)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NumEvents), GetTypeName(node.NumEvents?.GetResultType()), GetOutputConnection(node.NumEvents)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.WaitEvents), GetTypeName(node.WaitEvents?.GetResultType()), GetOutputConnection(node.WaitEvents)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RetEvent), GetTypeName(node.RetEvent?.GetResultType()), GetOutputConnection(node.RetEvent)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
+            if (node.LocalSize != null)
+            {
+                for (var index = 0; index < node.LocalSize.Count; index++)
+                {
+                    var item = node.LocalSize[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "LocalSize{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetKernelNDrangeSubGroupCount(Nodes.GetKernelNDrangeSubGroupCount node)
         {
-            var scriptNode = CreateNode(node, "OpGetKernelNDrangeSubGroupCount", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetKernelNDrangeSubGroupCount", "OpGetKernelNDrangeSubGroupCount", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NDRange), GetTypeName(node.NDRange?.GetResultType()), GetOutputConnection(node.NDRange)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetKernelNDrangeMaxSubGroupSize(Nodes.GetKernelNDrangeMaxSubGroupSize node)
         {
-            var scriptNode = CreateNode(node, "OpGetKernelNDrangeMaxSubGroupSize", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetKernelNDrangeMaxSubGroupSize", "OpGetKernelNDrangeMaxSubGroupSize", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NDRange), GetTypeName(node.NDRange?.GetResultType()), GetOutputConnection(node.NDRange)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetKernelWorkGroupSize(Nodes.GetKernelWorkGroupSize node)
         {
-            var scriptNode = CreateNode(node, "OpGetKernelWorkGroupSize", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetKernelWorkGroupSize", "OpGetKernelWorkGroupSize", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetKernelPreferredWorkGroupSizeMultiple(Nodes.GetKernelPreferredWorkGroupSizeMultiple node)
         {
-            var scriptNode = CreateNode(node, "OpGetKernelPreferredWorkGroupSizeMultiple", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetKernelPreferredWorkGroupSizeMultiple", "OpGetKernelPreferredWorkGroupSizeMultiple", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRetainEvent(Nodes.RetainEvent node)
         {
-            var scriptNode = CreateNode(node, "OpRetainEvent", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRetainEvent", "OpRetainEvent", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Event), GetTypeName(node.Event?.GetResultType()), GetOutputConnection(node.Event)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReleaseEvent(Nodes.ReleaseEvent node)
         {
-            var scriptNode = CreateNode(node, "OpReleaseEvent", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReleaseEvent", "OpReleaseEvent", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Event), GetTypeName(node.Event?.GetResultType()), GetOutputConnection(node.Event)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCreateUserEvent(Nodes.CreateUserEvent node)
         {
-            var scriptNode = CreateNode(node, "OpCreateUserEvent", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCreateUserEvent", "OpCreateUserEvent", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsValidEvent(Nodes.IsValidEvent node)
         {
-            var scriptNode = CreateNode(node, "OpIsValidEvent", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsValidEvent", "OpIsValidEvent", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Event), GetTypeName(node.Event?.GetResultType()), GetOutputConnection(node.Event)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSetUserEventStatus(Nodes.SetUserEventStatus node)
         {
-            var scriptNode = CreateNode(node, "OpSetUserEventStatus", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSetUserEventStatus", "OpSetUserEventStatus", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Event), GetTypeName(node.Event?.GetResultType()), GetOutputConnection(node.Event)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Status), GetTypeName(node.Status?.GetResultType()), GetOutputConnection(node.Status)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCaptureEventProfilingInfo(Nodes.CaptureEventProfilingInfo node)
         {
-            var scriptNode = CreateNode(node, "OpCaptureEventProfilingInfo", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCaptureEventProfilingInfo", "OpCaptureEventProfilingInfo", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Event), GetTypeName(node.Event?.GetResultType()), GetOutputConnection(node.Event)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ProfilingInfo), GetTypeName(node.ProfilingInfo?.GetResultType()), GetOutputConnection(node.ProfilingInfo)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetDefaultQueue(Nodes.GetDefaultQueue node)
         {
-            var scriptNode = CreateNode(node, "OpGetDefaultQueue", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetDefaultQueue", "OpGetDefaultQueue", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBuildNDRange(Nodes.BuildNDRange node)
         {
-            var scriptNode = CreateNode(node, "OpBuildNDRange", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBuildNDRange", "OpBuildNDRange", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.GlobalWorkSize), GetTypeName(node.GlobalWorkSize?.GetResultType()), GetOutputConnection(node.GlobalWorkSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LocalWorkSize), GetTypeName(node.LocalWorkSize?.GetResultType()), GetOutputConnection(node.LocalWorkSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.GlobalWorkOffset), GetTypeName(node.GlobalWorkOffset?.GetResultType()), GetOutputConnection(node.GlobalWorkOffset)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleImplicitLod(Nodes.ImageSparseSampleImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleImplicitLod", "OpImageSparseSampleImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleExplicitLod(Nodes.ImageSparseSampleExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleExplicitLod", "OpImageSparseSampleExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleDrefImplicitLod(Nodes.ImageSparseSampleDrefImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleDrefImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleDrefImplicitLod", "OpImageSparseSampleDrefImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleDrefExplicitLod(Nodes.ImageSparseSampleDrefExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleDrefExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleDrefExplicitLod", "OpImageSparseSampleDrefExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleProjImplicitLod(Nodes.ImageSparseSampleProjImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleProjImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleProjImplicitLod", "OpImageSparseSampleProjImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleProjExplicitLod(Nodes.ImageSparseSampleProjExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleProjExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleProjExplicitLod", "OpImageSparseSampleProjExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleProjDrefImplicitLod(Nodes.ImageSparseSampleProjDrefImplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleProjDrefImplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleProjDrefImplicitLod", "OpImageSparseSampleProjDrefImplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseSampleProjDrefExplicitLod(Nodes.ImageSparseSampleProjDrefExplicitLod node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseSampleProjDrefExplicitLod", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseSampleProjDrefExplicitLod", "OpImageSparseSampleProjDrefExplicitLod", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseFetch(Nodes.ImageSparseFetch node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseFetch", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseFetch", "OpImageSparseFetch", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseGather(Nodes.ImageSparseGather node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseGather", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseGather", "OpImageSparseGather", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Component), GetTypeName(node.Component?.GetResultType()), GetOutputConnection(node.Component)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseDrefGather(Nodes.ImageSparseDrefGather node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseDrefGather", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseDrefGather", "OpImageSparseDrefGather", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.D_ref), GetTypeName(node.D_ref?.GetResultType()), GetOutputConnection(node.D_ref)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseTexelsResident(Nodes.ImageSparseTexelsResident node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseTexelsResident", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseTexelsResident", "OpImageSparseTexelsResident", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ResidentCode), GetTypeName(node.ResidentCode?.GetResultType()), GetOutputConnection(node.ResidentCode)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitNoLine(Nodes.NoLine node)
         {
-            var scriptNode = CreateNode(node, "OpNoLine", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpNoLine", "OpNoLine", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicFlagTestAndSet(Nodes.AtomicFlagTestAndSet node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicFlagTestAndSet", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicFlagTestAndSet", "OpAtomicFlagTestAndSet", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAtomicFlagClear(Nodes.AtomicFlagClear node)
         {
-            var scriptNode = CreateNode(node, "OpAtomicFlagClear", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAtomicFlagClear", "OpAtomicFlagClear", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSparseRead(Nodes.ImageSparseRead node)
         {
-            var scriptNode = CreateNode(node, "OpImageSparseRead", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSparseRead", "OpImageSparseRead", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSizeOf(Nodes.SizeOf node)
         {
-            var scriptNode = CreateNode(node, "OpSizeOf", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSizeOf", "OpSizeOf", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitConstantPipeStorage(Nodes.ConstantPipeStorage node)
         {
-            var scriptNode = CreateNode(node, "OpConstantPipeStorage", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpConstantPipeStorage", "OpConstantPipeStorage", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCreatePipeFromPipeStorage(Nodes.CreatePipeFromPipeStorage node)
         {
-            var scriptNode = CreateNode(node, "OpCreatePipeFromPipeStorage", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCreatePipeFromPipeStorage", "OpCreatePipeFromPipeStorage", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PipeStorage), GetTypeName(node.PipeStorage?.GetResultType()), GetOutputConnection(node.PipeStorage)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetKernelLocalSizeForSubgroupCount(Nodes.GetKernelLocalSizeForSubgroupCount node)
         {
-            var scriptNode = CreateNode(node, "OpGetKernelLocalSizeForSubgroupCount", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetKernelLocalSizeForSubgroupCount", "OpGetKernelLocalSizeForSubgroupCount", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SubgroupCount), GetTypeName(node.SubgroupCount?.GetResultType()), GetOutputConnection(node.SubgroupCount)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGetKernelMaxNumSubgroups(Nodes.GetKernelMaxNumSubgroups node)
         {
-            var scriptNode = CreateNode(node, "OpGetKernelMaxNumSubgroups", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGetKernelMaxNumSubgroups", "OpGetKernelMaxNumSubgroups", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Invoke), GetTypeName(node.Invoke?.GetResultType()), GetOutputConnection(node.Invoke)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Param), GetTypeName(node.Param?.GetResultType()), GetOutputConnection(node.Param)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamSize), GetTypeName(node.ParamSize?.GetResultType()), GetOutputConnection(node.ParamSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ParamAlign), GetTypeName(node.ParamAlign?.GetResultType()), GetOutputConnection(node.ParamAlign)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitNamedBarrierInitialize(Nodes.NamedBarrierInitialize node)
         {
-            var scriptNode = CreateNode(node, "OpNamedBarrierInitialize", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpNamedBarrierInitialize", "OpNamedBarrierInitialize", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SubgroupCount), GetTypeName(node.SubgroupCount?.GetResultType()), GetOutputConnection(node.SubgroupCount)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMemoryNamedBarrier(Nodes.MemoryNamedBarrier node)
         {
-            var scriptNode = CreateNode(node, "OpMemoryNamedBarrier", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMemoryNamedBarrier", "OpMemoryNamedBarrier", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.NamedBarrier), GetTypeName(node.NamedBarrier?.GetResultType()), GetOutputConnection(node.NamedBarrier)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitModuleProcessed(Nodes.ModuleProcessed node)
         {
-            var scriptNode = CreateNode(node, "OpModuleProcessed", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpModuleProcessed", "OpModuleProcessed", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitExecutionModeId(Nodes.ExecutionModeId node)
         {
-            var scriptNode = CreateNode(node, "OpExecutionModeId", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpExecutionModeId", "OpExecutionModeId", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.EntryPoint), GetTypeName(node.EntryPoint?.GetResultType()), GetOutputConnection(node.EntryPoint)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDecorateId(Nodes.DecorateId node)
         {
-            var scriptNode = CreateNode(node, "OpDecorateId", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDecorateId", "OpDecorateId", false, null, NodeCategory.Unknown, null);
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.Target),null, GetExitConnection(node.Target)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformElect(Nodes.GroupNonUniformElect node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformElect", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformElect", "OpGroupNonUniformElect", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformAll(Nodes.GroupNonUniformAll node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformAll", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformAll", "OpGroupNonUniformAll", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformAny(Nodes.GroupNonUniformAny node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformAny", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformAny", "OpGroupNonUniformAny", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformAllEqual(Nodes.GroupNonUniformAllEqual node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformAllEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformAllEqual", "OpGroupNonUniformAllEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBroadcast(Nodes.GroupNonUniformBroadcast node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBroadcast", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBroadcast", "OpGroupNonUniformBroadcast", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Id), GetTypeName(node.Id?.GetResultType()), GetOutputConnection(node.Id)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBroadcastFirst(Nodes.GroupNonUniformBroadcastFirst node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBroadcastFirst", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBroadcastFirst", "OpGroupNonUniformBroadcastFirst", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBallot(Nodes.GroupNonUniformBallot node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBallot", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBallot", "OpGroupNonUniformBallot", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformInverseBallot(Nodes.GroupNonUniformInverseBallot node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformInverseBallot", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformInverseBallot", "OpGroupNonUniformInverseBallot", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBallotBitExtract(Nodes.GroupNonUniformBallotBitExtract node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBallotBitExtract", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBallotBitExtract", "OpGroupNonUniformBallotBitExtract", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBallotBitCount(Nodes.GroupNonUniformBallotBitCount node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBallotBitCount", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBallotBitCount", "OpGroupNonUniformBallotBitCount", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBallotFindLSB(Nodes.GroupNonUniformBallotFindLSB node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBallotFindLSB", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBallotFindLSB", "OpGroupNonUniformBallotFindLSB", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBallotFindMSB(Nodes.GroupNonUniformBallotFindMSB node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBallotFindMSB", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBallotFindMSB", "OpGroupNonUniformBallotFindMSB", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformShuffle(Nodes.GroupNonUniformShuffle node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformShuffle", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformShuffle", "OpGroupNonUniformShuffle", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Id), GetTypeName(node.Id?.GetResultType()), GetOutputConnection(node.Id)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformShuffleXor(Nodes.GroupNonUniformShuffleXor node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformShuffleXor", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformShuffleXor", "OpGroupNonUniformShuffleXor", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Mask), GetTypeName(node.Mask?.GetResultType()), GetOutputConnection(node.Mask)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformShuffleUp(Nodes.GroupNonUniformShuffleUp node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformShuffleUp", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformShuffleUp", "OpGroupNonUniformShuffleUp", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Delta), GetTypeName(node.Delta?.GetResultType()), GetOutputConnection(node.Delta)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformShuffleDown(Nodes.GroupNonUniformShuffleDown node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformShuffleDown", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformShuffleDown", "OpGroupNonUniformShuffleDown", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Delta), GetTypeName(node.Delta?.GetResultType()), GetOutputConnection(node.Delta)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformIAdd(Nodes.GroupNonUniformIAdd node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformIAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformIAdd", "OpGroupNonUniformIAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformFAdd(Nodes.GroupNonUniformFAdd node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformFAdd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformFAdd", "OpGroupNonUniformFAdd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformIMul(Nodes.GroupNonUniformIMul node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformIMul", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformIMul", "OpGroupNonUniformIMul", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformFMul(Nodes.GroupNonUniformFMul node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformFMul", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformFMul", "OpGroupNonUniformFMul", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformSMin(Nodes.GroupNonUniformSMin node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformSMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformSMin", "OpGroupNonUniformSMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformUMin(Nodes.GroupNonUniformUMin node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformUMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformUMin", "OpGroupNonUniformUMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformFMin(Nodes.GroupNonUniformFMin node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformFMin", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformFMin", "OpGroupNonUniformFMin", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformSMax(Nodes.GroupNonUniformSMax node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformSMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformSMax", "OpGroupNonUniformSMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformUMax(Nodes.GroupNonUniformUMax node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformUMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformUMax", "OpGroupNonUniformUMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformFMax(Nodes.GroupNonUniformFMax node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformFMax", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformFMax", "OpGroupNonUniformFMax", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBitwiseAnd(Nodes.GroupNonUniformBitwiseAnd node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBitwiseAnd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBitwiseAnd", "OpGroupNonUniformBitwiseAnd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBitwiseOr(Nodes.GroupNonUniformBitwiseOr node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBitwiseOr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBitwiseOr", "OpGroupNonUniformBitwiseOr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformBitwiseXor(Nodes.GroupNonUniformBitwiseXor node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformBitwiseXor", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformBitwiseXor", "OpGroupNonUniformBitwiseXor", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformLogicalAnd(Nodes.GroupNonUniformLogicalAnd node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformLogicalAnd", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformLogicalAnd", "OpGroupNonUniformLogicalAnd", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformLogicalOr(Nodes.GroupNonUniformLogicalOr node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformLogicalOr", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformLogicalOr", "OpGroupNonUniformLogicalOr", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformLogicalXor(Nodes.GroupNonUniformLogicalXor node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformLogicalXor", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformLogicalXor", "OpGroupNonUniformLogicalXor", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ClusterSize), GetTypeName(node.ClusterSize?.GetResultType()), GetOutputConnection(node.ClusterSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformQuadBroadcast(Nodes.GroupNonUniformQuadBroadcast node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformQuadBroadcast", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformQuadBroadcast", "OpGroupNonUniformQuadBroadcast", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformQuadSwap(Nodes.GroupNonUniformQuadSwap node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformQuadSwap", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformQuadSwap", "OpGroupNonUniformQuadSwap", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCopyLogical(Nodes.CopyLogical node)
         {
-            var scriptNode = CreateNode(node, "OpCopyLogical", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCopyLogical", "OpCopyLogical", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitPtrEqual(Nodes.PtrEqual node)
         {
-            var scriptNode = CreateNode(node, "OpPtrEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpPtrEqual", "OpPtrEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitPtrNotEqual(Nodes.PtrNotEqual node)
         {
-            var scriptNode = CreateNode(node, "OpPtrNotEqual", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpPtrNotEqual", "OpPtrNotEqual", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitPtrDiff(Nodes.PtrDiff node)
         {
-            var scriptNode = CreateNode(node, "OpPtrDiff", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpPtrDiff", "OpPtrDiff", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupBallotKHR(Nodes.SubgroupBallotKHR node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupBallotKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupBallotKHR", "OpSubgroupBallotKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupFirstInvocationKHR(Nodes.SubgroupFirstInvocationKHR node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupFirstInvocationKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupFirstInvocationKHR", "OpSubgroupFirstInvocationKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAllKHR(Nodes.SubgroupAllKHR node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAllKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAllKHR", "OpSubgroupAllKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAnyKHR(Nodes.SubgroupAnyKHR node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAnyKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAnyKHR", "OpSubgroupAnyKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAllEqualKHR(Nodes.SubgroupAllEqualKHR node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAllEqualKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAllEqualKHR", "OpSubgroupAllEqualKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Predicate), GetTypeName(node.Predicate?.GetResultType()), GetOutputConnection(node.Predicate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupReadInvocationKHR(Nodes.SubgroupReadInvocationKHR node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupReadInvocationKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupReadInvocationKHR", "OpSubgroupReadInvocationKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Index), GetTypeName(node.Index?.GetResultType()), GetOutputConnection(node.Index)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupIAddNonUniformAMD(Nodes.GroupIAddNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupIAddNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupIAddNonUniformAMD", "OpGroupIAddNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupFAddNonUniformAMD(Nodes.GroupFAddNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupFAddNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupFAddNonUniformAMD", "OpGroupFAddNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupFMinNonUniformAMD(Nodes.GroupFMinNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupFMinNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupFMinNonUniformAMD", "OpGroupFMinNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupUMinNonUniformAMD(Nodes.GroupUMinNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupUMinNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupUMinNonUniformAMD", "OpGroupUMinNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupSMinNonUniformAMD(Nodes.GroupSMinNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupSMinNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupSMinNonUniformAMD", "OpGroupSMinNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupFMaxNonUniformAMD(Nodes.GroupFMaxNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupFMaxNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupFMaxNonUniformAMD", "OpGroupFMaxNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupUMaxNonUniformAMD(Nodes.GroupUMaxNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupUMaxNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupUMaxNonUniformAMD", "OpGroupUMaxNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupSMaxNonUniformAMD(Nodes.GroupSMaxNonUniformAMD node)
         {
-            var scriptNode = CreateNode(node, "OpGroupSMaxNonUniformAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupSMaxNonUniformAMD", "OpGroupSMaxNonUniformAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.X), GetTypeName(node.X?.GetResultType()), GetOutputConnection(node.X)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFragmentMaskFetchAMD(Nodes.FragmentMaskFetchAMD node)
         {
-            var scriptNode = CreateNode(node, "OpFragmentMaskFetchAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFragmentMaskFetchAMD", "OpFragmentMaskFetchAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitFragmentFetchAMD(Nodes.FragmentFetchAMD node)
         {
-            var scriptNode = CreateNode(node, "OpFragmentFetchAMD", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpFragmentFetchAMD", "OpFragmentFetchAMD", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FragmentIndex), GetTypeName(node.FragmentIndex?.GetResultType()), GetOutputConnection(node.FragmentIndex)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReadClockKHR(Nodes.ReadClockKHR node)
         {
-            var scriptNode = CreateNode(node, "OpReadClockKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReadClockKHR", "OpReadClockKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitImageSampleFootprintNV(Nodes.ImageSampleFootprintNV node)
         {
-            var scriptNode = CreateNode(node, "OpImageSampleFootprintNV", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpImageSampleFootprintNV", "OpImageSampleFootprintNV", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SampledImage), GetTypeName(node.SampledImage?.GetResultType()), GetOutputConnection(node.SampledImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Granularity), GetTypeName(node.Granularity?.GetResultType()), GetOutputConnection(node.Granularity)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coarse), GetTypeName(node.Coarse?.GetResultType()), GetOutputConnection(node.Coarse)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitGroupNonUniformPartitionNV(Nodes.GroupNonUniformPartitionNV node)
         {
-            var scriptNode = CreateNode(node, "OpGroupNonUniformPartitionNV", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpGroupNonUniformPartitionNV", "OpGroupNonUniformPartitionNV", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitWritePackedPrimitiveIndices4x8NV(Nodes.WritePackedPrimitiveIndices4x8NV node)
         {
-            var scriptNode = CreateNode(node, "OpWritePackedPrimitiveIndices4x8NV", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpWritePackedPrimitiveIndices4x8NV", "OpWritePackedPrimitiveIndices4x8NV", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.IndexOffset), GetTypeName(node.IndexOffset?.GetResultType()), GetOutputConnection(node.IndexOffset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedIndices), GetTypeName(node.PackedIndices?.GetResultType()), GetOutputConnection(node.PackedIndices)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitReportIntersectionNV(Nodes.ReportIntersectionNV node)
         {
-            var scriptNode = CreateNode(node, "OpReportIntersectionNV", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpReportIntersectionNV", "OpReportIntersectionNV", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Hit), GetTypeName(node.Hit?.GetResultType()), GetOutputConnection(node.Hit)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.HitKind), GetTypeName(node.HitKind?.GetResultType()), GetOutputConnection(node.HitKind)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIgnoreIntersectionNV(Nodes.IgnoreIntersectionNV node)
         {
-            var scriptNode = CreateNode(node, "OpIgnoreIntersectionNV", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIgnoreIntersectionNV", "OpIgnoreIntersectionNV", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitTerminateRayNV(Nodes.TerminateRayNV node)
         {
-            var scriptNode = CreateNode(node, "OpTerminateRayNV", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpTerminateRayNV", "OpTerminateRayNV", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitTraceNV(Nodes.TraceNV node)
         {
-            var scriptNode = CreateNode(node, "OpTraceNV", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpTraceNV", "OpTraceNV", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Accel), GetTypeName(node.Accel?.GetResultType()), GetOutputConnection(node.Accel)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayFlags), GetTypeName(node.RayFlags?.GetResultType()), GetOutputConnection(node.RayFlags)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.CullMask), GetTypeName(node.CullMask?.GetResultType()), GetOutputConnection(node.CullMask)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SBTOffset), GetTypeName(node.SBTOffset?.GetResultType()), GetOutputConnection(node.SBTOffset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SBTStride), GetTypeName(node.SBTStride?.GetResultType()), GetOutputConnection(node.SBTStride)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MissIndex), GetTypeName(node.MissIndex?.GetResultType()), GetOutputConnection(node.MissIndex)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayOrigin), GetTypeName(node.RayOrigin?.GetResultType()), GetOutputConnection(node.RayOrigin)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayTmin), GetTypeName(node.RayTmin?.GetResultType()), GetOutputConnection(node.RayTmin)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayDirection), GetTypeName(node.RayDirection?.GetResultType()), GetOutputConnection(node.RayDirection)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayTmax), GetTypeName(node.RayTmax?.GetResultType()), GetOutputConnection(node.RayTmax)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PayloadId), GetTypeName(node.PayloadId?.GetResultType()), GetOutputConnection(node.PayloadId)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryInitializeKHR(Nodes.RayQueryInitializeKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryInitializeKHR", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryInitializeKHR", "OpRayQueryInitializeKHR", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Accel), GetTypeName(node.Accel?.GetResultType()), GetOutputConnection(node.Accel)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayFlags), GetTypeName(node.RayFlags?.GetResultType()), GetOutputConnection(node.RayFlags)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.CullMask), GetTypeName(node.CullMask?.GetResultType()), GetOutputConnection(node.CullMask)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayOrigin), GetTypeName(node.RayOrigin?.GetResultType()), GetOutputConnection(node.RayOrigin)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayTMin), GetTypeName(node.RayTMin?.GetResultType()), GetOutputConnection(node.RayTMin)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayDirection), GetTypeName(node.RayDirection?.GetResultType()), GetOutputConnection(node.RayDirection)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayTMax), GetTypeName(node.RayTMax?.GetResultType()), GetOutputConnection(node.RayTMax)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryTerminateKHR(Nodes.RayQueryTerminateKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryTerminateKHR", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryTerminateKHR", "OpRayQueryTerminateKHR", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGenerateIntersectionKHR(Nodes.RayQueryGenerateIntersectionKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGenerateIntersectionKHR", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGenerateIntersectionKHR", "OpRayQueryGenerateIntersectionKHR", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.HitT), GetTypeName(node.HitT?.GetResultType()), GetOutputConnection(node.HitT)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryConfirmIntersectionKHR(Nodes.RayQueryConfirmIntersectionKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryConfirmIntersectionKHR", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryConfirmIntersectionKHR", "OpRayQueryConfirmIntersectionKHR", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryProceedKHR(Nodes.RayQueryProceedKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryProceedKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryProceedKHR", "OpRayQueryProceedKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionTypeKHR(Nodes.RayQueryGetIntersectionTypeKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionTypeKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionTypeKHR", "OpRayQueryGetIntersectionTypeKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetRayTMinKHR(Nodes.RayQueryGetRayTMinKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetRayTMinKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetRayTMinKHR", "OpRayQueryGetRayTMinKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetRayFlagsKHR(Nodes.RayQueryGetRayFlagsKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetRayFlagsKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetRayFlagsKHR", "OpRayQueryGetRayFlagsKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionTKHR(Nodes.RayQueryGetIntersectionTKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionTKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionTKHR", "OpRayQueryGetIntersectionTKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionInstanceCustomIndexKHR(Nodes.RayQueryGetIntersectionInstanceCustomIndexKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionInstanceCustomIndexKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionInstanceCustomIndexKHR", "OpRayQueryGetIntersectionInstanceCustomIndexKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionInstanceIdKHR(Nodes.RayQueryGetIntersectionInstanceIdKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionInstanceIdKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionInstanceIdKHR", "OpRayQueryGetIntersectionInstanceIdKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(Nodes.RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR", "OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionGeometryIndexKHR(Nodes.RayQueryGetIntersectionGeometryIndexKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionGeometryIndexKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionGeometryIndexKHR", "OpRayQueryGetIntersectionGeometryIndexKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionPrimitiveIndexKHR(Nodes.RayQueryGetIntersectionPrimitiveIndexKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionPrimitiveIndexKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionPrimitiveIndexKHR", "OpRayQueryGetIntersectionPrimitiveIndexKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionBarycentricsKHR(Nodes.RayQueryGetIntersectionBarycentricsKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionBarycentricsKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionBarycentricsKHR", "OpRayQueryGetIntersectionBarycentricsKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionFrontFaceKHR(Nodes.RayQueryGetIntersectionFrontFaceKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionFrontFaceKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionFrontFaceKHR", "OpRayQueryGetIntersectionFrontFaceKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionCandidateAABBOpaqueKHR(Nodes.RayQueryGetIntersectionCandidateAABBOpaqueKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionCandidateAABBOpaqueKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionCandidateAABBOpaqueKHR", "OpRayQueryGetIntersectionCandidateAABBOpaqueKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionObjectRayDirectionKHR(Nodes.RayQueryGetIntersectionObjectRayDirectionKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionObjectRayDirectionKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionObjectRayDirectionKHR", "OpRayQueryGetIntersectionObjectRayDirectionKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionObjectRayOriginKHR(Nodes.RayQueryGetIntersectionObjectRayOriginKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionObjectRayOriginKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionObjectRayOriginKHR", "OpRayQueryGetIntersectionObjectRayOriginKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetWorldRayDirectionKHR(Nodes.RayQueryGetWorldRayDirectionKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetWorldRayDirectionKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetWorldRayDirectionKHR", "OpRayQueryGetWorldRayDirectionKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetWorldRayOriginKHR(Nodes.RayQueryGetWorldRayOriginKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetWorldRayOriginKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetWorldRayOriginKHR", "OpRayQueryGetWorldRayOriginKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionObjectToWorldKHR(Nodes.RayQueryGetIntersectionObjectToWorldKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionObjectToWorldKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionObjectToWorldKHR", "OpRayQueryGetIntersectionObjectToWorldKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitRayQueryGetIntersectionWorldToObjectKHR(Nodes.RayQueryGetIntersectionWorldToObjectKHR node)
         {
-            var scriptNode = CreateNode(node, "OpRayQueryGetIntersectionWorldToObjectKHR", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpRayQueryGetIntersectionWorldToObjectKHR", "OpRayQueryGetIntersectionWorldToObjectKHR", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RayQuery), GetTypeName(node.RayQuery?.GetResultType()), GetOutputConnection(node.RayQuery)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Intersection), GetTypeName(node.Intersection?.GetResultType()), GetOutputConnection(node.Intersection)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitExecuteCallableNV(Nodes.ExecuteCallableNV node)
         {
-            var scriptNode = CreateNode(node, "OpExecuteCallableNV", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpExecuteCallableNV", "OpExecuteCallableNV", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SBTIndex), GetTypeName(node.SBTIndex?.GetResultType()), GetOutputConnection(node.SBTIndex)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.CallableDataId), GetTypeName(node.CallableDataId?.GetResultType()), GetOutputConnection(node.CallableDataId)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCooperativeMatrixLoadNV(Nodes.CooperativeMatrixLoadNV node)
         {
-            var scriptNode = CreateNode(node, "OpCooperativeMatrixLoadNV", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCooperativeMatrixLoadNV", "OpCooperativeMatrixLoadNV", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Stride), GetTypeName(node.Stride?.GetResultType()), GetOutputConnection(node.Stride)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ColumnMajor), GetTypeName(node.ColumnMajor?.GetResultType()), GetOutputConnection(node.ColumnMajor)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCooperativeMatrixStoreNV(Nodes.CooperativeMatrixStoreNV node)
         {
-            var scriptNode = CreateNode(node, "OpCooperativeMatrixStoreNV", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCooperativeMatrixStoreNV", "OpCooperativeMatrixStoreNV", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Pointer), GetTypeName(node.Pointer?.GetResultType()), GetOutputConnection(node.Pointer)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Object), GetTypeName(node.Object?.GetResultType()), GetOutputConnection(node.Object)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Stride), GetTypeName(node.Stride?.GetResultType()), GetOutputConnection(node.Stride)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ColumnMajor), GetTypeName(node.ColumnMajor?.GetResultType()), GetOutputConnection(node.ColumnMajor)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCooperativeMatrixMulAddNV(Nodes.CooperativeMatrixMulAddNV node)
         {
-            var scriptNode = CreateNode(node, "OpCooperativeMatrixMulAddNV", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCooperativeMatrixMulAddNV", "OpCooperativeMatrixMulAddNV", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.A), GetTypeName(node.A?.GetResultType()), GetOutputConnection(node.A)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.B), GetTypeName(node.B?.GetResultType()), GetOutputConnection(node.B)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.C), GetTypeName(node.C?.GetResultType()), GetOutputConnection(node.C)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitCooperativeMatrixLengthNV(Nodes.CooperativeMatrixLengthNV node)
         {
-            var scriptNode = CreateNode(node, "OpCooperativeMatrixLengthNV", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpCooperativeMatrixLengthNV", "OpCooperativeMatrixLengthNV", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Type), GetTypeName(node.Type?.GetResultType()), GetOutputConnection(node.Type)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitBeginInvocationInterlockEXT(Nodes.BeginInvocationInterlockEXT node)
         {
-            var scriptNode = CreateNode(node, "OpBeginInvocationInterlockEXT", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpBeginInvocationInterlockEXT", "OpBeginInvocationInterlockEXT", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitEndInvocationInterlockEXT(Nodes.EndInvocationInterlockEXT node)
         {
-            var scriptNode = CreateNode(node, "OpEndInvocationInterlockEXT", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpEndInvocationInterlockEXT", "OpEndInvocationInterlockEXT", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDemoteToHelperInvocationEXT(Nodes.DemoteToHelperInvocationEXT node)
         {
-            var scriptNode = CreateNode(node, "OpDemoteToHelperInvocationEXT", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDemoteToHelperInvocationEXT", "OpDemoteToHelperInvocationEXT", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIsHelperInvocationEXT(Nodes.IsHelperInvocationEXT node)
         {
-            var scriptNode = CreateNode(node, "OpIsHelperInvocationEXT", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIsHelperInvocationEXT", "OpIsHelperInvocationEXT", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupShuffleINTEL(Nodes.SubgroupShuffleINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupShuffleINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupShuffleINTEL", "OpSubgroupShuffleINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Data), GetTypeName(node.Data?.GetResultType()), GetOutputConnection(node.Data)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.InvocationId), GetTypeName(node.InvocationId?.GetResultType()), GetOutputConnection(node.InvocationId)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupShuffleDownINTEL(Nodes.SubgroupShuffleDownINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupShuffleDownINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupShuffleDownINTEL", "OpSubgroupShuffleDownINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Current), GetTypeName(node.Current?.GetResultType()), GetOutputConnection(node.Current)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Next), GetTypeName(node.Next?.GetResultType()), GetOutputConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Delta), GetTypeName(node.Delta?.GetResultType()), GetOutputConnection(node.Delta)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupShuffleUpINTEL(Nodes.SubgroupShuffleUpINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupShuffleUpINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupShuffleUpINTEL", "OpSubgroupShuffleUpINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Previous), GetTypeName(node.Previous?.GetResultType()), GetOutputConnection(node.Previous)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Current), GetTypeName(node.Current?.GetResultType()), GetOutputConnection(node.Current)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Delta), GetTypeName(node.Delta?.GetResultType()), GetOutputConnection(node.Delta)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupShuffleXorINTEL(Nodes.SubgroupShuffleXorINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupShuffleXorINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupShuffleXorINTEL", "OpSubgroupShuffleXorINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Data), GetTypeName(node.Data?.GetResultType()), GetOutputConnection(node.Data)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Value), GetTypeName(node.Value?.GetResultType()), GetOutputConnection(node.Value)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupBlockReadINTEL(Nodes.SubgroupBlockReadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupBlockReadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupBlockReadINTEL", "OpSubgroupBlockReadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Ptr), GetTypeName(node.Ptr?.GetResultType()), GetOutputConnection(node.Ptr)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupBlockWriteINTEL(Nodes.SubgroupBlockWriteINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupBlockWriteINTEL", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupBlockWriteINTEL", "OpSubgroupBlockWriteINTEL", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Ptr), GetTypeName(node.Ptr?.GetResultType()), GetOutputConnection(node.Ptr)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Data), GetTypeName(node.Data?.GetResultType()), GetOutputConnection(node.Data)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupImageBlockReadINTEL(Nodes.SubgroupImageBlockReadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupImageBlockReadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupImageBlockReadINTEL", "OpSubgroupImageBlockReadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupImageBlockWriteINTEL(Nodes.SubgroupImageBlockWriteINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupImageBlockWriteINTEL", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupImageBlockWriteINTEL", "OpSubgroupImageBlockWriteINTEL", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Data), GetTypeName(node.Data?.GetResultType()), GetOutputConnection(node.Data)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupImageMediaBlockReadINTEL(Nodes.SubgroupImageMediaBlockReadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupImageMediaBlockReadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupImageMediaBlockReadINTEL", "OpSubgroupImageMediaBlockReadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Width), GetTypeName(node.Width?.GetResultType()), GetOutputConnection(node.Width)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Height), GetTypeName(node.Height?.GetResultType()), GetOutputConnection(node.Height)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupImageMediaBlockWriteINTEL(Nodes.SubgroupImageMediaBlockWriteINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupImageMediaBlockWriteINTEL", true, true, NodeCategory.Function, null);
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupImageMediaBlockWriteINTEL", "OpSubgroupImageMediaBlockWriteINTEL", true, null, NodeCategory.Procedure, null);
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Image), GetTypeName(node.Image?.GetResultType()), GetOutputConnection(node.Image)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Coordinate), GetTypeName(node.Coordinate?.GetResultType()), GetOutputConnection(node.Coordinate)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Width), GetTypeName(node.Width?.GetResultType()), GetOutputConnection(node.Width)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Height), GetTypeName(node.Height?.GetResultType()), GetOutputConnection(node.Height)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Data), GetTypeName(node.Data?.GetResultType()), GetOutputConnection(node.Data)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUCountLeadingZerosINTEL(Nodes.UCountLeadingZerosINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUCountLeadingZerosINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUCountLeadingZerosINTEL", "OpUCountLeadingZerosINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUCountTrailingZerosINTEL(Nodes.UCountTrailingZerosINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUCountTrailingZerosINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUCountTrailingZerosINTEL", "OpUCountTrailingZerosINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand), GetTypeName(node.Operand?.GetResultType()), GetOutputConnection(node.Operand)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAbsISubINTEL(Nodes.AbsISubINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpAbsISubINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAbsISubINTEL", "OpAbsISubINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitAbsUSubINTEL(Nodes.AbsUSubINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpAbsUSubINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpAbsUSubINTEL", "OpAbsUSubINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIAddSatINTEL(Nodes.IAddSatINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpIAddSatINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIAddSatINTEL", "OpIAddSatINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUAddSatINTEL(Nodes.UAddSatINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUAddSatINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUAddSatINTEL", "OpUAddSatINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIAverageINTEL(Nodes.IAverageINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpIAverageINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIAverageINTEL", "OpIAverageINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUAverageINTEL(Nodes.UAverageINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUAverageINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUAverageINTEL", "OpUAverageINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIAverageRoundedINTEL(Nodes.IAverageRoundedINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpIAverageRoundedINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIAverageRoundedINTEL", "OpIAverageRoundedINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUAverageRoundedINTEL(Nodes.UAverageRoundedINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUAverageRoundedINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUAverageRoundedINTEL", "OpUAverageRoundedINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitISubSatINTEL(Nodes.ISubSatINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpISubSatINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpISubSatINTEL", "OpISubSatINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUSubSatINTEL(Nodes.USubSatINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUSubSatINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUSubSatINTEL", "OpUSubSatINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitIMul32x16INTEL(Nodes.IMul32x16INTEL node)
         {
-            var scriptNode = CreateNode(node, "OpIMul32x16INTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpIMul32x16INTEL", "OpIMul32x16INTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitUMul32x16INTEL(Nodes.UMul32x16INTEL node)
         {
-            var scriptNode = CreateNode(node, "OpUMul32x16INTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpUMul32x16INTEL", "OpUMul32x16INTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand1), GetTypeName(node.Operand1?.GetResultType()), GetOutputConnection(node.Operand1)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Operand2), GetTypeName(node.Operand2?.GetResultType()), GetOutputConnection(node.Operand2)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitDecorateString(Nodes.DecorateString node)
         {
-            var scriptNode = CreateNode(node, "OpDecorateString", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpDecorateString", "OpDecorateString", false, null, NodeCategory.Unknown, null);
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.Target),null, GetExitConnection(node.Target)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitMemberDecorateString(Nodes.MemberDecorateString node)
         {
-            var scriptNode = CreateNode(node, "OpMemberDecorateString", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpMemberDecorateString", "OpMemberDecorateString", false, null, NodeCategory.Unknown, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.StructType), GetTypeName(node.StructType?.GetResultType()), GetOutputConnection(node.StructType)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitVmeImageINTEL(Nodes.VmeImageINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpVmeImageINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpVmeImageINTEL", "OpVmeImageINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ImageType), GetTypeName(node.ImageType?.GetResultType()), GetOutputConnection(node.ImageType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Sampler), GetTypeName(node.Sampler?.GetResultType()), GetOutputConnection(node.Sampler)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL", "OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SliceType), GetTypeName(node.SliceType?.GetResultType()), GetOutputConnection(node.SliceType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Qp), GetTypeName(node.Qp?.GetResultType()), GetOutputConnection(node.Qp)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(Nodes.SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL", "OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReferenceBasePenalty), GetTypeName(node.ReferenceBasePenalty?.GetResultType()), GetOutputConnection(node.ReferenceBasePenalty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultInterShapePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterShapePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL", "OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SliceType), GetTypeName(node.SliceType?.GetResultType()), GetOutputConnection(node.SliceType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Qp), GetTypeName(node.Qp?.GetResultType()), GetOutputConnection(node.Qp)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetInterShapePenaltyINTEL(Nodes.SubgroupAvcMceSetInterShapePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetInterShapePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetInterShapePenaltyINTEL", "OpSubgroupAvcMceSetInterShapePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedShapePenalty), GetTypeName(node.PackedShapePenalty?.GetResultType()), GetOutputConnection(node.PackedShapePenalty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL", "OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SliceType), GetTypeName(node.SliceType?.GetResultType()), GetOutputConnection(node.SliceType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Qp), GetTypeName(node.Qp?.GetResultType()), GetOutputConnection(node.Qp)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetInterDirectionPenaltyINTEL(Nodes.SubgroupAvcMceSetInterDirectionPenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetInterDirectionPenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetInterDirectionPenaltyINTEL", "OpSubgroupAvcMceSetInterDirectionPenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.DirectionCost), GetTypeName(node.DirectionCost?.GetResultType()), GetOutputConnection(node.DirectionCost)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL", "OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SliceType), GetTypeName(node.SliceType?.GetResultType()), GetOutputConnection(node.SliceType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Qp), GetTypeName(node.Qp?.GetResultType()), GetOutputConnection(node.Qp)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL", "OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SliceType), GetTypeName(node.SliceType?.GetResultType()), GetOutputConnection(node.SliceType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Qp), GetTypeName(node.Qp?.GetResultType()), GetOutputConnection(node.Qp)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL", "OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL", "OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(Nodes.SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL", "OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetMotionVectorCostFunctionINTEL(Nodes.SubgroupAvcMceSetMotionVectorCostFunctionINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL", "OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedCostCenterDelta), GetTypeName(node.PackedCostCenterDelta?.GetResultType()), GetOutputConnection(node.PackedCostCenterDelta)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedCostTable), GetTypeName(node.PackedCostTable?.GetResultType()), GetOutputConnection(node.PackedCostTable)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.CostPrecision), GetTypeName(node.CostPrecision?.GetResultType()), GetOutputConnection(node.CostPrecision)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL", "OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SliceType), GetTypeName(node.SliceType?.GetResultType()), GetOutputConnection(node.SliceType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Qp), GetTypeName(node.Qp?.GetResultType()), GetOutputConnection(node.Qp)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL", "OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(Nodes.SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL", "OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetAcOnlyHaarINTEL(Nodes.SubgroupAvcMceSetAcOnlyHaarINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetAcOnlyHaarINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetAcOnlyHaarINTEL", "OpSubgroupAvcMceSetAcOnlyHaarINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(Nodes.SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL", "OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SourceFieldPolarity), GetTypeName(node.SourceFieldPolarity?.GetResultType()), GetOutputConnection(node.SourceFieldPolarity)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(Nodes.SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL", "OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ReferenceFieldPolarity), GetTypeName(node.ReferenceFieldPolarity?.GetResultType()), GetOutputConnection(node.ReferenceFieldPolarity)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(Nodes.SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL", "OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ForwardReferenceFieldPolarity), GetTypeName(node.ForwardReferenceFieldPolarity?.GetResultType()), GetOutputConnection(node.ForwardReferenceFieldPolarity)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BackwardReferenceFieldPolarity), GetTypeName(node.BackwardReferenceFieldPolarity?.GetResultType()), GetOutputConnection(node.BackwardReferenceFieldPolarity)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceConvertToImePayloadINTEL(Nodes.SubgroupAvcMceConvertToImePayloadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceConvertToImePayloadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceConvertToImePayloadINTEL", "OpSubgroupAvcMceConvertToImePayloadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceConvertToImeResultINTEL(Nodes.SubgroupAvcMceConvertToImeResultINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceConvertToImeResultINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceConvertToImeResultINTEL", "OpSubgroupAvcMceConvertToImeResultINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceConvertToRefPayloadINTEL(Nodes.SubgroupAvcMceConvertToRefPayloadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceConvertToRefPayloadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceConvertToRefPayloadINTEL", "OpSubgroupAvcMceConvertToRefPayloadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceConvertToRefResultINTEL(Nodes.SubgroupAvcMceConvertToRefResultINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceConvertToRefResultINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceConvertToRefResultINTEL", "OpSubgroupAvcMceConvertToRefResultINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceConvertToSicPayloadINTEL(Nodes.SubgroupAvcMceConvertToSicPayloadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceConvertToSicPayloadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceConvertToSicPayloadINTEL", "OpSubgroupAvcMceConvertToSicPayloadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceConvertToSicResultINTEL(Nodes.SubgroupAvcMceConvertToSicResultINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceConvertToSicResultINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceConvertToSicResultINTEL", "OpSubgroupAvcMceConvertToSicResultINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetMotionVectorsINTEL(Nodes.SubgroupAvcMceGetMotionVectorsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetMotionVectorsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetMotionVectorsINTEL", "OpSubgroupAvcMceGetMotionVectorsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterDistortionsINTEL(Nodes.SubgroupAvcMceGetInterDistortionsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterDistortionsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterDistortionsINTEL", "OpSubgroupAvcMceGetInterDistortionsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetBestInterDistortionsINTEL(Nodes.SubgroupAvcMceGetBestInterDistortionsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetBestInterDistortionsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetBestInterDistortionsINTEL", "OpSubgroupAvcMceGetBestInterDistortionsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterMajorShapeINTEL(Nodes.SubgroupAvcMceGetInterMajorShapeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterMajorShapeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterMajorShapeINTEL", "OpSubgroupAvcMceGetInterMajorShapeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterMinorShapeINTEL(Nodes.SubgroupAvcMceGetInterMinorShapeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterMinorShapeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterMinorShapeINTEL", "OpSubgroupAvcMceGetInterMinorShapeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterDirectionsINTEL(Nodes.SubgroupAvcMceGetInterDirectionsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterDirectionsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterDirectionsINTEL", "OpSubgroupAvcMceGetInterDirectionsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterMotionVectorCountINTEL(Nodes.SubgroupAvcMceGetInterMotionVectorCountINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterMotionVectorCountINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterMotionVectorCountINTEL", "OpSubgroupAvcMceGetInterMotionVectorCountINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterReferenceIdsINTEL(Nodes.SubgroupAvcMceGetInterReferenceIdsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterReferenceIdsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterReferenceIdsINTEL", "OpSubgroupAvcMceGetInterReferenceIdsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(Nodes.SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL", "OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceIds), GetTypeName(node.PackedReferenceIds?.GetResultType()), GetOutputConnection(node.PackedReferenceIds)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceParameterFieldPolarities), GetTypeName(node.PackedReferenceParameterFieldPolarities?.GetResultType()), GetOutputConnection(node.PackedReferenceParameterFieldPolarities)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeInitializeINTEL(Nodes.SubgroupAvcImeInitializeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeInitializeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeInitializeINTEL", "OpSubgroupAvcImeInitializeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcCoord), GetTypeName(node.SrcCoord?.GetResultType()), GetOutputConnection(node.SrcCoord)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PartitionMask), GetTypeName(node.PartitionMask?.GetResultType()), GetOutputConnection(node.PartitionMask)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SADAdjustment), GetTypeName(node.SADAdjustment?.GetResultType()), GetOutputConnection(node.SADAdjustment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeSetSingleReferenceINTEL(Nodes.SubgroupAvcImeSetSingleReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeSetSingleReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeSetSingleReferenceINTEL", "OpSubgroupAvcImeSetSingleReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefOffset), GetTypeName(node.RefOffset?.GetResultType()), GetOutputConnection(node.RefOffset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SearchWindowConfig), GetTypeName(node.SearchWindowConfig?.GetResultType()), GetOutputConnection(node.SearchWindowConfig)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeSetDualReferenceINTEL(Nodes.SubgroupAvcImeSetDualReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeSetDualReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeSetDualReferenceINTEL", "OpSubgroupAvcImeSetDualReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefOffset), GetTypeName(node.FwdRefOffset?.GetResultType()), GetOutputConnection(node.FwdRefOffset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefOffset), GetTypeName(node.BwdRefOffset?.GetResultType()), GetOutputConnection(node.BwdRefOffset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SearchWindowConfig), GetTypeName(node.SearchWindowConfig?.GetResultType()), GetOutputConnection(node.SearchWindowConfig)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeRefWindowSizeINTEL(Nodes.SubgroupAvcImeRefWindowSizeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeRefWindowSizeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeRefWindowSizeINTEL", "OpSubgroupAvcImeRefWindowSizeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SearchWindowConfig), GetTypeName(node.SearchWindowConfig?.GetResultType()), GetOutputConnection(node.SearchWindowConfig)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.DualRef), GetTypeName(node.DualRef?.GetResultType()), GetOutputConnection(node.DualRef)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeAdjustRefOffsetINTEL(Nodes.SubgroupAvcImeAdjustRefOffsetINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeAdjustRefOffsetINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeAdjustRefOffsetINTEL", "OpSubgroupAvcImeAdjustRefOffsetINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefOffset), GetTypeName(node.RefOffset?.GetResultType()), GetOutputConnection(node.RefOffset)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcCoord), GetTypeName(node.SrcCoord?.GetResultType()), GetOutputConnection(node.SrcCoord)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefWindowSize), GetTypeName(node.RefWindowSize?.GetResultType()), GetOutputConnection(node.RefWindowSize)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ImageSize), GetTypeName(node.ImageSize?.GetResultType()), GetOutputConnection(node.ImageSize)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeConvertToMcePayloadINTEL(Nodes.SubgroupAvcImeConvertToMcePayloadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeConvertToMcePayloadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeConvertToMcePayloadINTEL", "OpSubgroupAvcImeConvertToMcePayloadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeSetMaxMotionVectorCountINTEL(Nodes.SubgroupAvcImeSetMaxMotionVectorCountINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeSetMaxMotionVectorCountINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeSetMaxMotionVectorCountINTEL", "OpSubgroupAvcImeSetMaxMotionVectorCountINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MaxMotionVectorCount), GetTypeName(node.MaxMotionVectorCount?.GetResultType()), GetOutputConnection(node.MaxMotionVectorCount)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeSetUnidirectionalMixDisableINTEL(Nodes.SubgroupAvcImeSetUnidirectionalMixDisableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL", "OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(Nodes.SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL", "OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Threshold), GetTypeName(node.Threshold?.GetResultType()), GetOutputConnection(node.Threshold)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeSetWeightedSadINTEL(Nodes.SubgroupAvcImeSetWeightedSadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeSetWeightedSadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeSetWeightedSadINTEL", "OpSubgroupAvcImeSetWeightedSadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedSadWeights), GetTypeName(node.PackedSadWeights?.GetResultType()), GetOutputConnection(node.PackedSadWeights)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithSingleReferenceINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL", "OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefImage), GetTypeName(node.RefImage?.GetResultType()), GetOutputConnection(node.RefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithDualReferenceINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithDualReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithDualReferenceINTEL", "OpSubgroupAvcImeEvaluateWithDualReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefImage), GetTypeName(node.FwdRefImage?.GetResultType()), GetOutputConnection(node.FwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefImage), GetTypeName(node.BwdRefImage?.GetResultType()), GetOutputConnection(node.BwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL", "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefImage), GetTypeName(node.RefImage?.GetResultType()), GetOutputConnection(node.RefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.StreaminComponents), GetTypeName(node.StreaminComponents?.GetResultType()), GetOutputConnection(node.StreaminComponents)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL", "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefImage), GetTypeName(node.FwdRefImage?.GetResultType()), GetOutputConnection(node.FwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefImage), GetTypeName(node.BwdRefImage?.GetResultType()), GetOutputConnection(node.BwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.StreaminComponents), GetTypeName(node.StreaminComponents?.GetResultType()), GetOutputConnection(node.StreaminComponents)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL", "OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefImage), GetTypeName(node.RefImage?.GetResultType()), GetOutputConnection(node.RefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL", "OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefImage), GetTypeName(node.FwdRefImage?.GetResultType()), GetOutputConnection(node.FwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefImage), GetTypeName(node.BwdRefImage?.GetResultType()), GetOutputConnection(node.BwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(Nodes.SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL", "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefImage), GetTypeName(node.RefImage?.GetResultType()), GetOutputConnection(node.RefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.StreaminComponents), GetTypeName(node.StreaminComponents?.GetResultType()), GetOutputConnection(node.StreaminComponents)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(Nodes.SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL", "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefImage), GetTypeName(node.FwdRefImage?.GetResultType()), GetOutputConnection(node.FwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefImage), GetTypeName(node.BwdRefImage?.GetResultType()), GetOutputConnection(node.BwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.StreaminComponents), GetTypeName(node.StreaminComponents?.GetResultType()), GetOutputConnection(node.StreaminComponents)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeConvertToMceResultINTEL(Nodes.SubgroupAvcImeConvertToMceResultINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeConvertToMceResultINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeConvertToMceResultINTEL", "OpSubgroupAvcImeConvertToMceResultINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetSingleReferenceStreaminINTEL(Nodes.SubgroupAvcImeGetSingleReferenceStreaminINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetSingleReferenceStreaminINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetSingleReferenceStreaminINTEL", "OpSubgroupAvcImeGetSingleReferenceStreaminINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetDualReferenceStreaminINTEL(Nodes.SubgroupAvcImeGetDualReferenceStreaminINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetDualReferenceStreaminINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetDualReferenceStreaminINTEL", "OpSubgroupAvcImeGetDualReferenceStreaminINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeStripSingleReferenceStreamoutINTEL(Nodes.SubgroupAvcImeStripSingleReferenceStreamoutINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL", "OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeStripDualReferenceStreamoutINTEL(Nodes.SubgroupAvcImeStripDualReferenceStreamoutINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeStripDualReferenceStreamoutINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeStripDualReferenceStreamoutINTEL", "OpSubgroupAvcImeStripDualReferenceStreamoutINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(Nodes.SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL", "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShape), GetTypeName(node.MajorShape?.GetResultType()), GetOutputConnection(node.MajorShape)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(Nodes.SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL", "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShape), GetTypeName(node.MajorShape?.GetResultType()), GetOutputConnection(node.MajorShape)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(Nodes.SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL", "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShape), GetTypeName(node.MajorShape?.GetResultType()), GetOutputConnection(node.MajorShape)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(Nodes.SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL", "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShape), GetTypeName(node.MajorShape?.GetResultType()), GetOutputConnection(node.MajorShape)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(Nodes.SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL", "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShape), GetTypeName(node.MajorShape?.GetResultType()), GetOutputConnection(node.MajorShape)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(Nodes.SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL", "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShape), GetTypeName(node.MajorShape?.GetResultType()), GetOutputConnection(node.MajorShape)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetBorderReachedINTEL(Nodes.SubgroupAvcImeGetBorderReachedINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetBorderReachedINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetBorderReachedINTEL", "OpSubgroupAvcImeGetBorderReachedINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ImageSelect), GetTypeName(node.ImageSelect?.GetResultType()), GetOutputConnection(node.ImageSelect)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetTruncatedSearchIndicationINTEL(Nodes.SubgroupAvcImeGetTruncatedSearchIndicationINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL", "OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(Nodes.SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL", "OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(Nodes.SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL", "OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(Nodes.SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL", "OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcFmeInitializeINTEL(Nodes.SubgroupAvcFmeInitializeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcFmeInitializeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcFmeInitializeINTEL", "OpSubgroupAvcFmeInitializeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcCoord), GetTypeName(node.SrcCoord?.GetResultType()), GetOutputConnection(node.SrcCoord)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MotionVectors), GetTypeName(node.MotionVectors?.GetResultType()), GetOutputConnection(node.MotionVectors)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShapes), GetTypeName(node.MajorShapes?.GetResultType()), GetOutputConnection(node.MajorShapes)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MinorShapes), GetTypeName(node.MinorShapes?.GetResultType()), GetOutputConnection(node.MinorShapes)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PixelResolution), GetTypeName(node.PixelResolution?.GetResultType()), GetOutputConnection(node.PixelResolution)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SadAdjustment), GetTypeName(node.SadAdjustment?.GetResultType()), GetOutputConnection(node.SadAdjustment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcBmeInitializeINTEL(Nodes.SubgroupAvcBmeInitializeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcBmeInitializeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcBmeInitializeINTEL", "OpSubgroupAvcBmeInitializeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcCoord), GetTypeName(node.SrcCoord?.GetResultType()), GetOutputConnection(node.SrcCoord)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MotionVectors), GetTypeName(node.MotionVectors?.GetResultType()), GetOutputConnection(node.MotionVectors)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MajorShapes), GetTypeName(node.MajorShapes?.GetResultType()), GetOutputConnection(node.MajorShapes)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MinorShapes), GetTypeName(node.MinorShapes?.GetResultType()), GetOutputConnection(node.MinorShapes)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PixelResolution), GetTypeName(node.PixelResolution?.GetResultType()), GetOutputConnection(node.PixelResolution)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BidirectionalWeight), GetTypeName(node.BidirectionalWeight?.GetResultType()), GetOutputConnection(node.BidirectionalWeight)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SadAdjustment), GetTypeName(node.SadAdjustment?.GetResultType()), GetOutputConnection(node.SadAdjustment)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefConvertToMcePayloadINTEL(Nodes.SubgroupAvcRefConvertToMcePayloadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefConvertToMcePayloadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefConvertToMcePayloadINTEL", "OpSubgroupAvcRefConvertToMcePayloadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefSetBidirectionalMixDisableINTEL(Nodes.SubgroupAvcRefSetBidirectionalMixDisableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefSetBidirectionalMixDisableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefSetBidirectionalMixDisableINTEL", "OpSubgroupAvcRefSetBidirectionalMixDisableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefSetBilinearFilterEnableINTEL(Nodes.SubgroupAvcRefSetBilinearFilterEnableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefSetBilinearFilterEnableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefSetBilinearFilterEnableINTEL", "OpSubgroupAvcRefSetBilinearFilterEnableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefEvaluateWithSingleReferenceINTEL(Nodes.SubgroupAvcRefEvaluateWithSingleReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL", "OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefImage), GetTypeName(node.RefImage?.GetResultType()), GetOutputConnection(node.RefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefEvaluateWithDualReferenceINTEL(Nodes.SubgroupAvcRefEvaluateWithDualReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefEvaluateWithDualReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefEvaluateWithDualReferenceINTEL", "OpSubgroupAvcRefEvaluateWithDualReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefImage), GetTypeName(node.FwdRefImage?.GetResultType()), GetOutputConnection(node.FwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefImage), GetTypeName(node.BwdRefImage?.GetResultType()), GetOutputConnection(node.BwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefEvaluateWithMultiReferenceINTEL(Nodes.SubgroupAvcRefEvaluateWithMultiReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL", "OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceIds), GetTypeName(node.PackedReferenceIds?.GetResultType()), GetOutputConnection(node.PackedReferenceIds)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(Nodes.SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL", "OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceIds), GetTypeName(node.PackedReferenceIds?.GetResultType()), GetOutputConnection(node.PackedReferenceIds)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceFieldPolarities), GetTypeName(node.PackedReferenceFieldPolarities?.GetResultType()), GetOutputConnection(node.PackedReferenceFieldPolarities)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcRefConvertToMceResultINTEL(Nodes.SubgroupAvcRefConvertToMceResultINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcRefConvertToMceResultINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcRefConvertToMceResultINTEL", "OpSubgroupAvcRefConvertToMceResultINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicInitializeINTEL(Nodes.SubgroupAvcSicInitializeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicInitializeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicInitializeINTEL", "OpSubgroupAvcSicInitializeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcCoord), GetTypeName(node.SrcCoord?.GetResultType()), GetOutputConnection(node.SrcCoord)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicConfigureSkcINTEL(Nodes.SubgroupAvcSicConfigureSkcINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicConfigureSkcINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicConfigureSkcINTEL", "OpSubgroupAvcSicConfigureSkcINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SkipBlockPartitionType), GetTypeName(node.SkipBlockPartitionType?.GetResultType()), GetOutputConnection(node.SkipBlockPartitionType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SkipMotionVectorMask), GetTypeName(node.SkipMotionVectorMask?.GetResultType()), GetOutputConnection(node.SkipMotionVectorMask)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.MotionVectors), GetTypeName(node.MotionVectors?.GetResultType()), GetOutputConnection(node.MotionVectors)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BidirectionalWeight), GetTypeName(node.BidirectionalWeight?.GetResultType()), GetOutputConnection(node.BidirectionalWeight)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SadAdjustment), GetTypeName(node.SadAdjustment?.GetResultType()), GetOutputConnection(node.SadAdjustment)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicConfigureIpeLumaINTEL(Nodes.SubgroupAvcSicConfigureIpeLumaINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicConfigureIpeLumaINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicConfigureIpeLumaINTEL", "OpSubgroupAvcSicConfigureIpeLumaINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LumaIntraPartitionMask), GetTypeName(node.LumaIntraPartitionMask?.GetResultType()), GetOutputConnection(node.LumaIntraPartitionMask)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.IntraNeighbourAvailabilty), GetTypeName(node.IntraNeighbourAvailabilty?.GetResultType()), GetOutputConnection(node.IntraNeighbourAvailabilty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LeftEdgeLumaPixels), GetTypeName(node.LeftEdgeLumaPixels?.GetResultType()), GetOutputConnection(node.LeftEdgeLumaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperLeftCornerLumaPixel), GetTypeName(node.UpperLeftCornerLumaPixel?.GetResultType()), GetOutputConnection(node.UpperLeftCornerLumaPixel)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperEdgeLumaPixels), GetTypeName(node.UpperEdgeLumaPixels?.GetResultType()), GetOutputConnection(node.UpperEdgeLumaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperRightEdgeLumaPixels), GetTypeName(node.UpperRightEdgeLumaPixels?.GetResultType()), GetOutputConnection(node.UpperRightEdgeLumaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SadAdjustment), GetTypeName(node.SadAdjustment?.GetResultType()), GetOutputConnection(node.SadAdjustment)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicConfigureIpeLumaChromaINTEL(Nodes.SubgroupAvcSicConfigureIpeLumaChromaINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicConfigureIpeLumaChromaINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicConfigureIpeLumaChromaINTEL", "OpSubgroupAvcSicConfigureIpeLumaChromaINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LumaIntraPartitionMask), GetTypeName(node.LumaIntraPartitionMask?.GetResultType()), GetOutputConnection(node.LumaIntraPartitionMask)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.IntraNeighbourAvailabilty), GetTypeName(node.IntraNeighbourAvailabilty?.GetResultType()), GetOutputConnection(node.IntraNeighbourAvailabilty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LeftEdgeLumaPixels), GetTypeName(node.LeftEdgeLumaPixels?.GetResultType()), GetOutputConnection(node.LeftEdgeLumaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperLeftCornerLumaPixel), GetTypeName(node.UpperLeftCornerLumaPixel?.GetResultType()), GetOutputConnection(node.UpperLeftCornerLumaPixel)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperEdgeLumaPixels), GetTypeName(node.UpperEdgeLumaPixels?.GetResultType()), GetOutputConnection(node.UpperEdgeLumaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperRightEdgeLumaPixels), GetTypeName(node.UpperRightEdgeLumaPixels?.GetResultType()), GetOutputConnection(node.UpperRightEdgeLumaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LeftEdgeChromaPixels), GetTypeName(node.LeftEdgeChromaPixels?.GetResultType()), GetOutputConnection(node.LeftEdgeChromaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperLeftCornerChromaPixel), GetTypeName(node.UpperLeftCornerChromaPixel?.GetResultType()), GetOutputConnection(node.UpperLeftCornerChromaPixel)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.UpperEdgeChromaPixels), GetTypeName(node.UpperEdgeChromaPixels?.GetResultType()), GetOutputConnection(node.UpperEdgeChromaPixels)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SadAdjustment), GetTypeName(node.SadAdjustment?.GetResultType()), GetOutputConnection(node.SadAdjustment)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetMotionVectorMaskINTEL(Nodes.SubgroupAvcSicGetMotionVectorMaskINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetMotionVectorMaskINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetMotionVectorMaskINTEL", "OpSubgroupAvcSicGetMotionVectorMaskINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SkipBlockPartitionType), GetTypeName(node.SkipBlockPartitionType?.GetResultType()), GetOutputConnection(node.SkipBlockPartitionType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Direction), GetTypeName(node.Direction?.GetResultType()), GetOutputConnection(node.Direction)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicConvertToMcePayloadINTEL(Nodes.SubgroupAvcSicConvertToMcePayloadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicConvertToMcePayloadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicConvertToMcePayloadINTEL", "OpSubgroupAvcSicConvertToMcePayloadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicSetIntraLumaShapePenaltyINTEL(Nodes.SubgroupAvcSicSetIntraLumaShapePenaltyINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL", "OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedShapePenalty), GetTypeName(node.PackedShapePenalty?.GetResultType()), GetOutputConnection(node.PackedShapePenalty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(Nodes.SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL", "OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LumaModePenalty), GetTypeName(node.LumaModePenalty?.GetResultType()), GetOutputConnection(node.LumaModePenalty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LumaPackedNeighborModes), GetTypeName(node.LumaPackedNeighborModes?.GetResultType()), GetOutputConnection(node.LumaPackedNeighborModes)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.LumaPackedNonDcPenalty), GetTypeName(node.LumaPackedNonDcPenalty?.GetResultType()), GetOutputConnection(node.LumaPackedNonDcPenalty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(Nodes.SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL", "OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.ChromaModeBasePenalty), GetTypeName(node.ChromaModeBasePenalty?.GetResultType()), GetOutputConnection(node.ChromaModeBasePenalty)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicSetBilinearFilterEnableINTEL(Nodes.SubgroupAvcSicSetBilinearFilterEnableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicSetBilinearFilterEnableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicSetBilinearFilterEnableINTEL", "OpSubgroupAvcSicSetBilinearFilterEnableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicSetSkcForwardTransformEnableINTEL(Nodes.SubgroupAvcSicSetSkcForwardTransformEnableINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL", "OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedSadCoefficients), GetTypeName(node.PackedSadCoefficients?.GetResultType()), GetOutputConnection(node.PackedSadCoefficients)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicSetBlockBasedRawSkipSadINTEL(Nodes.SubgroupAvcSicSetBlockBasedRawSkipSadINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL", "OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BlockBasedSkipType), GetTypeName(node.BlockBasedSkipType?.GetResultType()), GetOutputConnection(node.BlockBasedSkipType)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicEvaluateIpeINTEL(Nodes.SubgroupAvcSicEvaluateIpeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicEvaluateIpeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicEvaluateIpeINTEL", "OpSubgroupAvcSicEvaluateIpeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicEvaluateWithSingleReferenceINTEL(Nodes.SubgroupAvcSicEvaluateWithSingleReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL", "OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.RefImage), GetTypeName(node.RefImage?.GetResultType()), GetOutputConnection(node.RefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicEvaluateWithDualReferenceINTEL(Nodes.SubgroupAvcSicEvaluateWithDualReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicEvaluateWithDualReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicEvaluateWithDualReferenceINTEL", "OpSubgroupAvcSicEvaluateWithDualReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.FwdRefImage), GetTypeName(node.FwdRefImage?.GetResultType()), GetOutputConnection(node.FwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.BwdRefImage), GetTypeName(node.BwdRefImage?.GetResultType()), GetOutputConnection(node.BwdRefImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicEvaluateWithMultiReferenceINTEL(Nodes.SubgroupAvcSicEvaluateWithMultiReferenceINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL", "OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceIds), GetTypeName(node.PackedReferenceIds?.GetResultType()), GetOutputConnection(node.PackedReferenceIds)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(Nodes.SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL", "OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.SrcImage), GetTypeName(node.SrcImage?.GetResultType()), GetOutputConnection(node.SrcImage)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceIds), GetTypeName(node.PackedReferenceIds?.GetResultType()), GetOutputConnection(node.PackedReferenceIds)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.PackedReferenceFieldPolarities), GetTypeName(node.PackedReferenceFieldPolarities?.GetResultType()), GetOutputConnection(node.PackedReferenceFieldPolarities)));
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicConvertToMceResultINTEL(Nodes.SubgroupAvcSicConvertToMceResultINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicConvertToMceResultINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicConvertToMceResultINTEL", "OpSubgroupAvcSicConvertToMceResultINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetIpeLumaShapeINTEL(Nodes.SubgroupAvcSicGetIpeLumaShapeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetIpeLumaShapeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetIpeLumaShapeINTEL", "OpSubgroupAvcSicGetIpeLumaShapeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetBestIpeLumaDistortionINTEL(Nodes.SubgroupAvcSicGetBestIpeLumaDistortionINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL", "OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetBestIpeChromaDistortionINTEL(Nodes.SubgroupAvcSicGetBestIpeChromaDistortionINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL", "OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetPackedIpeLumaModesINTEL(Nodes.SubgroupAvcSicGetPackedIpeLumaModesINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetPackedIpeLumaModesINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetPackedIpeLumaModesINTEL", "OpSubgroupAvcSicGetPackedIpeLumaModesINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetIpeChromaModeINTEL(Nodes.SubgroupAvcSicGetIpeChromaModeINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetIpeChromaModeINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetIpeChromaModeINTEL", "OpSubgroupAvcSicGetIpeChromaModeINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(Nodes.SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL", "OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(Nodes.SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL", "OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
 
         protected virtual ScriptNode VisitSubgroupAvcSicGetInterRawSadsINTEL(Nodes.SubgroupAvcSicGetInterRawSadsINTEL node)
         {
-            var scriptNode = CreateNode(node, "OpSubgroupAvcSicGetInterRawSadsINTEL", false, false, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "OpSubgroupAvcSicGetInterRawSadsINTEL", "OpSubgroupAvcSicGetInterRawSadsINTEL", false, GetTypeName(node.ResultType), NodeCategory.Function, null);
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.Payload), GetTypeName(node.Payload?.GetResultType()), GetOutputConnection(node.Payload)));
             return scriptNode;
         }
+        protected string GetTypeName(SpirvTypeBase type)
+        {
+            if (type == null)
+                return null;
+            switch (type.OpCode)
+            {
+                case Op.OpTypeVoid: return GetVoidName((TypeVoid)type);
+                case Op.OpTypeBool: return GetBoolName((TypeBool)type);
+                case Op.OpTypeInt: return GetIntName((TypeInt)type);
+                case Op.OpTypeFloat: return GetFloatName((TypeFloat)type);
+                case Op.OpTypeVector: return GetVectorName((TypeVector)type);
+                case Op.OpTypeMatrix: return GetMatrixName((TypeMatrix)type);
+                case Op.OpTypeImage: return GetImageName((TypeImage)type);
+                case Op.OpTypeSampler: return GetSamplerName((TypeSampler)type);
+                case Op.OpTypeSampledImage: return GetSampledImageName((TypeSampledImage)type);
+                case Op.OpTypeArray: return GetArrayName((TypeArray)type);
+                case Op.OpTypeRuntimeArray: return GetRuntimeArrayName((TypeRuntimeArray)type);
+                case Op.OpTypeStruct: return GetStructName((TypeStruct)type);
+                case Op.OpTypeOpaque: return GetOpaqueName((TypeOpaque)type);
+                case Op.OpTypePointer: return GetPointerName((TypePointer)type);
+                case Op.OpTypeFunction: return GetFunctionName((TypeFunction)type);
+                case Op.OpTypeEvent: return GetEventName((TypeEvent)type);
+                case Op.OpTypeDeviceEvent: return GetDeviceEventName((TypeDeviceEvent)type);
+                case Op.OpTypeReserveId: return GetReserveIdName((TypeReserveId)type);
+                case Op.OpTypeQueue: return GetQueueName((TypeQueue)type);
+                case Op.OpTypePipe: return GetPipeName((TypePipe)type);
+                case Op.OpTypeForwardPointer: return GetForwardPointerName((TypeForwardPointer)type);
+                case Op.OpTypePipeStorage: return GetPipeStorageName((TypePipeStorage)type);
+                case Op.OpTypeNamedBarrier: return GetNamedBarrierName((TypeNamedBarrier)type);
+                case Op.OpTypeAccelerationStructureNV: return GetAccelerationStructureNVName((TypeAccelerationStructureNV)type);
+                case Op.OpTypeRayQueryProvisionalKHR: return GetRayQueryProvisionalKHRName((TypeRayQueryProvisionalKHR)type);
+                case Op.OpTypeCooperativeMatrixNV: return GetCooperativeMatrixNVName((TypeCooperativeMatrixNV)type);
+                case Op.OpTypeVmeImageINTEL: return GetVmeImageINTELName((TypeVmeImageINTEL)type);
+                case Op.OpTypeAvcImePayloadINTEL: return GetAvcImePayloadINTELName((TypeAvcImePayloadINTEL)type);
+                case Op.OpTypeAvcRefPayloadINTEL: return GetAvcRefPayloadINTELName((TypeAvcRefPayloadINTEL)type);
+                case Op.OpTypeAvcSicPayloadINTEL: return GetAvcSicPayloadINTELName((TypeAvcSicPayloadINTEL)type);
+                case Op.OpTypeAvcMcePayloadINTEL: return GetAvcMcePayloadINTELName((TypeAvcMcePayloadINTEL)type);
+                case Op.OpTypeAvcMceResultINTEL: return GetAvcMceResultINTELName((TypeAvcMceResultINTEL)type);
+                case Op.OpTypeAvcImeResultINTEL: return GetAvcImeResultINTELName((TypeAvcImeResultINTEL)type);
+                case Op.OpTypeAvcImeResultSingleReferenceStreamoutINTEL: return GetAvcImeResultSingleReferenceStreamoutINTELName((TypeAvcImeResultSingleReferenceStreamoutINTEL)type);
+                case Op.OpTypeAvcImeResultDualReferenceStreamoutINTEL: return GetAvcImeResultDualReferenceStreamoutINTELName((TypeAvcImeResultDualReferenceStreamoutINTEL)type);
+                case Op.OpTypeAvcImeSingleReferenceStreaminINTEL: return GetAvcImeSingleReferenceStreaminINTELName((TypeAvcImeSingleReferenceStreaminINTEL)type);
+                case Op.OpTypeAvcImeDualReferenceStreaminINTEL: return GetAvcImeDualReferenceStreaminINTELName((TypeAvcImeDualReferenceStreaminINTEL)type);
+                case Op.OpTypeAvcRefResultINTEL: return GetAvcRefResultINTELName((TypeAvcRefResultINTEL)type);
+                case Op.OpTypeAvcSicResultINTEL: return GetAvcSicResultINTELName((TypeAvcSicResultINTEL)type);
+            }
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
 
-        protected ScriptNode CreateNode(Node node, string name, bool hasDefaultEnter = false, bool hasDefaultExit = false, NodeCategory category = NodeCategory.Unknown, string value = null)
+        protected virtual Connection GetExitConnection(Node node)
+        {
+            if (node == null)
+                return null;
+            return new Connection(VisitNode(node), "");
+        }
+
+        protected virtual Connection GetOutputConnection(Node node)
+        {
+            if (node == null)
+                return null;
+            return new Connection(VisitNode(node), "");
+        }
+
+
+        protected virtual string GetVoidName(TypeVoid type)
+        {
+            return "void";
+        }
+
+        protected virtual string GetBoolName(TypeBool type)
+        {
+            return "bool";
+        }
+
+        protected virtual string GetIntName(TypeInt type)
+        {
+            if (type.Signed)
+            {
+                switch (type.Width)
+                {
+                    case 8: return "sbyte";
+                    case 16: return "short";
+                    case 32: return "int";
+                    case 64: return "long";
+                }
+            }
+            else
+            {
+                switch (type.Width)
+                {
+                    case 8: return "byte";
+                    case 16: return "ushort";
+                    case 32: return "uint";
+                    case 64: return "ulong";
+                }
+            }
+            throw new NotImplementedException(type + " is not implemented yet.");
+        }
+
+        protected virtual string GetFloatName(TypeFloat type)
+        {
+            switch (type.Width)
+            {
+                case 32: return "float";
+                case 64: return "double";
+            }
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetVectorName(TypeVector type)
+        {
+            if (type.ComponentType == SpirvTypeBase.Float)
+            {
+                switch (type.ComponentCount)
+                {
+                    case 2: return "vec2";
+                    case 3: return "vec3";
+                    case 4: return "vec4";
+                }
+            }
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetMatrixName(TypeMatrix type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetImageName(TypeImage type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetSamplerName(TypeSampler type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetSampledImageName(TypeSampledImage type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetArrayName(TypeArray type)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0}[{1}]", GetTypeName(type.ElementType), type.Length);
+        }
+
+        protected virtual string GetRuntimeArrayName(TypeRuntimeArray type)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0}[*]", GetTypeName(type.ElementType));
+        }
+
+        protected virtual string GetStructName(TypeStruct type)
+        {
+            return type.DebugName;
+        }
+
+        protected virtual string GetOpaqueName(TypeOpaque type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetPointerName(TypePointer type)
+        {
+            return GetTypeName(type.Type)+"*";
+        }
+
+        protected virtual string GetFunctionName(TypeFunction type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetEventName(TypeEvent type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetDeviceEventName(TypeDeviceEvent type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetReserveIdName(TypeReserveId type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetQueueName(TypeQueue type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetPipeName(TypePipe type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetForwardPointerName(TypeForwardPointer type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetPipeStorageName(TypePipeStorage type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetNamedBarrierName(TypeNamedBarrier type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAccelerationStructureNVName(TypeAccelerationStructureNV type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetRayQueryProvisionalKHRName(TypeRayQueryProvisionalKHR type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetCooperativeMatrixNVName(TypeCooperativeMatrixNV type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetVmeImageINTELName(TypeVmeImageINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcImePayloadINTELName(TypeAvcImePayloadINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcRefPayloadINTELName(TypeAvcRefPayloadINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcSicPayloadINTELName(TypeAvcSicPayloadINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcMcePayloadINTELName(TypeAvcMcePayloadINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcMceResultINTELName(TypeAvcMceResultINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcImeResultINTELName(TypeAvcImeResultINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcImeResultSingleReferenceStreamoutINTELName(TypeAvcImeResultSingleReferenceStreamoutINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcImeResultDualReferenceStreamoutINTELName(TypeAvcImeResultDualReferenceStreamoutINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcImeSingleReferenceStreaminINTELName(TypeAvcImeSingleReferenceStreaminINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcImeDualReferenceStreaminINTELName(TypeAvcImeDualReferenceStreaminINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcRefResultINTELName(TypeAvcRefResultINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected virtual string GetAvcSicResultINTELName(TypeAvcSicResultINTEL type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+
+        protected ScriptNode CreateNode(Node node, string name, string type, bool hasDefaultEnter = false, string outputType = null, NodeCategory category = NodeCategory.Unknown, string value = null)
         {
             var scriptNode = new ScriptNode()
             {
                 Name = name,
+                Type = type,
                 Category = category,
                 Value = value
             };
@@ -3649,9 +4958,9 @@ namespace Toe.SPIRV
             {
                 scriptNode.EnterPins.Add(new Pin("",null));
             }
-            if (hasDefaultExit)
+            if (outputType != null)
             {
-                scriptNode.ExitPins.Add(new PinWithConnection("",null));
+                scriptNode.OutputPins.Add(new Pin("", outputType));
             }
             _script.Add(scriptNode);
             _nodeMap.Add(node, scriptNode);

@@ -37,33 +37,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Previous), Previous);
-                yield return CreateInputPin(nameof(Current), Current);
-                yield return CreateInputPin(nameof(Delta), Delta);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return Previous;
+                yield return Current;
+                yield return Delta;
         }
 
         public SubgroupShuffleUpINTEL WithDecoration(Spv.Decoration decoration)

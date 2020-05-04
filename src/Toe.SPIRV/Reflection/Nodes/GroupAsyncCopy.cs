@@ -46,35 +46,13 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Destination), Destination);
-                yield return CreateInputPin(nameof(Source), Source);
-                yield return CreateInputPin(nameof(NumElements), NumElements);
-                yield return CreateInputPin(nameof(Stride), Stride);
-                yield return CreateInputPin(nameof(Event), Event);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return Destination;
+                yield return Source;
+                yield return NumElements;
+                yield return Stride;
+                yield return Event;
         }
 
         public GroupAsyncCopy WithDecoration(Spv.Decoration decoration)

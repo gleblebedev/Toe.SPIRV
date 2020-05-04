@@ -20,23 +20,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public override Op OpCode => Op.OpDecorationGroup;
 
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
         public DecorationGroup WithDecoration(Spv.Decoration decoration)
         {
             AddDecoration(decoration);

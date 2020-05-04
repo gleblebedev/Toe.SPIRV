@@ -40,34 +40,12 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SrcImage), SrcImage);
-                yield return CreateInputPin(nameof(RefImage), RefImage);
-                yield return CreateInputPin(nameof(Payload), Payload);
-                yield return CreateInputPin(nameof(StreaminComponents), StreaminComponents);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return SrcImage;
+                yield return RefImage;
+                yield return Payload;
+                yield return StreaminComponents;
         }
 
         public SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL WithDecoration(Spv.Decoration decoration)

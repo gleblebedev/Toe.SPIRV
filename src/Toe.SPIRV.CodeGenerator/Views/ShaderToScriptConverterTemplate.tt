@@ -3,11 +3,13 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Toe.SPIRV.CodeGenerator.Model.Grammar" #>
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Toe.Scripting;
 using Toe.SPIRV.Reflection;
-using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Nodes=Toe.SPIRV.Reflection.Nodes;
 
@@ -56,14 +58,44 @@ foreach (var instruction in _grammar.Instructions.Values)
 
         protected virtual ScriptNode Visit<#=instruction.Name.Substring(2)#>(Nodes.<#=instruction.Name.Substring(2)#> node)
         {
-            var scriptNode = CreateNode(node, "<#=instruction.Name#>", <#=instruction.HasDefaultEnter?"true":"false"#>, <#=instruction.HasDefaultExit?"true":"false"#>, NodeCategory.Function, null);
+            var scriptNode = CreateNode(node, node.DebugName ?? "<#=instruction.Name#>", "<#=instruction.Name#>", <#=instruction.HasDefaultEnter?"true":"false"#>, <#=(instruction.IdResultType!=null)?"GetTypeName(node.ResultType)":"null"#>, NodeCategory.<#=GetNodeCategory(instruction)#>, null);
 <#
         if (instruction.HasDefaultExit)
         {
 #>
-            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Next), "");
+            scriptNode.ExitPins.Add(new PinWithConnection("",null,GetExitConnection(node.Next)));
 <#
         }
+#>
+<# 
+foreach (var op in instruction.Operands)
+{
+    if (op.Class == SpirvOperandClassification.Exit)
+    {
+#>
+            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.<#=op.Name#>),null, GetExitConnection(node.<#=op.Name#>)));
+<# 
+    }
+    else if (op.Class == SpirvOperandClassification.Input)
+    {
+#>
+            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.<#=op.Name#>), GetTypeName(node.<#=op.Name#>?.GetResultType()), GetOutputConnection(node.<#=op.Name#>)));
+<# 
+    }
+    else if (op.Class == SpirvOperandClassification.RepeatedInput)
+    {
+#>
+            if (node.<#=op.Name#> != null)
+            {
+                for (var index = 0; index < node.<#=op.Name#>.Count; index++)
+                {
+                    var item = node.<#=op.Name#>[index];
+                    scriptNode.InputPins.Add(new PinWithConnection(string.Format(CultureInfo.InvariantCulture, "<#=op.Name#>{0}", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));
+                }
+            }
+<# 
+    }
+}
 #>
             return scriptNode;
         }
@@ -71,12 +103,190 @@ foreach (var instruction in _grammar.Instructions.Values)
     }
 }
 #>
+        protected string GetTypeName(SpirvTypeBase type)
+        {
+            if (type == null)
+                return null;
+            switch (type.OpCode)
+            {
+<#
+foreach (var instruction in _grammar.Instructions.Values)
+{
+    if (instruction.Name.StartsWith("OpType"))
+    {
+#>
+                case Op.<#=instruction.Name#>: return Get<#=instruction.Name.Substring(6)#>Name((<#=instruction.Name.Substring(2)#>)type);
+<#
+    }
+}
+#>
+            }
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
 
-        protected ScriptNode CreateNode(Node node, string name, bool hasDefaultEnter = false, bool hasDefaultExit = false, NodeCategory category = NodeCategory.Unknown, string value = null)
+        protected virtual Connection GetExitConnection(Node node)
+        {
+            if (node == null)
+                return null;
+            return new Connection(VisitNode(node), "");
+        }
+
+        protected virtual Connection GetOutputConnection(Node node)
+        {
+            if (node == null)
+                return null;
+            return new Connection(VisitNode(node), "");
+        }
+
+<#
+foreach (var instruction in _grammar.Instructions.Values)
+{
+    if (instruction.Name.StartsWith("OpType"))
+    {
+        if (instruction.Name == "OpTypeVoid")
+        {
+#>
+
+        protected virtual string GetVoidName(<#=instruction.Name.Substring(2)#> type)
+        {
+            return "void";
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeBool")
+        {
+#>
+
+        protected virtual string GetBoolName(<#=instruction.Name.Substring(2)#> type)
+        {
+            return "bool";
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeInt")
+        {
+#>
+
+        protected virtual string GetIntName(TypeInt type)
+        {
+            if (type.Signed)
+            {
+                switch (type.Width)
+                {
+                    case 8: return "sbyte";
+                    case 16: return "short";
+                    case 32: return "int";
+                    case 64: return "long";
+                }
+            }
+            else
+            {
+                switch (type.Width)
+                {
+                    case 8: return "byte";
+                    case 16: return "ushort";
+                    case 32: return "uint";
+                    case 64: return "ulong";
+                }
+            }
+            throw new NotImplementedException(type + " is not implemented yet.");
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeFloat")
+        {
+#>
+
+        protected virtual string GetFloatName(TypeFloat type)
+        {
+            switch (type.Width)
+            {
+                case 32: return "float";
+                case 64: return "double";
+            }
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeVector")
+        {
+#>
+
+        protected virtual string GetVectorName(TypeVector type)
+        {
+            if (type.ComponentType == SpirvTypeBase.Float)
+            {
+                switch (type.ComponentCount)
+                {
+                    case 2: return "vec2";
+                    case 3: return "vec3";
+                    case 4: return "vec4";
+                }
+            }
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypePointer")
+        {
+#>
+
+        protected virtual string GetPointerName(TypePointer type)
+        {
+            return GetTypeName(type.Type)+"*";
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeStruct")
+        {
+#>
+
+        protected virtual string GetStructName(TypeStruct type)
+        {
+            return type.DebugName;
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeArray")
+        {
+#>
+
+        protected virtual string GetArrayName(TypeArray type)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0}[{1}]", GetTypeName(type.ElementType), type.Length);
+        }
+<#
+        }
+        else if (instruction.Name == "OpTypeRuntimeArray")
+        {
+#>
+
+        protected virtual string GetRuntimeArrayName(TypeRuntimeArray type)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0}[*]", GetTypeName(type.ElementType));
+        }
+<#
+        }
+        else
+        {
+#>
+
+        protected virtual string Get<#=instruction.Name.Substring(6)#>Name(<#=instruction.Name.Substring(2)#> type)
+        {
+            throw new NotImplementedException(type+" is not implemented yet.");
+        }
+<#
+        }
+    }
+}
+#>
+
+        protected ScriptNode CreateNode(Node node, string name, string type, bool hasDefaultEnter = false, string outputType = null, NodeCategory category = NodeCategory.Unknown, string value = null)
         {
             var scriptNode = new ScriptNode()
             {
                 Name = name,
+                Type = type,
                 Category = category,
                 Value = value
             };
@@ -84,9 +294,9 @@ foreach (var instruction in _grammar.Instructions.Values)
             {
                 scriptNode.EnterPins.Add(new Pin("",null));
             }
-            if (hasDefaultExit)
+            if (outputType != null)
             {
-                scriptNode.ExitPins.Add(new PinWithConnection("",null));
+                scriptNode.OutputPins.Add(new Pin("", outputType));
             }
             _script.Add(scriptNode);
             _nodeMap.Add(node, scriptNode);

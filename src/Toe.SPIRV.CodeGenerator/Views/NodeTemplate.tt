@@ -129,17 +129,15 @@ if (_instruction.Operands.Any(op=>op.Class == SpirvOperandClassification.Input |
 {
 #>
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
 <# 
 foreach (var op in _instruction.Operands)
 {
     if (op.Class == SpirvOperandClassification.Input)
     {
 #>
-                yield return CreateInputPin(nameof(<#=op.Name#>), <#=op.Name#>);
+                yield return <#=op.Name#>;
 <# 
     }
     else if (op.Class == SpirvOperandClassification.RepeatedInput)
@@ -147,74 +145,16 @@ foreach (var op in _instruction.Operands)
 #>
                 for (var index = 0; index < <#=op.Name#>.Count; index++)
                 {
-                    yield return CreateInputPin(nameof(<#=op.Name#>) + index, <#=op.Name#>[index]);
+                    yield return <#=op.Name#>[index];
                 }
 <# 
     }
 }
 #>
-                yield break;
-            }
         }
 <# 
 }
 #>
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-<# 
-if (_instruction.IdResultType != null)
-{
-#>
-                yield return new NodePin(this, "", ResultType);
-<# 
-}
-#>
-                yield break;
-            }
-        }
-
-<# 
-if (_instruction.HasDefaultEnter)
-{
-#>
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-<# 
-}
-#>
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-<# 
-if (_instruction.HasDefaultExit)
-{
-#>
-                yield return CreateExitPin("", GetNext());
-<# 
-}
-foreach (var op in _instruction.Operands)
-{
-    if (op.Class == SpirvOperandClassification.Exit)
-    {
-#>
-                yield return CreateExitPin(nameof(<#=op.Name#>), <#=op.Name#>);
-<# 
-    }
-}
-#>
-                yield break;
-            }
-        }
 
         public <#= name #> WithDecoration(Spv.Decoration decoration)
         {

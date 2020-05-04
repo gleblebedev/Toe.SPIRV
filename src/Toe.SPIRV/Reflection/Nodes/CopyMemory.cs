@@ -48,39 +48,10 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Spv.MemoryAccess MemoryAccess2 { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Target), Target);
-                yield return CreateInputPin(nameof(Source), Source);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return Target;
+                yield return Source;
         }
 
         public CopyMemory WithDecoration(Spv.Decoration decoration)

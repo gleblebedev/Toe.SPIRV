@@ -69,48 +69,19 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Node PayloadId { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Accel), Accel);
-                yield return CreateInputPin(nameof(RayFlags), RayFlags);
-                yield return CreateInputPin(nameof(CullMask), CullMask);
-                yield return CreateInputPin(nameof(SBTOffset), SBTOffset);
-                yield return CreateInputPin(nameof(SBTStride), SBTStride);
-                yield return CreateInputPin(nameof(MissIndex), MissIndex);
-                yield return CreateInputPin(nameof(RayOrigin), RayOrigin);
-                yield return CreateInputPin(nameof(RayTmin), RayTmin);
-                yield return CreateInputPin(nameof(RayDirection), RayDirection);
-                yield return CreateInputPin(nameof(RayTmax), RayTmax);
-                yield return CreateInputPin(nameof(PayloadId), PayloadId);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return Accel;
+                yield return RayFlags;
+                yield return CullMask;
+                yield return SBTOffset;
+                yield return SBTStride;
+                yield return MissIndex;
+                yield return RayOrigin;
+                yield return RayTmin;
+                yield return RayDirection;
+                yield return RayTmax;
+                yield return PayloadId;
         }
 
         public TraceNV WithDecoration(Spv.Decoration decoration)

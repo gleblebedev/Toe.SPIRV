@@ -61,41 +61,19 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(LumaIntraPartitionMask), LumaIntraPartitionMask);
-                yield return CreateInputPin(nameof(IntraNeighbourAvailabilty), IntraNeighbourAvailabilty);
-                yield return CreateInputPin(nameof(LeftEdgeLumaPixels), LeftEdgeLumaPixels);
-                yield return CreateInputPin(nameof(UpperLeftCornerLumaPixel), UpperLeftCornerLumaPixel);
-                yield return CreateInputPin(nameof(UpperEdgeLumaPixels), UpperEdgeLumaPixels);
-                yield return CreateInputPin(nameof(UpperRightEdgeLumaPixels), UpperRightEdgeLumaPixels);
-                yield return CreateInputPin(nameof(LeftEdgeChromaPixels), LeftEdgeChromaPixels);
-                yield return CreateInputPin(nameof(UpperLeftCornerChromaPixel), UpperLeftCornerChromaPixel);
-                yield return CreateInputPin(nameof(UpperEdgeChromaPixels), UpperEdgeChromaPixels);
-                yield return CreateInputPin(nameof(SadAdjustment), SadAdjustment);
-                yield return CreateInputPin(nameof(Payload), Payload);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return LumaIntraPartitionMask;
+                yield return IntraNeighbourAvailabilty;
+                yield return LeftEdgeLumaPixels;
+                yield return UpperLeftCornerLumaPixel;
+                yield return UpperEdgeLumaPixels;
+                yield return UpperRightEdgeLumaPixels;
+                yield return LeftEdgeChromaPixels;
+                yield return UpperLeftCornerChromaPixel;
+                yield return UpperEdgeChromaPixels;
+                yield return SadAdjustment;
+                yield return Payload;
         }
 
         public SubgroupAvcSicConfigureIpeLumaChromaINTEL WithDecoration(Spv.Decoration decoration)

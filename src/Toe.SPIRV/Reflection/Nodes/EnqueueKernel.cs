@@ -61,44 +61,22 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Queue), Queue);
-                yield return CreateInputPin(nameof(Flags), Flags);
-                yield return CreateInputPin(nameof(NDRange), NDRange);
-                yield return CreateInputPin(nameof(NumEvents), NumEvents);
-                yield return CreateInputPin(nameof(WaitEvents), WaitEvents);
-                yield return CreateInputPin(nameof(RetEvent), RetEvent);
-                yield return CreateInputPin(nameof(Invoke), Invoke);
-                yield return CreateInputPin(nameof(Param), Param);
-                yield return CreateInputPin(nameof(ParamSize), ParamSize);
-                yield return CreateInputPin(nameof(ParamAlign), ParamAlign);
+                yield return Queue;
+                yield return Flags;
+                yield return NDRange;
+                yield return NumEvents;
+                yield return WaitEvents;
+                yield return RetEvent;
+                yield return Invoke;
+                yield return Param;
+                yield return ParamSize;
+                yield return ParamAlign;
                 for (var index = 0; index < LocalSize.Count; index++)
                 {
-                    yield return CreateInputPin(nameof(LocalSize) + index, LocalSize[index]);
+                    yield return LocalSize[index];
                 }
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
         }
 
         public EnqueueKernel WithDecoration(Spv.Decoration decoration)

@@ -46,36 +46,14 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SkipBlockPartitionType), SkipBlockPartitionType);
-                yield return CreateInputPin(nameof(SkipMotionVectorMask), SkipMotionVectorMask);
-                yield return CreateInputPin(nameof(MotionVectors), MotionVectors);
-                yield return CreateInputPin(nameof(BidirectionalWeight), BidirectionalWeight);
-                yield return CreateInputPin(nameof(SadAdjustment), SadAdjustment);
-                yield return CreateInputPin(nameof(Payload), Payload);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return SkipBlockPartitionType;
+                yield return SkipMotionVectorMask;
+                yield return MotionVectors;
+                yield return BidirectionalWeight;
+                yield return SadAdjustment;
+                yield return Payload;
         }
 
         public SubgroupAvcSicConfigureSkcINTEL WithDecoration(Spv.Decoration decoration)

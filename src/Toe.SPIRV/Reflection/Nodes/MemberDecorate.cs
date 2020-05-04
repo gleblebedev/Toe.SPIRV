@@ -29,23 +29,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Spv.Decoration Decoration { get; set; }
 
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
         public MemberDecorate WithDecoration(Spv.Decoration decoration)
         {
             AddDecoration(decoration);

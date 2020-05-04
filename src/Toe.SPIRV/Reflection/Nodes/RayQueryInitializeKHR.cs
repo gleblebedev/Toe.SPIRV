@@ -60,45 +60,16 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Node RayTMax { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(RayQuery), RayQuery);
-                yield return CreateInputPin(nameof(Accel), Accel);
-                yield return CreateInputPin(nameof(RayFlags), RayFlags);
-                yield return CreateInputPin(nameof(CullMask), CullMask);
-                yield return CreateInputPin(nameof(RayOrigin), RayOrigin);
-                yield return CreateInputPin(nameof(RayTMin), RayTMin);
-                yield return CreateInputPin(nameof(RayDirection), RayDirection);
-                yield return CreateInputPin(nameof(RayTMax), RayTMax);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return RayQuery;
+                yield return Accel;
+                yield return RayFlags;
+                yield return CullMask;
+                yield return RayOrigin;
+                yield return RayTMin;
+                yield return RayDirection;
+                yield return RayTMax;
         }
 
         public RayQueryInitializeKHR WithDecoration(Spv.Decoration decoration)

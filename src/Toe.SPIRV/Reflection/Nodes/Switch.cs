@@ -29,38 +29,9 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public IList<Operands.PairLiteralIntegerNode> Target { get; private set; } = new List<Operands.PairLiteralIntegerNode>();
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Selector), Selector);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin(nameof(Default), Default);
-                yield break;
-            }
+                yield return Selector;
         }
 
         public Switch WithDecoration(Spv.Decoration decoration)

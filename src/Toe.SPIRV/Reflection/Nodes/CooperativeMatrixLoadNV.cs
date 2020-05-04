@@ -40,33 +40,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Pointer), Pointer);
-                yield return CreateInputPin(nameof(Stride), Stride);
-                yield return CreateInputPin(nameof(ColumnMajor), ColumnMajor);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return Pointer;
+                yield return Stride;
+                yield return ColumnMajor;
         }
 
         public CooperativeMatrixLoadNV WithDecoration(Spv.Decoration decoration)

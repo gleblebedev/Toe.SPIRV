@@ -40,34 +40,12 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Queue), Queue);
-                yield return CreateInputPin(nameof(NumEvents), NumEvents);
-                yield return CreateInputPin(nameof(WaitEvents), WaitEvents);
-                yield return CreateInputPin(nameof(RetEvent), RetEvent);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return Queue;
+                yield return NumEvents;
+                yield return WaitEvents;
+                yield return RetEvent;
         }
 
         public EnqueueMarker WithDecoration(Spv.Decoration decoration)

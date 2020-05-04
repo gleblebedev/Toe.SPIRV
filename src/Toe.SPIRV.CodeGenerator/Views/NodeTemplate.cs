@@ -355,10 +355,9 @@ if (_instruction.Operands.Any(op=>op.Class == SpirvOperandClassification.Input |
             
             #line default
             #line hidden
-            this.Write("\r\n        public override IEnumerable<NodePinWithConnection> InputPins\r\n        {" +
-                    "\r\n            get\r\n            {\r\n");
+            this.Write("\r\n        public override IEnumerable<Node> GetInputNodes()\r\n        {\r\n");
             
-            #line 136 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 134 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
 foreach (var op in _instruction.Operands)
 {
@@ -368,23 +367,16 @@ foreach (var op in _instruction.Operands)
             
             #line default
             #line hidden
-            this.Write("                yield return CreateInputPin(nameof(");
+            this.Write("                yield return ");
             
-            #line 142 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 140 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
-            this.Write("), ");
+            this.Write(";\r\n");
             
-            #line 142 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n");
-            
-            #line 143 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 141 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
     }
     else if (op.Class == SpirvOperandClassification.RepeatedInput)
@@ -395,29 +387,21 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("                for (var index = 0; index < ");
             
+            #line 146 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write(".Count; index++)\r\n                {\r\n                    yield return ");
+            
             #line 148 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
-            this.Write(".Count; index++)\r\n                {\r\n                    yield return CreateInput" +
-                    "Pin(nameof(");
+            this.Write("[index];\r\n                }\r\n");
             
             #line 150 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write(") + index, ");
-            
-            #line 150 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write("[index]);\r\n                }\r\n");
-            
-            #line 152 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
     }
 }
@@ -425,107 +409,18 @@ foreach (var op in _instruction.Operands)
             
             #line default
             #line hidden
-            this.Write("                yield break;\r\n            }\r\n        }\r\n");
+            this.Write("        }\r\n");
+            
+            #line 155 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+ 
+}
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        public ");
             
             #line 159 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        public override IEnumerable<NodePin> OutputPins\r\n        {\r\n           " +
-                    " get\r\n            {\r\n");
-            
-            #line 167 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-if (_instruction.IdResultType != null)
-{
-
-            
-            #line default
-            #line hidden
-            this.Write("                yield return new NodePin(this, \"\", ResultType);\r\n");
-            
-            #line 172 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-}
-
-            
-            #line default
-            #line hidden
-            this.Write("                yield break;\r\n            }\r\n        }\r\n\r\n");
-            
-            #line 179 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-if (_instruction.HasDefaultEnter)
-{
-
-            
-            #line default
-            #line hidden
-            this.Write("        public override IEnumerable<NodePin> EnterPins\r\n        {\r\n            ge" +
-                    "t\r\n            {\r\n                yield return new NodePin(this, \"\", null);\r\n   " +
-                    "         }\r\n        }\r\n");
-            
-            #line 190 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        public override IEnumerable<NodePinWithConnection> ExitPins\r\n        {\r" +
-                    "\n            get\r\n            {\r\n");
-            
-            #line 198 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-if (_instruction.HasDefaultExit)
-{
-
-            
-            #line default
-            #line hidden
-            this.Write("                yield return CreateExitPin(\"\", GetNext());\r\n");
-            
-            #line 203 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-}
-foreach (var op in _instruction.Operands)
-{
-    if (op.Class == SpirvOperandClassification.Exit)
-    {
-
-            
-            #line default
-            #line hidden
-            this.Write("                yield return CreateExitPin(nameof(");
-            
-            #line 210 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write("), ");
-            
-            #line 210 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n");
-            
-            #line 211 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
- 
-    }
-}
-
-            
-            #line default
-            #line hidden
-            this.Write("                yield break;\r\n            }\r\n        }\r\n\r\n        public ");
-            
-            #line 219 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
@@ -541,21 +436,21 @@ foreach (var op in _instruction.Operands)
             base.SetUp(op, treeBuilder);
             SetUp((");
             
-            #line 228 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 168 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(opname));
             
             #line default
             #line hidden
             this.Write(")op, treeBuilder);\r\n        }\r\n\r\n        public ");
             
-            #line 231 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 171 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(" SetUp(Action<");
             
-            #line 231 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 171 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
@@ -563,14 +458,14 @@ foreach (var op in _instruction.Operands)
             this.Write("> setup)\r\n        {\r\n            setup(this);\r\n            return this;\r\n        " +
                     "}\r\n\r\n        private void SetUp(");
             
-            #line 237 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 177 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(opname));
             
             #line default
             #line hidden
             this.Write(" op, SpirvInstructionTreeBuilder treeBuilder)\r\n        {\r\n");
             
-            #line 239 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 179 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
 if (_instruction.IdResultType != null)
 {
@@ -580,7 +475,7 @@ if (_instruction.IdResultType != null)
             #line hidden
             this.Write("            ResultType = treeBuilder.ResolveType(op.IdResultType);\r\n");
             
-            #line 244 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 184 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
 }
 
@@ -595,21 +490,21 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("            ");
             
-            #line 253 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 193 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" = treeBuilder.ResolveType(op.");
             
-            #line 253 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 193 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 254 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 194 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
             break;
         case SpirvOperandClassification.Exit:
@@ -620,28 +515,28 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("            ");
             
-            #line 259 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 199 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 259 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 199 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CastNodeType(op)));
             
             #line default
             #line hidden
             this.Write("treeBuilder.GetNode(op.");
             
-            #line 259 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 199 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 260 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 200 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
             break;
         case SpirvOperandClassification.RepeatedInput:
@@ -651,21 +546,21 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("            ");
             
-            #line 264 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 204 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" = treeBuilder.GetNodes(op.");
             
-            #line 264 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 204 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 265 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 205 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
             break;
         default:
@@ -677,21 +572,21 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("            foreach (var item in op.");
             
-            #line 271 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 211 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(") { ");
             
-            #line 271 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 211 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(".Add(treeBuilder.Parse(item)); }\r\n");
             
-            #line 272 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 212 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
 
             }
             else if (op.Kind == SpirvOperandKind.LiteralSpecConstantOpInteger)
@@ -702,21 +597,21 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("            ");
             
-            #line 277 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 217 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" = treeBuilder.Parse(op.");
             
-            #line 277 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 217 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 278 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 218 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
 
             }
             else
@@ -727,21 +622,21 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("            ");
             
-            #line 283 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 223 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(" = op.");
             
-            #line 283 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 223 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 284 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 224 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
 
             }
             break;
@@ -754,14 +649,14 @@ foreach (var op in _instruction.Operands)
             this.Write("            SetUpDecorations(op, treeBuilder);\r\n        }\r\n\r\n        /// <summary" +
                     ">Returns a string that represents the ");
             
-            #line 293 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 233 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(" object.</summary>\r\n        /// <returns>A string that represents the ");
             
-            #line 294 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 234 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
@@ -769,21 +664,21 @@ foreach (var op in _instruction.Operands)
             this.Write(" object.</returns>\r\n        /// <filterpriority>2</filterpriority>\r\n        publi" +
                     "c override string ToString()\r\n        {\r\n            return $\"");
             
-            #line 298 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 238 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 298 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 238 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", _operands.Concat(new KeyValuePair<string, string>("DebugName","string")).Select(_=>$"{{{_.Key}}}"))));
             
             #line default
             #line hidden
             this.Write(")\";\r\n        }\r\n    }\r\n");
             
-            #line 301 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 241 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
 if (_instruction.HasDefaultEnter)
 {
@@ -794,21 +689,21 @@ if (_instruction.HasDefaultEnter)
             this.Write("\r\n    public static partial class INodeWithNextExtensionMethods\r\n    {\r\n        p" +
                     "ublic static ");
             
-            #line 308 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 248 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(" Then");
             
-            #line 308 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 248 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write("(this INodeWithNext node");
             
-            #line 308 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 248 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
 
 foreach (var op in _instruction.Operands)
 {
@@ -836,14 +731,14 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write(", string debugName = null)\r\n        {\r\n            return node.Then(new ");
             
-            #line 331 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 271 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 331 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 271 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
 
 {
     var sep = "";
@@ -860,7 +755,7 @@ foreach (var op in _instruction.Operands)
             #line hidden
             this.Write("));\r\n        }\r\n    }\r\n");
             
-            #line 344 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
+            #line 284 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\NodeTemplate.tt"
  
 }
 

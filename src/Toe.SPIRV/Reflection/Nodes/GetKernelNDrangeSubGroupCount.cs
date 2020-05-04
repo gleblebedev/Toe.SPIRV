@@ -43,35 +43,13 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(NDRange), NDRange);
-                yield return CreateInputPin(nameof(Invoke), Invoke);
-                yield return CreateInputPin(nameof(Param), Param);
-                yield return CreateInputPin(nameof(ParamSize), ParamSize);
-                yield return CreateInputPin(nameof(ParamAlign), ParamAlign);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return NDRange;
+                yield return Invoke;
+                yield return Param;
+                yield return ParamSize;
+                yield return ParamAlign;
         }
 
         public GetKernelNDrangeSubGroupCount WithDecoration(Spv.Decoration decoration)

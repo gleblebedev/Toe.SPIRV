@@ -23,23 +23,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public string Extension { get; set; }
 
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
         public SourceExtension WithDecoration(Spv.Decoration decoration)
         {
             AddDecoration(decoration);

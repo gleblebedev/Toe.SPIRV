@@ -42,31 +42,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public uint Semantics { get; set; }
 
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
-        }
-
         public MemoryBarrier WithDecoration(Spv.Decoration decoration)
         {
             AddDecoration(decoration);

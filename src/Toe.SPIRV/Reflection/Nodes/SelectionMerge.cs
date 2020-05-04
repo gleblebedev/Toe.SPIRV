@@ -42,32 +42,6 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Spv.SelectionControl SelectionControl { get; set; }
 
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield return CreateExitPin(nameof(MergeBlock), MergeBlock);
-                yield break;
-            }
-        }
-
         public SelectionMerge WithDecoration(Spv.Decoration decoration)
         {
             AddDecoration(decoration);

@@ -2,7 +2,7 @@
   "profiles": {
     "Toe.SPIRV.CodeGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "updategrammar -r"
+      "commandLineArgs": "genshadertoscriptconverter -o C:\\github\\Toe.SPIRV\\src\\Toe.SPIRV.Scripting\\ShaderToScriptConverterBase.cs"
     }
   }
 }

@@ -37,33 +37,11 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(Base), Base);
-                yield return CreateInputPin(nameof(Offset), Offset);
-                yield return CreateInputPin(nameof(Count), Count);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return Base;
+                yield return Offset;
+                yield return Count;
         }
 
         public BitFieldSExtract WithDecoration(Spv.Decoration decoration)

@@ -26,30 +26,9 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public IList<Operands.PairNodeLiteralInteger> Targets { get; private set; } = new List<Operands.PairNodeLiteralInteger>();
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(DecorationGroup), DecorationGroup);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return DecorationGroup;
         }
 
         public GroupMemberDecorate WithDecoration(Spv.Decoration decoration)

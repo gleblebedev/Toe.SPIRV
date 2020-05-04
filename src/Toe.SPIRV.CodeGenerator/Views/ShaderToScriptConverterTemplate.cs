@@ -12,6 +12,7 @@ namespace Toe.SPIRV.CodeGenerator.Views
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using Toe.SPIRV.CodeGenerator.Model.Grammar;
     using System;
     
     /// <summary>
@@ -30,9 +31,10 @@ namespace Toe.SPIRV.CodeGenerator.Views
         {
             this.Write(@"using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Toe.Scripting;
 using Toe.SPIRV.Reflection;
-using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 using Nodes=Toe.SPIRV.Reflection.Nodes;
 
@@ -58,7 +60,7 @@ namespace Toe.SPIRV
             {
 ");
             
-            #line 34 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 36 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
 
 foreach (var instruction in _grammar.Instructions.Values)
 {
@@ -70,28 +72,28 @@ foreach (var instruction in _grammar.Instructions.Values)
             #line hidden
             this.Write("                case Op.");
             
-            #line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
             
             #line default
             #line hidden
             this.Write(": return Visit");
             
-            #line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write("((Nodes.");
             
-            #line 40 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 42 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write(") node);\r\n");
             
-            #line 41 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 43 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
 
     }
 }
@@ -102,7 +104,7 @@ foreach (var instruction in _grammar.Instructions.Values)
             this.Write("            }\r\n\r\n            throw new NotImplementedException(node.OpCode+\" is n" +
                     "ot implemented yet.\");\r\n        }\r\n\r\n");
             
-            #line 50 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 52 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
 
 foreach (var instruction in _grammar.Instructions.Values)
 {
@@ -114,42 +116,57 @@ foreach (var instruction in _grammar.Instructions.Values)
             #line hidden
             this.Write("\r\n        protected virtual ScriptNode Visit");
             
-            #line 57 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
             this.Write("(Nodes.");
             
-            #line 57 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
             
             #line default
             #line hidden
-            this.Write(" node)\r\n        {\r\n            var scriptNode = CreateNode(node, \"");
+            this.Write(" node)\r\n        {\r\n            var scriptNode = CreateNode(node, node.DebugName ?" +
+                    "? \"");
             
-            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 61 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\", \"");
+            
+            #line 61 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 61 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(instruction.HasDefaultEnter?"true":"false"));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 59 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.HasDefaultExit?"true":"false"));
+            #line 61 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture((instruction.IdResultType!=null)?"GetTypeName(node.ResultType)":"null"));
             
             #line default
             #line hidden
-            this.Write(", NodeCategory.Function, null);\r\n");
+            this.Write(", NodeCategory.");
             
-            #line 60 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 61 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetNodeCategory(instruction)));
+            
+            #line default
+            #line hidden
+            this.Write(", null);\r\n");
+            
+            #line 62 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
 
         if (instruction.HasDefaultExit)
         {
@@ -157,19 +174,127 @@ foreach (var instruction in _grammar.Instructions.Values)
             
             #line default
             #line hidden
-            this.Write("            scriptNode.ExitPins[0].Connection = new Connection(VisitNode(node.Nex" +
-                    "t), \"\");\r\n");
+            this.Write("            scriptNode.ExitPins.Add(new PinWithConnection(\"\",null,GetExitConnecti" +
+                    "on(node.Next)));\r\n");
             
-            #line 65 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            #line 67 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
 
         }
 
             
             #line default
             #line hidden
-            this.Write("            return scriptNode;\r\n        }\r\n");
             
             #line 70 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+ 
+foreach (var op in instruction.Operands)
+{
+    if (op.Class == SpirvOperandClassification.Exit)
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("            scriptNode.ExitPins.Add(new PinWithConnection(nameof(node.");
+            
+            #line 76 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write("),null, GetExitConnection(node.");
+            
+            #line 76 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write(")));\r\n");
+            
+            #line 77 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+ 
+    }
+    else if (op.Class == SpirvOperandClassification.Input)
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("            scriptNode.InputPins.Add(new PinWithConnection(nameof(node.");
+            
+            #line 82 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write("), GetTypeName(node.");
+            
+            #line 82 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write("?.GetResultType()), GetOutputConnection(node.");
+            
+            #line 82 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write(")));\r\n");
+            
+            #line 83 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+ 
+    }
+    else if (op.Class == SpirvOperandClassification.RepeatedInput)
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("            if (node.");
+            
+            #line 88 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" != null)\r\n            {\r\n                for (var index = 0; index < node.");
+            
+            #line 90 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write(".Count; index++)\r\n                {\r\n                    var item = node.");
+            
+            #line 92 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write("[index];\r\n                    scriptNode.InputPins.Add(new PinWithConnection(stri" +
+                    "ng.Format(CultureInfo.InvariantCulture, \"");
+            
+            #line 93 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(op.Name));
+            
+            #line default
+            #line hidden
+            this.Write("{0}\", index), GetTypeName(item?.GetResultType()), GetOutputConnection(item)));\r\n " +
+                    "               }\r\n            }\r\n");
+            
+            #line 96 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+ 
+    }
+}
+
+            
+            #line default
+            #line hidden
+            this.Write("            return scriptNode;\r\n        }\r\n");
+            
+            #line 102 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
 
     }
 }
@@ -177,12 +302,284 @@ foreach (var instruction in _grammar.Instructions.Values)
             
             #line default
             #line hidden
+            this.Write("        protected string GetTypeName(SpirvTypeBase type)\r\n        {\r\n            " +
+                    "if (type == null)\r\n                return null;\r\n            switch (type.OpCode" +
+                    ")\r\n            {\r\n");
+            
+            #line 112 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+foreach (var instruction in _grammar.Instructions.Values)
+{
+    if (instruction.Name.StartsWith("OpType"))
+    {
+
+            
+            #line default
+            #line hidden
+            this.Write("                case Op.");
+            
+            #line 118 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name));
+            
+            #line default
+            #line hidden
+            this.Write(": return Get");
+            
+            #line 118 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(6)));
+            
+            #line default
+            #line hidden
+            this.Write("Name((");
+            
+            #line 118 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
+            
+            #line default
+            #line hidden
+            this.Write(")type);\r\n");
+            
+            #line 119 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+    }
+}
+
+            
+            #line default
+            #line hidden
+            this.Write(@"            }
+            throw new NotImplementedException(type+"" is not implemented yet."");
+        }
+
+        protected virtual Connection GetExitConnection(Node node)
+        {
+            if (node == null)
+                return null;
+            return new Connection(VisitNode(node), """");
+        }
+
+        protected virtual Connection GetOutputConnection(Node node)
+        {
+            if (node == null)
+                return null;
+            return new Connection(VisitNode(node), """");
+        }
+
+");
+            
+            #line 141 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+foreach (var instruction in _grammar.Instructions.Values)
+{
+    if (instruction.Name.StartsWith("OpType"))
+    {
+        if (instruction.Name == "OpTypeVoid")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string GetVoidName(");
+            
+            #line 150 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
+            
+            #line default
+            #line hidden
+            this.Write(" type)\r\n        {\r\n            return \"void\";\r\n        }\r\n");
+            
+            #line 154 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeBool")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string GetBoolName(");
+            
+            #line 160 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
+            
+            #line default
+            #line hidden
+            this.Write(" type)\r\n        {\r\n            return \"bool\";\r\n        }\r\n");
+            
+            #line 164 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeInt")
+        {
+
+            
+            #line default
+            #line hidden
             this.Write(@"
-        protected ScriptNode CreateNode(Node node, string name, bool hasDefaultEnter = false, bool hasDefaultExit = false, NodeCategory category = NodeCategory.Unknown, string value = null)
+        protected virtual string GetIntName(TypeInt type)
+        {
+            if (type.Signed)
+            {
+                switch (type.Width)
+                {
+                    case 8: return ""sbyte"";
+                    case 16: return ""short"";
+                    case 32: return ""int"";
+                    case 64: return ""long"";
+                }
+            }
+            else
+            {
+                switch (type.Width)
+                {
+                    case 8: return ""byte"";
+                    case 16: return ""ushort"";
+                    case 32: return ""uint"";
+                    case 64: return ""ulong"";
+                }
+            }
+            throw new NotImplementedException(type + "" is not implemented yet."");
+        }
+");
+            
+            #line 194 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeFloat")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write(@"
+        protected virtual string GetFloatName(TypeFloat type)
+        {
+            switch (type.Width)
+            {
+                case 32: return ""float"";
+                case 64: return ""double"";
+            }
+            throw new NotImplementedException(type+"" is not implemented yet."");
+        }
+");
+            
+            #line 209 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeVector")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write(@"
+        protected virtual string GetVectorName(TypeVector type)
+        {
+            if (type.ComponentType == SpirvTypeBase.Float)
+            {
+                switch (type.ComponentCount)
+                {
+                    case 2: return ""vec2"";
+                    case 3: return ""vec3"";
+                    case 4: return ""vec4"";
+                }
+            }
+            throw new NotImplementedException(type+"" is not implemented yet."");
+        }
+");
+            
+            #line 228 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypePointer")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string GetPointerName(TypePointer type)\r\n        {\r\n " +
+                    "           return GetTypeName(type.Type)+\"*\";\r\n        }\r\n");
+            
+            #line 238 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeStruct")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string GetStructName(TypeStruct type)\r\n        {\r\n   " +
+                    "         return type.DebugName;\r\n        }\r\n");
+            
+            #line 248 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeArray")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string GetArrayName(TypeArray type)\r\n        {\r\n     " +
+                    "       return string.Format(CultureInfo.InvariantCulture, \"{0}[{1}]\", GetTypeNam" +
+                    "e(type.ElementType), type.Length);\r\n        }\r\n");
+            
+            #line 258 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else if (instruction.Name == "OpTypeRuntimeArray")
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string GetRuntimeArrayName(TypeRuntimeArray type)\r\n  " +
+                    "      {\r\n            return string.Format(CultureInfo.InvariantCulture, \"{0}[*]\"" +
+                    ", GetTypeName(type.ElementType));\r\n        }\r\n");
+            
+            #line 268 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n        protected virtual string Get");
+            
+            #line 274 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(6)));
+            
+            #line default
+            #line hidden
+            this.Write("Name(");
+            
+            #line 274 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(instruction.Name.Substring(2)));
+            
+            #line default
+            #line hidden
+            this.Write(" type)\r\n        {\r\n            throw new NotImplementedException(type+\" is not im" +
+                    "plemented yet.\");\r\n        }\r\n");
+            
+            #line 278 "C:\github\Toe.SPIRV\src\Toe.SPIRV.CodeGenerator\Views\ShaderToScriptConverterTemplate.tt"
+
+        }
+    }
+}
+
+            
+            #line default
+            #line hidden
+            this.Write(@"
+        protected ScriptNode CreateNode(Node node, string name, string type, bool hasDefaultEnter = false, string outputType = null, NodeCategory category = NodeCategory.Unknown, string value = null)
         {
             var scriptNode = new ScriptNode()
             {
                 Name = name,
+                Type = type,
                 Category = category,
                 Value = value
             };
@@ -190,9 +587,9 @@ foreach (var instruction in _grammar.Instructions.Values)
             {
                 scriptNode.EnterPins.Add(new Pin("""",null));
             }
-            if (hasDefaultExit)
+            if (outputType != null)
             {
-                scriptNode.ExitPins.Add(new PinWithConnection("""",null));
+                scriptNode.OutputPins.Add(new Pin("""", outputType));
             }
             _script.Add(scriptNode);
             _nodeMap.Add(node, scriptNode);

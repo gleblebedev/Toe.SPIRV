@@ -32,34 +32,12 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public IList<Node> Interface { get; private set; } = new PrintableList<Node>();
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
                 for (var index = 0; index < Interface.Count; index++)
                 {
-                    yield return CreateInputPin(nameof(Interface) + index, Interface[index]);
+                    yield return Interface[index];
                 }
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin(nameof(Value), Value);
-                yield break;
-            }
         }
 
         public EntryPoint WithDecoration(Spv.Decoration decoration)

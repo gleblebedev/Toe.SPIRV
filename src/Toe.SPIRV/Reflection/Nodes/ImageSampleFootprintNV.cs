@@ -43,34 +43,12 @@ namespace Toe.SPIRV.Reflection.Nodes
             return ResultType;
         }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SampledImage), SampledImage);
-                yield return CreateInputPin(nameof(Coordinate), Coordinate);
-                yield return CreateInputPin(nameof(Granularity), Granularity);
-                yield return CreateInputPin(nameof(Coarse), Coarse);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", ResultType);
-                yield break;
-            }
-        }
-
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield break;
-            }
+                yield return SampledImage;
+                yield return Coordinate;
+                yield return Granularity;
+                yield return Coarse;
         }
 
         public ImageSampleFootprintNV WithDecoration(Spv.Decoration decoration)

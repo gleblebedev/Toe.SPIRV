@@ -42,39 +42,10 @@ namespace Toe.SPIRV.Reflection.Nodes
 
         public Node CallableDataId { get; set; }
 
-        public override IEnumerable<NodePinWithConnection> InputPins
+        public override IEnumerable<Node> GetInputNodes()
         {
-            get
-            {
-                yield return CreateInputPin(nameof(SBTIndex), SBTIndex);
-                yield return CreateInputPin(nameof(CallableDataId), CallableDataId);
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> OutputPins
-        {
-            get
-            {
-                yield break;
-            }
-        }
-
-        public override IEnumerable<NodePin> EnterPins
-        {
-            get
-            {
-                yield return new NodePin(this, "", null);
-            }
-        }
-
-        public override IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get
-            {
-                yield return CreateExitPin("", GetNext());
-                yield break;
-            }
+                yield return SBTIndex;
+                yield return CallableDataId;
         }
 
         public ExecuteCallableNV WithDecoration(Spv.Decoration decoration)

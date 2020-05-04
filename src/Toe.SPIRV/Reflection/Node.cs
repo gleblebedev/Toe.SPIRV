@@ -27,39 +27,9 @@ namespace Toe.SPIRV.Reflection
             return null;
         }
 
-        public virtual IEnumerable<NodePin> EnterPins
+        public virtual IEnumerable<Node> GetInputNodes()
         {
-            get { return Enumerable.Empty<NodePin>(); }
-        }
-
-        public virtual IEnumerable<NodePinWithConnection> ExitPins
-        {
-            get { return Enumerable.Empty<NodePinWithConnection>(); }
-        }
-
-        public virtual IEnumerable<NodePinWithConnection> InputPins
-        {
-            get { return Enumerable.Empty<NodePinWithConnection>(); }
-        }
-
-        public virtual IEnumerable<NodePin> OutputPins
-        {
-            get { return Enumerable.Empty<NodePin>(); }
-        }
-
-        protected NodePinWithConnection CreateInputPin(string name, Node node)
-        {
-            if (node == null)
-                return new NodePinWithConnection(this, name, null, null);
-            var output = node.OutputPins.First();
-            return new NodePinWithConnection(this, name, output.Type, output);
-        }
-        protected NodePinWithConnection CreateExitPin(string name, Node node)
-        {
-            if (node == null)
-                return new NodePinWithConnection(this, name, null, null);
-            var input = node.EnterPins.First();
-            return new NodePinWithConnection(this, name, input.Type, input);
+            return Enumerable.Empty<Node>();
         }
 
         public virtual void SetUp(Instruction op, SpirvInstructionTreeBuilder treeBuilder)
