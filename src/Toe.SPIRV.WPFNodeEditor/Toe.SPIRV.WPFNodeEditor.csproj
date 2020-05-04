@@ -199,6 +199,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -230,6 +231,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -237,6 +239,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\PreviewControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -290,6 +295,10 @@
     <ProjectReference Include="..\Toe.SPIRV.NodeEditor\Toe.SPIRV.NodeEditor.csproj">
       <Project>{6220d7f8-6ea7-4e36-9491-9d0a45f64a17}</Project>
       <Name>Toe.SPIRV.NodeEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toe.SPIRV.Scripting\Toe.SPIRV.Scripting.csproj">
+      <Project>{7FA8E7D5-A814-4AEC-8E61-95ED4E254F78}</Project>
+      <Name>Toe.SPIRV.Scripting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Toe.SPIRV\Toe.SPIRV.csproj">
       <Project>{87A8BC61-09D2-4A9F-8CAB-E93226F786C6}</Project>

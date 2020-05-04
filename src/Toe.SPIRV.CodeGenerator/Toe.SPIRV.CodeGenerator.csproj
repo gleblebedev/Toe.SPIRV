@@ -61,6 +61,10 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>NodeVisitor.cs</LastGenOutput>
     </None>
+    <None Update="Views\ShaderToScriptConverterTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ShaderToScriptConverterTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Views\SpirvInstructionsBuilderTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>SpirvInstructionsBuilderTemplate.cs</LastGenOutput>
@@ -125,6 +129,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>NodeVisitor.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ShaderToScriptConverterTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShaderToScriptConverterTemplate.tt</DependentUpon>
     </Compile>
     <Compile Update="Views\SpirvInstructionsBuilderTemplate.cs">
       <DesignTime>True</DesignTime>

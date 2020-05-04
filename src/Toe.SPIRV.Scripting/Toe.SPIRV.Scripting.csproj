@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Toe.SPIRV</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\submodules\Toe.Scripting\src\Toe.Scripting\Toe.Scripting.csproj" />
+    <ProjectReference Include="..\Toe.SPIRV\Toe.SPIRV.csproj" />
+  </ItemGroup>
+
+</Project>

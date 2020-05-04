@@ -154,6 +154,15 @@ namespace Toe.SPIRV.CodeGenerator.Views
             return "object";
         }
     }
+    public partial class ShaderToScriptConverterTemplate
+    {
+        private readonly SpirvInstructions _grammar;
+
+        public ShaderToScriptConverterTemplate(SpirvInstructions grammar)
+        {
+            _grammar = grammar;
+        }
+    }
 
     public partial class SpirvInstructionsBuilderTemplate
     {

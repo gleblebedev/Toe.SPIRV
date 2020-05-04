@@ -1,24 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Toe.Scripting;
 using Toe.SPIRV.Reflection;
 using Toe.SPIRV.Reflection.Nodes;
+using Toe.SPIRV.Reflection.Types;
 using Toe.SPIRV.Spv;
 
-namespace Toe.SPIRV.NodeEditor
+namespace Toe.SPIRV
 {
-    internal class ShaderToScriptConverter
+    internal class ShaderToScriptConverter: ShaderToScriptConverterBase
     {
         private readonly Dictionary<Node, ScriptNode> _nodeMap = new Dictionary<Node, ScriptNode>();
-        private readonly Script _script = new Script();
 
-        public Script Convert(ShaderReflection reflection)
+        public Script Convert(ShaderReflection vertexShader, ShaderReflection fragmentShader)
         {
-            foreach (var node in reflection.EntryPointInstructions)
-            {
-                VisitNode(node.Value, null, null, null);
-            }
+            ValidateShader(vertexShader, nameof(vertexShader));
+            ValidateShader(fragmentShader, nameof(fragmentShader));
+
+            var vertex = VisitFunction(vertexShader.EntryPointInstructions[0].Value);
+            var fragment = VisitFunction(fragmentShader.EntryPointInstructions[0].Value);
+
             return _script;
+        }
+
+        private static void ValidateShader(ShaderReflection vertexShader, string vertexShaderName)
+        {
+            if (vertexShader == null)
+                throw new ArgumentNullException($"{vertexShaderName} should not be null");
+            if (vertexShader.EntryPointInstructions.Count != 1)
+                throw new ArgumentException($"{vertexShaderName} expected to have exactly one entry point");
+            if (vertexShader.EntryPointInstructions[0].Value.ResultType != SpirvTypeBase.Void)
+                throw new ArgumentException($"{vertexShaderName} entry point should have void result type");
+            if (vertexShader.EntryPointInstructions[0].Value.Parameters.Count != 0)
+                throw new ArgumentException($"{vertexShaderName} entry point should not have arguments");
+            if (((TypeFunction) vertexShader.EntryPointInstructions[0].Value.FunctionType).Arguments.Count != 0)
+                throw new ArgumentException($"{vertexShaderName} entry point should not have arguments");
         }
 
         private ScriptNode VisitNode(Node node, Node mergeNode, Node continueNode, Node loopNode)

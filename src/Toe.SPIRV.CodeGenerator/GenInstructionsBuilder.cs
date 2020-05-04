@@ -1,12 +1,11 @@
 ﻿using System;
-using System.IO;
 using CommandLine;
 using Toe.SPIRV.CodeGenerator.Model.Grammar;
 using Toe.SPIRV.CodeGenerator.Views;
 
 namespace Toe.SPIRV.CodeGenerator
 {
-    public class InstructionBuilder
+    public class GenInstructionsBuilder
     {
         [Verb("geninstructionbuilder")]
         public class Options

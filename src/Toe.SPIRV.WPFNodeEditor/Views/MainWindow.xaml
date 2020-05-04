@@ -6,6 +6,16 @@
         xmlns:local="clr-namespace:Toe.SPIRV.NodeEditor.Views"
         xmlns:views="clr-namespace:Toe.Scripting.WPF.Views;assembly=Toe.Scripting.WPF"
         mc:Ignorable="d"
+        WindowState="Maximized"
         Title="Toe.SPIRV.NodeEditor" Height="450" Width="800">
-    <views:ScriptView DataContext="{Binding Script}"/>
+    <Grid Margin="0,-7,0,7">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5px"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <views:ScriptView DataContext="{Binding Script}"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <WindowsFormsHost Grid.Column="2" x:Name="_host"></WindowsFormsHost>
+    </Grid>
 </Window>

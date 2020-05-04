@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Toe.SPIRV.NodeEditor.ViewModels;
+using Toe.SPIRV.WPFNodeEditor.Views;
 
 namespace Toe.SPIRV.NodeEditor.Views
 {
@@ -24,6 +25,7 @@ namespace Toe.SPIRV.NodeEditor.Views
         public MainWindow()
         {
             InitializeComponent();
+            _host.Child = new PreviewControl();
             DataContext = new MainWindowViewModel();
         }
     }

@@ -13,12 +13,17 @@ namespace Toe.SPIRV.NodeEditor.ViewModels
 
             SetGLSL(@"
 #version 450
-layout(location = 0) in float Attr;
-float GetX(float a) { return a+1; }
 void main()
 {
-    gl_Position = vec4(0,GetX(Attr),2,3);
-}", ShaderStages.Vertex);
+    gl_Position = vec4(0,0,0,1);
+}",
+                @"
+#version 450
+layout(location = 0) out vec4 fragColor;
+void main()
+{
+    fragColor = vec4(1,0,1,1);
+}");
 
             //            SetGLSL(@"
             //#version 450
@@ -33,14 +38,16 @@ void main()
             //    gl_Position = vec4(x);
             //}", ShaderStages.Vertex, true);
             //
-            }
+        }
 
 
-            public void SetGLSL(string sourceText, ShaderStages stage, bool debug = true)
+        public void SetGLSL(string vertexSource, string fragmentSource, bool debug = true)
         {
-            var bytes = Veldrid.SPIRV.SpirvCompilation.CompileGlslToSpirv(sourceText, "shader.spv", stage,
-                new GlslCompileOptions(debug));
-            Script.Script = ShaderScriptConverter.Convert(new ShaderReflection(Shader.Parse(bytes.SpirvBytes)));
+            var vertexBytes = Veldrid.SPIRV.SpirvCompilation.CompileGlslToSpirv(vertexSource, "shader.spv", ShaderStages.Vertex, new GlslCompileOptions(debug));
+            var vertexReflection = new ShaderReflection(Shader.Parse(vertexBytes.SpirvBytes));
+            var fragmentBytes = Veldrid.SPIRV.SpirvCompilation.CompileGlslToSpirv(fragmentSource, "shader.spv", ShaderStages.Fragment, new GlslCompileOptions(debug));
+            var fragmentReflection = new ShaderReflection(Shader.Parse(fragmentBytes.SpirvBytes));
+            Script.Script = ShaderScriptConverter.Convert(vertexReflection, fragmentReflection);
         }
 
         public ScriptViewModel Script { get; set; }
